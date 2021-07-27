@@ -21,8 +21,8 @@ jobs:
           pip install flake8 flake8-docstrings flake8-import-order
       - name: Style guide
         run: |
-          flake8 --select=E,W,I --tee --output-file=pep8_violations.txt --statistics --count setup.py fastapi_mvc_template
-          flake8 --select=D --tee --output-file=pep257_violations.txt --statistics --count setup.py fastapi_mvc_template
+          flake8 --select=E,W,I --max-line-length 80 --import-order-style pep8 --exclude .git,__pycache__,.eggs,*.egg,.pytest_cache,fastapi_mvc_template/version.py,setup.py,fastapi_mvc_template/__init__.py --tee --output-file=pep8_violations.txt --statistics --count setup.py fastapi_mvc_template
+          flake8 --select=D --ignore D301 --tee --output-file=pep257_violations.txt --statistics --count setup.py fastapi_mvc_template
       - name: Code errors
         run: flake8 --select=F --tee --output-file=flake8_code_errors.txt --statistics --count setup.py fastapi_mvc_template
       - name: Code complexity
