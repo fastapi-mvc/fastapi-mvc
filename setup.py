@@ -10,9 +10,7 @@ exec(open('fastapi_mvc_template/version.py').read())
 setup(
     name='fastapi_mvc_template',
     version=__version__,
-    description='FastAPI project core implemented using MVC architectural '
-                'pattern with base utilities, tests, and pipeline to speed '
-                'up creating new projects based on FastAPI.',
+    description='FastAPI MVC template',
     url='https://github.com/rszamszur/fastapi-mvc-template',
     author='Radosław Szamszur',
     author_email='radoslawszamszur@gmail.com',
