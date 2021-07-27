@@ -29,7 +29,7 @@ jobs:
         run: flake8 --select=C901 --tee --output-file=code_complexity.txt --count fastapi_mvc_template
       - name: TODO
         run: flake8 --select=T --tee --output-file=todo_occurence.txt --statistics --count setup.py fastapi_mvc_template tests
-  code-cov:
+  code-coverage:
     runs-on: ubuntu-latest
 
     steps:
@@ -44,7 +44,9 @@ jobs:
           pip install .
           pip install pytest pytest-cov pytest-asyncio requests mock aioresponses
       - name: Run coverage
-        run: py.test tests --cov-fail-under=70 --cov=./fastapi_mvc_template/ --cov-report=xml
+        run: |
+          ls -lah
+          py.test tests --cov-fail-under=70 --cov=fastapi_mvc_template --cov-report=xml
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v2
         with:
