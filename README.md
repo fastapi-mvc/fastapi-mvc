@@ -1,5 +1,9 @@
 # FastAPI-MVC-template
 
+![Build](https://github.com/rszamszur/fastapi-mvc-template/actions/workflows/build.yml/badge.svg)
+![Test](https://github.com/rszamszur/fastapi-mvc-template/actions/workflows/test.yml/badge.svg)
+[![codecov](https://codecov.io/gh/rszamszur/fastapi-mvc-template/branch/master/graph/badge.svg?token=7ESV30TYZS)](https://codecov.io/gh/rszamszur/fastapi-mvc-template)
+
 FastAPI project core implemented using MVC architectural pattern with base utilities, tests, and pipeline to speed up creating new projects based on FastAPI.
 
 As of today [FastAPI](https://fastapi.tiangolo.com/) doesn't have any project generator like other known web frameworks ex: Django, Rails, etc., which makes creating new projects based on it that much more time-consuming.
