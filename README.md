@@ -95,7 +95,7 @@ Options:
   --help                       Show this message and exit.
 ```
 
-*NOTE: Maximum number of workers may be different in your case, it's limited to `multiprocessing.cpu_count`*
+*NOTE: Maximum number of workers may be different in your case, it's limited to `multiprocessing.cpu_count()`*
 
 To serve application simply run:
 
@@ -128,7 +128,47 @@ $ curl localhost:8000/api/ready
 
 ## Renaming
 
+To your discretion I've provided simple bash script for renaming whole project, although I do not guarantee it will work with all possible names.
 
+It takes two parameters:
+1) new project name *NOTE: if your project name contains '-' this script should automatically change '-' to '_' wherever it's needed.*
+2) new project url
+
+```shell
+#!/usr/bin/env bash
+
+if [ -n "$DEBUG" ]; then
+	set -x
+fi
+
+set -o errexit
+set -o nounset
+set -o pipefail
+
+if [[ -z "$1" ]]; then
+  echo "Parameter project name is empty."
+  exit 1
+fi
+
+if [[ -z "$2" ]]; then
+  echo "Parameter project url is empty."
+  exit 1
+fi
+
+grep -rl "https://github.com/rszamszur/fastapi-mvc-template" | xargs sed -i "s/https:\/\/github.com\/rszamszur\/fastapi-mvc-template/${2//\//\\/}/g"
+
+if [[ $1 == *"-"* ]]; then
+  mv fastapi_mvc_template ${1//-/_}
+  grep -rl --exclude-dir=.git fastapi_mvc_template | xargs sed -i "s/fastapi_mvc_template/${1//-/_}/g"
+else
+  mv fastapi_mvc_template $1
+  grep -rl --exclude-dir=.git fastapi_mvc_template | xargs sed -i "s/fastapi_mvc_template/$1/g"
+fi
+
+grep -rl --exclude-dir=.git fastapi-mvc-template | xargs sed -i "s/fastapi-mvc-template/$1/g"
+grep -rl --exclude-dir=.git 'FastAPI MVC template' | xargs sed -i "s/FastAPI MVC template/$1/g"
+```
+*NOTE: Afterwards you may still want to edit some docstrings or descriptions.*
 
 ## Development
 
