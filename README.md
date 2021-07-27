@@ -172,7 +172,7 @@ grep -rl --exclude-dir=.git 'FastAPI MVC template' | xargs sed -i "s/FastAPI MVC
 
 ## Development
 
-You can implement your own web routes logic straight away in `.app.controllers.api.v1` submodule. Please see [FastAPI documentation](https://fastapi.tiangolo.com/tutorial/).
+You can implement your own web routes logic straight away in `.app.controllers.api.v1` submodule. For more information please see [FastAPI documentation](https://fastapi.tiangolo.com/tutorial/).
 
 ### Utilities
 
