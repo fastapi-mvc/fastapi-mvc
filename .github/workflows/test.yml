@@ -21,14 +21,14 @@ jobs:
           pip install flake8 flake8-docstrings flake8-import-order
       - name: Style guide
         run: |
-          flake8 --select=E,W,I --tee --output-file=pep8_violations.txt --statistics --count setup.py fastapi-mvc-template
-          flake8 --select=D --tee --output-file=pep257_violations.txt --statistics --count setup.py fastapi-mvc-template
+          flake8 --select=E,W,I --tee --output-file=pep8_violations.txt --statistics --count setup.py fastapi_mvc_template
+          flake8 --select=D --tee --output-file=pep257_violations.txt --statistics --count setup.py fastapi_mvc_template
       - name: Code errors
-        run: flake8 --select=F --tee --output-file=flake8_code_errors.txt --statistics --count setup.py fastapi-mvc-template
+        run: flake8 --select=F --tee --output-file=flake8_code_errors.txt --statistics --count setup.py fastapi_mvc_template
       - name: Code complexity
         run: flake8 --select=C901 --tee --output-file=code_complexity.txt --count
       - name: TODO
-        run: flake8 --select=T --tee --output-file=todo_occurence.txt --statistics --count setup.py fastapi-mvc-template tests
+        run: flake8 --select=T --tee --output-file=todo_occurence.txt --statistics --count setup.py fastapi_mvc_template tests
   unit-tests:
     runs-on: ubuntu-latest
     strategy:
@@ -44,8 +44,8 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -r requirements.txt
-      - name: Style guide
+          pip install .
+      - name: Run unit tests
         run: py.test tests/unit --junit-xml=xunit-${{ matrix.python-version }}.xml
   integration-tests:
     runs-on: ubuntu-latest
@@ -62,6 +62,6 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -r requirements.txt
-      - name: Style guide
+          pip install .
+      - name: Run integration tests
         run: py.test tests/integration --junit-xml=xunit-${{ matrix.python-version }}.xml
