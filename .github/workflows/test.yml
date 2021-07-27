@@ -45,7 +45,7 @@ jobs:
           pip install pytest pytest-cov pytest-asyncio requests mock aioresponses
       - name: Run coverage
         run: |
-          py.test tests --cov=./fastapi_mvc_template --cov-report=xml
+          pytest tests/unit --cov=./fastapi_mvc_template --cov-report=xml
           ls -lah
           echo $PWD
           ls -lah ./fastapi_mvc_template
