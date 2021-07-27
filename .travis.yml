@@ -1,0 +1,60 @@
+language: python
+python:
+  - "3.7"
+  - "3.8"
+  - "3.9"
+install:
+  - pip install tox
+
+jobs:
+  include:
+    - stage: metrics
+      name: "Style Guide"
+      python: "3.7"
+      script: tox -e style_guide
+    - stage: metrics
+      name: "Code Errors"
+      python: "3.7"
+      script: tox -e flake8
+    - stage: metrics
+      name: "Code Complexity"
+      python: "3.7"
+      script: tox -e code_complexity
+    - stage: metrics
+      name: "TODO"
+      python: "3.7"
+      script: tox -e todo
+    - stage: build
+      name: "package"
+      python: "3.7"
+      script: tox -e package
+    - stage: unit
+      name: "coverage"
+      python: "3.7"
+      script: tox -e coverage
+    - stage: unit
+      name: "python3.7"
+      python: "3.7"
+      script: tox -e py37
+    - stage: unit
+      name: "python3.8"
+      python: "3.8"
+      script: tox -e py38
+    - stage: unit
+      name: "python3.9"
+      python: "3.9"
+      script: tox -e py39
+    - stage: integration
+      name: "python3.7"
+      python: "3.7"
+      script: tox -e in37
+    - stage: integration
+      name: "python3.8"
+      python: "3.8"
+      script: tox -e in38
+    - stage: integration
+      name: "python3.9"
+      python: "3.9"
+      script: tox -e in39
+  allow_failures:
+    - name: "Style Guide"
