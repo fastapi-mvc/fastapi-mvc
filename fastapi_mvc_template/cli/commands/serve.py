@@ -20,7 +20,7 @@ from fastapi_mvc_template.wsgi import run_wsgi
     "--port",
     help="Port to bind.",
     type=click.INT,
-    default=5000,
+    default=8000,
     required=False,
     show_default=True,
 )
