@@ -44,7 +44,7 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -r requiremetns.txt
+          pip install -r requirements.txt
       - name: Style guide
         run: py.test tests/unit --junit-xml=xunit-${{ matrix.python-version }}.xml
   integration-tests:
@@ -62,6 +62,6 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -r requiremetns.txt
+          pip install -r requirements.txt
       - name: Style guide
         run: py.test tests/integration --junit-xml=xunit-${{ matrix.python-version }}.xml
