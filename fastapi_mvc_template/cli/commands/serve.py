@@ -34,7 +34,7 @@ from fastapi_mvc_template.wsgi import run_wsgi
     show_default=True,
 )
 def serve(**options):
-    """FastAPI MVC template CLI serve command."""
+    """Fastapi MVC template CLI serve command."""
     run_wsgi(
         host=options["host"],
         port=str(options["port"]),

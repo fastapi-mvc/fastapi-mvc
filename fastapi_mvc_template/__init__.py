@@ -2,7 +2,7 @@
 """FastAPI MVC template."""
 import logging
 
-from .version import __version__
+from .version import __version__  # noqa: F401
 
 # initialize logging
 log = logging.getLogger(__name__)
