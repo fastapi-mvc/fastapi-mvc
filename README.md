@@ -7,7 +7,7 @@
 FastAPI project core implemented using MVC architectural pattern with base utilities, tests, and pipeline to speed up creating new projects based on FastAPI.
 
 As of today [FastAPI](https://fastapi.tiangolo.com/) doesn't have any project generator like other known web frameworks ex: Django, Rails, etc., which makes creating new projects based on it that much more time-consuming.
-The idea behind this template is that one can fork this repo, rename package and then start implementing endpoints logic straightaway, rather than creating the whole project from scratch.
+The idea behind this template is that, one can fork this repo, rename package and then start implementing endpoints logic straightaway, rather than creating the whole project from scratch.
 Moreover, the project is structured in MVC architectural pattern to help developers who don't know FastAPI yet but are familiar with MVC to get up to speed quickly.
 
 Last but not least this application utilizes WSGI + ASGI combination for the best performance possible. Mainly because web servers like Nginx don't know how to async and WSGI is single synchronous callable. You can further read about this [here](https://asgi.readthedocs.io/en/latest/introduction.html).
@@ -57,6 +57,7 @@ Prerequisites:
 ```shell
 git clone git@github.com:rszamszur/fastapi-mvc-template.git
 cd fastapi-mvc-template
+# Project will be installed to virtualenv
 make venv
 ```
 
@@ -142,7 +143,7 @@ It takes two parameters:
 #!/usr/bin/env bash
 
 if [ -n "$DEBUG" ]; then
-	set -x
+  set -x
 fi
 
 set -o errexit
@@ -260,7 +261,7 @@ REDIS_PASSWORD = os.getenv('FASTAPI_REDIS_PASSWORD', None)
 REDIS_USE_SENTINEL = bool(os.getenv('FASTAPI_REDIS_USE_SENTINEL', False))
 ```
 
-Lastly web routes definition. You just simply import you controller and include it to FastAPI router:
+Lastly web routes definition. Just simply import your controller and include it to FastAPI router:
 
 ```python
 from fastapi import APIRouter
