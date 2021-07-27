@@ -44,12 +44,16 @@ jobs:
           pip install .
           pip install pytest pytest-cov pytest-asyncio requests mock aioresponses
       - name: Run coverage
-        run: py.test tests --cov=./fastapi_mvc_template --cov-report=xml
+        run: |
+          py.test tests --cov=./fastapi_mvc_template --cov-report=xml
+          ls -lah
+          echo $PWD
+          ls -lah ./fastapi_mvc_template
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v2
         with:
           fail_ci_if_error: true
-          files: coverage.xml
+          files: ./coverage.xml
   unit-tests:
     runs-on: ubuntu-latest
     strategy:
