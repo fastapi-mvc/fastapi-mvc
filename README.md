@@ -167,6 +167,7 @@ fi
 
 grep -rl --exclude-dir=.git fastapi-mvc-template | xargs sed -i "s/fastapi-mvc-template/$1/g"
 grep -rl --exclude-dir=.git 'FastAPI MVC template' | xargs sed -i "s/FastAPI MVC template/$1/g"
+grep -rl --exclude-dir=.git 'Fastapi MVC template' | xargs sed -i "s/FastAPI MVC template/$1/g"
 ```
 *NOTE: Afterwards you may still want to edit some docstrings or descriptions.*
 
