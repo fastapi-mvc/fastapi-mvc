@@ -9,7 +9,7 @@ exec(open('fastapi_mvc_template/version.py').read())
 
 setup(
     name='fastapi_mvc_template',
-    version=__version__,
+    version=__version__,  # noqa: F821
     description='FastAPI MVC template',
     url='https://github.com/rszamszur/fastapi-mvc-template',
     author='Radosław Szamszur',
