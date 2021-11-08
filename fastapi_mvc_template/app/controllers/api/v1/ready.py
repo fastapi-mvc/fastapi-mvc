@@ -13,7 +13,8 @@ log = logging.getLogger(__name__)
     "/ready",
     tags=["ready"],
     response_model=ReadyResponse,
-    summary="Simple health check."
+    summary="Simple health check.",
+    status_code=200,
 )
 async def readiness_check():
     """Run basic application health check.
