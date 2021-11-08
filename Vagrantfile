@@ -23,10 +23,10 @@ Vagrant.configure("2") do |config|
       systemctl restart docker
       usermod -aG docker vagrant
       # Install kubectl
-      curl -Lso /tmp/kubectl "https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl"
+      curl -Lso /tmp/kubectl "https://storage.googleapis.com/kubernetes-release/release/v1.20.8/bin/linux/amd64/kubectl"
       install -m 755 /tmp/kubectl /usr/local/bin
       # Install minikube
-      curl -Lso /tmp/minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+      curl -Lso /tmp/minikube https://storage.googleapis.com/minikube/releases/v1.22.0/minikube-linux-amd64
       install -m 755 /tmp/minikube /usr/local/bin/
 
       # NOTE: no need to statrt minikube just yet
