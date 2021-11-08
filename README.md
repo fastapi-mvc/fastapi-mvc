@@ -4,7 +4,8 @@
 ![Test](https://github.com/rszamszur/fastapi-mvc-template/actions/workflows/test.yml/badge.svg)
 [![codecov](https://codecov.io/gh/rszamszur/fastapi-mvc-template/branch/master/graph/badge.svg?token=7ESV30TYZS)](https://codecov.io/gh/rszamszur/fastapi-mvc-template)
 
-FastAPI project core implemented using MVC architectural pattern with base utilities, tests, and pipeline to speed up creating new projects based on FastAPI.
+FastAPI project core implemented using MVC architectural pattern with base utilities, tests, and pipeline to speed up creating new projects based on FastAPI. 
+Additionally, this repo includes Kubernetes Helm charts, and a script for bootstrapping local development cluster with High Availability Redis cluster deployed using [spotathome/redis-operator](https://github.com/spotahome/redis-operator).
 
 As of today [FastAPI](https://fastapi.tiangolo.com/) doesn't have any project generator like other known web frameworks ex: Django, Rails, etc., which makes creating new projects based on it that much more time-consuming.
 The idea behind this template is that, one can fork this repo, rename package and then start implementing endpoints logic straightaway, rather than creating the whole project from scratch.
@@ -15,10 +16,18 @@ Additionally, here are some benchmarks done by wonderful people of StackOverflow
 * https://stackoverflow.com/a/62977786/10566747
 * https://stackoverflow.com/a/63427961/10566747
 
+### Kubernetes local development cluster
+
+[Helm charts for application](https://github.com/rszamszur/fastapi-mvc-template/tree/master/charts/fastapi-mvc-template)
+
+Application stack in Kubernetes:
+![k8s_arch](https://github.com/rszamszur/fastapi-mvc-template/blob/master/assets/k8s_arch.png?raw=true)
 ### Project structure
 
 ```
 ├── build                           Makefile build scripts
+├── charts                          Helm chart for application
+│   └── fastapi-mvc-template
 ├── fastapi_mvc_template            Python project root
 │   ├── app                         FastAPI core implementation
 │   │   ├── config                  FastAPI configuration: routes, variables
@@ -32,7 +41,7 @@ Additionally, here are some benchmarks done by wonderful people of StackOverflow
 ├── tests
 │   ├── integration                 Integration test implementation
 │   └── unit                        Unit tests implementation
-├── .travis.yml                     Pipeline definition
+├── manifests                       Manifests for spotathome/redis-operator
 ├── CHANGELOG.md
 ├── Dockerfile
 ├── LICENSE
@@ -41,19 +50,94 @@ Additionally, here are some benchmarks done by wonderful people of StackOverflow
 ├── requirements.txt
 ├── setup.py
 ├── TAG             
-└── tox.ini                         Tox task automation definitions
+└── Vagrantfile                     Virtualized environment definiton
+```
+
+## Prerequisites
+
+If You want to go easy way and use provided virtualized environment You'll need to have installed:
+* rsync 
+* Vagrant [How to install vagrant](https://www.vagrantup.com/downloads)
+* (Optional) Enabled virtualization in BIOS
+
+Otherwise, for local complete project environment with k8s infrastructure bootstrapping You'll need:
+
+For application:
+* Python 3.7 or later installed [How to install python](https://docs.python-guide.org/starting/installation/)
+* Python package index installed. [How to install pip](https://pip.pypa.io/en/stable/installing/)
+* (Optional) Virtualenv installed if you'd like to isolate environment
+
+For infrastructure:
+* make, gcc, golang
+* minikube version 1.22.0 [How_to_install_minikube](https://minikube.sigs.k8s.io/docs/start/)
+* helm version 3.0.0 or higher [How_to_install_helm](https://helm.sh/docs/intro/install/)
+* kubectl version 1.16 up to 1.20.8 [How_to_install_kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/)
+* Container runtime interface. NOTE! dev-env script uses docker for minikube, for other CRI you'll need to modify this line in dev-env.sh `MINIKUBE_IN_STYLE=0 minikube start --driver=docker 2>/dev/null`
+
+## Quickstart
+First run `vagrant up` in project root directory and enter virtualized environment using `vagrant ssh`
+Then run following commands to bootstrap local development cluster exposing `fastapi-mvc-template` application.
+```sh
+$ cd /syncd
+$ make dev-env
+```
+*Note: this process may take a while on first run.*
+
+Once development cluster is up and running you should see summary listing application address:
+```
+Kubernetes cluster ready
+
+fastapi-mvc-template available under: http://fastapi-mvc-template.192.168.49.2.nip.io/
+
+You can delete dev-env by issuing: minikube delete
+```
+*Note: above address may be different for your installation.*
+
+*Note: provided virtualized env doesn't have port forwarding configured which means, that bootstrapped application stack in k8s won't be accessible on Host OS.*
+
+Deployed application stack in Kubernetes:
+```shell
+vagrant@ubuntu-focal:/syncd$ make dev-env
+...
+...
+...
+Kubernetes cluster ready
+FastAPI available under: http://fastapi-mvc-template.192.168.49.2.nip.io/
+You can delete dev-env by issuing: make clean
+vagrant@ubuntu-focal:/syncd$ kubectl get all -n fastapi-mvc-template
+NAME                                                     READY   STATUS    RESTARTS   AGE
+pod/fastapi-mvc-template-7f4dd8dc7f-p2kr7                1/1     Running   0          55s
+pod/rfr-redisfailover-persistent-keep-0                  1/1     Running   0          3m39s
+pod/rfr-redisfailover-persistent-keep-1                  1/1     Running   0          3m39s
+pod/rfr-redisfailover-persistent-keep-2                  1/1     Running   0          3m39s
+pod/rfs-redisfailover-persistent-keep-5d46b5bcf8-2r7th   1/1     Running   0          3m39s
+pod/rfs-redisfailover-persistent-keep-5d46b5bcf8-6kqv5   1/1     Running   0          3m39s
+pod/rfs-redisfailover-persistent-keep-5d46b5bcf8-sgtvv   1/1     Running   0          3m39s
+
+NAME                                        TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)     AGE
+service/fastapi-mvc-template                ClusterIP   10.110.42.252   <none>        8000/TCP    56s
+service/rfs-redisfailover-persistent-keep   ClusterIP   10.110.4.24     <none>        26379/TCP   3m39s
+
+NAME                                                READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/fastapi-mvc-template                1/1     1            1           55s
+deployment.apps/rfs-redisfailover-persistent-keep   3/3     3            3           3m39s
+
+NAME                                                           DESIRED   CURRENT   READY   AGE
+replicaset.apps/fastapi-mvc-template-7f4dd8dc7f                1         1         1       55s
+replicaset.apps/rfs-redisfailover-persistent-keep-5d46b5bcf8   3         3         3       3m39s
+
+NAME                                                 READY   AGE
+statefulset.apps/rfr-redisfailover-persistent-keep   3/3     3m39s
+
+NAME                                                                  AGE
+redisfailover.databases.spotahome.com/redisfailover-persistent-keep   3m39s
+vagrant@ubuntu-focal:/syncd$ curl http://fastapi-mvc-template.192.168.49.2.nip.io/api/ready
+{"status":"ok"}
 ```
 
 ## Installation
 
-Prerequisites:
-* Python 3.7 or later installed [How to install python](https://docs.python-guide.org/starting/installation/)
-* Python package index installed. [How to install pip](https://pip.pypa.io/en/stable/installing/)
-* Virtualenv
-* make
-
-### Using make
-
+To install application to virtualenv:
 ```shell
 git clone git@github.com:rszamszur/fastapi-mvc-template.git
 cd fastapi-mvc-template
@@ -61,14 +145,10 @@ cd fastapi-mvc-template
 make venv
 ```
 
-### From source
-
+To bootstrap local minikube Kubernetes cluster exposing `fastapi-mvc-template` application:
 ```shell
-git clone git@github.com:rszamszur/fastapi-mvc-template.git
 cd fastapi-mvc-template
-pip install .
-# Or if you want to have build and test dependencies as well
-pip install -r requirements.txt
+$ make dev-env
 ```
 
 ## Usage
@@ -111,7 +191,7 @@ $ fastapi serve
 To confirm it's working:
 
 ```shell
-$ curl localhost:8080/api/ready
+$ curl localhost:8000/api/ready
 {"status":"ok"}
 ```
 
