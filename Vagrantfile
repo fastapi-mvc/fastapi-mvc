@@ -44,3 +44,4 @@ Vagrant.configure("2") do |config|
   end
   config.vm.synced_folder ".", "/syncd", type: "rsync"
   config.vm.boot_timeout = 600
+end
