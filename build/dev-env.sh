@@ -106,5 +106,5 @@ done
 cat <<EOF
 Kubernetes cluster ready
 FastAPI available under: http://fastapi-mvc-template.${INGRESS_HOST}/
-You can delete dev-env by issuing: minikube delete
+You can delete dev-env by issuing: make clean
 EOF
