@@ -1,0 +1,25 @@
+{{- if .Values.ingress.enabled -}}
+{{- $fullName := include "fastapi-mvc-template.fullname" . -}}
+{{- $svcPort := .Values.service.port -}}
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: {{ $fullName }}
+  labels:
+{{ include "fastapi-mvc-template.labels" . | indent 4 }}
+  {{- with .Values.ingress.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  rules:
+    - host: {{ .Values.ingress.host.name | quote }}
+      http:
+        paths:
+        {{- range .Values.ingress.host.paths }}
+          - path: {{ . }}
+            backend:
+              serviceName: {{ $fullName }}
+              servicePort: {{ $svcPort }}
+        {{- end }}
+{{- end }}
