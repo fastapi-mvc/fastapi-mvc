@@ -17,4 +17,5 @@ class ReadyResponse(BaseModel):
             doesn't pass type validation.
 
     """
+
     status: str
