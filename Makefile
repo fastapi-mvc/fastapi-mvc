@@ -30,6 +30,14 @@ clean-image:  ## Clean fastapi-mvc-template image
 venv:  ## Install project locally to virtualenv
 	@build/venv.sh
 
+.PHONY: dev-env
+dev-env: image ## Start a local Kubernetes cluster using minikube and deploy application
+	@build/dev-env.sh
+
+.PHONY: clean
+clean: ## Remove .cache directory and cached minikube
+	minikube delete && rm -rf ~/.cache ~/.minikube
+
 .PHONY: show-version
 show-version:
 	echo -n $(TAG)
