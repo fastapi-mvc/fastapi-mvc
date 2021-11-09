@@ -5,7 +5,7 @@
 [![codecov](https://codecov.io/gh/rszamszur/fastapi-mvc-template/branch/master/graph/badge.svg?token=7ESV30TYZS)](https://codecov.io/gh/rszamszur/fastapi-mvc-template)
 
 FastAPI project core implemented using MVC architectural pattern with base utilities, tests, and pipeline to speed up creating new projects based on FastAPI. 
-Additionally, this repo includes Kubernetes Helm charts, and a script for bootstrapping local development cluster with High Availability Redis cluster deployed using [spotathome/redis-operator](https://github.com/spotahome/redis-operator).
+Additionally, this repo includes Kubernetes Helm chart, and a script for bootstrapping local development cluster with High Availability Redis cluster deployed using [spotathome/redis-operator](https://github.com/spotahome/redis-operator).
 
 As of today [FastAPI](https://fastapi.tiangolo.com/) doesn't have any project generator like other known web frameworks ex: Django, Rails, etc., which makes creating new projects based on it that much more time-consuming.
 The idea behind this template is that, one can fork this repo, rename package and then start implementing endpoints logic straightaway, rather than creating the whole project from scratch.
@@ -18,7 +18,7 @@ Additionally, here are some benchmarks done by wonderful people of StackOverflow
 
 ### Kubernetes local development cluster
 
-[Helm charts for application](https://github.com/rszamszur/fastapi-mvc-template/tree/master/charts/fastapi-mvc-template)
+[Helm chart for application](https://github.com/rszamszur/fastapi-mvc-template/tree/master/charts/fastapi-mvc-template)
 
 Application stack in Kubernetes:
 ![k8s_arch](https://github.com/rszamszur/fastapi-mvc-template/blob/master/assets/k8s_arch.png?raw=true)
@@ -241,6 +241,7 @@ if [[ -z "$2" ]]; then
 fi
 
 grep -rl "https://github.com/rszamszur/fastapi-mvc-template" | xargs sed -i "s/https:\/\/github.com\/rszamszur\/fastapi-mvc-template/${2//\//\\/}/g"
+mv charts/fastapi-mvc-template charts/$1
 
 if [[ $1 == *"-"* ]]; then
   mv fastapi_mvc_template ${1//-/_}
