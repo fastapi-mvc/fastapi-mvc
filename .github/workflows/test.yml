@@ -14,7 +14,7 @@ jobs:
           skip_after_successful_duplicate: 'true'
           concurrent_skipping: same_content
           do_not_skip: '["pull_request", "workflow_dispatch", "schedule"]'
-  buid:
+  build:
     needs: pre_job
     if: ${{ needs.pre_job.outputs.should_skip != 'true' }}
     runs-on: ubuntu-latest
