@@ -37,8 +37,6 @@ jobs:
         with:
           path: ~/.poetry
           key: poetry-${{ matrix.python-version }}-${{ hashFiles('**/pyproject.toml') }}-${{ hashFiles('**/poetry.lock') }}
-      - name: Update Path
-        run: echo "$HOME/.poetry/bin" >> $GITHUB_PATH
       - name: Install project
         run: |
           export POETRY_HOME=$HOME/.poetry
@@ -68,6 +66,7 @@ jobs:
       - name: Archive build artifacts
         uses: actions/upload-artifact@v2
         with:
+          name: ${{ env.whl_name }}
           path: dist/${{ env.whl_name }}
           retention-days: 7
   metrics:
