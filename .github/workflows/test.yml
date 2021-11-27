@@ -47,6 +47,12 @@ jobs:
         if: steps.cached-poetry.outputs.cache-hit != 'true'
       - name: Build project
         run: poetry build -f wheel
+      - name: Archive build artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{ env.pkg_name }}
+          path: dist
+          retention-days: 7
   metrics:
     needs: build
     runs-on: ubuntu-latest
