@@ -27,7 +27,7 @@ if ! command -v poetry &> /dev/null; then
 fi
 
 echo "[install] Begin installing project."
-poetry install --extras "aioredis aiohttp" --no-dev
+poetry install --extras "aioredis aiohttp" --no-interaction
 
 cat <<EOF
 Project successfully installed.
