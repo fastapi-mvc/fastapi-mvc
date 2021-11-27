@@ -60,14 +60,15 @@ jobs:
         with:
           path: ~/.poetry
           key: poetry-3.9-${{ hashFiles('**/pyproject.toml') }}-${{ hashFiles('**/poetry.lock') }}
-      - name: Config path and poetry
+      - name: Build wheel
         run: |
           $HOME/.poetry/bin/poetry config cache-dir $HOME/.poetry/store
           $HOME/.poetry/bin/poetry build -f wheel
+          echo "whl_name=fastapi_mvc_template-$(cat TAG)-py3-none-any.whl" >> $GITHUB_ENV
       - name: Archive build artifacts
         uses: actions/upload-artifact@v2
         with:
-          path: dist/*.whl
+          path: dist/${{ env.whl_name }}
           retention-days: 7
   metrics:
     needs: install
