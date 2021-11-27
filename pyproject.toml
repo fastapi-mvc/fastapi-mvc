@@ -1,0 +1,51 @@
+[tool.poetry]
+name = "fastapi-mvc-template"
+version = "0.3.0"
+description = "FastAPI MVC template"
+authors = ["Radosław Szamszur <radoslawszamszur@gmail.com>"]
+license = "MIT"
+repository = "https://github.com/rszamszur/fastapi-mvc-template"
+classifiers = [
+    'Intended Audience :: Developers',
+    'Natural Language :: English',
+    'Topic :: Software Development :: FastAPI MVC template',
+    'Programming Language :: Python :: 3',
+    'Programming Language :: Python :: 3.7',
+    'Programming Language :: Python :: 3.8',
+    'Programming Language :: Python :: 3.9',
+]
+
+[tool.poetry.dependencies]
+python = "^3.7"
+fastapi = "~0.66.0"
+uvicorn = {extras = ["standard"], version = "~0.14.0"}
+gunicorn = "~20.1.0"
+click = "~7.1.2"
+aioredis = {version = "2.0.0a1", optional = true}
+aiohttp = {version = "~3.7.0", optional = true}
+
+[tool.poetry.dev-dependencies]
+pytest = "~6.2.4"
+pytest-cov = "~2.12.0"
+pytest-asyncio = "~0.15.1"
+requests = "~2.25.1"
+aioresponses = "~0.7.2"
+mock = "~4.0.3"
+flake8 = "~3.9.2"
+flake8-docstrings = "~1.6.0"
+flake8-import-order = "~0.18.1"
+flake8-todo = "^0.7"
+
+[tool.poetry.scripts]
+fastapi = 'fastapi_mvc_template.cli.cli:cli'
+
+[tool.poetry.extras]
+aioredis = ["aioredis"]
+aiohttp = ["aiohttp"]
+
+[tool.poetry.urls]
+"Issues" = "https://github.com/rszamszur/fastapi-mvc-template/issues"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
