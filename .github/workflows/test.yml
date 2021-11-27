@@ -65,8 +65,10 @@ jobs:
         with:
           path: ~/.poetry
           key: poetry-${{ matrix.python-version }}-${{ hashFiles('**/pyproject.toml') }}-${{ hashFiles('**/poetry.lock') }}
-      - name: Update Path
-        run: echo "$HOME/.poetry/bin" >> $GITHUB_PATH
+      - name: Config path and poetry
+        run: |
+          echo "$HOME/.poetry/bin" >> $GITHUB_PATH
+          poetry config cache-dir $HOME/.poetry/store
       - name: Style guide
         run: |
           poetry run flake8 --select=E,W,I --max-line-length 80 --import-order-style pep8 --exclude .git,__pycache__,.eggs,*.egg,.pytest_cache,fastapi_mvc_template/version.py,setup.py,fastapi_mvc_template/__init__.py --tee --output-file=pep8_violations.txt --statistics --count setup.py fastapi_mvc_template
@@ -95,8 +97,10 @@ jobs:
         with:
           path: ~/.poetry
           key: poetry-${{ matrix.python-version }}-${{ hashFiles('**/pyproject.toml') }}-${{ hashFiles('**/poetry.lock') }}
-      - name: Update Path
-        run: echo "$HOME/.poetry/bin" >> $GITHUB_PATH
+      - name: Config path and poetry
+        run: |
+          echo "$HOME/.poetry/bin" >> $GITHUB_PATH
+          poetry config cache-dir $HOME/.poetry/store
       - name: Run unit tests
         run: poetry run py.test tests/unit --junit-xml=xunit-${{ matrix.python-version }}.xml
       - name: Run coverage
@@ -124,7 +128,9 @@ jobs:
         with:
           path: ~/.poetry
           key: poetry-${{ matrix.python-version }}-${{ hashFiles('**/pyproject.toml') }}-${{ hashFiles('**/poetry.lock') }}
-      - name: Update Path
-        run: echo "$HOME/.poetry/bin" >> $GITHUB_PATH
+      - name: Config path and poetry
+        run: |
+          echo "$HOME/.poetry/bin" >> $GITHUB_PATH
+          poetry config cache-dir $HOME/.poetry/store
       - name: Run integration tests
         run: poetry run py.test tests/integration --junit-xml=xunit-${{ matrix.python-version }}.xml
