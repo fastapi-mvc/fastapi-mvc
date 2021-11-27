@@ -27,7 +27,7 @@ clean-image:  ## Clean fastapi-mvc-template image
 	@build/clean-image.sh
 
 .PHONY: install
-venv:  ## Install fastapi-mvc-template with poetry
+install:  ## Install fastapi-mvc-template with poetry
 	@build/install.sh
 
 .PHONY: dev-env
