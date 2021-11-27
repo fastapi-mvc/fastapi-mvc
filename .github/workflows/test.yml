@@ -17,7 +17,7 @@ jobs:
           skip_after_successful_duplicate: 'true'
           concurrent_skipping: same_content
           do_not_skip: '["pull_request", "workflow_dispatch", "schedule"]'
-  build:
+  install:
     needs: pre_job
     if: ${{ needs.pre_job.outputs.should_skip != 'true' }}
     runs-on: ubuntu-latest
@@ -45,16 +45,32 @@ jobs:
           export POETRY_CACHE_DIR=$HOME/.poetry/store
           make install
         if: steps.cached-poetry.outputs.cache-hit != 'true'
-      - name: Build project
-        run: poetry build -f wheel
+  build:
+    needs: install
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.9
+      - name: Load Poetry cache
+        uses: actions/cache@v2
+        with:
+          path: ~/.poetry
+          key: poetry-3.9-${{ hashFiles('**/pyproject.toml') }}-${{ hashFiles('**/poetry.lock') }}
+      - name: Config path and poetry
+        run: |
+          $HOME/.poetry/bin/poetry config cache-dir $HOME/.poetry/store
+          $HOME/.poetry/bin/poetry build -f wheel
       - name: Archive build artifacts
         uses: actions/upload-artifact@v2
         with:
-          name: ${{ env.pkg_name }}
-          path: dist
+          path: dist/fastapi_mvc_template-$(cat TAG)-py3-none-any.whl
           retention-days: 7
   metrics:
-    needs: build
+    needs: install
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -86,7 +102,7 @@ jobs:
       - name: TODO
         run: poetry run flake8 --select=T --tee --output-file=todo_occurence.txt --statistics --count setup.py fastapi_mvc_template tests
   unit-tests:
-    needs: build
+    needs: install
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -117,7 +133,7 @@ jobs:
           fail_ci_if_error: true
           files: ./coverage.xml
   integration-tests:
-    needs: build
+    needs: install
     runs-on: ubuntu-latest
     strategy:
       matrix:
