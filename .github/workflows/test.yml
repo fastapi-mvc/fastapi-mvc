@@ -67,7 +67,7 @@ jobs:
       - name: Archive build artifacts
         uses: actions/upload-artifact@v2
         with:
-          path: dist/fastapi_mvc_template-$(cat TAG)-py3-none-any.whl
+          path: dist/*.whl
           retention-days: 7
   metrics:
     needs: install
