@@ -26,9 +26,9 @@ image:  ## Build fastapi-mvc-template image
 clean-image:  ## Clean fastapi-mvc-template image
 	@build/clean-image.sh
 
-.PHONY: venv
-venv:  ## Install project locally to virtualenv
-	@build/venv.sh
+.PHONY: install
+install:  ## Install fastapi-mvc-template with poetry
+	@build/install.sh
 
 .PHONY: dev-env
 dev-env: image ## Start a local Kubernetes cluster using minikube and deploy application

@@ -1,6 +1,5 @@
 # FastAPI-MVC-template
 
-![Build](https://github.com/rszamszur/fastapi-mvc-template/actions/workflows/build.yml/badge.svg)
 ![Test](https://github.com/rszamszur/fastapi-mvc-template/actions/workflows/test.yml/badge.svg)
 [![codecov](https://codecov.io/gh/rszamszur/fastapi-mvc-template/branch/master/graph/badge.svg?token=7ESV30TYZS)](https://codecov.io/gh/rszamszur/fastapi-mvc-template)
 
@@ -64,8 +63,7 @@ Otherwise, for local complete project environment with k8s infrastructure bootst
 
 For application:
 * Python 3.7 or later installed [How to install python](https://docs.python-guide.org/starting/installation/)
-* Python package index installed. [How to install pip](https://pip.pypa.io/en/stable/installing/)
-* (Optional) Virtualenv installed if you'd like to isolate environment
+* Poetry [How to install poetry](https://python-poetry.org/docs/#installation)
 
 For infrastructure:
 * make, gcc, golang
@@ -137,12 +135,22 @@ vagrant@ubuntu-focal:/syncd$ curl http://fastapi-mvc-template.192.168.49.2.nip.i
 
 ## Installation
 
-To install application to virtualenv:
+Using poetry directly:
 ```shell
-git clone git@github.com:rszamszur/fastapi-mvc-template.git
-cd fastapi-mvc-template
-# Project will be installed to virtualenv
-make venv
+poetry install --extras "aioredis aiohttp"
+```
+
+Or using make:
+```shell
+make install
+```
+
+You can customize poetry installation with [environment variables](https://python-poetry.org/docs/configuration/#using-environment-variables) 
+```shell
+export POETRY_HOME=/custom/poetry/path
+export POETRY_CACHE_DIR=/custom/poetry/path/cache
+export POETRY_VIRTUALENVS_IN_PROJECT=true
+make install
 ```
 
 To bootstrap local minikube Kubernetes cluster exposing `fastapi-mvc-template` application:
