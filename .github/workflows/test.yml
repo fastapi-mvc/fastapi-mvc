@@ -39,7 +39,9 @@ jobs:
       - name: Update Path
         run: echo "$HOME/.poetry/bin" >> $GITHUB_PATH
       - name: Install project
-        run: make install
+        run: |
+          export POETRY_HOME=$HOME/.poetry
+          make install
       - name: Build project
         run: poetry build -f wheel
   metrics:
