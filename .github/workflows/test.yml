@@ -31,18 +31,19 @@ jobs:
         uses: actions/setup-python@v2
         with:
           python-version: ${{ matrix.python-version }}
+      - name: Init Poetry cache
+        id: cached-poetry
+        uses: actions/cache@v2
+        with:
+          path: ~/.poetry
+          key: ${{ matrix.python-version }}-${{ hashFiles('**/poetry.lock') }}-${{ hashFiles('**/pyproject.toml') }}
       - name: Update Path
         run: echo "$HOME/.poetry/bin" >> $GITHUB_PATH
       - name: Install project
         run: |
           export POETRY_HOME=$HOME/.poetry
           make install
-      - name: Init Poetry cache
-        id: cached-poetry
-        uses: actions/cache@v2
-        with:
-          path: $HOME/.poetry
-          key: ${{ env.GITHUB_RUN_ID }}-${{ matrix.python-version }}-${{ hashFiles('**/poetry.lock') }}-${{ hashFiles('**/pyproject.toml') }}
+        if: steps.cached-poetry.outputs.cache-hit != 'true'
       - name: Build project
         run: poetry build -f wheel
   metrics:
@@ -61,8 +62,8 @@ jobs:
       - name: Load Poetry cache
         uses: actions/cache@v2
         with:
-          path: $HOME/.poetry
-          key: ${{ env.GITHUB_RUN_ID }}-${{ matrix.python-version }}-${{ hashFiles('**/poetry.lock') }}-${{ hashFiles('**/pyproject.toml') }}
+          path: ~/.poetry
+          key: ${{ matrix.python-version }}-${{ hashFiles('**/poetry.lock') }}-${{ hashFiles('**/pyproject.toml') }}
       - name: Update Path
         run: echo "$HOME/.poetry/bin" >> $GITHUB_PATH
       - name: Activate virtualenv
@@ -93,8 +94,8 @@ jobs:
       - name: Load Poetry cache
         uses: actions/cache@v2
         with:
-          path: $HOME/.poetry
-          key: ${{ env.GITHUB_RUN_ID }}-${{ matrix.python-version }}-${{ hashFiles('**/poetry.lock') }}-${{ hashFiles('**/pyproject.toml') }}
+          path: ~/.poetry
+          key: ${{ matrix.python-version }}-${{ hashFiles('**/poetry.lock') }}-${{ hashFiles('**/pyproject.toml') }}
       - name: Update Path
         run: echo "$HOME/.poetry/bin" >> $GITHUB_PATH
       - name: Activate virtualenv
@@ -124,8 +125,8 @@ jobs:
       - name: Load Poetry cache
         uses: actions/cache@v2
         with:
-          path: $HOME/.poetry
-          key: ${{ env.GITHUB_RUN_ID }}-${{ matrix.python-version }}-${{ hashFiles('**/poetry.lock') }}-${{ hashFiles('**/pyproject.toml') }}
+          path: ~/.poetry
+          key: ${{ matrix.python-version }}-${{ hashFiles('**/poetry.lock') }}-${{ hashFiles('**/pyproject.toml') }}
       - name: Update Path
         run: echo "$HOME/.poetry/bin" >> $GITHUB_PATH
       - name: Activate virtualenv
