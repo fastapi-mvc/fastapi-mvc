@@ -34,14 +34,12 @@ jobs:
       - name: Load Poetry cache
         uses: actions/cache@v2
         with:
-          path: /poetry
+          path: $HOME/.poetry
           key: ${{ matrix.python-version }}-${{ hashFiles('**/poetry.lock') }}
       - name: Update Path
-        run: echo "/poetry/bin" >> $GITHUB_PATH
+        run: echo "$HOME/.poetry/bin" >> $GITHUB_PATH
       - name: Install project
-        run: |
-          export POETRY_HOME=/poetry
-          make install
+        run: make install
       - name: Build project
         run: poetry build -f wheel
   metrics:
@@ -60,10 +58,10 @@ jobs:
       - name: Load Poetry cache
         uses: actions/cache@v2
         with:
-          path: /poetry
+          path: $HOME/.poetry
           key: ${{ matrix.python-version }}-${{ hashFiles('**/poetry.lock') }}
       - name: Update Path
-        run: echo "/poetry/bin" >> $GITHUB_PATH
+        run: echo "$HOME/.poetry/bin" >> $GITHUB_PATH
       - name: Activate virtualenv
         run: poetry shell
       - name: Style guide
@@ -92,10 +90,10 @@ jobs:
       - name: Load Poetry cache
         uses: actions/cache@v2
         with:
-          path: /poetry
+          path: $HOME/.poetry
           key: ${{ matrix.python-version }}-${{ hashFiles('**/poetry.lock') }}
       - name: Update Path
-        run: echo "/poetry/bin" >> $GITHUB_PATH
+        run: echo "$HOME/.poetry/bin" >> $GITHUB_PATH
       - name: Activate virtualenv
         run: poetry shell
       - name: Run unit tests
@@ -123,10 +121,10 @@ jobs:
       - name: Load Poetry cache
         uses: actions/cache@v2
         with:
-          path: /poetry
+          path: $HOME/.poetry
           key: ${{ matrix.python-version }}-${{ hashFiles('**/poetry.lock') }}
       - name: Update Path
-        run: echo "/poetry/bin" >> $GITHUB_PATH
+        run: echo "$HOME/.poetry/bin" >> $GITHUB_PATH
       - name: Activate virtualenv
         run: poetry shell
       - name: Run integration tests
