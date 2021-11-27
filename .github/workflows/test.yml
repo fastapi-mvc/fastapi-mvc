@@ -36,13 +36,13 @@ jobs:
         uses: actions/cache@v2
         with:
           path: ~/.poetry
-          key: poetry-${{ matrix.python-version }}-${{ hashFiles('**/poetry.lock') }}-${{ hashFiles('**/pyproject.toml') }}
+          key: poetry-${{ matrix.python-version }}-${{ hashFiles('**/pyproject.toml') }}-${{ hashFiles('**/poetry.lock') }}
       - name: Update Path
         run: echo "$HOME/.poetry/bin" >> $GITHUB_PATH
       - name: Install project
         run: |
           export POETRY_HOME=$HOME/.poetry
-          export POETRY_VIRTUALENVS_PATH=$HOME/.poetry/virtualenvs
+          export POETRY_CACHE_DIR=$HOME/.poetry/store
           make install
         if: steps.cached-poetry.outputs.cache-hit != 'true'
       - name: Build project
@@ -64,7 +64,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: ~/.poetry
-          key: poetry-${{ matrix.python-version }}-${{ hashFiles('**/poetry.lock') }}-${{ hashFiles('**/pyproject.toml') }}
+          key: poetry-${{ matrix.python-version }}-${{ hashFiles('**/pyproject.toml') }}-${{ hashFiles('**/poetry.lock') }}
       - name: Update Path
         run: echo "$HOME/.poetry/bin" >> $GITHUB_PATH
       - name: Style guide
@@ -94,7 +94,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: ~/.poetry
-          key: poetry-${{ matrix.python-version }}-${{ hashFiles('**/poetry.lock') }}-${{ hashFiles('**/pyproject.toml') }}
+          key: poetry-${{ matrix.python-version }}-${{ hashFiles('**/pyproject.toml') }}-${{ hashFiles('**/poetry.lock') }}
       - name: Update Path
         run: echo "$HOME/.poetry/bin" >> $GITHUB_PATH
       - name: Run unit tests
@@ -123,7 +123,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: ~/.poetry
-          key: poetry-${{ matrix.python-version }}-${{ hashFiles('**/poetry.lock') }}-${{ hashFiles('**/pyproject.toml') }}
+          key: poetry-${{ matrix.python-version }}-${{ hashFiles('**/pyproject.toml') }}-${{ hashFiles('**/poetry.lock') }}
       - name: Update Path
         run: echo "$HOME/.poetry/bin" >> $GITHUB_PATH
       - name: Run integration tests
