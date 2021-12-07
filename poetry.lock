@@ -22,7 +22,7 @@ speedups = ["aiodns", "brotli", "cchardet"]
 
 [[package]]
 name = "aioredis"
-version = "2.0.0a1"
+version = "2.0.0"
 description = "asyncio (PEP 3156) Redis support"
 category = "main"
 optional = true
@@ -677,7 +677,7 @@ aioredis = ["aioredis"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7"
-content-hash = "6ae031f2fc1540c16172dd13f8fb3f3585945a8faa0128d1a181309428f1dc04"
+content-hash = "b9f86e57fa58e460e88101469cfd9c2ab23b07c4d7023fde7ebafc1a5dd8e799"
 
 [metadata.files]
 aiohttp = [
@@ -755,8 +755,8 @@ aiohttp = [
     {file = "aiohttp-3.8.1.tar.gz", hash = "sha256:fc5471e1a54de15ef71c1bc6ebe80d4dc681ea600e68bfd1cbce40427f0b7578"},
 ]
 aioredis = [
-    {file = "aioredis-2.0.0a1-py3-none-any.whl", hash = "sha256:32d7910724282a475c91b8b34403867069a4f07bf0c5ad5fe66cd797322f9a0d"},
-    {file = "aioredis-2.0.0a1.tar.gz", hash = "sha256:5884f384b8ecb143bb73320a96e7c464fd38e117950a7d48340a35db8e35e7d2"},
+    {file = "aioredis-2.0.0-py3-none-any.whl", hash = "sha256:9921d68a3df5c5cdb0d5b49ad4fc88a4cfdd60c108325df4f0066e8410c55ffb"},
+    {file = "aioredis-2.0.0.tar.gz", hash = "sha256:3a2de4b614e6a5f8e104238924294dc4e811aefbe17ddf52c04a93cbf06e67db"},
 ]
 aioresponses = [
     {file = "aioresponses-0.7.2-py2.py3-none-any.whl", hash = "sha256:2f8ff624543066eb465b0238de68d29231e8488f41dc4b5a9dae190982cdae50"},
