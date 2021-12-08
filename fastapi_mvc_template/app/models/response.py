@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """Response models."""
-from typing import Dict,  Any
+from typing import Dict, Any
 from http import HTTPStatus
 
 from pydantic import BaseModel, root_validator
