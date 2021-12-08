@@ -9,8 +9,7 @@ from fastapi_mvc_template.app.config.application import (
     PROJECT_NAME,
     VERSION,
 )
-from fastapi_mvc_template.app.utils.redis import RedisClient
-from fastapi_mvc_template.app.utils.aiohttp_client import AiohttpClient
+from fastapi_mvc_template.app.utils import RedisClient, AiohttpClient
 
 
 log = logging.getLogger(__name__)

@@ -1,7 +1,7 @@
 import mock
 import pytest
 from aioredis import Redis
-from fastapi_mvc_template.app.utils.redis import RedisClient
+from fastapi_mvc_template.app.utils import RedisClient
 
 
 # monkey patch for allowing MagicMock to be used with await
