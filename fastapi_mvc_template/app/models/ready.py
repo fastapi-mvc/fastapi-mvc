@@ -32,7 +32,7 @@ class ReadyResponse(BaseModel):
 
         @staticmethod
         def schema_extra(schema: Dict[str, Any]) -> None:
-            """Method for more fine-grained control to post-process the schema.
+            """Post-process the generated schema.
 
             Mathod can have one or two positional arguments. The first will be
             the schema dictionary. The second, if accepted, will be the model

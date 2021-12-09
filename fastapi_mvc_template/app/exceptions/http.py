@@ -61,7 +61,7 @@ class HTTPException(Exception):
 
 
 async def http_exception_handler(request: Request, exception: HTTPException):
-    """Custom HTTPException handler to handle it globally.
+    """Handle HTTPException globally.
 
     In this application custom handler is added in asgi.py while initializing
     FastAPI application. This is needed in order to handle custom HTTException

@@ -26,8 +26,7 @@ class ErrorModel(BaseModel):
 
     @root_validator(pre=False)
     def _set_status(cls, values: dict) -> dict:
-        """This is a validator that sets the status field value based on the
-        the code value.
+        """Set the status field value based on the code attribute value.
 
         Args:
             values(dict): Stores the attributes of the ErrorModel object.
@@ -49,7 +48,7 @@ class ErrorModel(BaseModel):
 
         @staticmethod
         def schema_extra(schema: Dict[str, Any]) -> None:
-            """Method for more fine-grained control to post-process the schema.
+            """Post-process the generated schema.
 
             Mathod can have one or two positional arguments. The first will be
             the schema dictionary. The second, if accepted, will be the model
@@ -84,7 +83,7 @@ class ErrorResponse(BaseModel):
     error: ErrorModel
 
     def __init__(self, **kwargs):
-        """"""
+        """Initialize ErrorResponse class object instance."""
         # Neat trick to still use kwargs on ErrorResponse model.
         super().__init__(error=ErrorModel(**kwargs))
 
@@ -98,7 +97,7 @@ class ErrorResponse(BaseModel):
 
         @staticmethod
         def schema_extra(schema: Dict[str, Any]) -> None:
-            """Method for more fine-grained control to post-process the schema.
+            """Post-process the generated schema.
 
             Mathod can have one or two positional arguments. The first will be
             the schema dictionary. The second, if accepted, will be the model
