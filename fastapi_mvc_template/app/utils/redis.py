@@ -100,7 +100,7 @@ class RedisClient(object):
                 "Redis PING command finished with exception",
                 exc_info=(type(ex), ex, ex.__traceback__)
             )
-            raise ex
+            return False
 
     @classmethod
     async def set(cls, key, value):
