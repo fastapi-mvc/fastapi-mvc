@@ -23,6 +23,12 @@ def test_exception(status_code, content, headers):
     assert ex.content == content
     assert ex.headers == headers
 
+    ex_eval = eval(repr(ex))
+    assert ex_eval.status_code == ex.status_code
+    assert ex_eval.content == ex.content
+    assert ex_eval.headers == ex.headers
+    assert isinstance(ex_eval, HTTPException)
+
 
 @pytest.mark.asyncio
 @mock.patch("fastapi_mvc_template.app.exceptions.http.JSONResponse")
