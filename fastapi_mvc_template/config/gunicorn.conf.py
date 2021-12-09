@@ -77,7 +77,7 @@ backlog = 2048
 #
 #       True or False
 
-workers = os.getenv("FASTAPI_WORKERS", 2)
+workers = int(os.getenv("FASTAPI_WORKERS", 2))
 worker_class = "uvicorn.workers.UvicornWorker"
 worker_connections = 1000
 timeout = 30
