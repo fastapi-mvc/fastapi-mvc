@@ -3,14 +3,18 @@
 import logging
 
 from fastapi import FastAPI
-from fastapi_mvc_template.app.config.router import router
-from fastapi_mvc_template.app.config.application import (
+from fastapi_mvc_template.config import (
     DEBUG,
     PROJECT_NAME,
     VERSION,
+    USE_REDIS,
+    router,
 )
 from fastapi_mvc_template.app.utils import RedisClient, AiohttpClient
-
+from fastapi_mvc_template.app.exceptions import (
+    HTTPException,
+    http_exception_handler,
+)
 
 log = logging.getLogger(__name__)
 
@@ -18,25 +22,29 @@ log = logging.getLogger(__name__)
 async def on_startup():
     """Fastapi startup event handler.
 
-    Creates AiohttpClient session.
+    Creates RedisClient and AiohttpClient session.
 
     """
     log.debug("Execute FastAPI startup event handler.")
     # Initialize utilities for whole FastAPI application without passing object
     # instances within the logic. Feel free to disable it if you don't need it.
-    RedisClient.open_redis_client()
+    if USE_REDIS:
+        RedisClient.open_redis_client()
+
     AiohttpClient.get_aiohttp_client()
 
 
 async def on_shutdown():
     """Fastapi shutdown event handler.
 
-    Destroys AiohttpClient session.
+    Destroys RedisClient and AiohttpClient session.
 
     """
     log.debug("Execute FastAPI shutdown event handler.")
     # Gracefully close utilities.
-    await RedisClient.close_redis_client()
+    if USE_REDIS:
+        await RedisClient.close_redis_client()
+
     await AiohttpClient.close_aiohttp_client()
 
 
@@ -58,6 +66,8 @@ def get_app():
     )
     log.debug("Add application routes.")
     app.include_router(router)
+    # Register global exception handler for custom HTTPException.
+    app.add_exception_handler(HTTPException, http_exception_handler)
 
     return app
 
