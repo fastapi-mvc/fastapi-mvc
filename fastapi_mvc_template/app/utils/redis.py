@@ -5,13 +5,7 @@ import logging
 import aioredis
 import aioredis.sentinel
 from aioredis.exceptions import RedisError
-from fastapi_mvc_template.app.config.redis import (
-    REDIS_HOST,
-    REDIS_PORT,
-    REDIS_USERNAME,
-    REDIS_PASSWORD,
-    REDIS_USE_SENTINEL
-)
+from fastapi_mvc_template.config import redis as redis_conf
 
 
 class RedisClient(object):
@@ -32,7 +26,7 @@ class RedisClient(object):
     log: logging.Logger = logging.getLogger(__name__)
     base_redis_init_kwargs: dict = {
         "encoding": "utf-8",
-        "port": REDIS_PORT
+        "port": redis_conf.REDIS_PORT
     }
     connection_kwargs: dict = {}
 
@@ -48,22 +42,22 @@ class RedisClient(object):
         """
         if cls.redis_client is None:
             cls.log.debug("Initialize Redis client.")
-            if REDIS_USERNAME and REDIS_PASSWORD:
+            if redis_conf.REDIS_USERNAME and redis_conf.REDIS_PASSWORD:
                 cls.connection_kwargs = {
-                    "username": REDIS_USERNAME,
-                    "password": REDIS_PASSWORD,
+                    "username": redis_conf.REDIS_USERNAME,
+                    "password": redis_conf.REDIS_PASSWORD,
                 }
 
-            if REDIS_USE_SENTINEL:
+            if redis_conf.REDIS_USE_SENTINEL:
                 sentinel = aioredis.sentinel.Sentinel(
-                    [(REDIS_HOST, REDIS_PORT)],
+                    [(redis_conf.REDIS_HOST, redis_conf.REDIS_PORT)],
                     sentinel_kwargs=cls.connection_kwargs
                 )
                 cls.redis_client = sentinel.master_for("mymaster")
             else:
                 cls.base_redis_init_kwargs.update(cls.connection_kwargs)
                 cls.redis_client = aioredis.from_url(
-                    "redis://{0:s}".format(REDIS_HOST),
+                    "redis://{0:s}".format(redis_conf.REDIS_HOST),
                     **cls.base_redis_init_kwargs,
                 )
 

@@ -3,7 +3,7 @@
 import logging
 
 from fastapi import APIRouter
-from fastapi_mvc_template.config import USE_REDIS
+from fastapi_mvc_template.config import settings
 from fastapi_mvc_template.app.utils import RedisClient
 from fastapi_mvc_template.app.models import ReadyResponse, ErrorResponse
 from fastapi_mvc_template.app.exceptions import HTTPException
@@ -40,7 +40,7 @@ async def readiness_check():
     """
     log.info("Started GET /ready")
 
-    if USE_REDIS and not await RedisClient.ping():
+    if settings.USE_REDIS and not await RedisClient.ping():
         log.error("Could not connect to Redis")
         raise HTTPException(
             status_code=502,
