@@ -29,7 +29,7 @@ def run_wsgi(host, port, workers):
     sys.argv = [
         "--gunicorn",
         "-c",
-        os.path.join(os.path.dirname(__file__), "app/config/gunicorn.conf.py"),
+        os.path.join(os.path.dirname(__file__), "config/gunicorn.conf.py"),
         "-w",
         workers,
         "-b {host}:{port}".format(
