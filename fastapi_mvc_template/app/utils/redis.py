@@ -26,7 +26,7 @@ class RedisClient(object):
     log: logging.Logger = logging.getLogger(__name__)
     base_redis_init_kwargs: dict = {
         "encoding": "utf-8",
-        "port": redis_conf.REDIS_PORT
+        "port": redis_conf.REDIS_PORT,
     }
     connection_kwargs: dict = {}
 
@@ -51,7 +51,7 @@ class RedisClient(object):
             if redis_conf.REDIS_USE_SENTINEL:
                 sentinel = aioredis.sentinel.Sentinel(
                     [(redis_conf.REDIS_HOST, redis_conf.REDIS_PORT)],
-                    sentinel_kwargs=cls.connection_kwargs
+                    sentinel_kwargs=cls.connection_kwargs,
                 )
                 cls.redis_client = sentinel.master_for("mymaster")
             else:
@@ -92,7 +92,7 @@ class RedisClient(object):
         except RedisError as ex:
             cls.log.exception(
                 "Redis PING command finished with exception",
-                exc_info=(type(ex), ex, ex.__traceback__)
+                exc_info=(type(ex), ex, ex.__traceback__),
             )
             return False
 
@@ -125,7 +125,7 @@ class RedisClient(object):
         except RedisError as ex:
             cls.log.exception(
                 "Redis SET command finished with exception",
-                exc_info=(type(ex), ex, ex.__traceback__)
+                exc_info=(type(ex), ex, ex.__traceback__),
             )
             raise ex
 
@@ -159,7 +159,7 @@ class RedisClient(object):
         except RedisError as ex:
             cls.log.exception(
                 "Redis RPUSH command finished with exception",
-                exc_info=(type(ex), ex, ex.__traceback__)
+                exc_info=(type(ex), ex, ex.__traceback__),
             )
             raise ex
 
@@ -189,7 +189,7 @@ class RedisClient(object):
         except RedisError as ex:
             cls.log.exception(
                 "Redis EXISTS command finished with exception",
-                exc_info=(type(ex), ex, ex.__traceback__)
+                exc_info=(type(ex), ex, ex.__traceback__),
             )
             raise ex
 
@@ -213,15 +213,13 @@ class RedisClient(object):
         """
         redis_client = cls.redis_client
 
-        cls.log.debug(
-            "Preform Redis GET command, key: {}".format(key)
-        )
+        cls.log.debug("Preform Redis GET command, key: {}".format(key))
         try:
             return await redis_client.get(key)
         except RedisError as ex:
             cls.log.exception(
                 "Redis GET command finished with exception",
-                exc_info=(type(ex), ex, ex.__traceback__)
+                exc_info=(type(ex), ex, ex.__traceback__),
             )
             raise ex
 
@@ -262,6 +260,6 @@ class RedisClient(object):
         except RedisError as ex:
             cls.log.exception(
                 "Redis LRANGE command finished with exception",
-                exc_info=(type(ex), ex, ex.__traceback__)
+                exc_info=(type(ex), ex, ex.__traceback__),
             )
             raise ex

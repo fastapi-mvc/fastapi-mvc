@@ -158,12 +158,12 @@ tmp_upload_dir = None
 #       A string of "debug", "info", "warning", "error", "critical"
 #
 
-errorlog = '-'
+errorlog = "-"
 loglevel = os.getenv("FASTAPI_GUNICORN_LOG_LEVEL", "info")
-accesslog = '-'
+accesslog = "-"
 access_log_format = os.getenv(
     "FASTAPI_GUNICORN_LOG_FORMAT",
-    '%(h)s %(l)s %(u)s %(t)s "%(r)s" %(s)s %(b)s "%(f)s" "%(a)s"'
+    '%(h)s %(l)s %(u)s %(t)s "%(r)s" %(s)s %(b)s "%(f)s" "%(a)s"',
 )
 
 #
@@ -237,9 +237,7 @@ def worker_int(worker):
             "\n# Thread: %s(%d)" % (id2name.get(threadId, ""), threadId)
         )
         for filename, lineno, name, line in traceback.extract_stack(stack):
-            code.append(
-                'File: "%s", line %d, in %s' % (filename, lineno, name)
-            )
+            code.append('File: "%s", line %d, in %s' % (filename, lineno, name))
             if line:
                 code.append("  %s" % (line.strip()))
 

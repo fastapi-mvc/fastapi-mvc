@@ -16,7 +16,7 @@ from fastapi_mvc_template.cli.commands.serve import serve
 )
 def cli(**options):
     """Fastapi MVC template CLI root."""
-    if options['verbose']:
+    if options["verbose"]:
         level = logging.DEBUG
     else:
         level = logging.INFO

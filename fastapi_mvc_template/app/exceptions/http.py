@@ -48,15 +48,11 @@ class HTTPException(Exception):
         for key, value in self.__dict__.items():
             if not key.startswith("_"):
                 kwargs.append(
-                    "{key}={value}".format(
-                        key=key,
-                        value=repr(value)
-                    )
+                    "{key}={value}".format(key=key, value=repr(value))
                 )
 
         return "{name}({kwargs})".format(
-            name=self.__class__.__name__,
-            kwargs=", ".join(kwargs)
+            name=self.__class__.__name__, kwargs=", ".join(kwargs)
         )
 
 

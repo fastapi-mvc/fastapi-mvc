@@ -18,7 +18,7 @@ log = logging.getLogger(__name__)
     response_model=ReadyResponse,
     summary="Simple health check.",
     status_code=200,
-    responses={502: {"model": ErrorResponse}}
+    responses={502: {"model": ErrorResponse}},
 )
 async def readiness_check():
     """Run basic application health check.
@@ -45,9 +45,8 @@ async def readiness_check():
         raise HTTPException(
             status_code=502,
             content=ErrorResponse(
-                code=502,
-                message="Could not connect to Redis"
-            ).dict(exclude_none=True)
+                code=502, message="Could not connect to Redis"
+            ).dict(exclude_none=True),
         )
 
     return ReadyResponse(status="ok")
