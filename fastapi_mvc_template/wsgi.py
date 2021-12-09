@@ -46,5 +46,5 @@ if __name__ == "__main__":
     run_wsgi(
         host=os.getenv("FASTAPI_HOST", "127.0.0.1"),
         port=os.getenv("FASTAPI_PORT", "8000"),
-        workers=os.getenv("FASTAPI_WORKERS", 2),
+        workers=int(os.getenv("FASTAPI_WORKERS", 2)),
     )
