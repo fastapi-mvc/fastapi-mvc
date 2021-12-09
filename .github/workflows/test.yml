@@ -101,6 +101,8 @@ jobs:
         run: poetry run flake8 --select=C901 --tee --output-file=code_complexity.txt --count fastapi_mvc_template
       - name: TODO
         run: poetry run flake8 --select=T --tee --output-file=todo_occurence.txt --statistics --count fastapi_mvc_template tests
+      - name: Black
+        run: poetry run black -l 80 --check fastapi_mvc_template
   unit-tests:
     needs: install
     runs-on: ubuntu-latest
