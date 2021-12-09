@@ -11,7 +11,13 @@ from pydantic.error_wrappers import ValidationError
     False,
 ])
 def test_ready_response(value):
-    ReadyResponse(status=value)
+    ready = ReadyResponse(status=value)
+
+    schema = ready.schema()
+    assert schema["description"] == "Ready response model."
+
+    response = ready.dict()
+    assert response["status"] == str(value)
 
 
 @pytest.mark.parametrize("value", [
