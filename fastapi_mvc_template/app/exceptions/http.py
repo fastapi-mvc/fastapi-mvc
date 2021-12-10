@@ -10,7 +10,7 @@ class HTTPException(Exception):
 
     This exception combined with exception_handler method allows you to use it
     the same manner as you'd use FastAPI.HTTPException with one difference. You
-    have freedom to define returned response body, where as in
+    have freedom to define returned response body, whereas in
     FastAPI.HTTPException content is returned under "detail" JSON key.
 
     FastAPI.HTTPException source:
