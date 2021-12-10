@@ -4,13 +4,15 @@ This file documents changes to [fastapi-mvc-template](https://github.com/rszamsz
 
 ### Unreleased
 
-### Internal
-
-- [x] Add FASTAPI_DEBUG env var in Helm chart config map and deployment.
-
 ### Fixed
 
 - [x] Add missing FASTAPI_USE_REDIS env var in Helm chart config map and deployment.
+
+### Internal
+
+- [x] Add FASTAPI_DEBUG env var in Helm chart config map and deployment.
+- [x] Add K8s integration test workflow.
+- [x] Rename Test workflow to CI.
 
 ### 0.4.0
 
