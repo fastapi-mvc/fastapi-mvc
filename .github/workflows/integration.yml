@@ -1,4 +1,4 @@
-name: K8s integration
+name: K8s integration test
 
 on:
   push:
@@ -22,9 +22,7 @@ jobs:
         run: vagrant up
 
       - name: Bootstrap minukube cluster and Redis operator
-        run: |
-          vagrant ssh -c "cd /syncd"
-          vagrant ssh -c "make dev-env"
+        run: vagrant ssh -c "cd /syncd && make dev-env"
 
       - name: Test exposed fastapi_mvc_template application
         run: vagrant ssh -c "curl http://fastapi-mvc-template.${INGRESS_HOST}/api/ready"
