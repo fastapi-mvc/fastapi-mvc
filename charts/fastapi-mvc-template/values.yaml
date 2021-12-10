@@ -11,6 +11,8 @@ image:
   tag: ""
 
 configMap:
+  debug: "false"
+  useRedis: "true"
   redisHost: "rfs-redisfailover-persistent-keep"
   redisPort: "26379"
   redisUseSentinel: "true"

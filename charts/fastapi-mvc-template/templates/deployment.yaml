@@ -37,6 +37,16 @@ spec:
             - containerPort: 8000
               protocol: TCP
           env:
+            - name: FASTAPI_DEBUG
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ include "fastapi-mvc-template.fullname" . }}
+                  key: fastapi_debug
+            - name: FASTAPI_USE_REDIS
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ include "fastapi-mvc-template.fullname" . }}
+                  key: fastapi_use_redis
             - name: FASTAPI_REDIS_HOST
               valueFrom:
                 configMapKeyRef:
