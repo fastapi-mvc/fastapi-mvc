@@ -2,6 +2,16 @@
 
 This file documents changes to [fastapi-mvc-template](https://github.com/rszamszur/fastapi-mvc-template). The release numbering uses [semantic versioning](http://semver.org).
 
+### Unreleased
+
+### Internal
+
+- [x] Add FASTAPI_DEBUG env var in Helm chart config map and deployment.
+
+### Fixed
+
+- [x] Add missing FASTAPI_USE_REDIS env var in Helm chart config map and deployment.
+
 ### 0.4.0
 
 ### Features
