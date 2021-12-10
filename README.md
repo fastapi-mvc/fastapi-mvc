@@ -355,7 +355,7 @@ If you don't need it just simply remove the utility, init on start up and tests.
 This exception combined with `http_exception_handler` method allows you to use it the same manner as you'd use `FastAPI.HTTPException` with one difference. 
 You have freedom to define returned response body, whereas in `FastAPI.HTTPException` content is returned under "detail" JSON key.
 In this application custom handler is added in `asgi.py` while initializing FastAPI application. 
-This is needed in order to handle custom HTTException globally.
+This is needed in order to handle it globally.
 
 [Example usage in ready controller](https://github.com/rszamszur/fastapi-mvc-template/blob/master/fastapi_mvc_template/app/controllers/api/v1/ready.py)
 
