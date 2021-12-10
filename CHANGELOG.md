@@ -7,7 +7,7 @@ This file documents changes to [fastapi-mvc-template](https://github.com/rszamsz
 ### Features
 
 - [x] Implement model for error response rendering.
-- [x] Implement custom HTTPException, and it's handler to have freedom to define returned response body.
+- [x] Implement custom HTTPException, and its handler to have freedom to define returned response body.
 - [x] Extend application configuration from environment variables.
 - [x] Add and utilize gunicorn.conf.py file for better WSGI configuration.
 
