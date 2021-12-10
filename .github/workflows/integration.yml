@@ -1,4 +1,4 @@
-name: K8s integration test
+name: K8s integration
 
 on:
   push:
@@ -9,14 +9,11 @@ on:
       - master
 
 jobs:
-  integration:
+  test:
     runs-on: macos-10.15
 
     steps:
       - uses: actions/checkout@v2
-
-      - name: Show Vagrant version
-        run: vagrant --version
 
       - name: Run vagrant up
         run: vagrant up
@@ -25,4 +22,4 @@ jobs:
         run: vagrant ssh -c "cd /syncd && make dev-env"
 
       - name: Test exposed fastapi_mvc_template application
-        run: vagrant ssh -c "curl http://fastapi-mvc-template.${INGRESS_HOST}/api/ready"
+        run: vagrant ssh -c 'curl "http://fastapi-mvc-template.$(minikube ip).nip.io/api/ready"'
