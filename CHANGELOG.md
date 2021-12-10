@@ -2,6 +2,28 @@
 
 This file documents changes to [fastapi-mvc-template](https://github.com/rszamszur/fastapi-mvc-template). The release numbering uses [semantic versioning](http://semver.org).
 
+### 0.4.0
+
+### Features
+
+- [x] Implement model for error response rendering.
+- [x] Implement custom HTTPException, and its handler to have freedom to define returned response body.
+- [x] Extend application configuration from environment variables.
+- [x] Add and utilize gunicorn.conf.py file for better WSGI configuration.
+
+### Internal
+
+- [x] Update project dependencies:
+  * fastapi (0.66.0 -> 0.70.0)
+  * aioredis (2.0.0a1 -> 2.0.0)
+  * aiohttp (3.7.4.post0 -> 3.8.1)
+  * uvicorn (0.14.0 -> 0.15.0)
+- [x] Improve submodules import paths.
+- [x] Move fastapi_mvc_template.app.config submodule to fastapi_mvc_template.config.
+- [x] Refactor application and redis config with using pydantic.BaseSetting.
+- [x] Extend unit tests, and increase coverage to 99%.
+- [x] Change RedisClient.ping() method to return false instead of raising an RedisError exception.
+
 ## 0.3.0
 
 ### Features

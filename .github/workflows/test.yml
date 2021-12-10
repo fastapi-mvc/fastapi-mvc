@@ -93,14 +93,16 @@ jobs:
           $HOME/.poetry/bin/poetry config cache-dir $HOME/.poetry/store
       - name: Style guide
         run: |
-          poetry run flake8 --select=E,W,I --max-line-length 80 --import-order-style pep8 --exclude .git,__pycache__,.eggs,*.egg,.pytest_cache,fastapi_mvc_template/version.py,setup.py,fastapi_mvc_template/__init__.py --tee --output-file=pep8_violations.txt --statistics --count setup.py fastapi_mvc_template
-          poetry run flake8 --select=D --ignore D301 --tee --output-file=pep257_violations.txt --statistics --count setup.py fastapi_mvc_template
+          poetry run flake8 --select=E,W,I --max-line-length 80 --import-order-style pep8 --exclude .git,__pycache__,.eggs,*.egg,.pytest_cache,fastapi_mvc_template/version.py,fastapi_mvc_template/__init__.py --tee --output-file=pep8_violations.txt --statistics --count fastapi_mvc_template
+          poetry run flake8 --select=D --ignore D301 --tee --output-file=pep257_violations.txt --statistics --count fastapi_mvc_template
       - name: Code errors
-        run: poetry run flake8 --select=F --tee --output-file=flake8_code_errors.txt --statistics --count setup.py fastapi_mvc_template
+        run: poetry run flake8 --select=F --tee --output-file=flake8_code_errors.txt --statistics --count fastapi_mvc_template
       - name: Code complexity
         run: poetry run flake8 --select=C901 --tee --output-file=code_complexity.txt --count fastapi_mvc_template
       - name: TODO
-        run: poetry run flake8 --select=T --tee --output-file=todo_occurence.txt --statistics --count setup.py fastapi_mvc_template tests
+        run: poetry run flake8 --select=T --tee --output-file=todo_occurence.txt --statistics --count fastapi_mvc_template tests
+      - name: Black
+        run: poetry run black -l 80 --check fastapi_mvc_template
   unit-tests:
     needs: install
     runs-on: ubuntu-latest

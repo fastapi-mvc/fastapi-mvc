@@ -81,8 +81,7 @@ class AiohttpClient(object):
         except asyncio.TimeoutError:
             cls.log.warning("Completed 408 Request Timeout")
             return CustomResponse(
-                status=408,
-                content={"detail": "Request Timeout"}
+                status=408, content={"detail": "Request Timeout"}
             )
 
 

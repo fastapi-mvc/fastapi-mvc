@@ -28,10 +28,10 @@ def run_wsgi(host, port, workers):
     log.info("Start gunicorn WSGI with ASGI workers.")
     sys.argv = [
         "--gunicorn",
+        "-c",
+        os.path.join(os.path.dirname(__file__), "config/gunicorn.conf.py"),
         "-w",
         workers,
-        "-k",
-        "uvicorn.workers.UvicornWorker",
         "-b {host}:{port}".format(
             host=host,
             port=port,
@@ -44,7 +44,7 @@ def run_wsgi(host, port, workers):
 
 if __name__ == "__main__":
     run_wsgi(
-        host=os.getenv("APP_HOST", "localhost"),
-        port=os.getenv("APP_PORT", "5000"),
-        workers=os.getenv("WORKERS", "4"),
+        host=os.getenv("FASTAPI_HOST", "127.0.0.1"),
+        port=os.getenv("FASTAPI_PORT", "8000"),
+        workers=int(os.getenv("FASTAPI_WORKERS", 2)),
     )

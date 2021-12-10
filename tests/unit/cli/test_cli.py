@@ -6,6 +6,13 @@ def test_root(cli_runner):
     assert result.exit_code == 0
 
 
+def test_root_options(cli_runner):
+    result = cli_runner.invoke(cli, ["--verbose", "serve", "--help"])
+    assert result.exit_code == 0
+    result = cli_runner.invoke(cli, ["serve", "--help"])
+    assert result.exit_code == 0
+
+
 def test_root_help(cli_runner):
     result = cli_runner.invoke(cli, ["--help"])
     assert result.exit_code == 0
