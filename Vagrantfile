@@ -19,7 +19,7 @@ Vagrant.configure("2") do |config|
       apt-get install -y curl docker.io snapd git golang python3 python3-pip
       systemctl enable docker
       # NOTE: Fix resolving DNS in docker
-      echo '{ "dns": ["192.168.0.1"] }' > /etc/docker/daemon.json
+      echo '{ "dns": ["192.168.0.1", "8.8.8.8"] }' > /etc/docker/daemon.json
       systemctl restart docker
       usermod -aG docker vagrant
       # Install kubectl
