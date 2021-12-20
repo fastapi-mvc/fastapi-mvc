@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "fastapi-mvc-template"
-version = "0.4.0"
+version = "0.5.0"
 description = "FastAPI MVC template"
 authors = ["Radosław Szamszur <radoslawszamszur@gmail.com>"]
 license = "MIT"
