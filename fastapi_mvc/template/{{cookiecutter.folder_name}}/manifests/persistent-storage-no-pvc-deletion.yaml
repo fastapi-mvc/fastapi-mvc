@@ -1,0 +1,24 @@
+apiVersion: databases.spotahome.com/v1
+kind: RedisFailover
+metadata:
+  name: redisfailover-persistent-keep
+spec:
+  redis:
+    image: redis:6.2.4-alpine
+    imagePullPolicy: IfNotPresent
+    replicas: 3
+    storage:
+      keepAfterDeletion: true
+      persistentVolumeClaim:
+        metadata:
+          name: redisfailover-persistent-keep-data
+        spec:
+          accessModes:
+          - ReadWriteOnce
+          resources:
+            requests:
+              storage: 1Gi
+  sentinel:
+    image: redis:6.2.4-alpine
+    imagePullPolicy: IfNotPresent
+    replicas: 3
