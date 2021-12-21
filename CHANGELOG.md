@@ -10,6 +10,7 @@ This file documents changes to [fastapi-mvc](https://github.com/rszamszur/fastap
 
 ### Internal
 
+- [x] Rename project to fastapi-mvc.
 - [x] Add FASTAPI_DEBUG env var in Helm chart config map and deployment.
 - [x] Add K8s integration test workflow.
 - [x] Rename Test workflow to CI.
