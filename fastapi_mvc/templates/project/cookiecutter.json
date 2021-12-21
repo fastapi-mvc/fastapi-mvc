@@ -1,0 +1,27 @@
+{
+  "project_name": "{{ cookiecutter.project_name }}",
+  "folder_name": "{{ cookiecutter.project_name|lower|replace(' ','-') }}",
+  "repo_url": "{{ cookiecutter.repo_url }}",
+  "package_name": "{{ cookiecutter.project_name|lower|replace(' ','_')|replace('-','_') }}",
+  "author": "{{ cookiecutter.author }}",
+  "email": "{{ cookiecutter.email }}",
+  "project_description": "Generated with fastapi-mvc.",
+  "version": "0.1.0",
+  "redis": ["yes", "no"],
+  "github_actions": ["yes", "no"],
+  "aiohttp_util": ["yes", "no"],
+  "codecov": ["yes", "no"],
+  "license": [
+        "MIT license",
+        "BSD 2-Clause License",
+        "BSD 3-Clause License",
+        "ISC license",
+        "Apache Software License 2.0",
+        "GNU Lesser General Public License v3 or later (LGPLv3+)",
+        "GNU Lesser General Public License v3 (LGPLv3)",
+        "GNU Lesser General Public License v2.1 or later (LGPLv2+)",
+        "GNU Lesser General Public License v2.1 (LGPLv2)",
+        "no"
+  ],
+  "year": "{{ cookiecutter.year }}"
+}

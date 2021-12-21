@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "{{cookiecutter.folder_name}}.fullname" . }}
+  labels:
+    {{- include "{{cookiecutter.folder_name}}.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: {{ .Values.service.targetPort }}
+      protocol: TCP
+  selector:
+    {{- include "{{cookiecutter.folder_name}}.selectorLabels" . | nindent 4 }}

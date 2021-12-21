@@ -1,0 +1,34 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*,cover
+.hypothesis/
+flake8_code_errors.txt
+pep257_violations.txt
+pep8_violations.txt
+code_complexity.txt
+xunit-*.xml
+
+# PyCharm
+.idea
+
+# virtual
+venv
+.venv
+
+# vagrant
+.vagrant

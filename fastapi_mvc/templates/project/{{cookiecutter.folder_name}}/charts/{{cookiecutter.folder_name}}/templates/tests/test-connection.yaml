@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "{{ include "{{cookiecutter.folder_name}}.fullname" . }}-test-connection"
+  labels:
+    {{- include "{{cookiecutter.folder_name}}.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook": test
+spec:
+  containers:
+    - name: wget
+      image: busybox
+      command: ['wget']
+      args: ['{{ include "{{cookiecutter.folder_name}}.fullname" . }}:{{ .Values.service.port }}']
+  restartPolicy: Never
