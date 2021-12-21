@@ -1,5 +1,5 @@
 import pytest
-from fastapi_mvc_template.app.models.ready import ReadyResponse
+from fastapi_mvc.app.models.ready import ReadyResponse
 from pydantic.error_wrappers import ValidationError
 
 

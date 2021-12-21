@@ -1,14 +1,14 @@
 [tool.poetry]
-name = "fastapi-mvc-template"
+name = "fastapi-mvc"
 version = "0.5.0"
-description = "FastAPI MVC template"
+description = "fastapi-mvc"
 authors = ["Radosław Szamszur <radoslawszamszur@gmail.com>"]
 license = "MIT"
-repository = "https://github.com/rszamszur/fastapi-mvc-template"
+repository = "https://github.com/rszamszur/fastapi-mvc"
 classifiers = [
     'Intended Audience :: Developers',
     'Natural Language :: English',
-    'Topic :: Software Development :: FastAPI MVC template',
+    'Topic :: Software Development :: fastapi-mvc',
     'Programming Language :: Python :: 3',
     'Programming Language :: Python :: 3.7',
     'Programming Language :: Python :: 3.8',
@@ -38,14 +38,14 @@ flake8-todo = "^0.7"
 black = "^21.12b0"
 
 [tool.poetry.scripts]
-fastapi = 'fastapi_mvc_template.cli.cli:cli'
+fastapi = 'fastapi_mvc.cli.cli:cli'
 
 [tool.poetry.extras]
 aioredis = ["aioredis"]
 aiohttp = ["aiohttp"]
 
 [tool.poetry.urls]
-"Issues" = "https://github.com/rszamszur/fastapi-mvc-template/issues"
+"Issues" = "https://github.com/rszamszur/fastapi-mvc/issues"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

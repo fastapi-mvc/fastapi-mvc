@@ -1,6 +1,6 @@
 import pytest
 import mock
-from fastapi_mvc_template.app.exceptions import (
+from fastapi_mvc.app.exceptions import (
     HTTPException,
     http_exception_handler,
 )
@@ -31,7 +31,7 @@ def test_exception(status_code, content, headers):
 
 
 @pytest.mark.asyncio
-@mock.patch("fastapi_mvc_template.app.exceptions.http.JSONResponse")
+@mock.patch("fastapi_mvc.app.exceptions.http.JSONResponse")
 async def test_exception_handler(json_mock):
     req_mock = mock.MagicMock()
     ex = HTTPException(

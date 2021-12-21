@@ -1,7 +1,7 @@
 from http import HTTPStatus
 
 import pytest
-from fastapi_mvc_template.app.models.response import ErrorModel, ErrorResponse
+from fastapi_mvc.app.models.response import ErrorModel, ErrorResponse
 from pydantic.error_wrappers import ValidationError
 
 

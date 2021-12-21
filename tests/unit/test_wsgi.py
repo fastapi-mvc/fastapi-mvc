@@ -2,10 +2,10 @@ import sys
 import os
 
 import mock
-from fastapi_mvc_template.wsgi import run_wsgi
+from fastapi_mvc.wsgi import run_wsgi
 
 
-@mock.patch("fastapi_mvc_template.wsgi.ApplicationLoader")
+@mock.patch("fastapi_mvc.wsgi.ApplicationLoader")
 def test_run_wsgi(loader_mock):
     run_wsgi("localhost", "5555", "2")
     loader_mock.assert_called_once()
@@ -15,11 +15,11 @@ def test_run_wsgi(loader_mock):
         os.path.abspath(
             os.path.join(
                 os.path.dirname(__file__),
-                "../../fastapi_mvc_template/config/gunicorn.conf.py"
+                "../../fastapi_mvc/config/gunicorn.conf.py"
             )
         ),
         "-w",
         "2",
         "-b localhost:5555",
-        "fastapi_mvc_template.app.asgi:application"
+        "fastapi_mvc.app.asgi:application"
     ]

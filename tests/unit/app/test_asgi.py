@@ -1,13 +1,13 @@
 import mock
-from fastapi_mvc_template.config import settings, router
-from fastapi_mvc_template.app.asgi import get_app, on_startup, on_shutdown
-from fastapi_mvc_template.app.exceptions import (
+from fastapi_mvc.config import settings, router
+from fastapi_mvc.app.asgi import get_app, on_startup, on_shutdown
+from fastapi_mvc.app.exceptions import (
     HTTPException,
     http_exception_handler,
 )
 
 
-@mock.patch("fastapi_mvc_template.app.asgi.FastAPI")
+@mock.patch("fastapi_mvc.app.asgi.FastAPI")
 def test_get_app(mock_fastapi):
     mock_app = get_app()
     # check init kwargs
