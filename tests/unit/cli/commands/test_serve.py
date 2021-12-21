@@ -1,5 +1,5 @@
 import mock
-from fastapi_mvc_template.cli.commands.serve import serve
+from fastapi_mvc.cli.commands.serve import serve
 
 
 def test_serve_help(cli_runner):
@@ -7,7 +7,7 @@ def test_serve_help(cli_runner):
     assert result.exit_code == 0
 
 
-@mock.patch("fastapi_mvc_template.cli.commands.serve.run_wsgi")
+@mock.patch("fastapi_mvc.cli.commands.serve.run_wsgi")
 def test_serve_options(run_mock, cli_runner, ):
     result = cli_runner.invoke(serve, ["--host", "localhost", "-p", 5000, "-w", 2])
     assert result.exit_code == 0

@@ -50,13 +50,13 @@ done
 INGRESS_HOST="$(minikube ip).nip.io"
 
 echo "[dev-env] pushing app image"
-minikube image load "fastapi-mvc-template:${TAG}"
+minikube image load "fastapi-mvc:${TAG}"
 
-echo "[dev-env] creating fastapi-mvc-template namespace"
-kubectl create namespace fastapi-mvc-template
+echo "[dev-env] creating fastapi-mvc namespace"
+kubectl create namespace fastapi-mvc
 
 ATTEMPTS=0
-ROLLOUT_STATUS_CMD="kubectl get namespace fastapi-mvc-template -n fastapi-mvc-template"
+ROLLOUT_STATUS_CMD="kubectl get namespace fastapi-mvc -n fastapi-mvc"
 until $ROLLOUT_STATUS_CMD 2>/dev/null || [ $ATTEMPTS -eq 60 ]; do
   ATTEMPTS=$((ATTEMPTS + 1))
   sleep 10
@@ -73,31 +73,31 @@ until $ROLLOUT_STATUS_CMD 2>/dev/null || [ $ATTEMPTS -eq 60 ]; do
   sleep 10
 done
 
-kubectl create -f manifests/persistent-storage-no-pvc-deletion.yaml -n fastapi-mvc-template
+kubectl create -f manifests/persistent-storage-no-pvc-deletion.yaml -n fastapi-mvc
 
 ATTEMPTS=0
-ROLLOUT_STATUS_CMD="kubectl rollout status deployment.apps/rfs-redisfailover-persistent-keep -n fastapi-mvc-template"
+ROLLOUT_STATUS_CMD="kubectl rollout status deployment.apps/rfs-redisfailover-persistent-keep -n fastapi-mvc"
 until $ROLLOUT_STATUS_CMD || [ $ATTEMPTS -eq 60 ]; do
   ATTEMPTS=$((ATTEMPTS + 1))
   sleep 10
 done
 
 echo "[dev-env] Checking redis-operator statefulset replicas status to be ready"
-STATEFULSET_REPLICAS=$(kubectl get statefulset rfr-redisfailover-persistent-keep -o jsonpath='{.spec.replicas}' -n fastapi-mvc-template)
+STATEFULSET_REPLICAS=$(kubectl get statefulset rfr-redisfailover-persistent-keep -o jsonpath='{.spec.replicas}' -n fastapi-mvc)
 ATTEMPTS=0
-until [[ ${STATEFULSET_REPLICAS} -eq $(kubectl get statefulset rfr-redisfailover-persistent-keep -o jsonpath='{.status.readyReplicas}' -n fastapi-mvc-template) ]] || [ $ATTEMPTS -eq 60 ]; do
+until [[ ${STATEFULSET_REPLICAS} -eq $(kubectl get statefulset rfr-redisfailover-persistent-keep -o jsonpath='{.status.readyReplicas}' -n fastapi-mvc) ]] || [ $ATTEMPTS -eq 60 ]; do
   ATTEMPTS=$((ATTEMPTS + 1))
   sleep 10
 done
 
-echo "[dev-env] installing fastapi-mvc-template charts"
+echo "[dev-env] installing fastapi-mvc charts"
 helm upgrade --install \
-    fastapi-mvc-template charts/fastapi-mvc-template \
-    --namespace fastapi-mvc-template \
-    --set ingress.host.name="fastapi-mvc-template.${INGRESS_HOST}"
+    fastapi-mvc charts/fastapi-mvc \
+    --namespace fastapi-mvc \
+    --set ingress.host.name="fastapi-mvc.${INGRESS_HOST}"
 
 ATTEMPTS=0
-ROLLOUT_STATUS_CMD="kubectl rollout status deployment/fastapi-mvc-template -n fastapi-mvc-template"
+ROLLOUT_STATUS_CMD="kubectl rollout status deployment/fastapi-mvc -n fastapi-mvc"
 until $ROLLOUT_STATUS_CMD || [ $ATTEMPTS -eq 60 ]; do
   ATTEMPTS=$((ATTEMPTS + 1))
   sleep 10
@@ -105,6 +105,6 @@ done
 
 cat <<EOF
 Kubernetes cluster ready
-FastAPI available under: http://fastapi-mvc-template.${INGRESS_HOST}/
+FastAPI available under: http://fastapi-mvc.${INGRESS_HOST}/
 You can delete dev-env by issuing: make clean
 EOF

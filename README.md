@@ -1,13 +1,13 @@
 # FastAPI-MVC-template
 
 
-[![CI](https://github.com/rszamszur/fastapi-mvc-template/actions/workflows/main.yml/badge.svg?branch=master)](https://github.com/rszamszur/fastapi-mvc-template/actions/workflows/main.yml)
-[![codecov](https://codecov.io/gh/rszamszur/fastapi-mvc-template/branch/master/graph/badge.svg?token=7ESV30TYZS)](https://codecov.io/gh/rszamszur/fastapi-mvc-template)
-[![K8s integration](https://github.com/rszamszur/fastapi-mvc-template/actions/workflows/integration.yml/badge.svg)](https://github.com/rszamszur/fastapi-mvc-template/actions/workflows/integration.yml)
+[![CI](https://github.com/rszamszur/fastapi-mvc/actions/workflows/main.yml/badge.svg?branch=master)](https://github.com/rszamszur/fastapi-mvc/actions/workflows/main.yml)
+[![codecov](https://codecov.io/gh/rszamszur/fastapi-mvc/branch/master/graph/badge.svg?token=7ESV30TYZS)](https://codecov.io/gh/rszamszur/fastapi-mvc)
+[![K8s integration](https://github.com/rszamszur/fastapi-mvc/actions/workflows/integration.yml/badge.svg)](https://github.com/rszamszur/fastapi-mvc/actions/workflows/integration.yml)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 ![GitHub](https://img.shields.io/badge/fastapi-v.0.70.0-blue)
 ![GitHub](https://img.shields.io/badge/python-3.7%20%7C%203.8%20%7C%203.9-blue)
-![GitHub](https://img.shields.io/github/license/rszamszur/fastapi-mvc-template?color=blue)
+![GitHub](https://img.shields.io/github/license/rszamszur/fastapi-mvc?color=blue)
 
 ---
 
@@ -25,18 +25,18 @@ Additionally, here are some benchmarks done by wonderful people of StackOverflow
 
 ### Kubernetes local development cluster
 
-[Helm chart for application](https://github.com/rszamszur/fastapi-mvc-template/tree/master/charts/fastapi-mvc-template)
+[Helm chart for application](https://github.com/rszamszur/fastapi-mvc/tree/master/charts/fastapi-mvc)
 
 Application stack in Kubernetes:
-![k8s_arch](https://github.com/rszamszur/fastapi-mvc-template/blob/master/assets/k8s_arch.png?raw=true)
+![k8s_arch](https://github.com/rszamszur/fastapi-mvc/blob/master/assets/k8s_arch.png?raw=true)
 
 ### Project structure
 
 ```
 ├── build                           Makefile build scripts
 ├── charts                          Helm chart for application
-│   └── fastapi-mvc-template
-├── fastapi_mvc_template            Python project root
+│   └── fastapi-mvc
+├── fastapi_mvc            Python project root
 │   ├── app                         FastAPI core implementation
 │   │   ├── controllers             FastAPI controllers
 │   │   ├── models                  FastAPI models
@@ -84,7 +84,7 @@ For infrastructure:
 
 ## Quickstart
 First run `vagrant up` in project root directory and enter virtualized environment using `vagrant ssh`
-Then run following commands to bootstrap local development cluster exposing `fastapi-mvc-template` application.
+Then run following commands to bootstrap local development cluster exposing `fastapi-mvc` application.
 ```sh
 $ cd /syncd
 $ make dev-env
@@ -95,7 +95,7 @@ Once development cluster is up and running you should see summary listing applic
 ```
 Kubernetes cluster ready
 
-fastapi-mvc-template available under: http://fastapi-mvc-template.192.168.49.2.nip.io/
+fastapi-mvc available under: http://fastapi-mvc.192.168.49.2.nip.io/
 
 You can delete dev-env by issuing: minikube delete
 ```
@@ -110,11 +110,11 @@ vagrant@ubuntu-focal:/syncd$ make dev-env
 ...
 ...
 Kubernetes cluster ready
-FastAPI available under: http://fastapi-mvc-template.192.168.49.2.nip.io/
+FastAPI available under: http://fastapi-mvc.192.168.49.2.nip.io/
 You can delete dev-env by issuing: make clean
-vagrant@ubuntu-focal:/syncd$ kubectl get all -n fastapi-mvc-template
+vagrant@ubuntu-focal:/syncd$ kubectl get all -n fastapi-mvc
 NAME                                                     READY   STATUS    RESTARTS   AGE
-pod/fastapi-mvc-template-7f4dd8dc7f-p2kr7                1/1     Running   0          55s
+pod/fastapi-mvc-7f4dd8dc7f-p2kr7                1/1     Running   0          55s
 pod/rfr-redisfailover-persistent-keep-0                  1/1     Running   0          3m39s
 pod/rfr-redisfailover-persistent-keep-1                  1/1     Running   0          3m39s
 pod/rfr-redisfailover-persistent-keep-2                  1/1     Running   0          3m39s
@@ -123,15 +123,15 @@ pod/rfs-redisfailover-persistent-keep-5d46b5bcf8-6kqv5   1/1     Running   0    
 pod/rfs-redisfailover-persistent-keep-5d46b5bcf8-sgtvv   1/1     Running   0          3m39s
 
 NAME                                        TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)     AGE
-service/fastapi-mvc-template                ClusterIP   10.110.42.252   <none>        8000/TCP    56s
+service/fastapi-mvc                ClusterIP   10.110.42.252   <none>        8000/TCP    56s
 service/rfs-redisfailover-persistent-keep   ClusterIP   10.110.4.24     <none>        26379/TCP   3m39s
 
 NAME                                                READY   UP-TO-DATE   AVAILABLE   AGE
-deployment.apps/fastapi-mvc-template                1/1     1            1           55s
+deployment.apps/fastapi-mvc                1/1     1            1           55s
 deployment.apps/rfs-redisfailover-persistent-keep   3/3     3            3           3m39s
 
 NAME                                                           DESIRED   CURRENT   READY   AGE
-replicaset.apps/fastapi-mvc-template-7f4dd8dc7f                1         1         1       55s
+replicaset.apps/fastapi-mvc-7f4dd8dc7f                1         1         1       55s
 replicaset.apps/rfs-redisfailover-persistent-keep-5d46b5bcf8   3         3         3       3m39s
 
 NAME                                                 READY   AGE
@@ -139,7 +139,7 @@ statefulset.apps/rfr-redisfailover-persistent-keep   3/3     3m39s
 
 NAME                                                                  AGE
 redisfailover.databases.spotahome.com/redisfailover-persistent-keep   3m39s
-vagrant@ubuntu-focal:/syncd$ curl http://fastapi-mvc-template.192.168.49.2.nip.io/api/ready
+vagrant@ubuntu-focal:/syncd$ curl http://fastapi-mvc.192.168.49.2.nip.io/api/ready
 {"status":"ok"}
 ```
 
@@ -163,9 +163,9 @@ export POETRY_VIRTUALENVS_IN_PROJECT=true
 make install
 ```
 
-To bootstrap local minikube Kubernetes cluster exposing `fastapi-mvc-template` application:
+To bootstrap local minikube Kubernetes cluster exposing `fastapi-mvc` application:
 ```shell
-cd fastapi-mvc-template
+cd fastapi-mvc
 $ make dev-env
 ```
 
@@ -177,18 +177,18 @@ This package exposes simple CLI for easier interaction:
 $ fastapi --help
 Usage: fastapi [OPTIONS] COMMAND [ARGS]...
 
-  FastAPI MVC template CLI root.
+  fastapi-mvc CLI root.
 
 Options:
   -v, --verbose  Enable verbose logging.
   --help         Show this message and exit.
 
 Commands:
-  serve  FastAPI MVC template CLI serve command.
+  serve  fastapi-mvc CLI serve command.
 $ fastapi serve --help
 Usage: fastapi serve [OPTIONS]
 
-  FastAPI MVC template CLI serve command.
+  fastapi-mvc CLI serve command.
 
 Options:
   --host TEXT                  Host to bind.  [default: localhost]
@@ -220,11 +220,11 @@ This repository provides Dockerfile for virtualized environment.
 *NOTE: Replace podman with docker if it's yours containerization engine.*
 ```shell
 $ make image
-$ podman run -dit --name fastapi-mvc-template -p 8000:8000 fastapi-mvc-template:$(cat TAG)
+$ podman run -dit --name fastapi-mvc -p 8000:8000 fastapi-mvc:$(cat TAG)
 f41e5fa7ffd512aea8f1aad1c12157bf1e66f961aeb707f51993e9ac343f7a4b
 $ podman ps
 CONTAINER ID  IMAGE                                 COMMAND               CREATED        STATUS            PORTS                   NAMES
-f41e5fa7ffd5  localhost/fastapi-mvc-template:0.1.0  /usr/bin/fastapi ...  2 seconds ago  Up 3 seconds ago  0.0.0.0:8000->8000/tcp  fastapi-mvc-template
+f41e5fa7ffd5  localhost/fastapi-mvc:0.1.0  /usr/bin/fastapi ...  2 seconds ago  Up 3 seconds ago  0.0.0.0:8000->8000/tcp  fastapi-mvc
 $ curl localhost:8000/api/ready
 {"status":"ok"}
 ```
@@ -241,7 +241,7 @@ Priority of overriding configuration:
 2. environment variables
 3. gunicorn.conf.py
 
-All application configuration is available in `fastapi_mvc_template.config` submodule.
+All application configuration is available in `fastapi_mvc.config` submodule.
 
 ### Environment variables
 
@@ -253,7 +253,7 @@ All application configuration is available in `fastapi_mvc_template.config` subm
 | FASTAPI_PORT         | `"8000"`                 | FastAPI port to bind.                                          |
 | FASTAPI_WORKERS      | `"2"`                    | Number of gunicorn workers (uvicorn.workers.UvicornWorker)     |
 | FASTAPI_DEBUG        | `"True"`                 | FastAPI logging level. You should disable this for production. |
-| FASTAPI_PROJECT_NAME | `"fastapi_mvc_template"` | FastAPI project name.                                          |
+| FASTAPI_PROJECT_NAME | `"fastapi_mvc"` | FastAPI project name.                                          |
 | FASTAPI_VERSION      | `"0.4.0"`                | Application version.                                           |
 | FASTAPI_DOCS_URL     | `"/"`                    | Path where swagger ui will be served at.                       |
 | FASTAPI_USE_REDIS    | `"False"`                | Whether or not to use Redis.                                   |
@@ -273,16 +273,16 @@ All application configuration is available in `fastapi_mvc_template.config` subm
 
 ### gunicorn.conf.py
 
-1. [Source](https://github.com/rszamszur/fastapi-mvc-template/blob/master/fastapi_mvc_template/config/gunicorn.conf.py)
+1. [Source](https://github.com/rszamszur/fastapi-mvc/blob/master/fastapi_mvc/config/gunicorn.conf.py)
 2. [Gunicorn configuration file documentation](https://docs.gunicorn.org/en/latest/settings.html)
 
 ### Routes definition
 
-Endpoints are defined in `fastapi_mvc_template.config.router`. Just simply import your controller and include it to FastAPI router:
+Endpoints are defined in `fastapi_mvc.config.router`. Just simply import your controller and include it to FastAPI router:
 
 ```python
 from fastapi import APIRouter
-from fastapi_mvc_template.app.controllers.api.v1 import ready
+from fastapi_mvc.app.controllers.api.v1 import ready
 
 router = APIRouter(
     prefix="/api"
@@ -337,12 +337,12 @@ and are available for whole application scope without passing object instances. 
 
 Example:
 ```python
-from fastapi_mvc_template.app.utils import RedisClient
+from fastapi_mvc.app.utils import RedisClient
 
 response = RedisClient.get("Key")
 ```
 ```python
-from fastapi_mvc_template.app.utils import AiohttpClient
+from fastapi_mvc.app.utils import AiohttpClient
 
 response = AiohttpClient.get("http://foo.bar")
 ```
@@ -351,14 +351,14 @@ If you don't need it just simply remove the utility, init on start up and tests.
 
 ### Exceptions
 
-#### [HTTPException and handler](https://github.com/rszamszur/fastapi-mvc-template/blob/master/fastapi_mvc_template/app/exceptions/http.py)
+#### [HTTPException and handler](https://github.com/rszamszur/fastapi-mvc/blob/master/fastapi_mvc/app/exceptions/http.py)
 
 This exception combined with `http_exception_handler` method allows you to use it the same manner as you'd use `FastAPI.HTTPException` with one difference. 
 You have freedom to define returned response body, whereas in `FastAPI.HTTPException` content is returned under "detail" JSON key.
 In this application custom handler is added in `asgi.py` while initializing FastAPI application. 
 This is needed in order to handle it globally.
 
-[Example usage in ready controller](https://github.com/rszamszur/fastapi-mvc-template/blob/master/fastapi_mvc_template/app/controllers/api/v1/ready.py)
+[Example usage in ready controller](https://github.com/rszamszur/fastapi-mvc/blob/master/fastapi_mvc/app/controllers/api/v1/ready.py)
 
 ### Web Routes
 All routes documentation is available on:
@@ -394,20 +394,20 @@ if [[ -z "$2" ]]; then
   exit 1
 fi
 
-grep -rl "https://github.com/rszamszur/fastapi-mvc-template" | xargs sed -i "s/https:\/\/github.com\/rszamszur\/fastapi-mvc-template/${2//\//\\/}/g"
-mv charts/fastapi-mvc-template charts/$1
+grep -rl "https://github.com/rszamszur/fastapi-mvc" | xargs sed -i "s/https:\/\/github.com\/rszamszur\/fastapi-mvc/${2//\//\\/}/g"
+mv charts/fastapi-mvc charts/$1
 
 if [[ $1 == *"-"* ]]; then
-  mv fastapi_mvc_template ${1//-/_}
-  grep -rl --exclude-dir=.git fastapi_mvc_template | xargs sed -i "s/fastapi_mvc_template/${1//-/_}/g"
+  mv fastapi_mvc ${1//-/_}
+  grep -rl --exclude-dir=.git fastapi_mvc | xargs sed -i "s/fastapi_mvc/${1//-/_}/g"
 else
-  mv fastapi_mvc_template $1
-  grep -rl --exclude-dir=.git fastapi_mvc_template | xargs sed -i "s/fastapi_mvc_template/$1/g"
+  mv fastapi_mvc $1
+  grep -rl --exclude-dir=.git fastapi_mvc | xargs sed -i "s/fastapi_mvc/$1/g"
 fi
 
-grep -rl --exclude-dir=.git fastapi-mvc-template | xargs sed -i "s/fastapi-mvc-template/$1/g"
-grep -rl --exclude-dir=.git 'FastAPI MVC template' | xargs sed -i "s/FastAPI MVC template/$1/g"
-grep -rl --exclude-dir=.git 'Fastapi MVC template' | xargs sed -i "s/FastAPI MVC template/$1/g"
+grep -rl --exclude-dir=.git fastapi-mvc | xargs sed -i "s/fastapi-mvc/$1/g"
+grep -rl --exclude-dir=.git 'fastapi-mvc' | xargs sed -i "s/fastapi-mvc/$1/g"
+grep -rl --exclude-dir=.git 'Fastapi MVC template' | xargs sed -i "s/fastapi-mvc/$1/g"
 ```
 *NOTE: Afterwards you may still want to edit some docstrings or descriptions.*
 
@@ -417,4 +417,4 @@ Questions, comments or improvements? Please create an issue on Github. I do my b
 
 ## License
 
-[MIT](https://github.com/rszamszur/fastapi-mvc-template/blob/master/LICENSE)
+[MIT](https://github.com/rszamszur/fastapi-mvc/blob/master/LICENSE)

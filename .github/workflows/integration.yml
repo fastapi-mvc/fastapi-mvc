@@ -37,5 +37,5 @@ jobs:
       - name: Bootstrap minukube cluster and Redis operator
         run: vagrant ssh -c "cd /syncd && make dev-env"
 
-      - name: Test exposed fastapi_mvc_template application
-        run: vagrant ssh -c 'curl "http://fastapi-mvc-template.$(minikube ip).nip.io/api/ready"'
+      - name: Test exposed fastapi_mvc application
+        run: vagrant ssh -c 'curl "http://fastapi-mvc.$(minikube ip).nip.io/api/ready"'

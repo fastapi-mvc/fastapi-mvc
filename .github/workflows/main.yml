@@ -62,7 +62,7 @@ jobs:
         run: |
           $HOME/.poetry/bin/poetry config cache-dir $HOME/.poetry/store
           $HOME/.poetry/bin/poetry build -f wheel
-          echo "whl_name=fastapi_mvc_template-$(cat TAG)-py3-none-any.whl" >> $GITHUB_ENV
+          echo "whl_name=fastapi_mvc-$(cat TAG)-py3-none-any.whl" >> $GITHUB_ENV
       - name: Archive build artifacts
         uses: actions/upload-artifact@v2
         with:
@@ -93,16 +93,16 @@ jobs:
           $HOME/.poetry/bin/poetry config cache-dir $HOME/.poetry/store
       - name: Style guide
         run: |
-          poetry run flake8 --select=E,W,I --max-line-length 80 --import-order-style pep8 --exclude .git,__pycache__,.eggs,*.egg,.pytest_cache,fastapi_mvc_template/version.py,fastapi_mvc_template/__init__.py --tee --output-file=pep8_violations.txt --statistics --count fastapi_mvc_template
-          poetry run flake8 --select=D --ignore D301 --tee --output-file=pep257_violations.txt --statistics --count fastapi_mvc_template
+          poetry run flake8 --select=E,W,I --max-line-length 80 --import-order-style pep8 --exclude .git,__pycache__,.eggs,*.egg,.pytest_cache,fastapi_mvc/version.py,fastapi_mvc/__init__.py --tee --output-file=pep8_violations.txt --statistics --count fastapi_mvc
+          poetry run flake8 --select=D --ignore D301 --tee --output-file=pep257_violations.txt --statistics --count fastapi_mvc
       - name: Code errors
-        run: poetry run flake8 --select=F --tee --output-file=flake8_code_errors.txt --statistics --count fastapi_mvc_template
+        run: poetry run flake8 --select=F --tee --output-file=flake8_code_errors.txt --statistics --count fastapi_mvc
       - name: Code complexity
-        run: poetry run flake8 --select=C901 --tee --output-file=code_complexity.txt --count fastapi_mvc_template
+        run: poetry run flake8 --select=C901 --tee --output-file=code_complexity.txt --count fastapi_mvc
       - name: TODO
-        run: poetry run flake8 --select=T --tee --output-file=todo_occurence.txt --statistics --count fastapi_mvc_template tests
+        run: poetry run flake8 --select=T --tee --output-file=todo_occurence.txt --statistics --count fastapi_mvc tests
       - name: Black
-        run: poetry run black -l 80 --check fastapi_mvc_template
+        run: poetry run black -l 80 --check fastapi_mvc
   unit-tests:
     needs: install
     runs-on: ubuntu-latest
@@ -128,7 +128,7 @@ jobs:
       - name: Run unit tests
         run: poetry run py.test tests/unit --junit-xml=xunit-${{ matrix.python-version }}.xml
       - name: Run coverage
-        run: poetry run pytest --cov=fastapi_mvc_template --cov-fail-under=70 --cov-report=xml --cov-report=term-missing tests
+        run: poetry run pytest --cov=fastapi_mvc --cov-fail-under=70 --cov-report=xml --cov-report=term-missing tests
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v2
         with:
