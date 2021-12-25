@@ -1,13 +1,13 @@
 import mock
-from fastapi_mvc.config import settings, router
-from fastapi_mvc.app.asgi import get_app, on_startup, on_shutdown
-from fastapi_mvc.app.exceptions import (
+from {{cookiecutter.package_name}}.config import settings, router
+from {{cookiecutter.package_name}}.app.asgi import get_app, on_startup, on_shutdown
+from {{cookiecutter.package_name}}.app.exceptions import (
     HTTPException,
     http_exception_handler,
 )
 
 
-@mock.patch("fastapi_mvc.app.asgi.FastAPI")
+@mock.patch("{{cookiecutter.package_name}}.app.asgi.FastAPI")
 def test_get_app(mock_fastapi):
     mock_app = get_app()
     # check init kwargs

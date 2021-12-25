@@ -1,4 +1,4 @@
-from fastapi_mvc.config import settings
+from {{cookiecutter.package_name}}.config import settings
 
 
 def test_ready(app):

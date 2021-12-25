@@ -1,7 +1,7 @@
 from http import HTTPStatus
 
 import pytest
-from fastapi_mvc.app.models.response import ErrorModel, ErrorResponse
+from {{cookiecutter.package_name}}.app.models.response import ErrorModel, ErrorResponse
 from pydantic.error_wrappers import ValidationError
 
 

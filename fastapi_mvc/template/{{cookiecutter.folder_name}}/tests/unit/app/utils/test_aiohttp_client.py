@@ -1,7 +1,7 @@
 import pytest
 import aiohttp
 from aioresponses import aioresponses
-from fastapi_mvc.app.utils import AiohttpClient
+from {{cookiecutter.package_name}}.app.utils import AiohttpClient
 
 
 @pytest.mark.asyncio

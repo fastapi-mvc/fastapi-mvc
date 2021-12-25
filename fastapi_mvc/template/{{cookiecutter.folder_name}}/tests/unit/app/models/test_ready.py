@@ -1,5 +1,5 @@
 import pytest
-from fastapi_mvc.app.models.ready import ReadyResponse
+from {{cookiecutter.package_name}}.app.models.ready import ReadyResponse
 from pydantic.error_wrappers import ValidationError
 
 

@@ -1,7 +1,7 @@
 import pytest
 from fastapi.testclient import TestClient
-from fastapi_mvc.app.asgi import get_app
-from fastapi_mvc.config import settings
+from {{cookiecutter.package_name}}.app.asgi import get_app
+from {{cookiecutter.package_name}}.config import settings
 
 
 @pytest.fixture

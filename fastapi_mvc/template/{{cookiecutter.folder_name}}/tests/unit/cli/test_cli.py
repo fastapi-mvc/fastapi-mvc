@@ -1,4 +1,4 @@
-from fastapi_mvc.cli.cli import cli
+from {{cookiecutter.package_name}}.cli.cli import cli
 
 
 def test_root(cli_runner):
