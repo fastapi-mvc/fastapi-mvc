@@ -28,6 +28,7 @@ xunit-*.xml
 
 # virtual
 venv
+.venv
 
 # vagrant
 .vagrant
