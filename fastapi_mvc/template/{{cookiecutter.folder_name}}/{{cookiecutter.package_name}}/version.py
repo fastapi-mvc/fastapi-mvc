@@ -1,3 +1,3 @@
 # -*- coding: utf-8 -*-
-"""fastapi-mvc version."""
+"""{{ cookiecutter.project_name }} version."""
 __version__ = "{{ cookiecutter.version }}"

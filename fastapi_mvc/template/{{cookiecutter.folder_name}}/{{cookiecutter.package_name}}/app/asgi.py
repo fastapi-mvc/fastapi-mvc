@@ -4,7 +4,13 @@ import logging
 
 from fastapi import FastAPI
 from {{cookiecutter.package_name}}.config import router, settings
+{%- if cookiecutter.redis == "yes" and cookiecutter.aiohttp == "yes" %}
 from {{cookiecutter.package_name}}.app.utils import RedisClient, AiohttpClient
+{%- elif cookiecutter.redis == "yes" %}
+from {{cookiecutter.package_name}}.app.utils import RedisClient
+{%- elif cookiecutter.aiohttp == "yes" %}
+from {{cookiecutter.package_name}}.app.utils import AiohttpClient
+{%- endif %}
 from {{cookiecutter.package_name}}.app.exceptions import (
     HTTPException,
     http_exception_handler,
@@ -21,11 +27,20 @@ async def on_startup():
     """
     log.debug("Execute FastAPI startup event handler.")
     # Initialize utilities for whole FastAPI application without passing object
-    # instances within the logic. Feel free to disable it if you don't need it.
+    # instances within the logic.
+    {%- if cookiecutter.redis == "yes" and cookiecutter.aiohttp == "yes" %}
     if settings.USE_REDIS:
         await RedisClient.open_redis_client()
 
     AiohttpClient.get_aiohttp_client()
+    {%- elif cookiecutter.redis == "yes" %}
+    if settings.USE_REDIS:
+        await RedisClient.open_redis_client()
+    {%- elif cookiecutter.aiohttp == "yes" %}
+    AiohttpClient.get_aiohttp_client()
+    {%- else %}
+    pass
+    {%- endif %}
 
 
 async def on_shutdown():
@@ -36,10 +51,19 @@ async def on_shutdown():
     """
     log.debug("Execute FastAPI shutdown event handler.")
     # Gracefully close utilities.
+    {%- if cookiecutter.redis == "yes" and cookiecutter.aiohttp == "yes" %}
     if settings.USE_REDIS:
         await RedisClient.close_redis_client()
 
     await AiohttpClient.close_aiohttp_client()
+    {%- elif cookiecutter.redis == "yes" %}
+    if settings.USE_REDIS:
+        await RedisClient.close_redis_client()
+    {%- elif cookiecutter.aiohttp == "yes" %}
+    await AiohttpClient.close_aiohttp_client()
+    {%- else %}
+    pass
+    {%- endif %}
 
 
 def get_app():

@@ -15,6 +15,7 @@ def test_ready():
         assert response.json() == {"status": "ok"}
 
 
+{% if cookiecutter.redis == "yes" %}
 def test_ready_invalid_with_redis():
     settings.USE_REDIS = True
 
@@ -28,6 +29,7 @@ def test_ready_invalid_with_redis():
                 "status": "BAD_GATEWAY"
             }
         }
+{% endif %}
 
 
 def test_ready_invalid():

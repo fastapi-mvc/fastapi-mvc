@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""fastapi-mvc."""
+"""{{cookiecutter.project_description}}"""
 from .ready import ReadyResponse
 from .response import ErrorResponse
 

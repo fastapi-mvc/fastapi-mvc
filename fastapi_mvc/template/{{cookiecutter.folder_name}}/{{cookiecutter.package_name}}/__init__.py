@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""fastapi-mvc."""
+"""{{cookiecutter.project_description}}"""
 import logging
 
 from .version import __version__  # noqa: F401

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""fastapi-mvc."""
+"""{{cookiecutter.project_description}}"""
 from .http import HTTPException, http_exception_handler
 
 

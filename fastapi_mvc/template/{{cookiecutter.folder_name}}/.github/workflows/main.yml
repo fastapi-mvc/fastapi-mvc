@@ -1,4 +1,4 @@
-name: CI
+{% raw %}name: CI
 
 on: [push, pull_request]
 
@@ -58,11 +58,11 @@ jobs:
         with:
           path: ~/.poetry
           key: poetry-3.9-${{ hashFiles('**/pyproject.toml') }}-${{ hashFiles('**/poetry.lock') }}
-      - name: Build wheel
+      - name: Build wheel{% endraw %}
         run: |
           $HOME/.poetry/bin/poetry config cache-dir $HOME/.poetry/store
           $HOME/.poetry/bin/poetry build -f wheel
-          echo "whl_name={{ cookiecutter.package_name }}-$(cat TAG)-py3-none-any.whl" >> $GITHUB_ENV
+          echo "whl_name={{cookiecutter.folder_name}}-$(cat TAG)-py3-none-any.whl" >> $GITHUB_ENV{% raw %}
       - name: Archive build artifacts
         uses: actions/upload-artifact@v2
         with:
@@ -91,18 +91,18 @@ jobs:
         run: |
           echo "$HOME/.poetry/bin" >> $GITHUB_PATH
           $HOME/.poetry/bin/poetry config cache-dir $HOME/.poetry/store
-      - name: Style guide
+      - name: Style guide{% endraw %}
         run: |
-          poetry run flake8 --select=E,W,I --max-line-length 80 --import-order-style pep8 --exclude .git,__pycache__,.eggs,*.egg,.pytest_cache,{{ cookiecutter.package_name }}/version.py,{{ cookiecutter.package_name }}/__init__.py --tee --output-file=pep8_violations.txt --statistics --count {{ cookiecutter.package_name }}
-          poetry run flake8 --select=D --ignore D301 --tee --output-file=pep257_violations.txt --statistics --count {{ cookiecutter.package_name }}
+          poetry run flake8 --select=E,W,I --max-line-length 80 --import-order-style pep8 --exclude .git,__pycache__,.eggs,*.egg,.pytest_cache,{{cookiecutter.folder_name}}/version.py,{{cookiecutter.folder_name}}/__init__.py --tee --output-file=pep8_violations.txt --statistics --count {{cookiecutter.folder_name}}
+          poetry run flake8 --select=D --ignore D301 --tee --output-file=pep257_violations.txt --statistics --count {{cookiecutter.folder_name}}
       - name: Code errors
-        run: poetry run flake8 --select=F --tee --output-file=flake8_code_errors.txt --statistics --count {{ cookiecutter.package_name }}
+        run: poetry run flake8 --select=F --tee --output-file=flake8_code_errors.txt --statistics --count {{cookiecutter.folder_name}}
       - name: Code complexity
-        run: poetry run flake8 --select=C901 --tee --output-file=code_complexity.txt --count {{ cookiecutter.package_name }}
+        run: poetry run flake8 --select=C901 --tee --output-file=code_complexity.txt --count {{cookiecutter.folder_name}}
       - name: TODO
-        run: poetry run flake8 --select=T --tee --output-file=todo_occurence.txt --statistics --count {{ cookiecutter.package_name }} tests
+        run: poetry run flake8 --select=T --tee --output-file=todo_occurence.txt --statistics --count {{cookiecutter.folder_name}} tests
       - name: Black
-        run: poetry run black -l 80 --check {{ cookiecutter.package_name }}
+        run: poetry run black -l 80 --check {{cookiecutter.folder_name}}{% raw %}
   unit-tests:
     needs: install
     runs-on: ubuntu-latest
@@ -127,8 +127,8 @@ jobs:
           $HOME/.poetry/bin/poetry config cache-dir $HOME/.poetry/store
       - name: Run unit tests
         run: poetry run py.test tests/unit --junit-xml=xunit-${{ matrix.python-version }}.xml
-      - name: Run coverage
-        run: poetry run pytest --cov={{ cookiecutter.package_name }} --cov-fail-under=70 --cov-report=xml --cov-report=term-missing tests
+      - name: Run coverage{% endraw %}
+        run: poetry run pytest --cov={{cookiecutter.folder_name}} --cov-fail-under=70 --cov-report=xml --cov-report=term-missing tests{% raw %}
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v2
         with:
@@ -157,4 +157,4 @@ jobs:
           echo "$HOME/.poetry/bin" >> $GITHUB_PATH
           $HOME/.poetry/bin/poetry config cache-dir $HOME/.poetry/store
       - name: Run integration tests
-        run: poetry run py.test tests/integration --junit-xml=xunit-${{ matrix.python-version }}.xml
+        run: poetry run py.test tests/integration --junit-xml=xunit-${{ matrix.python-version }}.xml{% endraw %}

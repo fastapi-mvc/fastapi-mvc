@@ -13,6 +13,7 @@ def test_ready_invalid(app):
     assert response.status_code == 404
 
 
+{% if cookiecutter.redis == "yes" %}
 def test_ready_invalid_with_redis(app):
     settings.USE_REDIS = True
     response = app.get("/api/ready")
@@ -24,3 +25,4 @@ def test_ready_invalid_with_redis(app):
             "status": "BAD_GATEWAY"
         }
     }
+{% endif %}

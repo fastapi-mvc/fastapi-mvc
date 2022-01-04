@@ -61,7 +61,7 @@ until $ROLLOUT_STATUS_CMD 2>/dev/null || [ $ATTEMPTS -eq 60 ]; do
   ATTEMPTS=$((ATTEMPTS + 1))
   sleep 10
 done
-
+{% if cookiecutter.redis == "yes" %}
 # Install Redis operator
 echo "[dev-env] creating redis-operator"
 kubectl create -f manifests/all-redis-operator-resources.yaml
@@ -95,7 +95,14 @@ helm upgrade --install \
     {{ cookiecutter.folder_name }} charts/{{ cookiecutter.folder_name }} \
     --namespace {{ cookiecutter.folder_name }} \
     --set ingress.host.name="{{ cookiecutter.folder_name }}.${INGRESS_HOST}"
-
+{% else %}
+echo "[dev-env] installing {{ cookiecutter.folder_name }} charts"
+helm upgrade --install \
+    {{ cookiecutter.folder_name }} charts/{{ cookiecutter.folder_name }} \
+    --namespace {{ cookiecutter.folder_name }} \
+    --set ingress.host.name="{{ cookiecutter.folder_name }}.${INGRESS_HOST}" \
+    --set configMap.useRedis="false"
+{% endif %}
 ATTEMPTS=0
 ROLLOUT_STATUS_CMD="kubectl rollout status deployment/{{ cookiecutter.folder_name }} -n {{ cookiecutter.folder_name }}"
 until $ROLLOUT_STATUS_CMD || [ $ATTEMPTS -eq 60 ]; do

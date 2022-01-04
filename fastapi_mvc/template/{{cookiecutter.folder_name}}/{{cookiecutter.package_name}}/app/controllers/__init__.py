@@ -1,2 +1,2 @@
 # -*- coding: utf-8 -*-
-"""fastapi-mvc."""
+"""{{cookiecutter.project_description}}"""

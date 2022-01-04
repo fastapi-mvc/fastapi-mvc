@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""fastapi-mvc CLI serve command."""
+"""{{cookiecutter.project_name}} CLI serve command."""
 from multiprocessing import cpu_count
 
 import click
@@ -34,7 +34,7 @@ from {{cookiecutter.package_name}}.wsgi import run_wsgi
     show_default=True,
 )
 def serve(**options):
-    """Fastapi MVC template CLI serve command."""
+    """{{cookiecutter.project_name}} CLI serve command."""
     run_wsgi(
         host=options["host"],
         port=str(options["port"]),

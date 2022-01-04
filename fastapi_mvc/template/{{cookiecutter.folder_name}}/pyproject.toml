@@ -1,11 +1,11 @@
 [tool.poetry]
-name = "{{ cookiecutter.project_name }}"
-version = "{{ cookiecutter.version }}"
-description = "{{ cookiecutter.project_description }}"
-authors = ["{{ cookiecutter.author }} <{{ cookiecutter.email }}>"]
-license = "{{ cookiecutter.license }}"
+name = "{{cookiecutter.project_name}}"
+version = "{{cookiecutter.version}}"
+description = "{{cookiecutter.project_description}}"
+authors = ["{{cookiecutter.author}} <{{cookiecutter.email}}>"]
+license = "{{cookiecutter.license}}"
 readme = "README.md"
-repository = "{{ cookiecutter.repo_url }}"
+repository = "{{cookiecutter.repo_url}}"
 classifiers = [
     'Intended Audience :: Developers',
     'Natural Language :: English',
@@ -21,21 +21,15 @@ fastapi = "~0.70.0"
 uvicorn = {extras = ["standard"], version = "~0.15.0"}
 gunicorn = "~20.1.0"
 click = "~7.1.2"
-{% if cookiecutter.aioredis_util == "yes" %}
-aioredis = "~2.0.0"
-{%- endif %}
-{% if cookiecutter.aiohttp_util == "yes" %}
-aiohttp = "~3.8.0"
-{%- endif %}
+{% if cookiecutter.redis == "yes" %}aioredis = "~2.0.0"{%- endif %}
+{% if cookiecutter.aiohttp == "yes" %}aiohttp = "~3.8.0"{%- endif %}
 
 [tool.poetry.dev-dependencies]
 pytest = "~6.2.4"
 pytest-cov = "~2.12.0"
 pytest-asyncio = "~0.15.1"
 requests = "~2.25.1"
-{% if cookiecutter.aiohttp_util == "yes" %}
-aioresponses = "~0.7.2"
-{%- endif %}
+{% if cookiecutter.aiohttp == "yes" %}aioresponses = "~0.7.2"{%- endif %}
 mock = "~4.0.3"
 flake8 = "~3.9.2"
 flake8-docstrings = "~1.6.0"
@@ -44,10 +38,10 @@ flake8-todo = "^0.7"
 black = "^21.12b0"
 
 [tool.poetry.scripts]
-fastapi = '{{ cookiecutter.package_name }}.cli.cli:cli'
+{{cookiecutter.script_name}} = '{{cookiecutter.package_name}}.cli.cli:cli'
 
 [tool.poetry.urls]
-"Issues" = "{{ cookiecutter.repo_url }}/issues"
+"Issues" = "{{cookiecutter.repo_url}}/issues"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

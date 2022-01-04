@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""fastapi-mvc CLI root."""
+"""{{cookiecutter.project_name}} CLI root."""
 import logging
 
 import click
@@ -15,7 +15,7 @@ from {{cookiecutter.package_name}}.cli.commands.serve import serve
     default=False,
 )
 def cli(**options):
-    """Fastapi MVC template CLI root."""
+    """{{cookiecutter.project_name}} CLI root."""
     if options["verbose"]:
         level = logging.DEBUG
     else:

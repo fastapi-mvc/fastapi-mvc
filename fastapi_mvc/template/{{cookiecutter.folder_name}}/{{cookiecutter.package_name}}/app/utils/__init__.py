@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""fastapi-mvc."""
+"""{{cookiecutter.project_description}}"""
 from .aiohttp_client import AiohttpClient
 from .redis import RedisClient
 

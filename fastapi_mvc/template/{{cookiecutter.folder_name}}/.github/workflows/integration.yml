@@ -1,4 +1,4 @@
-name: K8s integration
+{% raw %}name: K8s integration
 
 on:
   push:
@@ -35,7 +35,6 @@ jobs:
         run: vagrant up
 
       - name: Bootstrap minukube cluster and Redis operator
-        run: vagrant ssh -c "cd /syncd && make dev-env"
-
-      - name: Test exposed fastapi_mvc application
-        run: vagrant ssh -c 'curl "http://{{ cookiecutter.folder_name }}.$(minikube ip).nip.io/api/ready"'
+        run: vagrant ssh -c "cd /syncd && make dev-env"{% endraw %}
+      - name: Test exposed {{cookiecutter.project_name}} application
+        run: vagrant ssh -c 'curl "http://{{cookiecutter.folder_name}}.$(minikube ip).nip.io/api/ready"'

@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+{% raw %}#!/usr/bin/env bash
 
 if [ -n "$DEBUG" ]; then
 	set -x
@@ -33,11 +33,11 @@ fi
 
 echo "[install] Begin installing project."
 "$POETRY_HOME"/bin/poetry install --no-interaction
-
+{% endraw %}
 cat <<EOF
 Project successfully installed.
 To activate virtualenv run: $ poetry shell
-Now you should access CLI script: $ {{ cookiecutter.package_name }} --help
-Alternatively you can access CLI script via poetry run: $ poetry run {{ cookiecutter.package_name }} --help
+Now you should access CLI script: $ {{cookiecutter.script_name}} --help
+Alternatively you can access CLI script via poetry run: $ poetry run {{cookiecutter.script_name}} --help
 To deactivate virtualenv simply type: $ deactivate
 EOF
