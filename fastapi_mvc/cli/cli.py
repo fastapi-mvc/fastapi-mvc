@@ -1,4 +1,4 @@
-"""FastAPI MVC CLI root."""
+"""FastAPI MVC CLI root implementation."""
 import logging
 
 import click
@@ -14,7 +14,13 @@ from fastapi_mvc.cli.commands.new import new
     default=False,
 )
 def cli(**options):
-    """CLI root method implementation."""
+    """Generate and manage fastapi-mvc projects.
+    \f
+
+    Args:
+        options(dict): CLI command options.
+
+    """
     if options["verbose"]:
         level = logging.DEBUG
     else:
