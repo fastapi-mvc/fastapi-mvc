@@ -1,4 +1,4 @@
-# {{cookiecutter.folder_name}}
+# {{cookiecutter.chart_name}}
 
 ![Version: 0.2.0](https://img.shields.io/badge/Version-0.2.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.1.0](https://img.shields.io/badge/AppVersion-0.1.0-informational?style=flat-square)
 
@@ -20,12 +20,12 @@ A Helm chart for Kubernetes
 | configMap.useRedis | string | `"true"` |  |
 | fullnameOverride | string | `""` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
-| image.repository | string | `"{{cookiecutter.folder_name}}"` |  |
+| image.repository | string | `"{{cookiecutter.chart_name}}"` |  |
 | image.tag | string | `""` |  |
 | imagePullSecrets | list | `[]` |  |
 | ingress.annotations."kubernetes.io/ingress.class" | string | `"nginx"` |  |
 | ingress.enabled | bool | `true` |  |
-| ingress.host.name | string | `"{{cookiecutter.folder_name}}.kubernetes.local"` |  |
+| ingress.host.name | string | `"{{cookiecutter.chart_name}}.kubernetes.local"` |  |
 | ingress.host.paths[0] | string | `"/"` |  |
 | nameOverride | string | `""` |  |
 | nodeSelector | object | `{}` |  |

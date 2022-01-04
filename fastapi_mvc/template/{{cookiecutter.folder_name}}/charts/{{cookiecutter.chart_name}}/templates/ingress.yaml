@@ -1,12 +1,12 @@
-{{- if .Values.ingress.enabled -}}
-{{- $fullName := include "{{cookiecutter.folder_name}}.fullname" . -}}
+{% raw %}{{- if .Values.ingress.enabled -}}
+{{- $fullName := include "{% endraw %}{{cookiecutter.chart_name}}{% raw %}.fullname" . -}}
 {{- $svcPort := .Values.service.port -}}
 apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
   name: {{ $fullName }}
   labels:
-{{ include "{{cookiecutter.folder_name}}.labels" . | indent 4 }}
+{{ include "{% endraw %}{{cookiecutter.chart_name}}{% raw %}.labels" . | indent 4 }}
   {{- with .Values.ingress.annotations }}
   annotations:
     {{- toYaml . | nindent 4 }}
@@ -22,4 +22,4 @@ spec:
               serviceName: {{ $fullName }}
               servicePort: {{ $svcPort }}
         {{- end }}
-{{- end }}
+{{- end }}{% endraw %}

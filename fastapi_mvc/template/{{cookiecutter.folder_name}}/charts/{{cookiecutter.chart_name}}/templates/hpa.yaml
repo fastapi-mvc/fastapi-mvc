@@ -1,15 +1,15 @@
-{{- if .Values.autoscaling.enabled }}
+{% raw %}{{- if .Values.autoscaling.enabled }}
 apiVersion: autoscaling/v2beta1
 kind: HorizontalPodAutoscaler
 metadata:
-  name: {{ include "{{cookiecutter.folder_name}}.fullname" . }}
+  name: {{ include "{% endraw %}{{cookiecutter.chart_name}}{% raw %}.fullname" . }}
   labels:
-    {{- include "{{cookiecutter.folder_name}}.labels" . | nindent 4 }}
+    {{- include "{% endraw %}{{cookiecutter.chart_name}}{% raw %}.labels" . | nindent 4 }}
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: {{ include "{{cookiecutter.folder_name}}.fullname" . }}
+    name: {{ include "{% endraw %}{{cookiecutter.chart_name}}{% raw %}.fullname" . }}
   minReplicas: {{ .Values.autoscaling.minReplicas }}
   maxReplicas: {{ .Values.autoscaling.maxReplicas }}
   metrics:
@@ -26,3 +26,4 @@ spec:
         targetAverageUtilization: {{ .Values.autoscaling.targetMemoryUtilizationPercentage }}
     {{- end }}
 {{- end }}
+{% endraw %}

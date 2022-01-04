@@ -1,16 +1,16 @@
-apiVersion: apps/v1
+{% raw %}apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "{{cookiecutter.folder_name}}.fullname" . }}
+  name: {{ include "{% endraw %}{{cookiecutter.chart_name}}{% raw %}.fullname" . }}
   labels:
-    {{- include "{{cookiecutter.folder_name}}.labels" . | nindent 4 }}
+    {{- include "{% endraw %}{{cookiecutter.chart_name}}{% raw %}.labels" . | nindent 4 }}
 spec:
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
   {{- end }}
   selector:
     matchLabels:
-      {{- include "{{cookiecutter.folder_name}}.selectorLabels" . | nindent 6 }}
+      {{- include "{% endraw %}{{cookiecutter.chart_name}}{% raw %}.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -18,13 +18,13 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        {{- include "{{cookiecutter.folder_name}}.selectorLabels" . | nindent 8 }}
+        {{- include "{% endraw %}{{cookiecutter.chart_name}}{% raw %}.selectorLabels" . | nindent 8 }}
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      serviceAccountName: {{ include "{{cookiecutter.folder_name}}.serviceAccountName" . }}
+      serviceAccountName: {{ include "{% endraw %}{{cookiecutter.chart_name}}{% raw %}.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
@@ -40,27 +40,27 @@ spec:
             - name: FASTAPI_DEBUG
               valueFrom:
                 configMapKeyRef:
-                  name: {{ include "{{cookiecutter.folder_name}}.fullname" . }}
+                  name: {{ include "{% endraw %}{{cookiecutter.chart_name}}{% raw %}.fullname" . }}
                   key: fastapi_debug
             - name: FASTAPI_USE_REDIS
               valueFrom:
                 configMapKeyRef:
-                  name: {{ include "{{cookiecutter.folder_name}}.fullname" . }}
+                  name: {{ include "{% endraw %}{{cookiecutter.chart_name}}{% raw %}.fullname" . }}
                   key: fastapi_use_redis
             - name: FASTAPI_REDIS_HOST
               valueFrom:
                 configMapKeyRef:
-                  name: {{ include "{{cookiecutter.folder_name}}.fullname" . }}
+                  name: {{ include "{% endraw %}{{cookiecutter.chart_name}}{% raw %}.fullname" . }}
                   key: fastapi_redis_host
             - name: FASTAPI_REDIS_PORT
               valueFrom:
                 configMapKeyRef:
-                  name: {{ include "{{cookiecutter.folder_name}}.fullname" . }}
+                  name: {{ include "{% endraw %}{{cookiecutter.chart_name}}{% raw %}.fullname" . }}
                   key: fastapi_redis_port
             - name: FASTAPI_REDIS_USE_SENTINEL
               valueFrom:
                 configMapKeyRef:
-                  name: {{ include "{{cookiecutter.folder_name}}.fullname" . }}
+                  name: {{ include "{% endraw %}{{cookiecutter.chart_name}}{% raw %}.fullname" . }}
                   key: fastapi_redis_use_sentinel
           livenessProbe:
             tcpSocket:
@@ -83,3 +83,4 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+{% endraw %}
