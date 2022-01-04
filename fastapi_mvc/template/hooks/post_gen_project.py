@@ -1,5 +1,6 @@
 """Fastapi-mvc cookiecutter template post_gen_project hook."""
 import os
+import shutil
 
 
 def remove(paths):
@@ -16,7 +17,7 @@ def remove(paths):
 
         if path and os.path.exists(path):
             if os.path.isdir(path):
-                os.rmdir(path)
+                shutil.rmtree(path)
             else:
                 os.remove(path)
 
@@ -48,7 +49,8 @@ def set_helm():
         remove([
             "charts",
             ".github/workflows/integration.yml",
-            "build/dev-env.sh"
+            "build/dev-env.sh",
+            "manifests",
         ])
 
 
@@ -57,7 +59,8 @@ def set_redis():
     if "{{ cookiecutter.redis }}" != "yes":
         remove([
             "manifests",
-            "{{ cookiecutter.package_name }}/app/utils/redis.py"
+            "{{ cookiecutter.package_name }}/app/utils/redis.py",
+            "{{ cookiecutter.package_name }}/config/redis.py"
         ])
 
 
