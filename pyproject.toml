@@ -1,0 +1,41 @@
+[tool.poetry]
+name = "fastapi-mvc"
+version = "0.5.0"
+description = "Generate and manage FastAPI projects"
+authors = ["Radosław Szamszur <radoslawszamszur@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+repository = "https://github.com/rszamszur/fastapi-mvc"
+classifiers = [
+    'Intended Audience :: Developers',
+    'Natural Language :: English',
+    'Programming Language :: Python :: 3',
+    'Programming Language :: Python :: 3.7',
+    'Programming Language :: Python :: 3.8',
+    'Programming Language :: Python :: 3.9',
+]
+
+[tool.poetry.dependencies]
+python = "^3.7"
+cookiecutter = "~1.7.3"
+click = "~7.1.2"
+
+[tool.poetry.dev-dependencies]
+pytest = "~6.2.5"
+pytest-cov = "~2.12.0"
+pytest-cookies = "~0.6.1"
+flake8 = "~3.9.2"
+flake8-docstrings = "~1.6.0"
+flake8-import-order = "~0.18.1"
+flake8-todo = "^0.7"
+black = "^21.12b0"
+
+[tool.poetry.scripts]
+fastapi-mvc = "fastapi_mvc.cli.cli:cli"
+
+[tool.poetry.urls]
+"Issues" = "https://github.com/rszamszur/fastapi-mvc/issues"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
