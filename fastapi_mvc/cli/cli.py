@@ -15,6 +15,7 @@ from fastapi_mvc.cli.commands.new import new
 )
 def cli(**options):
     """Generate and manage fastapi-mvc projects.
+
     \f
 
     Args:

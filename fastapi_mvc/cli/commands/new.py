@@ -49,13 +49,7 @@ from cookiecutter.main import cookiecutter
 @click.option(
     "--license",
     help="Choose license.",
-    type=click.Choice([
-        "MIT",
-        "BSD2",
-        "BSD3",
-        "ISC",
-        "Apache"
-    ]),
+    type=click.Choice(["MIT", "BSD2", "BSD3", "ISC", "Apache"]),
 )
 @click.option(
     "--repo-url",
@@ -82,12 +76,16 @@ def new(app_name, **options):
     )
 
     try:
-        user = subprocess.check_output(
-            ["git", "config", "--get", "user.name"]
-        ).decode("utf-8").strip()
-        email = subprocess.check_output(
-            ["git", "config", "--get", "user.email"]
-        ).decode("utf-8").strip()
+        user = (
+            subprocess.check_output(["git", "config", "--get", "user.name"])
+            .decode("utf-8")
+            .strip()
+        )
+        email = (
+            subprocess.check_output(["git", "config", "--get", "user.email"])
+            .decode("utf-8")
+            .strip()
+        )
     except subprocess.CalledProcessError:
         user = None
         email = None

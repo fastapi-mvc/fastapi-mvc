@@ -1,3 +1,4 @@
+"""fastapi-mvc."""
 from fastapi_mvc.cli.cli import cli
 
 
