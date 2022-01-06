@@ -25,7 +25,7 @@ if [[ ${PYTHON_VERSION} < "3.7.0" ]]; then
   exit 1
 fi
 
-POETRY_HOME="${POETRY_HOME:=${HOME}/.local}"
+POETRY_HOME="${POETRY_HOME:=${HOME}/.poetry}"
 if ! command -v "$POETRY_HOME"/bin/poetry &> /dev/null; then
   echo "[install] Poetry is not installed. Begin download and install."
   curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/install-poetry.py | POETRY_HOME=$POETRY_HOME $PYTHON -
