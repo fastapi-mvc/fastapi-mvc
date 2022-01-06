@@ -14,7 +14,7 @@ from fastapi_mvc.cli.commands.new import new
     default=False,
 )
 def cli(**options):
-    """Generate and manage fastapi-mvc projects.
+    """Generate and manage fastapi-mvc projects. # noqa: D205,D400
 
     \f
 
