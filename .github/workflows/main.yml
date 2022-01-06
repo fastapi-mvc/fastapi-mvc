@@ -180,7 +180,7 @@ jobs:
         id: cached-project
         uses: actions/cache@v2
         with:
-          path: ~/test-project
+          path: ~/.poetry
           key: project-${{ matrix.python-version }}-${{ hashFiles('**/*.py') }}
       - name: Config path and poetry
         run: |
@@ -188,12 +188,13 @@ jobs:
           $HOME/.poetry/bin/poetry config cache-dir $HOME/.poetry/store
         if: steps.cached-project.outputs.cache-hit != 'true'
       - name: Generate test-project
-        run: poetry run fastapi-mvc new test-project
+        run: |
+          poetry run fastapi-mvc new test-project
+          mv test-project ~/.poetry/store
         if: steps.cached-project.outputs.cache-hit != 'true'
       - name: Install test-project
         run: |
-          cd test-project
-          export POETRY_VIRTUALENVS_IN_PROJECT=true
+          cd ~/.poetry/store/test-project
           make install
         if: steps.cached-project.outputs.cache-hit != 'true'
   template-metrics:
@@ -211,9 +212,14 @@ jobs:
       - name: Load test-project cache
         uses: actions/cache@v2
         with:
-          path: ~/test-project
+          path: ~/.poetry
           key: project-${{ matrix.python-version }}-${{ hashFiles('**/*.py') }}
+      - name: Config path and poetry
+        run: |
+          echo "$HOME/.poetry/bin" >> $GITHUB_PATH
+          $HOME/.poetry/bin/poetry config cache-dir $HOME/.poetry/store
       - name: Style guide
         run: |
-          ~/test-project/.venv/bin/flake8 --select=E,W,I --max-line-length 80 --import-order-style pep8 --exclude .git,__pycache__,.eggs,*.egg,.pytest_cache,test_project/version.py,test_project/__init__.py, --tee --output-file=pep8_violations.txt --statistics --count test_project
+          cd ~/.poetry/store/test-project
+          poetry run flake8 --select=E,W,I --max-line-length 80 --import-order-style pep8 --exclude .git,__pycache__,.eggs,*.egg,.pytest_cache,test_project/version.py,test_project/__init__.py, --tee --output-file=pep8_violations.txt --statistics --count test_project
           poetry run flake8 --select=D --ignore D301 --tee --exclude test_project/template --output-file=pep257_violations.txt --statistics --count test_project
