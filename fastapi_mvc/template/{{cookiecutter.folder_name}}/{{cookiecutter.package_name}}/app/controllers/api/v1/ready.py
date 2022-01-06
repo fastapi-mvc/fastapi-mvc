@@ -43,7 +43,8 @@ async def readiness_check():
 
     """
     log.info("Started GET /ready")
-    {% if cookiecutter.redis == "yes" %}
+    {%- if cookiecutter.redis == "yes" %}
+
     if settings.USE_REDIS and not await RedisClient.ping():
         log.error("Could not connect to Redis")
         raise HTTPException(
@@ -52,5 +53,6 @@ async def readiness_check():
                 code=502, message="Could not connect to Redis"
             ).dict(exclude_none=True),
         )
-    {% endif %}
+
+    {%- endif %}
     return ReadyResponse(status="ok")
