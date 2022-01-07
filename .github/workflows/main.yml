@@ -283,6 +283,7 @@ jobs:
       - name: Run coverage
         run: |
           poetry run pytest --cov=fastapi_mvc/cli --cov-report=xml --cov-report=term-missing  tests
+          ls -lah ~/.poetry/store/virtualenvs
           poetry env list
           poetry env use test-project
           poetry run pytest --cov=~/.poetry/store/test-project/test_project --cov-fail-under=70 --cov-report=xml --cov-report=term-missing --cov-append  ~/.poetry/store/test-project/tests
