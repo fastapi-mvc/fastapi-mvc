@@ -1,8 +1,9 @@
 import os
-import subprocess
+from datetime import datetime
 
 import mock
 from fastapi_mvc.cli.commands.new import new
+from cookiecutter.exceptions import OutputDirExistsException
 
 
 template_dir = os.path.abspath(
@@ -11,21 +12,6 @@ template_dir = os.path.abspath(
         "../../../../../fastapi_mvc/template",
     )
 )
-
-try:
-    user = (
-        subprocess.check_output(["git", "config", "--get", "user.name"])
-            .decode("utf-8")
-            .strip()
-    )
-    email = (
-        subprocess.check_output(["git", "config", "--get", "user.email"])
-            .decode("utf-8")
-            .strip()
-    )
-except subprocess.CalledProcessError:
-    user = None
-    email = None
 
 
 def test_new_help(cli_runner):
@@ -39,10 +25,15 @@ def test_serve_invalid_option(cli_runner):
 
 
 @mock.patch("fastapi_mvc.cli.commands.new.cookiecutter")
-def test_new_default_options(run_mock, cli_runner):
-    result = cli_runner.invoke(new, ["testapp"])
+@mock.patch(
+    "fastapi_mvc.cli.commands.new.subprocess.check_output",
+    side_effect=["Joe".encode("utf-8"), "email@test.com".encode("utf-8")]
+)
+@mock.patch("fastapi_mvc.cli.commands.new.subprocess.run")
+def test_new_default_options(run_mock, check_mock, cookie_mock, cli_runner):
+    result = cli_runner.invoke(new, ["/tmp/testapp"])
     assert result.exit_code == 0
-    run_mock.assert_called_once_with(
+    cookie_mock.assert_called_once_with(
         template_dir,
         extra_context={
             'project_name': 'testapp',
@@ -51,20 +42,35 @@ def test_new_default_options(run_mock, cli_runner):
             'github_actions': 'yes',
             'vagrantfile': 'yes',
             'helm': 'yes',
-            'author': user,
-            'email': email,
-            'repo_url': None,
-            'year': 2022
+            'codecov': 'yes',
+            'author': "Joe",
+            'email': "email@test.com",
+            'repo_url': 'https://your.repo.url.here',
+            'year': datetime.today().year
         },
         no_input=True,
+        output_dir="/tmp",
     )
+    calls = [
+        mock.call(["git", "config", "--get", "user.name"]),
+        mock.call(["git", "config", "--get", "user.email"])
+    ]
+    check_mock.assert_has_calls(calls)
+    run_mock.assert_called_once_with(["make", "install"], cwd="/tmp/testapp")
 
 
 @mock.patch("fastapi_mvc.cli.commands.new.cookiecutter")
-def test_new_skip_options(run_mock, cli_runner):
-    result = cli_runner.invoke(new, ["-R", "-A", "-V", "-H", "-G", "testapp"])
+@mock.patch(
+    "fastapi_mvc.cli.commands.new.subprocess.check_output",
+    side_effect=["Joe".encode("utf-8"), "email@test.com".encode("utf-8")]
+)
+def test_new_skip_options(check_mock, cookie_mock, cli_runner):
+    result = cli_runner.invoke(
+        new,
+        ["-R", "-A", "-V", "-H", "-G", "-C", "-I", "testapp"]
+    )
     assert result.exit_code == 0
-    run_mock.assert_called_once_with(
+    cookie_mock.assert_called_once_with(
         template_dir,
         extra_context={
             'project_name': 'testapp',
@@ -73,10 +79,53 @@ def test_new_skip_options(run_mock, cli_runner):
             'github_actions': 'no',
             'vagrantfile': 'no',
             'helm': 'no',
-            'author': user,
-            'email': email,
-            'repo_url': None,
-            'year': 2022
+            'codecov': 'no',
+            'author': "Joe",
+            'email': "email@test.com",
+            'repo_url': 'https://your.repo.url.here',
+            'year': datetime.today().year
         },
         no_input=True,
+        output_dir=".",
     )
+    calls = [
+        mock.call(["git", "config", "--get", "user.name"]),
+        mock.call(["git", "config", "--get", "user.email"])
+    ]
+    check_mock.assert_has_calls(calls)
+
+
+@mock.patch(
+    "fastapi_mvc.cli.commands.new.cookiecutter",
+    side_effect=OutputDirExistsException(),
+)
+@mock.patch(
+    "fastapi_mvc.cli.commands.new.subprocess.check_output",
+    side_effect=["Joe".encode("utf-8"), "email@test.com".encode("utf-8")]
+)
+def test_new_dir_exists(check_mock, cookie_mock, cli_runner):
+    result = cli_runner.invoke(new, ["testapp"])
+    assert result.exit_code == 1
+    cookie_mock.assert_called_once_with(
+        template_dir,
+        extra_context={
+            'project_name': 'testapp',
+            'redis': 'yes',
+            'aiohttp': 'yes',
+            'github_actions': 'yes',
+            'vagrantfile': 'yes',
+            'helm': 'yes',
+            'codecov': 'yes',
+            'author': "Joe",
+            'email': "email@test.com",
+            'repo_url': 'https://your.repo.url.here',
+            'year': datetime.today().year
+        },
+        no_input=True,
+        output_dir=".",
+    )
+    calls = [
+        mock.call(["git", "config", "--get", "user.name"]),
+        mock.call(["git", "config", "--get", "user.email"])
+    ]
+    check_mock.assert_has_calls(calls)
