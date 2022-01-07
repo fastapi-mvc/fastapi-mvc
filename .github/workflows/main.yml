@@ -219,7 +219,96 @@ jobs:
           echo "$HOME/.poetry/bin" >> $GITHUB_PATH
           $HOME/.poetry/bin/poetry config cache-dir $HOME/.poetry/store
       - name: Style guide
+        working-directory: ~/.poetry/store/test-project
         run: |
-          cd ~/.poetry/store/test-project
           poetry run flake8 --select=E,W,I --max-line-length 80 --import-order-style pep8 --exclude .git,__pycache__,.eggs,*.egg,.pytest_cache,test_project/version.py,test_project/__init__.py, --tee --output-file=pep8_violations.txt --statistics --count test_project
           poetry run flake8 --select=D --ignore D301 --tee --exclude test_project/template --output-file=pep257_violations.txt --statistics --count test_project
+      - name: Code errors
+        working-directory: ~/.poetry/store/test-project
+        run: poetry run flake8 --select=F --tee --exclude test_project/template --output-file=flake8_code_errors.txt --statistics --count test_project
+      - name: Code complexity
+        working-directory: ~/.poetry/store/test-project
+        run: poetry run flake8 --select=C901 --tee --exclude test_project/template --output-file=code_complexity.txt --count test_project
+      - name: TODO
+        working-directory: ~/.poetry/store/test-project
+        run: poetry run flake8 --select=T --tee  --exclude test_project/template--output-file=todo_occurence.txt --statistics --count test_project tests
+      - name: Black
+        working-directory: ~/.poetry/store/test-project
+        run: poetry run black -l 80 --exclude test_project/template --check test_project
+  template-unit-tests:
+    needs: generate
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [ 3.7, 3.8, 3.9 ]
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Load test-project cache
+        uses: actions/cache@v2
+        with:
+          path: ~/.poetry
+          key: project-${{ matrix.python-version }}-${{ hashFiles('**/*.py') }}
+      - name: Config path and poetry
+        run: |
+          echo "$HOME/.poetry/bin" >> $GITHUB_PATH
+          $HOME/.poetry/bin/poetry config cache-dir $HOME/.poetry/store
+      - name: Run unit tests
+        working-directory: ~/.poetry/store/test-project
+        run: poetry run py.test tests/unit --junit-xml=xunit-${{ matrix.python-version }}.xml
+  template-integration-tests:
+    needs: generate
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [ 3.7, 3.8, 3.9 ]
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Load test-project cache
+        uses: actions/cache@v2
+        with:
+          path: ~/.poetry
+          key: project-${{ matrix.python-version }}-${{ hashFiles('**/*.py') }}
+      - name: Config path and poetry
+        run: |
+          echo "$HOME/.poetry/bin" >> $GITHUB_PATH
+          $HOME/.poetry/bin/poetry config cache-dir $HOME/.poetry/store
+      - name: Run integration tests
+        working-directory: ~/.poetry/store/test-project
+        run: poetry run py.test tests/integration --junit-xml=xunit-${{ matrix.python-version }}.xml
+  coverage:
+    needs: generate
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [ 3.7, 3.8, 3.9 ]
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Load test-project cache
+        uses: actions/cache@v2
+        with:
+          path: ~/.poetry
+          key: project-${{ matrix.python-version }}-${{ hashFiles('**/*.py') }}
+      - name: Run coverage
+        run: |
+          poetry run pytest --cov=fastapi_mvc/cli, --cov-report=xml --cov-report=term-missing --cov-append tests
+          poetry run pytest --cov=~/.poetry/store/test-project/test_project --cov-fail-under=70 --cov-report=xml --cov-report=term-missing --cov-append  ~/.poetry/store/test-project/tests
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v2
+        with:
+          fail_ci_if_error: true
+          files: ./coverage.xml
