@@ -5,9 +5,10 @@ def test_cookiecutter_template(cookies):
     template_dir = os.path.abspath(
         os.path.join(
             os.path.abspath(__file__),
-            "../../fastapi_mvc/template",
+            "../../../fastapi_mvc/template",
         )
     )
+    print(template_dir)
 
     result = cookies.bake(
         template=template_dir,
