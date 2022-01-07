@@ -12,6 +12,7 @@ on:
         required: false
         default: false
 
+jobs:
   release:
     runs-on: ubuntu-latest
 
@@ -34,7 +35,6 @@ on:
           files: dist/${{ env.whl_name }}
           fail_on_unmatched_files: true
           target_commitish: ${{ github.ref_name }}
-
   publish:
     needs: release
     runs-on: ubuntu-latest
