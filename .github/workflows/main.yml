@@ -91,18 +91,8 @@ jobs:
         run: |
           echo "$HOME/.poetry/bin" >> $GITHUB_PATH
           $HOME/.poetry/bin/poetry config cache-dir $HOME/.poetry/store
-      - name: Style guide
-        run: |
-          poetry run flake8 --select=E,W,I --max-line-length 80 --import-order-style pep8 --exclude .git,__pycache__,.eggs,*.egg,.pytest_cache,fastapi_mvc/version.py,fastapi_mvc/__init__.py,fastapi_mvc/template --tee --output-file=pep8_violations.txt --statistics --count fastapi_mvc
-          poetry run flake8 --select=D --ignore D301 --tee --exclude fastapi_mvc/template --output-file=pep257_violations.txt --statistics --count fastapi_mvc
-      - name: Code errors
-        run: poetry run flake8 --select=F --tee --exclude fastapi_mvc/template --output-file=flake8_code_errors.txt --statistics --count fastapi_mvc
-      - name: Code complexity
-        run: poetry run flake8 --select=C901 --tee --exclude fastapi_mvc/template --output-file=code_complexity.txt --count fastapi_mvc
-      - name: TODO
-        run: poetry run flake8 --select=T --tee  --exclude fastapi_mvc/template--output-file=todo_occurence.txt --statistics --count fastapi_mvc tests
-      - name: Black
-        run: poetry run black -l 80 --exclude fastapi_mvc/template --check fastapi_mvc
+      - name: Run metrics checks
+        run: make metrics
   unit-tests:
     needs: install
     runs-on: ubuntu-latest
@@ -126,14 +116,7 @@ jobs:
           echo "$HOME/.poetry/bin" >> $GITHUB_PATH
           $HOME/.poetry/bin/poetry config cache-dir $HOME/.poetry/store
       - name: Run unit tests
-        run: poetry run py.test tests/unit --junit-xml=xunit-${{ matrix.python-version }}.xml
-#      - name: Run coverage
-#        run: poetry run pytest --cov=fastapi_mvc --cov-report=xml --cov-fail-under=70 --cov-report=term-missing --cov-append /tmp/testapp/tests
-#      - name: Upload coverage to Codecov
-#        uses: codecov/codecov-action@v2
-#        with:
-#          fail_ci_if_error: true
-#          files: ./coverage.xml
+        run: make unit-test
   integration-tests:
     needs: install
     runs-on: ubuntu-latest
@@ -157,7 +140,7 @@ jobs:
           echo "$HOME/.poetry/bin" >> $GITHUB_PATH
           $HOME/.poetry/bin/poetry config cache-dir $HOME/.poetry/store
       - name: Run integration tests
-        run: poetry run py.test tests/integration --junit-xml=xunit-${{ matrix.python-version }}.xml
+        run: make integration-test
   generate:
     needs: install
     runs-on: ubuntu-latest
@@ -218,23 +201,10 @@ jobs:
         run: |
           echo "$HOME/.poetry/bin" >> $GITHUB_PATH
           $HOME/.poetry/bin/poetry config cache-dir $HOME/.poetry/store
-      - name: Style guide
-        working-directory: ~/.poetry/store/test-project
+      - name: Run metrics checks
         run: |
-          poetry run flake8 --select=E,W,I --max-line-length 80 --import-order-style pep8 --exclude .git,__pycache__,.eggs,*.egg,.pytest_cache,test_project/version.py,test_project/__init__.py, --tee --output-file=pep8_violations.txt --statistics --count test_project
-          poetry run flake8 --select=D --ignore D301 --tee --exclude test_project/template --output-file=pep257_violations.txt --statistics --count test_project
-      - name: Code errors
-        working-directory: ~/.poetry/store/test-project
-        run: poetry run flake8 --select=F --tee --exclude test_project/template --output-file=flake8_code_errors.txt --statistics --count test_project
-      - name: Code complexity
-        working-directory: ~/.poetry/store/test-project
-        run: poetry run flake8 --select=C901 --tee --exclude test_project/template --output-file=code_complexity.txt --count test_project
-      - name: TODO
-        working-directory: ~/.poetry/store/test-project
-        run: poetry run flake8 --select=T --tee  --exclude test_project/template--output-file=todo_occurence.txt --statistics --count test_project tests
-      - name: Black
-        working-directory: ~/.poetry/store/test-project
-        run: poetry run black -l 80 --exclude test_project/template --check test_project
+          cd ~/.poetry/store/test-project
+          make metrics
   template-unit-tests:
     needs: generate
     runs-on: ubuntu-latest
@@ -258,8 +228,9 @@ jobs:
           echo "$HOME/.poetry/bin" >> $GITHUB_PATH
           $HOME/.poetry/bin/poetry config cache-dir $HOME/.poetry/store
       - name: Run unit tests
-        working-directory: ~/.poetry/store/test-project
-        run: poetry run py.test tests/unit --junit-xml=xunit-${{ matrix.python-version }}.xml
+        run: |
+          cd ~/.poetry/store/test-project
+          make unit-test
   template-integration-tests:
     needs: generate
     runs-on: ubuntu-latest
@@ -283,8 +254,9 @@ jobs:
           echo "$HOME/.poetry/bin" >> $GITHUB_PATH
           $HOME/.poetry/bin/poetry config cache-dir $HOME/.poetry/store
       - name: Run integration tests
-        working-directory: ~/.poetry/store/test-project
-        run: poetry run py.test tests/integration --junit-xml=xunit-${{ matrix.python-version }}.xml
+        run: |
+          cd ~/.poetry/store/test-project
+          make integration-test
   coverage:
     needs: generate
     runs-on: ubuntu-latest
@@ -303,9 +275,13 @@ jobs:
         with:
           path: ~/.poetry
           key: project-${{ matrix.python-version }}-${{ hashFiles('**/*.py') }}
+      - name: Config path and poetry
+        run: |
+          echo "$HOME/.poetry/bin" >> $GITHUB_PATH
+          $HOME/.poetry/bin/poetry config cache-dir $HOME/.poetry/store
       - name: Run coverage
         run: |
-          poetry run pytest --cov=fastapi_mvc/cli, --cov-report=xml --cov-report=term-missing --cov-append tests
+          poetry run pytest --cov=fastapi_mvc/cli, --cov-report=xml --cov-report=term-missing  tests
           poetry run pytest --cov=~/.poetry/store/test-project/test_project --cov-fail-under=70 --cov-report=xml --cov-report=term-missing --cov-append  ~/.poetry/store/test-project/tests
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v2
