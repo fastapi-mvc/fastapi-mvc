@@ -8,7 +8,7 @@
   "chart_name": "{{ cookiecutter.project_name|lower|replace(' ','-') }}",
   "author": "{{ cookiecutter.author }}",
   "email": "{{ cookiecutter.email }}",
-  "project_description": "This project was generated with fastapi-mvc(https://github.com/rszamszur/fastapi-mvc).",
+  "project_description": "This project was generated with fastapi-mvc.",
   "version": "0.1.0",
   "redis": ["yes", "no"],
   "github_actions": ["yes", "no"],
