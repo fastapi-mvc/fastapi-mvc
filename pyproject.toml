@@ -1,18 +1,27 @@
 [tool.poetry]
 name = "fastapi-mvc"
-version = "0.5.0"
+version = "0.5.0rc0"
 description = "Generate and manage FastAPI projects"
 authors = ["Radosław Szamszur <radoslawszamszur@gmail.com>"]
 license = "MIT"
 readme = "README.md"
 repository = "https://github.com/rszamszur/fastapi-mvc"
 classifiers = [
-    'Intended Audience :: Developers',
-    'Natural Language :: English',
-    'Programming Language :: Python :: 3',
-    'Programming Language :: Python :: 3.7',
-    'Programming Language :: Python :: 3.8',
-    'Programming Language :: Python :: 3.9',
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Natural Language :: English",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "License :: OSI Approved :: MIT License",
+    "Topic :: Software Development",
+    "Topic :: Software Development :: Code Generators",
+    "Topic :: Software Development :: Build Tools",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Software Development :: Libraries",
+    "Framework :: FastAPI",
 ]
 
 [tool.poetry.dependencies]
