@@ -10,4 +10,4 @@ set -o pipefail
 
 DIR=$(cd $(dirname "${BASH_SOURCE}") && pwd -P)
 
-poetry run py.test tests/integration
+poetry run pytest tests/integration
