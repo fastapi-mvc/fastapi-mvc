@@ -62,7 +62,7 @@ jobs:
         run: |
           $HOME/.poetry/bin/poetry config cache-dir $HOME/.poetry/store
           $HOME/.poetry/bin/poetry build -f wheel
-          echo "whl_name={{cookiecutter.folder_name}}-$(cat TAG)-py3-none-any.whl" >> $GITHUB_ENV{% raw %}
+          echo "whl_name={{cookiecutter.package_name}}-$(cat TAG)-py3-none-any.whl" >> $GITHUB_ENV{% raw %}
       - name: Archive build artifacts
         uses: actions/upload-artifact@v2
         with:
