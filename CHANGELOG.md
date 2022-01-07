@@ -4,15 +4,22 @@ This file documents changes to [fastapi-mvc](https://github.com/rszamszur/fastap
 
 ### Unreleased
 
+### Features
+
+- [x] Refactor project from the pure template into the package which generates fastapi-mvc projects from cookiecutter template (#6). PR #10
+
 ### Fixed
 
 - [x] Add missing FASTAPI_USE_REDIS env var in Helm chart config map and deployment.
 
 ### Internal
 
+- [x] Rename project to fastapi-mvc.
 - [x] Add FASTAPI_DEBUG env var in Helm chart config map and deployment.
 - [x] Add K8s integration test workflow.
 - [x] Rename Test workflow to CI.
+- [x] Extend make targets for package and template.
+- [x] Add minor improvements to package and template GitHub workflows.
 
 ### 0.4.0
 

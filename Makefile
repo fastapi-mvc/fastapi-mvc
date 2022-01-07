@@ -30,13 +30,17 @@ clean-image:  ## Clean fastapi-mvc image
 install:  ## Install fastapi-mvc with poetry
 	@build/install.sh
 
-.PHONY: dev-env
-dev-env: image ## Start a local Kubernetes cluster using minikube and deploy application
-	@build/dev-env.sh
+.PHONY: metrics
+metrics: install ## Run fastapi-mvc metrics checks
+	@build/metrics.sh
 
-.PHONY: clean
-clean: ## Remove .cache directory and cached minikube
-	minikube delete && rm -rf ~/.cache ~/.minikube
+.PHONY: unit-test
+unit-test: install ## Run fastapi-mvc unit tests
+	@build/unit-test.sh
+
+.PHONY: integration-test
+integration-test: install ## Run fastapi-mvc integration tests
+	@build/integration-test.sh
 
 .PHONY: show-version
 show-version:

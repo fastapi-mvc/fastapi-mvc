@@ -1,0 +1,32 @@
+{
+  "project_name": "{{ cookiecutter.project_name }}",
+  "folder_name": "{{ cookiecutter.project_name|lower|replace(' ','-') }}",
+  "repo_url": "{{ cookiecutter.repo_url }}",
+  "package_name": "{{ cookiecutter.project_name|lower|replace(' ','_')|replace('-','_') }}",
+  "docker_image_name": "{{ cookiecutter.project_name|lower|replace(' ','_') }}",
+  "script_name": "{{ cookiecutter.project_name|lower|replace(' ','_') }}",
+  "chart_name": "{{ cookiecutter.project_name|lower|replace(' ','-') }}",
+  "author": "{{ cookiecutter.author }}",
+  "email": "{{ cookiecutter.email }}",
+  "project_description": "This project was generated with fastapi-mvc.",
+  "version": "0.1.0",
+  "redis": ["yes", "no"],
+  "github_actions": ["yes", "no"],
+  "aiohttp": ["yes", "no"],
+  "vagrantfile": ["yes", "no"],
+  "helm": ["yes", "no"],
+  "codecov": ["yes", "no"],
+  "license": [
+        "MIT",
+        "BSD2",
+        "BSD3",
+        "ISC",
+        "Apache2.0",
+        "LGPLv3+",
+        "LGPLv3",
+        "LGPLv2+",
+        "LGPLv2",
+        "no"
+  ],
+  "year": "{{ cookiecutter.year }}"
+}

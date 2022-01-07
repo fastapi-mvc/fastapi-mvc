@@ -1,0 +1,15 @@
+{% raw %}apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "{% endraw %}{{cookiecutter.chart_name}}{% raw %}.fullname" . }}
+  labels:
+    {{- include "{% endraw %}{{cookiecutter.chart_name}}{% raw %}.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: {{ .Values.service.targetPort }}
+      protocol: TCP
+  selector:
+    {{- include "{% endraw %}{{cookiecutter.chart_name}}{% raw %}.selectorLabels" . | nindent 4 }}
+{% endraw %}

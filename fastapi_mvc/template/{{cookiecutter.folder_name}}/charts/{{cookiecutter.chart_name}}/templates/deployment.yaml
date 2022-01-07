@@ -1,0 +1,86 @@
+{% raw %}apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "{% endraw %}{{cookiecutter.chart_name}}{% raw %}.fullname" . }}
+  labels:
+    {{- include "{% endraw %}{{cookiecutter.chart_name}}{% raw %}.labels" . | nindent 4 }}
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "{% endraw %}{{cookiecutter.chart_name}}{% raw %}.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "{% endraw %}{{cookiecutter.chart_name}}{% raw %}.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "{% endraw %}{{cookiecutter.chart_name}}{% raw %}.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - containerPort: 8000
+              protocol: TCP
+          env:
+            - name: FASTAPI_DEBUG
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ include "{% endraw %}{{cookiecutter.chart_name}}{% raw %}.fullname" . }}
+                  key: fastapi_debug
+            - name: FASTAPI_USE_REDIS
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ include "{% endraw %}{{cookiecutter.chart_name}}{% raw %}.fullname" . }}
+                  key: fastapi_use_redis
+            - name: FASTAPI_REDIS_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ include "{% endraw %}{{cookiecutter.chart_name}}{% raw %}.fullname" . }}
+                  key: fastapi_redis_host
+            - name: FASTAPI_REDIS_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ include "{% endraw %}{{cookiecutter.chart_name}}{% raw %}.fullname" . }}
+                  key: fastapi_redis_port
+            - name: FASTAPI_REDIS_USE_SENTINEL
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ include "{% endraw %}{{cookiecutter.chart_name}}{% raw %}.fullname" . }}
+                  key: fastapi_redis_use_sentinel
+          livenessProbe:
+            tcpSocket:
+              port: 8000
+          readinessProbe:
+            httpGet:
+              path: /api/ready
+              port: 8000
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+{% endraw %}

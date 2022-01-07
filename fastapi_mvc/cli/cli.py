@@ -1,9 +1,8 @@
-# -*- coding: utf-8 -*-
-"""fastapi-mvc CLI root."""
+"""FastAPI MVC CLI root implementation."""
 import logging
 
 import click
-from fastapi_mvc.cli.commands.serve import serve
+from fastapi_mvc.cli.commands.new import new
 
 
 @click.group()
@@ -15,7 +14,14 @@ from fastapi_mvc.cli.commands.serve import serve
     default=False,
 )
 def cli(**options):
-    """Fastapi MVC template CLI root."""
+    """Generate and manage fastapi-mvc projects. # noqa: D205,D400
+
+    \f
+
+    Args:
+        options(dict): CLI command options.
+
+    """
     if options["verbose"]:
         level = logging.DEBUG
     else:
@@ -28,4 +34,4 @@ def cli(**options):
     )
 
 
-cli.add_command(serve)
+cli.add_command(new)
