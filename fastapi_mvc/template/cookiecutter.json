@@ -15,6 +15,7 @@
   "aiohttp": ["yes", "no"],
   "vagrantfile": ["yes", "no"],
   "helm": ["yes", "no"],
+  "codecov": ["yes", "no"],
   "license": [
         "MIT license",
         "BSD 2-Clause License",
