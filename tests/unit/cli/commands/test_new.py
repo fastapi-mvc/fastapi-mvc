@@ -1,5 +1,6 @@
 import os
 from datetime import datetime
+from subprocess import CalledProcessError
 
 import mock
 from fastapi_mvc.cli.commands.new import new
@@ -36,17 +37,17 @@ def test_new_default_options(run_mock, check_mock, cookie_mock, cli_runner):
     cookie_mock.assert_called_once_with(
         template_dir,
         extra_context={
-            'project_name': 'testapp',
-            'redis': 'yes',
-            'aiohttp': 'yes',
-            'github_actions': 'yes',
-            'vagrantfile': 'yes',
-            'helm': 'yes',
-            'codecov': 'yes',
-            'author': "Joe",
-            'email': "email@test.com",
-            'repo_url': 'https://your.repo.url.here',
-            'year': datetime.today().year
+            "project_name": "testapp",
+            "redis": "yes",
+            "aiohttp": "yes",
+            "github_actions": "yes",
+            "vagrantfile": "yes",
+            "helm": "yes",
+            "codecov": "yes",
+            "author": "Joe",
+            "email": "email@test.com",
+            "repo_url": "https://your.repo.url.here",
+            "year": datetime.today().year
         },
         no_input=True,
         output_dir="/tmp",
@@ -73,17 +74,53 @@ def test_new_skip_options(check_mock, cookie_mock, cli_runner):
     cookie_mock.assert_called_once_with(
         template_dir,
         extra_context={
-            'project_name': 'testapp',
-            'redis': 'no',
-            'aiohttp': 'no',
-            'github_actions': 'no',
-            'vagrantfile': 'no',
-            'helm': 'no',
-            'codecov': 'no',
-            'author': "Joe",
-            'email': "email@test.com",
-            'repo_url': 'https://your.repo.url.here',
-            'year': datetime.today().year
+            "project_name": "testapp",
+            "redis": "no",
+            "aiohttp": "no",
+            "github_actions": "no",
+            "vagrantfile": "no",
+            "helm": "no",
+            "codecov": "no",
+            "author": "Joe",
+            "email": "email@test.com",
+            "repo_url": "https://your.repo.url.here",
+            "year": datetime.today().year
+        },
+        no_input=True,
+        output_dir=".",
+    )
+    calls = [
+        mock.call(["git", "config", "--get", "user.name"]),
+        mock.call(["git", "config", "--get", "user.email"])
+    ]
+    check_mock.assert_has_calls(calls)
+
+
+@mock.patch(
+    "fastapi_mvc.cli.commands.new.cookiecutter",
+    side_effect=OutputDirExistsException(),
+)
+@mock.patch(
+    "fastapi_mvc.cli.commands.new.subprocess.check_output",
+    side_effect=CalledProcessError(1, [])
+)
+def test_new_no_git_config(check_mock, cookie_mock, cli_runner):
+    result = cli_runner.invoke(new, ["testapp"])
+    assert result.exit_code == 1
+    cookie_mock.assert_called_once_with(
+        template_dir,
+        extra_context={
+            "project_name": "testapp",
+            "redis": "yes",
+            "aiohttp": "yes",
+            "github_actions": "yes",
+            "vagrantfile": "yes",
+            "helm": "yes",
+            "codecov": "yes",
+            "author": "John Doe",
+            "email": "example@email.com",
+            "repo_url": "https://your.repo.url.here",
+            "year": datetime.today().year
         },
         no_input=True,
         output_dir=".",
@@ -109,17 +146,17 @@ def test_new_dir_exists(check_mock, cookie_mock, cli_runner):
     cookie_mock.assert_called_once_with(
         template_dir,
         extra_context={
-            'project_name': 'testapp',
-            'redis': 'yes',
-            'aiohttp': 'yes',
-            'github_actions': 'yes',
-            'vagrantfile': 'yes',
-            'helm': 'yes',
-            'codecov': 'yes',
-            'author': "Joe",
-            'email': "email@test.com",
-            'repo_url': 'https://your.repo.url.here',
-            'year': datetime.today().year
+            "project_name": "testapp",
+            "redis": "yes",
+            "aiohttp": "yes",
+            "github_actions": "yes",
+            "vagrantfile": "yes",
+            "helm": "yes",
+            "codecov": "yes",
+            "author": "Joe",
+            "email": "email@test.com",
+            "repo_url": "https://your.repo.url.here",
+            "year": datetime.today().year
         },
         no_input=True,
         output_dir=".",
