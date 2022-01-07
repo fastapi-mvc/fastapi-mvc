@@ -116,7 +116,7 @@ jobs:
           echo "$HOME/.poetry/bin" >> $GITHUB_PATH
           $HOME/.poetry/bin/poetry config cache-dir $HOME/.poetry/store
       - name: Run unit tests
-        run: make unit-tests
+        run: make unit-test
   integration-tests:
     needs: install
     runs-on: ubuntu-latest
