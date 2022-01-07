@@ -280,15 +280,15 @@ jobs:
         run: |
           echo "$HOME/.poetry/bin" >> $GITHUB_PATH
           $HOME/.poetry/bin/poetry config cache-dir $HOME/.poetry/store
-      - name: Run coverage
+      - name: Run package coverage
+        run: poetry run pytest --cov=fastapi_mvc/cli --cov-fail-under=90 --cov-report=xml --cov-report=term-missing tests
+      - name: Run template coverage
         run: |
-          poetry run pytest --cov=fastapi_mvc/cli --cov-report=xml --cov-report=term-missing  tests
-          mv coverage.xml ~/.poetry/store/test-project
           cd ~/.poetry/store/test-project
-          poetry run pytest --cov=test_project --cov-fail-under=70 --cov-report=xml --cov-report=term-missing --cov-append  tests
+          poetry run pytest --cov=test_project --cov-fail-under=90 --cov-report=xml --cov-report=term-missing tests\
+          mv coverage.xml $GITHUB_WORKSPACE/coverage-template.xml
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v2
         with:
           fail_ci_if_error: true
-          directory: ~/.poetry/store/test-project
-          files: ./coverage.xml
+          files: ./coverage.xml,./coverage-template.xml
