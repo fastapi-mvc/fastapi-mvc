@@ -29,6 +29,18 @@ clean-image:  ## Clean {{cookiecutter.docker_image_name}} image
 .PHONY: install
 install:  ## Install {{cookiecutter.project_name}} with poetry
 	@build/install.sh
+
+.PHONY: metrics
+metrics: install ## Run {{cookiecutter.project_name}} metrics checks
+	@build/metrics.sh
+
+.PHONY: unit-test
+unit-test: install ## Run {{cookiecutter.project_name}} unit tests
+	@build/unit-test.sh
+
+.PHONY: integration-test
+integration-test: install ## Run {{cookiecutter.project_name}} integration tests
+	@build/integration-test.sh
 {% if cookiecutter.helm == "yes" %}
 .PHONY: dev-env
 dev-env: image ## Start a local Kubernetes cluster using minikube and deploy application
