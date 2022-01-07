@@ -178,6 +178,7 @@ jobs:
       - name: Install test-project
         run: |
           cd ~/.poetry/store/test-project
+          export POETRY_CACHE_DIR=$HOME/.poetry/store
           make install
         if: steps.cached-project.outputs.cache-hit != 'true'
   template-metrics:
