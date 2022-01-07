@@ -91,18 +91,8 @@ jobs:
         run: |
           echo "$HOME/.poetry/bin" >> $GITHUB_PATH
           $HOME/.poetry/bin/poetry config cache-dir $HOME/.poetry/store
-      - name: Style guide{% endraw %}
-        run: |
-          poetry run flake8 --select=E,W,I --max-line-length 80 --import-order-style pep8 --exclude .git,__pycache__,.eggs,*.egg,.pytest_cache,{{cookiecutter.folder_name}}/version.py,{{cookiecutter.folder_name}}/__init__.py --tee --output-file=pep8_violations.txt --statistics --count {{cookiecutter.folder_name}}
-          poetry run flake8 --select=D --ignore D301 --tee --output-file=pep257_violations.txt --statistics --count {{cookiecutter.folder_name}}
-      - name: Code errors
-        run: poetry run flake8 --select=F --tee --output-file=flake8_code_errors.txt --statistics --count {{cookiecutter.folder_name}}
-      - name: Code complexity
-        run: poetry run flake8 --select=C901 --tee --output-file=code_complexity.txt --count {{cookiecutter.folder_name}}
-      - name: TODO
-        run: poetry run flake8 --select=T --tee --output-file=todo_occurence.txt --statistics --count {{cookiecutter.folder_name}} tests
-      - name: Black
-        run: poetry run black -l 80 --check {{cookiecutter.folder_name}}{% raw %}
+      - name: Run metrics checks
+        run: make metrics
   unit-tests:
     needs: install
     runs-on: ubuntu-latest
@@ -126,14 +116,7 @@ jobs:
           echo "$HOME/.poetry/bin" >> $GITHUB_PATH
           $HOME/.poetry/bin/poetry config cache-dir $HOME/.poetry/store
       - name: Run unit tests
-        run: poetry run py.test tests/unit --junit-xml=xunit-${{ matrix.python-version }}.xml
-      - name: Run coverage{% endraw %}
-        run: poetry run pytest --cov={{cookiecutter.folder_name}} --cov-fail-under=70 --cov-report=xml --cov-report=term-missing tests{% raw %}
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v2
-        with:
-          fail_ci_if_error: true
-          files: ./coverage.xml
+        run: make unit-tests
   integration-tests:
     needs: install
     runs-on: ubuntu-latest
@@ -157,4 +140,35 @@ jobs:
           echo "$HOME/.poetry/bin" >> $GITHUB_PATH
           $HOME/.poetry/bin/poetry config cache-dir $HOME/.poetry/store
       - name: Run integration tests
-        run: poetry run py.test tests/integration --junit-xml=xunit-${{ matrix.python-version }}.xml{% endraw %}
+        run: make integration-test
+  coverage:
+    needs: install
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [ 3.7, 3.8, 3.9 ]
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Load Poetry cache
+        uses: actions/cache@v2
+        with:
+          path: ~/.poetry
+          key: poetry-${{ matrix.python-version }}-${{ hashFiles('**/pyproject.toml') }}-${{ hashFiles('**/poetry.lock') }}
+      - name: Config path and poetry
+        run: |
+          echo "$HOME/.poetry/bin" >> $GITHUB_PATH
+          $HOME/.poetry/bin/poetry config cache-dir $HOME/.poetry/store
+      - name: Run coverage{% endraw %}
+        run: poetry run pytest --cov={{cookiecutter.package_name}} --cov-fail-under=70 --cov-report=xml --cov-report=term-missing tests
+{%- if cookiecutter.codecov == "yes" %}
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v2
+        with:
+          fail_ci_if_error: true
+          files: ./coverage.xml
+{%- endif %}
