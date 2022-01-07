@@ -30,6 +30,18 @@ clean-image:  ## Clean fastapi-mvc image
 install:  ## Install fastapi-mvc with poetry
 	@build/install.sh
 
+.PHONY: metrics
+metrics: install ## Run fastapi-mvc metrics checks
+	@build/metrics.sh
+
+.PHONY: unit-test
+unit-test: install ## Run fastapi-mvc unit tests
+	@build/unit-test.sh
+
+.PHONY: integration-test
+integration-test: install ## Run fastapi-mvc integration tests
+	@build/integration-test.sh
+
 .PHONY: show-version
 show-version:
 	echo -n $(TAG)
