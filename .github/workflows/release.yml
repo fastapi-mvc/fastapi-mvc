@@ -9,8 +9,6 @@ on:
       prerelease:
         type: boolean
         description: "Prerelease"
-        required: false
-        default: false
 
 jobs:
   release:
