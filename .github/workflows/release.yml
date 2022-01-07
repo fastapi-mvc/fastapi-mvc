@@ -1,0 +1,54 @@
+name: Release and publish
+
+on:
+  workflow_dispatch:
+    inputs:
+      body:
+        description: "Release notes"
+        required: true
+      prerelease:
+        type: boolean
+        description: "Prerelease"
+        required: false
+        default: false
+
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Configure env
+        run: |
+          echo "whl_name=fastapi_mvc-$(cat TAG)-py3-none-any.whl" >> $GITHUB_ENV
+          echo "release_tag=$(cat TAG)" >> $GITHUB_ENV
+      - uses: actions/download-artifact@v2
+        with:
+          name: ${{ env.whl_name }}
+          path: dist/${{ env.whl_name }}
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        with:
+          body: ${{ github.event.inputs.body }}
+          tag: ${{ env.release_tag }}
+          prerelease: ${{ github.event.inputs.prerelease }}
+          files: dist/${{ env.whl_name }}
+          fail_on_unmatched_files: true
+          target_commitish: ${{ github.ref_name }}
+
+  publish:
+    needs: release
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Configure env
+        run: echo "whl_name=fastapi_mvc-$(cat TAG)-py3-none-any.whl" >> $GITHUB_ENV
+      - uses: actions/download-artifact@v2
+        with:
+          name: ${{ env.whl_name }}
+          path: dist/${{ env.whl_name }}
+      - name: Publish package to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          user: __token__
+          password: ${{ secrets.PYPI_TOKEN }}
