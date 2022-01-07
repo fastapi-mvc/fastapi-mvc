@@ -290,4 +290,4 @@ jobs:
         uses: codecov/codecov-action@v2
         with:
           fail_ci_if_error: true
-          files: ./coverage.xml
+          files: ~/.poetry/store/test-project/coverage.xml
