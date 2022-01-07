@@ -29,6 +29,7 @@ flake8-docstrings = "~1.6.0"
 flake8-import-order = "~0.18.1"
 flake8-todo = "^0.7"
 black = "^21.12b0"
+mock = "^4.0.3"
 
 [tool.poetry.scripts]
 fastapi-mvc = "fastapi_mvc.cli.cli:cli"
