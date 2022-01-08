@@ -40,4 +40,8 @@ To activate virtualenv run: $ poetry shell
 Now you should access CLI script: $ fastapi-mvc --help
 Alternatively you can access CLI script via poetry run: $ poetry run fastapi-mvc --help
 To deactivate virtualenv simply type: $ deactivate
+To activate shell completion:
+ - for bash: $ echo 'eval "$(_FASTAPI_MVC_COMPLETE=source_bash fastapi-mvc)' >> ~/.bashrc
+ - for zsh: $ echo 'eval "$(_FASTAPI_MVC_COMPLETE=source_zsh fastapi-mvc)' >> ~/.zshrc
+ - for fish: $ echo 'eval "$(_FASTAPI_MVC_COMPLETE=source_fish fastapi-mvc)' >> ~/.config/fish/completions/fastapi-mvc.fish
 EOF
