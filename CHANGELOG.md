@@ -19,7 +19,8 @@ This file documents changes to [fastapi-mvc](https://github.com/rszamszur/fastap
 - [x] Add K8s integration test workflow.
 - [x] Rename Test workflow to CI.
 - [x] Extend make targets for package and template.
-- [x] Add minor improvements to package and template GitHub workflows.
+- [x] Add minor improvements to package and template GitHub CI workflows.
+- [x] Add GitHub workflows for release and publish.
 
 ### 0.4.0
 
