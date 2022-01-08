@@ -34,7 +34,7 @@ fi
 echo "[install] Begin installing project."
 "$POETRY_HOME"/bin/poetry install --no-interaction
 
-cat <<EOF
+cat << 'EOF'
 Project successfully installed.
 To activate virtualenv run: $ poetry shell
 Now you should access CLI script: $ fastapi-mvc --help
