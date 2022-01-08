@@ -34,10 +34,14 @@ fi
 echo "[install] Begin installing project."
 "$POETRY_HOME"/bin/poetry install --no-interaction
 {% endraw %}
-cat <<EOF
+cat << 'EOF'
 Project successfully installed.
 To activate virtualenv run: $ poetry shell
 Now you should access CLI script: $ {{cookiecutter.script_name}} --help
 Alternatively you can access CLI script via poetry run: $ poetry run {{cookiecutter.script_name}} --help
 To deactivate virtualenv simply type: $ deactivate
+To activate shell completion:
+ - for bash: $ echo 'eval "$(_{{cookiecutter.script_name|upper|replace('-','_')}}_COMPLETE=source_bash {{cookiecutter.script_name}})' >> ~/.bashrc
+ - for zsh: $ echo 'eval "$(_{{cookiecutter.script_name|upper|replace('-','_')}}_COMPLETE=source_zsh {{cookiecutter.script_name}})' >> ~/.zshrc
+ - for fish: $ echo 'eval "$(_{{cookiecutter.script_name|upper|replace('-','_')}}_COMPLETE=source_fish {{cookiecutter.script_name}})' >> ~/.config/fish/completions/{{cookiecutter.script_name}}.fish
 EOF

@@ -1,6 +1,7 @@
-# FastAPI-MVC-template
+<div align="center">
+<h1>fastapi-mvc</h1>
 
-
+![fastapi-mvc](assets/readme.gif)
 [![CI](https://github.com/rszamszur/fastapi-mvc/actions/workflows/main.yml/badge.svg?branch=master)](https://github.com/rszamszur/fastapi-mvc/actions/workflows/main.yml)
 [![codecov](https://codecov.io/gh/rszamszur/fastapi-mvc/branch/master/graph/badge.svg?token=7ESV30TYZS)](https://codecov.io/gh/rszamszur/fastapi-mvc)
 [![K8s integration](https://github.com/rszamszur/fastapi-mvc/actions/workflows/integration.yml/badge.svg)](https://github.com/rszamszur/fastapi-mvc/actions/workflows/integration.yml)
@@ -9,201 +10,234 @@
 ![GitHub](https://img.shields.io/badge/python-3.7%20%7C%203.8%20%7C%203.9-blue)
 ![GitHub](https://img.shields.io/github/license/rszamszur/fastapi-mvc?color=blue)
 
+</div>
+
 ---
 
-FastAPI project core implemented using MVC architectural pattern with base utilities, tests, and pipeline to speed up creating new projects based on FastAPI. 
-Additionally, this repo includes Kubernetes Helm chart, and a script for bootstrapping local development cluster with High Availability Redis cluster deployed using [spotathome/redis-operator](https://github.com/spotahome/redis-operator).
+#### [Example generated project](https://github.com/rszamszur/fastapi-mvc-example)
 
-As of today [FastAPI](https://fastapi.tiangolo.com/) doesn't have any project generator like other known web frameworks ex: Django, Rails, etc., which makes creating new projects based on it that much more time-consuming.
-The idea behind this template is that, one can fork this repo, rename package and then start implementing endpoints logic straightaway, rather than creating the whole project from scratch.
-Moreover, the project is structured in MVC architectural pattern to help developers who don't know FastAPI yet but are familiar with MVC to get up to speed quickly.
+---
 
-Last but not least this application utilizes WSGI + ASGI combination for the best performance possible. Mainly because web servers like Nginx don't know how to async and WSGI is single synchronous callable. You can further read about this [here](https://asgi.readthedocs.io/en/latest/introduction.html).
-Additionally, here are some benchmarks done by wonderful people of StackOverflow:
-* https://stackoverflow.com/a/62977786/10566747
-* https://stackoverflow.com/a/63427961/10566747
+## Features
+<details>
+  <summary>Generated project core implemented using MVC architectural pattern</summary>
+  
+  Generated project is structured in MVC architectural pattern to help developers who don't know FastAPI yet but are familiar with MVC to get up to speed quickly.
+</details>
 
-### Kubernetes local development cluster
+<details>
+  <summary>WSGI + ASGI for high performance and better configuration</summary>
 
-[Helm chart for application](https://github.com/rszamszur/fastapi-mvc/tree/master/charts/fastapi-mvc)
+#### TLDR;
 
-Application stack in Kubernetes:
-![k8s_arch](https://github.com/rszamszur/fastapi-mvc/blob/master/assets/k8s_arch.png?raw=true)
+Running WSGI as a master worker with ASGI workers gives better results than running pure ASGI (for FastAPI for now):
+* better performance (requests per second)
+* better support for different protocols
+* broader configuration
+* better support with using reverse proxy
+---
+First of all, whether it's ASGI, WSGI, or combined, think of this as something that serves the application. For instance, Ruby on Rails uses Puma. The result of any of those servers is a TCP/IP or UNIX socket which is later on utilized by reverse proxy ex: Nginx (a TCP/IP socket you can access directly over the network, but still in production, usually it'll be behind a reverse proxy).
 
-### Project structure
+Now to WSGI + ASGI part. FastAPI is implemented with asyncio (https://docs.python.org/3/library/asyncio.html), so having a pure WSGI server doesn't make sense since you'd lose all the benefits of asynchronous concurrency. That's where ASGI comes in. However, Python journey with asyncio is still pretty young. Most projects have yet to reach maturity level (you should expect early bugs and a limited feature set). FastAPI, as ASGI server uses uvicorn, which is still prior 1.x.x release (17 in total so far, current 0.16.0) and lacks support for some protocols (ex: no HTTP/2).
+Moreover, some reverse proxy might not know how to work with asynchronous servers, and some problems or early bugs on this layer might happen as well.
 
+I'm not saying uvicorn is bad. Quite contrary, if you'd run 4 pure uvicorn workes, you'd still get great results. But if you'd run the same amount of workers with gunicorn (WSGI) as a master worker, it turns out you can even pump those numbers up.
+
+Gunicorn with 4 Uvicorn Workers (source: https://stackoverflow.com/a/62977786/10566747):
 ```
-├── build                           Makefile build scripts
-├── charts                          Helm chart for application
-│   └── fastapi-mvc
-├── fastapi_mvc            Python project root
-│   ├── app                         FastAPI core implementation
-│   │   ├── controllers             FastAPI controllers
-│   │   ├── models                  FastAPI models
-│   │   ├── utils                   FastAPI utilities: RedisClient, AiohttpClient
-│   │   ├── exceptions              FastAPI custom exceptions and exception handlers
-│   │   ├── asgi.py                 FastAPI ASGI node
-│   ├── config                      FastAPI configuration: routes, variables
-│   ├── cli                         Application command line interface implementation
-│   ├── version.py                  Application version
-│   └── wsgi.py                     Application master node: WSGI
-├── tests
-│   ├── integration                 Integration test implementation
-│   └── unit                        Unit tests implementation
-├── manifests                       Manifests for spotathome/redis-operator
-├── CHANGELOG.md
-├── Dockerfile
-├── LICENSE
-├── Makefile
-├── README.md
-├── requirements.txt
-├── setup.py
-├── TAG             
-└── Vagrantfile                     Virtualized environment definiton
+Requests per second: 7891.28 [#/sec] (mean)
+Time per request: 126.722 [ms] (mean)
+Time per request: 0.127 [ms] (mean, across all concurrent requests)
+```
+
+Pure Uvicorn with 4 workers:
+```
+Requests per second: 4359.68 [#/sec] (mean)
+Time per request: 229.375 [ms] (mean)
+Time per request: 0.229 [ms] (mean, across all concurrent requests)
+```
+
+~80% better
+
+I guess gunicorn does a better job in worker management. However, it's a more mature project, so it's probably a matter of time when uvicorn (or other ASGI for that matter) will catch up to this benchmark.
+
+Last but not least, gunicorn gives a ton of settings to configure (https://docs.gunicorn.org/en/stable/settings.html), which can come in handy.
+</details>
+
+<details>
+  <summary>Generated project comes with tests at 99% coverage</summary>
+  
+  Unit test coverage is at 99% regardless of chosen configuration. There is also a placeholder for integration tests with an example dummy test.
+</details>
+
+<details>
+  <summary>Proper Dockerfile created with best practises for the cloud and Kubernetes</summary>
+  
+Container image features:
+* Based on lightweight alpine.
+* Run as PID 1 (with child processes)
+* Utilizes multi-stage build for smallest size possible, also this results in having only necessary libraries/dependencies/tools in outcome container image.
+* DigestSHA - immutable identifier instead of tags, for better reproducibility and security.
+* Signal handling, for Kubernetes to be able to gracefully shut down pods.
+* Created with common layers.
+
+Based on Google [Best practices for building containers](https://cloud.google.com/architecture/best-practices-for-building-containers) and own experience.
+</details>
+
+<details>
+  <summary>Extensive GitHub actions for CI</summary>
+  
+![ci_example](assets/ci.png)
+</details>
+
+<details>
+  <summary>Helm chart for Kubernetes</summary>
+  
+For easily deploying application in Kubernetes cluster.
+</details>
+
+<details>
+  <summary>Reproducible virtualized development environment</summary>
+
+Easily boot virtual machine with Vagrant. Code and test straight away. 
+
+*Note: Project directory is rsync'ed between Host and Guest.*
+
+*Note2: provided Vagrant vm doesn't have port forwarding configured which means, that application won't be accessible on Host OS.*
+</details>
+
+<details>
+  <summary>Redis and aiohttp utilities</summary>
+  
+For your discretion, I've provided some basic utilities:
+* RedisClient `.app.utils.redis`
+* AiohttpClient `.app.utils.aiohttp_client`
+
+They're initialized in `asgi.py` on FastAPI startup event handler, and are available for whole application scope without passing object instances between controllers.
+</details>
+
+<details>
+  <summary>Kubernetes deployment with HA Redis cluster</summary>
+  
+Application stack in Kubernetes:
+![k8s_arch](assets/k8s_arch.png)
+</details>
+
+<details>
+  <summary>Readable and documented code</summary>
+  
+The metrics stage in CI workflow ensures important PEP rules are enforced. For additional readability and formatting checks - black is used. Every piece of generated code is documented with docstrings. Last but not least there is also extended README with how to.
+</details>
+
+<details>
+  <summary>Configurable from env</summary>
+  
+Generated application provides flexibility of configuration. All significant settings are defined by the environment variables, each with the default value.
+</details>
+
+## Quick start
+
+```shell
+$ pip install fastapi-mvc
+$ fastapi-mvc new my-project
+$ cd my-project
+$ my-project serve
 ```
 
 ## Prerequisites
 
-If You want to go easy way and use provided virtualized environment You'll need to have installed:
-* rsync 
-* Vagrant [How to install vagrant](https://www.vagrantup.com/downloads)
-* (Optional) Enabled virtualization in BIOS
-
-Otherwise, for local complete project environment with k8s infrastructure bootstrapping You'll need:
-
-For application:
 * Python 3.7 or later installed [How to install python](https://docs.python-guide.org/starting/installation/)
-* Poetry [How to install poetry](https://python-poetry.org/docs/#installation)
-
-For infrastructure:
-* make, gcc, golang
-* minikube version 1.22.0 [How_to_install_minikube](https://minikube.sigs.k8s.io/docs/start/)
-* helm version 3.0.0 or higher [How_to_install_helm](https://helm.sh/docs/intro/install/)
-* kubectl version 1.16 up to 1.20.8 [How_to_install_kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/)
-* Container runtime interface. NOTE! dev-env script uses docker for minikube, for other CRI you'll need to modify this line in dev-env.sh `MINIKUBE_IN_STYLE=0 minikube start --driver=docker 2>/dev/null`
-
-## Quickstart
-First run `vagrant up` in project root directory and enter virtualized environment using `vagrant ssh`
-Then run following commands to bootstrap local development cluster exposing `fastapi-mvc` application.
-```sh
-$ cd /syncd
-$ make dev-env
-```
-*Note: this process may take a while on first run.*
-
-Once development cluster is up and running you should see summary listing application address:
-```
-Kubernetes cluster ready
-
-fastapi-mvc available under: http://fastapi-mvc.192.168.49.2.nip.io/
-
-You can delete dev-env by issuing: minikube delete
-```
-*Note: above address may be different for your installation.*
-
-*Note: provided virtualized env doesn't have port forwarding configured which means, that bootstrapped application stack in k8s won't be accessible on Host OS.*
-
-Deployed application stack in Kubernetes:
-```shell
-vagrant@ubuntu-focal:/syncd$ make dev-env
-...
-...
-...
-Kubernetes cluster ready
-FastAPI available under: http://fastapi-mvc.192.168.49.2.nip.io/
-You can delete dev-env by issuing: make clean
-vagrant@ubuntu-focal:/syncd$ kubectl get all -n fastapi-mvc
-NAME                                                     READY   STATUS    RESTARTS   AGE
-pod/fastapi-mvc-7f4dd8dc7f-p2kr7                1/1     Running   0          55s
-pod/rfr-redisfailover-persistent-keep-0                  1/1     Running   0          3m39s
-pod/rfr-redisfailover-persistent-keep-1                  1/1     Running   0          3m39s
-pod/rfr-redisfailover-persistent-keep-2                  1/1     Running   0          3m39s
-pod/rfs-redisfailover-persistent-keep-5d46b5bcf8-2r7th   1/1     Running   0          3m39s
-pod/rfs-redisfailover-persistent-keep-5d46b5bcf8-6kqv5   1/1     Running   0          3m39s
-pod/rfs-redisfailover-persistent-keep-5d46b5bcf8-sgtvv   1/1     Running   0          3m39s
-
-NAME                                        TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)     AGE
-service/fastapi-mvc                ClusterIP   10.110.42.252   <none>        8000/TCP    56s
-service/rfs-redisfailover-persistent-keep   ClusterIP   10.110.4.24     <none>        26379/TCP   3m39s
-
-NAME                                                READY   UP-TO-DATE   AVAILABLE   AGE
-deployment.apps/fastapi-mvc                1/1     1            1           55s
-deployment.apps/rfs-redisfailover-persistent-keep   3/3     3            3           3m39s
-
-NAME                                                           DESIRED   CURRENT   READY   AGE
-replicaset.apps/fastapi-mvc-7f4dd8dc7f                1         1         1       55s
-replicaset.apps/rfs-redisfailover-persistent-keep-5d46b5bcf8   3         3         3       3m39s
-
-NAME                                                 READY   AGE
-statefulset.apps/rfr-redisfailover-persistent-keep   3/3     3m39s
-
-NAME                                                                  AGE
-redisfailover.databases.spotahome.com/redisfailover-persistent-keep   3m39s
-vagrant@ubuntu-focal:/syncd$ curl http://fastapi-mvc.192.168.49.2.nip.io/api/ready
-{"status":"ok"}
-```
+* Poetry [How to install poetry](https://python-poetry.org/docs/#installation) or pip [How to install pip](https://pip.pypa.io/en/stable/installation/) installed
+* make (optional)
 
 ## Installation
 
-Using poetry directly:
 ```shell
-poetry install --extras "aioredis aiohttp"
+pip install fastapi-mvc
 ```
 
-Or using make:
-```shell
-make install
-```
-
-You can customize poetry installation with [environment variables](https://python-poetry.org/docs/configuration/#using-environment-variables) 
-```shell
-export POETRY_HOME=/custom/poetry/path
-export POETRY_CACHE_DIR=/custom/poetry/path/cache
-export POETRY_VIRTUALENVS_IN_PROJECT=true
-make install
-```
-
-To bootstrap local minikube Kubernetes cluster exposing `fastapi-mvc` application:
-```shell
-cd fastapi-mvc
-$ make dev-env
-```
-
-## CLI
+## Usage
 
 This package exposes simple CLI for easier interaction:
 
 ```shell
-$ fastapi --help
-Usage: fastapi [OPTIONS] COMMAND [ARGS]...
+$ fastapi-mvc --help
+Usage: fastapi-mvc [OPTIONS] COMMAND [ARGS]...
 
-  fastapi-mvc CLI root.
+  Generate and manage fastapi-mvc projects.
 
 Options:
   -v, --verbose  Enable verbose logging.
   --help         Show this message and exit.
 
 Commands:
-  serve  fastapi-mvc CLI serve command.
-$ fastapi serve --help
-Usage: fastapi serve [OPTIONS]
+  new  Create a new FastAPI application.
+$ fastapi-mvc new --help
+Usage: fastapi-mvc new [OPTIONS] APP_PATH
 
-  fastapi-mvc CLI serve command.
+  Create a new FastAPI application.
+
+  The 'fastapi-mvc new' command creates a new FastAPI application with a
+  default directory structure and configuration at the path you specify.
 
 Options:
-  --host TEXT                  Host to bind.  [default: localhost]
-  -p, --port INTEGER           Port to bind.  [default: 8000]
-  -w, --workers INTEGER RANGE  The number of worker processes for handling
-                               requests.  [default: 2;1<=x<=8]
-  --help                       Show this message and exit.
+  -R, --skip-redis                Skip Redis utility files.
+  -A, --skip-aiohttp              Skip aiohttp utility files.
+  -V, --skip-vagrantfile          Skip Vagrantfile.
+  -H, --skip-helm                 Skip Helm chart files.
+  -G, --skip-actions              Skip GitHub actions files.
+  -C, --skip-codecov              Skip codecov in GitHub actions.
+  -I, --skip-install              Dont run make install
+  --license [MIT|BSD2|BSD3|ISC|Apache2.0|LGPLv3+|LGPLv3|LGPLv2+|LGPLv2|no]
+                                  Choose license.  [default: MIT]
+  --repo-url TEXT                 Repository url.
+  --help                          Show this message and exit.
 ```
 
-*NOTE: Maximum number of workers may be different in your case, it's limited to `multiprocessing.cpu_count()`*
-
-To serve application simply run:
+To generate new project:
 
 ```shell
-$ fastapi serve
+$ fastapi-mvc new my-project
+[install] Begin installing project.
+Updating dependencies
+Resolving dependencies... (0.7s)
+
+Writing lock file
+
+No dependencies to install or update
+
+Installing the current project: my-project (0.1.0)
+Project successfully installed.
+To activate virtualenv run: $ poetry shell
+Now you should access CLI script: $ my-project --help
+Alternatively you can access CLI script via poetry run: $ poetry run my-project --help
+To deactivate virtualenv simply type: $ deactivate
+To activate shell completion:
+ - for bash: $ echo 'eval "$(_MY_PROJECT_COMPLETE=source_bash my-project)' >> ~/.bashrc
+ - for zsh: $ echo 'eval "$(_MY_PROJECT_COMPLETE=source_zsh my-project)' >> ~/.zshrc
+ - for fish: $ echo 'eval "$(_MY_PROJECT_COMPLETE=source_fish my-project)' >> ~/.config/fish/completions/my-project.fish
+```
+
+To serve api:
+
+```shell
+$ cd my-project/
+$ my-project serve
+[2022-01-08 21:47:06 +0100] [2268861] [INFO] Start gunicorn WSGI with ASGI workers.
+[2022-01-08 21:47:06 +0100] [2268861] [INFO] Starting gunicorn 20.1.0
+[2022-01-08 21:47:06 +0100] [2268861] [INFO] Listening at: http://127.0.0.1:8000 (2268861)
+[2022-01-08 21:47:06 +0100] [2268861] [INFO] Using worker: uvicorn.workers.UvicornWorker
+[2022-01-08 21:47:06 +0100] [2268861] [INFO] Server is ready. Spawning workers
+[2022-01-08 21:47:06 +0100] [2268867] [INFO] Booting worker with pid: 2268867
+[2022-01-08 21:47:06 +0100] [2268867] [INFO] Worker spawned (pid: 2268867)
+[2022-01-08 21:47:06 +0100] [2268867] [INFO] Started server process [2268867]
+[2022-01-08 21:47:06 +0100] [2268867] [INFO] Waiting for application startup.
+[2022-01-08 21:47:06 +0100] [2268867] [INFO] Application startup complete.
+[2022-01-08 21:47:06 +0100] [2268873] [INFO] Booting worker with pid: 2268873
+[2022-01-08 21:47:06 +0100] [2268873] [INFO] Worker spawned (pid: 2268873)
+[2022-01-08 21:47:06 +0100] [2268873] [INFO] Started server process [2268873]
+[2022-01-08 21:47:06 +0100] [2268873] [INFO] Waiting for application startup.
+[2022-01-08 21:47:06 +0100] [2268873] [INFO] Application startup complete.
 ```
 
 To confirm it's working:
@@ -212,204 +246,6 @@ To confirm it's working:
 $ curl localhost:8000/api/ready
 {"status":"ok"}
 ```
-
-## Dockerfile
-
-This repository provides Dockerfile for virtualized environment.
-
-*NOTE: Replace podman with docker if it's yours containerization engine.*
-```shell
-$ make image
-$ podman run -dit --name fastapi-mvc -p 8000:8000 fastapi-mvc:$(cat TAG)
-f41e5fa7ffd512aea8f1aad1c12157bf1e66f961aeb707f51993e9ac343f7a4b
-$ podman ps
-CONTAINER ID  IMAGE                                 COMMAND               CREATED        STATUS            PORTS                   NAMES
-f41e5fa7ffd5  localhost/fastapi-mvc:0.1.0  /usr/bin/fastapi ...  2 seconds ago  Up 3 seconds ago  0.0.0.0:8000->8000/tcp  fastapi-mvc
-$ curl localhost:8000/api/ready
-{"status":"ok"}
-```
-
-## Application configuration
-
-This application provides flexibility of configuration. 
-All significant settings are defined by the environment variables, each with the default value. 
-Moreover, package CLI allows overriding core ones: host, port, workers. 
-You can modify all other available configuration settings in the gunicorn.conf.py file.
-
-Priority of overriding configuration:
-1. cli
-2. environment variables
-3. gunicorn.conf.py
-
-All application configuration is available in `fastapi_mvc.config` submodule.
-
-### Environment variables
-
-#### Application configuration
-
-| Key                  | Default                  | Description                                                    |
-|----------------------|--------------------------|----------------------------------------------------------------|
-| FASTAPI_HOST         | `"127.0.0.1"`            | FastAPI host to bind.                                          |
-| FASTAPI_PORT         | `"8000"`                 | FastAPI port to bind.                                          |
-| FASTAPI_WORKERS      | `"2"`                    | Number of gunicorn workers (uvicorn.workers.UvicornWorker)     |
-| FASTAPI_DEBUG        | `"True"`                 | FastAPI logging level. You should disable this for production. |
-| FASTAPI_PROJECT_NAME | `"fastapi_mvc"` | FastAPI project name.                                          |
-| FASTAPI_VERSION      | `"0.4.0"`                | Application version.                                           |
-| FASTAPI_DOCS_URL     | `"/"`                    | Path where swagger ui will be served at.                       |
-| FASTAPI_USE_REDIS    | `"False"`                | Whether or not to use Redis.                                   |
-| FASTAPI_GUNICORN_LOG_LEVEL | `"info"` | The granularity of gunicorn log output |
-| FASTAPI_GUNICORN_LOG_FORMAT | `'%(h)s %(l)s %(u)s %(t)s "%(r)s" %(s)s %(b)s "%(f)s" "%(a)s"'` | Gunicorn log format |
-
-
-#### Redis configuration
-
-| Key                        | Default       | Description                               |
-|----------------------------|---------------|-------------------------------------------|
-| FASTAPI_REDIS_HOTS         | `"127.0.0.1"` | Redis host.                               |
-| FASTAPI_REDIS_PORT         | `"6379"`      | Redis port.                               |
-| FASTAPI_REDIS_USERNAME     | `""`          | Redis username.                           |
-| FASTAPI_REDIS_PASSWORD     | `""`          | Redis password.                           |
-| FASTAPI_REDIS_USE_SENTINEL | `"False"`     | If provided Redis config is for Sentinel. |
-
-### gunicorn.conf.py
-
-1. [Source](https://github.com/rszamszur/fastapi-mvc/blob/master/fastapi_mvc/config/gunicorn.conf.py)
-2. [Gunicorn configuration file documentation](https://docs.gunicorn.org/en/latest/settings.html)
-
-### Routes definition
-
-Endpoints are defined in `fastapi_mvc.config.router`. Just simply import your controller and include it to FastAPI router:
-
-```python
-from fastapi import APIRouter
-from fastapi_mvc.app.controllers.api.v1 import ready
-
-router = APIRouter(
-    prefix="/api"
-)
-
-router.include_router(ready.router, tags=["ready"])
-```
-
-## Development
-
-You can implement your own web routes logic straight away in `.app.controllers.api.v1` submodule. For more information please see [FastAPI documentation](https://fastapi.tiangolo.com/tutorial/).
-
-### Utilities
-
-For your discretion, I've provided some basic utilities:
-* RedisClient `.app.utils.redis`
-* AiohttpClient `.app.utils.aiohttp_client`
-
-They're initialized in `asgi.py` on FastAPI startup event handler:
-
-```python
-async def on_startup():
-    """Fastapi startup event handler.
-
-    Creates RedisClient and AiohttpClient session.
-
-    """
-    log.debug("Execute FastAPI startup event handler.")
-    # Initialize utilities for whole FastAPI application without passing object
-    # instances within the logic. Feel free to disable it if you don't need it.
-    if settings.USE_REDIS:
-        await RedisClient.open_redis_client()
-
-    AiohttpClient.get_aiohttp_client()
-
-
-async def on_shutdown():
-    """Fastapi shutdown event handler.
-
-    Destroys RedisClient and AiohttpClient session.
-
-    """
-    log.debug("Execute FastAPI shutdown event handler.")
-    # Gracefully close utilities.
-    if settings.USE_REDIS:
-        await RedisClient.close_redis_client()
-
-    await AiohttpClient.close_aiohttp_client()
-```
-
-and are available for whole application scope without passing object instances. In order to utilize it just execute classmethods directly.
-
-Example:
-```python
-from fastapi_mvc.app.utils import RedisClient
-
-response = RedisClient.get("Key")
-```
-```python
-from fastapi_mvc.app.utils import AiohttpClient
-
-response = AiohttpClient.get("http://foo.bar")
-```
-
-If you don't need it just simply remove the utility, init on start up and tests.
-
-### Exceptions
-
-#### [HTTPException and handler](https://github.com/rszamszur/fastapi-mvc/blob/master/fastapi_mvc/app/exceptions/http.py)
-
-This exception combined with `http_exception_handler` method allows you to use it the same manner as you'd use `FastAPI.HTTPException` with one difference. 
-You have freedom to define returned response body, whereas in `FastAPI.HTTPException` content is returned under "detail" JSON key.
-In this application custom handler is added in `asgi.py` while initializing FastAPI application. 
-This is needed in order to handle it globally.
-
-[Example usage in ready controller](https://github.com/rszamszur/fastapi-mvc/blob/master/fastapi_mvc/app/controllers/api/v1/ready.py)
-
-### Web Routes
-All routes documentation is available on:
-* `/` with Swagger
-* `/redoc` or ReDoc.
-
-## Renaming
-
-To your discretion I've provided simple bash script for renaming whole project, although I do not guarantee it will work with all possible names.
-
-It takes two parameters:
-1) new project name *NOTE: if your project name contains '-' this script should automatically change '-' to '_' wherever it's needed.*
-2) new project url
-
-```shell
-#!/usr/bin/env bash
-
-if [ -n "$DEBUG" ]; then
-  set -x
-fi
-
-set -o errexit
-set -o nounset
-set -o pipefail
-
-if [[ -z "$1" ]]; then
-  echo "Parameter project name is empty."
-  exit 1
-fi
-
-if [[ -z "$2" ]]; then
-  echo "Parameter project url is empty."
-  exit 1
-fi
-
-grep -rl "https://github.com/rszamszur/fastapi-mvc" | xargs sed -i "s/https:\/\/github.com\/rszamszur\/fastapi-mvc/${2//\//\\/}/g"
-mv charts/fastapi-mvc charts/$1
-
-if [[ $1 == *"-"* ]]; then
-  mv fastapi_mvc ${1//-/_}
-  grep -rl --exclude-dir=.git fastapi_mvc | xargs sed -i "s/fastapi_mvc/${1//-/_}/g"
-else
-  mv fastapi_mvc $1
-  grep -rl --exclude-dir=.git fastapi_mvc | xargs sed -i "s/fastapi_mvc/$1/g"
-fi
-
-grep -rl --exclude-dir=.git fastapi-mvc | xargs sed -i "s/fastapi-mvc/$1/g"
-grep -rl --exclude-dir=.git 'fastapi-mvc' | xargs sed -i "s/fastapi-mvc/$1/g"
-grep -rl --exclude-dir=.git 'Fastapi MVC template' | xargs sed -i "s/fastapi-mvc/$1/g"
-```
-*NOTE: Afterwards you may still want to edit some docstrings or descriptions.*
 
 ## Contributing
 

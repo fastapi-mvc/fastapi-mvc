@@ -92,13 +92,13 @@ done
 
 echo "[dev-env] installing {{ cookiecutter.folder_name }} charts"
 helm upgrade --install \
-    {{ cookiecutter.folder_name }} charts/{{ cookiecutter.folder_name }} \
+    {{ cookiecutter.folder_name }} charts/{{ cookiecutter.chart_name }} \
     --namespace {{ cookiecutter.folder_name }} \
     --set ingress.host.name="{{ cookiecutter.folder_name }}.${INGRESS_HOST}"
 {% else %}
 echo "[dev-env] installing {{ cookiecutter.folder_name }} charts"
 helm upgrade --install \
-    {{ cookiecutter.folder_name }} charts/{{ cookiecutter.folder_name }} \
+    {{ cookiecutter.folder_name }} charts/{{ cookiecutter.chart_name }} \
     --namespace {{ cookiecutter.folder_name }} \
     --set ingress.host.name="{{ cookiecutter.folder_name }}.${INGRESS_HOST}" \
     --set configMap.useRedis="false"
