@@ -50,6 +50,6 @@ jobs:
           cd test-project
           vagrant ssh -c "cd /syncd && make dev-env"
       - name: Test exposed fastapi_mvc application
-        run:
+        run: |
           cd test-project
           vagrant ssh -c 'curl "http://test-project.$(minikube ip).nip.io/api/ready"'
