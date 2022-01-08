@@ -1,0 +1,174 @@
+{% raw %}name: CI
+
+on: [push, pull_request]
+
+jobs:
+  # This job checks if an identical workflow is being triggered by different
+  # event and skips it. For instance there is no need to run the same pipeline
+  # twice for pull_request and push for identical commit sha.
+  pre_job:
+    runs-on: ubuntu-latest
+    outputs:
+      should_skip: ${{ steps.skip_check.outputs.should_skip }}
+    steps:
+      - id: skip_check
+        uses: fkirc/skip-duplicate-actions@v3.4.1
+        with:
+          skip_after_successful_duplicate: 'true'
+          concurrent_skipping: same_content
+          do_not_skip: '["pull_request", "workflow_dispatch", "schedule"]'
+  install:
+    needs: pre_job
+    if: ${{ needs.pre_job.outputs.should_skip != 'true' }}
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [ 3.7, 3.8, 3.9 ]
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Init Poetry cache
+        id: cached-poetry
+        uses: actions/cache@v2
+        with:
+          path: ~/.poetry
+          key: poetry-${{ matrix.python-version }}-${{ hashFiles('**/pyproject.toml') }}-${{ hashFiles('**/poetry.lock') }}
+      - name: Install project
+        run: |
+          export POETRY_HOME=$HOME/.poetry
+          export POETRY_CACHE_DIR=$HOME/.poetry/store
+          make install
+        if: steps.cached-poetry.outputs.cache-hit != 'true'
+  build:
+    needs: install
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.9
+      - name: Load Poetry cache
+        uses: actions/cache@v2
+        with:
+          path: ~/.poetry
+          key: poetry-3.9-${{ hashFiles('**/pyproject.toml') }}-${{ hashFiles('**/poetry.lock') }}
+      - name: Build wheel{% endraw %}
+        run: |
+          $HOME/.poetry/bin/poetry config cache-dir $HOME/.poetry/store
+          $HOME/.poetry/bin/poetry build
+          echo "whl_name={{cookiecutter.package_name}}-$(cat TAG)-$GITHUB_SHA" >> $GITHUB_ENV{% raw %}
+      - name: Archive build artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{ env.whl_name }}
+          path: dist
+          retention-days: 7
+  metrics:
+    needs: install
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [ 3.7, 3.8, 3.9 ]
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Load Poetry cache
+        uses: actions/cache@v2
+        with:
+          path: ~/.poetry
+          key: poetry-${{ matrix.python-version }}-${{ hashFiles('**/pyproject.toml') }}-${{ hashFiles('**/poetry.lock') }}
+      - name: Config path and poetry
+        run: |
+          echo "$HOME/.poetry/bin" >> $GITHUB_PATH
+          $HOME/.poetry/bin/poetry config cache-dir $HOME/.poetry/store
+      - name: Run metrics checks
+        run: make metrics
+  unit-tests:
+    needs: install
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [ 3.7, 3.8, 3.9 ]
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Load Poetry cache
+        uses: actions/cache@v2
+        with:
+          path: ~/.poetry
+          key: poetry-${{ matrix.python-version }}-${{ hashFiles('**/pyproject.toml') }}-${{ hashFiles('**/poetry.lock') }}
+      - name: Config path and poetry
+        run: |
+          echo "$HOME/.poetry/bin" >> $GITHUB_PATH
+          $HOME/.poetry/bin/poetry config cache-dir $HOME/.poetry/store
+      - name: Run unit tests
+        run: make unit-test
+  integration-tests:
+    needs: install
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [ 3.7, 3.8, 3.9 ]
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Load Poetry cache
+        uses: actions/cache@v2
+        with:
+          path: ~/.poetry
+          key: poetry-${{ matrix.python-version }}-${{ hashFiles('**/pyproject.toml') }}-${{ hashFiles('**/poetry.lock') }}
+      - name: Config path and poetry
+        run: |
+          echo "$HOME/.poetry/bin" >> $GITHUB_PATH
+          $HOME/.poetry/bin/poetry config cache-dir $HOME/.poetry/store
+      - name: Run integration tests
+        run: make integration-test
+  coverage:
+    needs: install
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [ 3.7, 3.8, 3.9 ]
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Load Poetry cache
+        uses: actions/cache@v2
+        with:
+          path: ~/.poetry
+          key: poetry-${{ matrix.python-version }}-${{ hashFiles('**/pyproject.toml') }}-${{ hashFiles('**/poetry.lock') }}
+      - name: Config path and poetry
+        run: |
+          echo "$HOME/.poetry/bin" >> $GITHUB_PATH
+          $HOME/.poetry/bin/poetry config cache-dir $HOME/.poetry/store
+      - name: Run coverage{% endraw %}
+        run: poetry run pytest --cov={{cookiecutter.package_name}} --cov-fail-under=70 --cov-report=xml --cov-report=term-missing tests
+{%- if cookiecutter.codecov == "yes" %}
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v2
+        with:
+          fail_ci_if_error: true
+          files: ./coverage.xml
+{%- endif %}

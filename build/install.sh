@@ -25,19 +25,23 @@ if [[ ${PYTHON_VERSION} < "3.7.0" ]]; then
   exit 1
 fi
 
-POETRY_HOME="${POETRY_HOME:=${HOME}/.local}"
+POETRY_HOME="${POETRY_HOME:=${HOME}/.poetry}"
 if ! command -v "$POETRY_HOME"/bin/poetry &> /dev/null; then
   echo "[install] Poetry is not installed. Begin download and install."
   curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/install-poetry.py | POETRY_HOME=$POETRY_HOME $PYTHON -
 fi
 
 echo "[install] Begin installing project."
-"$POETRY_HOME"/bin/poetry install --extras "aioredis aiohttp" --no-interaction
+"$POETRY_HOME"/bin/poetry install --no-interaction
 
-cat <<EOF
+cat << 'EOF'
 Project successfully installed.
 To activate virtualenv run: $ poetry shell
-Now you should access CLI script: $ fastapi --help
-Alternatively you can access CLI script via poetry run: $ poetry run fastapi --help
+Now you should access CLI script: $ fastapi-mvc --help
+Alternatively you can access CLI script via poetry run: $ poetry run fastapi-mvc --help
 To deactivate virtualenv simply type: $ deactivate
+To activate shell completion:
+ - for bash: $ echo 'eval "$(_FASTAPI_MVC_COMPLETE=source_bash fastapi-mvc)' >> ~/.bashrc
+ - for zsh: $ echo 'eval "$(_FASTAPI_MVC_COMPLETE=source_zsh fastapi-mvc)' >> ~/.zshrc
+ - for fish: $ echo 'eval "$(_FASTAPI_MVC_COMPLETE=source_fish fastapi-mvc)' >> ~/.config/fish/completions/fastapi-mvc.fish
 EOF

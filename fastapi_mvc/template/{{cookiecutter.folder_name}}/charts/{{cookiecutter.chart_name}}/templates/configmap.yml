@@ -1,0 +1,13 @@
+{% raw %}apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "{% endraw %}{{cookiecutter.chart_name}}{% raw %}.fullname" . }}
+  labels:
+    {{- include "{% endraw %}{{cookiecutter.chart_name}}{% raw %}.labels" . | nindent 4 }}
+data:
+  fastapi_debug: "{{ .Values.configMap.debug }}"
+  fastapi_use_redis: "{{ .Values.configMap.useRedis }}"
+  fastapi_redis_host: "{{ .Values.configMap.redisHost }}"
+  fastapi_redis_port: "{{ .Values.configMap.redisPort }}"
+  fastapi_redis_use_sentinel: "{{ .Values.configMap.redisUseSentinel }}"
+{% endraw %}

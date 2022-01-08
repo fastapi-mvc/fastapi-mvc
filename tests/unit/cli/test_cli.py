@@ -1,4 +1,4 @@
-from fastapi_mvc_template.cli.cli import cli
+from fastapi_mvc.cli.cli import cli
 
 
 def test_root(cli_runner):
@@ -7,9 +7,9 @@ def test_root(cli_runner):
 
 
 def test_root_options(cli_runner):
-    result = cli_runner.invoke(cli, ["--verbose", "serve", "--help"])
+    result = cli_runner.invoke(cli, ["--verbose", "new", "--help"])
     assert result.exit_code == 0
-    result = cli_runner.invoke(cli, ["serve", "--help"])
+    result = cli_runner.invoke(cli, ["new", "--help"])
     assert result.exit_code == 0
 
 

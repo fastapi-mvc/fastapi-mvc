@@ -1,0 +1,40 @@
+{% raw %}name: K8s integration
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  # This job checks if an identical workflow is being triggered by different
+  # event and skips it. For instance there is no need to run the same pipeline
+  # twice for pull_request and push for identical commit sha.
+  pre_job:
+    runs-on: ubuntu-latest
+    outputs:
+      should_skip: ${{ steps.skip_check.outputs.should_skip }}
+    steps:
+      - id: skip_check
+        uses: fkirc/skip-duplicate-actions@v3.4.1
+        with:
+          skip_after_successful_duplicate: 'true'
+          concurrent_skipping: same_content
+          do_not_skip: '["pull_request", "workflow_dispatch", "schedule"]'
+  test:
+    needs: pre_job
+    if: ${{ needs.pre_job.outputs.should_skip != 'true' }}
+    runs-on: macos-10.15
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Run vagrant up
+        run: vagrant up
+
+      - name: Bootstrap minukube cluster and Redis operator
+        run: vagrant ssh -c "cd /syncd && make dev-env"{% endraw %}
+      - name: Test exposed {{cookiecutter.project_name}} application
+        run: vagrant ssh -c 'curl "http://{{cookiecutter.folder_name}}.$(minikube ip).nip.io/api/ready"'

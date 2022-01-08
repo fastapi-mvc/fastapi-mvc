@@ -1,51 +1,50 @@
 [tool.poetry]
-name = "fastapi-mvc-template"
-version = "0.4.0"
-description = "FastAPI MVC template"
+name = "fastapi-mvc"
+version = "0.5.0rc1"
+description = "Generate and manage FastAPI projects"
 authors = ["Radosław Szamszur <radoslawszamszur@gmail.com>"]
 license = "MIT"
-repository = "https://github.com/rszamszur/fastapi-mvc-template"
+readme = "README.md"
+repository = "https://github.com/rszamszur/fastapi-mvc"
 classifiers = [
-    'Intended Audience :: Developers',
-    'Natural Language :: English',
-    'Topic :: Software Development :: FastAPI MVC template',
-    'Programming Language :: Python :: 3',
-    'Programming Language :: Python :: 3.7',
-    'Programming Language :: Python :: 3.8',
-    'Programming Language :: Python :: 3.9',
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Natural Language :: English",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "License :: OSI Approved :: MIT License",
+    "Topic :: Software Development",
+    "Topic :: Software Development :: Code Generators",
+    "Topic :: Software Development :: Build Tools",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Software Development :: Libraries",
+    "Framework :: FastAPI",
 ]
 
 [tool.poetry.dependencies]
 python = "^3.7"
-fastapi = "~0.70.0"
-uvicorn = {extras = ["standard"], version = "~0.15.0"}
-gunicorn = "~20.1.0"
+cookiecutter = "~1.7.3"
 click = "~7.1.2"
-aioredis = {version = "~2.0.0", optional = true}
-aiohttp = {version = "~3.8.0", optional = true}
 
 [tool.poetry.dev-dependencies]
-pytest = "~6.2.4"
+pytest = "~6.2.5"
 pytest-cov = "~2.12.0"
-pytest-asyncio = "~0.15.1"
-requests = "~2.25.1"
-aioresponses = "~0.7.2"
-mock = "~4.0.3"
+pytest-cookies = "~0.6.1"
 flake8 = "~3.9.2"
 flake8-docstrings = "~1.6.0"
 flake8-import-order = "~0.18.1"
 flake8-todo = "^0.7"
 black = "^21.12b0"
+mock = "^4.0.3"
 
 [tool.poetry.scripts]
-fastapi = 'fastapi_mvc_template.cli.cli:cli'
-
-[tool.poetry.extras]
-aioredis = ["aioredis"]
-aiohttp = ["aiohttp"]
+fastapi-mvc = "fastapi_mvc.cli.cli:cli"
 
 [tool.poetry.urls]
-"Issues" = "https://github.com/rszamszur/fastapi-mvc-template/issues"
+"Issues" = "https://github.com/rszamszur/fastapi-mvc/issues"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

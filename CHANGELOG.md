@@ -1,8 +1,12 @@
 # Changelog
 
-This file documents changes to [fastapi-mvc-template](https://github.com/rszamszur/fastapi-mvc-template). The release numbering uses [semantic versioning](http://semver.org).
+This file documents changes to [fastapi-mvc](https://github.com/rszamszur/fastapi-mvc). The release numbering uses [semantic versioning](http://semver.org).
 
 ### Unreleased
+
+### Features
+
+- [x] Refactor project from the pure template into the package which generates fastapi-mvc projects from cookiecutter template (#6). PR #10
 
 ### Fixed
 
@@ -10,9 +14,13 @@ This file documents changes to [fastapi-mvc-template](https://github.com/rszamsz
 
 ### Internal
 
+- [x] Rename project to fastapi-mvc.
 - [x] Add FASTAPI_DEBUG env var in Helm chart config map and deployment.
 - [x] Add K8s integration test workflow.
 - [x] Rename Test workflow to CI.
+- [x] Extend make targets for package and template.
+- [x] Add minor improvements to package and template GitHub CI workflows.
+- [x] Add GitHub workflows for release and publish (#8). PR #11
 
 ### 0.4.0
 
@@ -31,7 +39,7 @@ This file documents changes to [fastapi-mvc-template](https://github.com/rszamsz
   * aiohttp (3.7.4.post0 -> 3.8.1)
   * uvicorn (0.14.0 -> 0.15.0)
 - [x] Improve submodules import paths.
-- [x] Move fastapi_mvc_template.app.config submodule to fastapi_mvc_template.config.
+- [x] Move fastapi_mvc.app.config submodule to fastapi_mvc.config.
 - [x] Refactor application and redis config with using pydantic.BaseSetting.
 - [x] Extend unit tests, and increase coverage to 99%.
 - [x] Change RedisClient.ping() method to return false instead of raising an RedisError exception.
@@ -55,7 +63,7 @@ This file documents changes to [fastapi-mvc-template](https://github.com/rszamsz
 ### Features
 
 - [x] Implement make dev-env target for bootstrapping a local Kubernetes cluster with High Availability Redis cluster, and deploy application.
-- [x] Add Helm charts for fastapi-mvc-template.
+- [x] Add Helm charts for fastapi-mvc.
 - [x] Add Vagrantfile.
 
 ### Internal

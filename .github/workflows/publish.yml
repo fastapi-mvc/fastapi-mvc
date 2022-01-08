@@ -1,0 +1,27 @@
+name: Publish
+
+on:
+  release:
+    types:
+      - created
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Configure env
+        run: echo "whl_name=fastapi_mvc-$(cat TAG)-$GITHUB_SHA" >> $GITHUB_ENV
+      - name: Download wheel artifact
+        uses: dawidd6/action-download-artifact@v2
+        with:
+          workflow: main.yml
+          workflow_conclusion: success
+          name: ${{ env.whl_name }}
+          path: dist
+      - name: Publish package to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          user: __token__
+          password: ${{ secrets.PYPI_TOKEN }}

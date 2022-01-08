@@ -30,12 +30,26 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-
+      - name: Install package
+        run: |
+          export POETRY_HOME=$HOME/.poetry
+          export POETRY_CACHE_DIR=$HOME/.poetry/store
+          make install
+      - name: Config path and poetry
+        run: |
+          echo "$HOME/.poetry/bin" >> $GITHUB_PATH
+          $HOME/.poetry/bin/poetry config cache-dir $HOME/.poetry/store
+      - name: Generate test-project
+        run: poetry run fastapi-mvc new test-project
       - name: Run vagrant up
-        run: vagrant up
-
+        run: |
+         cd test-project
+         vagrant up
       - name: Bootstrap minukube cluster and Redis operator
-        run: vagrant ssh -c "cd /syncd && make dev-env"
-
-      - name: Test exposed fastapi_mvc_template application
-        run: vagrant ssh -c 'curl "http://fastapi-mvc-template.$(minikube ip).nip.io/api/ready"'
+        run: |
+          cd test-project
+          vagrant ssh -c "cd /syncd && make dev-env"
+      - name: Test exposed fastapi_mvc application
+        run:
+          cd test-project
+          vagrant ssh -c 'curl "http://test-project.$(minikube ip).nip.io/api/ready"'
