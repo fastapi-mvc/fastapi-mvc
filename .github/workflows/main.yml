@@ -61,13 +61,13 @@ jobs:
       - name: Build wheel
         run: |
           $HOME/.poetry/bin/poetry config cache-dir $HOME/.poetry/store
-          $HOME/.poetry/bin/poetry build -f wheel
-          echo "whl_name=fastapi_mvc-$(cat TAG)-py3-none-any.whl" >> $GITHUB_ENV
+          $HOME/.poetry/bin/poetry build
+          echo "whl_name=fastapi_mvc-$(cat TAG)-$GITHUB_SHA" >> $GITHUB_ENV
       - name: Archive build artifacts
         uses: actions/upload-artifact@v2
         with:
           name: ${{ env.whl_name }}
-          path: dist/${{ env.whl_name }}
+          path: dist
           retention-days: 7
   metrics:
     needs: install
