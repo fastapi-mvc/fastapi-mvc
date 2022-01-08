@@ -1,0 +1,37 @@
+name: Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      body:
+        description: "Release notes"
+        required: true
+      prerelease:
+        type: boolean
+        description: "Prerelease"
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Configure env
+        run: |
+          echo "whl_name=fastapi_mvc-$(cat TAG)-$GITHUB_SHA" >> $GITHUB_ENV
+          echo "release_tag=$(cat TAG)" >> $GITHUB_ENV
+      - name: Download wheel artifact
+        uses: dawidd6/action-download-artifact@v2
+        with:
+          workflow: main.yml
+          workflow_conclusion: success
+          name: ${{ env.whl_name }}
+          path: dist
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        with:
+          body: ${{ github.event.inputs.body }}
+          tag: ${{ env.release_tag }}
+          prerelease: ${{ github.event.inputs.prerelease }}
+          files: dist/
+          fail_on_unmatched_files: true
