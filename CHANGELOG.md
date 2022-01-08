@@ -20,7 +20,7 @@ This file documents changes to [fastapi-mvc](https://github.com/rszamszur/fastap
 - [x] Rename Test workflow to CI.
 - [x] Extend make targets for package and template.
 - [x] Add minor improvements to package and template GitHub CI workflows.
-- [x] Add GitHub workflows for release and publish.
+- [x] Add GitHub workflows for release and publish (#8). PR #11
 
 ### 0.4.0
 
