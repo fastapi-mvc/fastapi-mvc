@@ -6,9 +6,11 @@ from fastapi import APIRouter
 from {{cookiecutter.package_name}}.config import settings
 {%- if cookiecutter.redis == "yes" %}
 from {{cookiecutter.package_name}}.app.utils import RedisClient
-{%- endif %}
 from {{cookiecutter.package_name}}.app.models import ReadyResponse, ErrorResponse
 from {{cookiecutter.package_name}}.app.exceptions import HTTPException
+{%- else %}
+from {{cookiecutter.package_name}}.app.models import ReadyResponse
+{%- endif %}
 
 router = APIRouter()
 log = logging.getLogger(__name__)
@@ -43,8 +45,7 @@ async def readiness_check():
 
     """
     log.info("Started GET /ready")
-    {%- if cookiecutter.redis == "yes" %}
-
+    {% if cookiecutter.redis == "yes" %}
     if settings.USE_REDIS and not await RedisClient.ping():
         log.error("Could not connect to Redis")
         raise HTTPException(
@@ -53,6 +54,10 @@ async def readiness_check():
                 code=502, message="Could not connect to Redis"
             ).dict(exclude_none=True),
         )
-
-    {%- endif %}
+    {% else %}
+    if settings.USE_REDIS:
+        log.warning(
+            "Redis utility skipped. Please set FASTAPI_USE_REDIS=false"
+        )
+    {% endif %}
     return ReadyResponse(status="ok")

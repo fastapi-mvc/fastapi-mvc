@@ -16,7 +16,7 @@ Vagrant.configure("2") do |config|
   end
   config.vm.provision "shell", inline: <<-SHELL
       apt-get update && apt-get upgrade -y
-      apt-get install -y curl docker.io snapd git golang python3 python3-pip
+      apt-get install -y curl docker.io snapd git golang python3 python3-pip python3-venv
       systemctl enable docker
       # NOTE: Fix resolving DNS in docker
       echo '{ "dns": ["192.168.0.1", "8.8.8.8"] }' > /etc/docker/daemon.json

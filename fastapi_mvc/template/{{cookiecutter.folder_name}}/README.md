@@ -57,6 +57,7 @@ You can delete dev-env by issuing: minikube delete
 *Note: provided virtualized env doesn't have port forwarding configured which means, that bootstrapped application stack in k8s won't be accessible on Host OS.*
 
 Deployed application stack in Kubernetes:
+{%- if cookiecutter.redis == "yes" %}
 ```shell
 vagrant@ubuntu-focal:/syncd$ make dev-env
 ...
@@ -95,6 +96,33 @@ redisfailover.databases.spotahome.com/redisfailover-persistent-keep   3m39s
 vagrant@ubuntu-focal:/syncd$ curl http://{{cookiecutter.folder_name}}.192.168.49.2.nip.io/api/ready
 {"status":"ok"}
 ```
+
+{%- else %}
+```shell
+vagrant@ubuntu-focal:/syncd$ make dev-env
+...
+...
+...
+Kubernetes cluster ready
+FastAPI available under: http://{{cookiecutter.folder_name}}.192.168.49.2.nip.io/
+You can delete dev-env by issuing: make clean
+vagrant@ubuntu-focal:/syncd$ kubectl get all -n {{cookiecutter.folder_name}}
+NAME                        READY   STATUS    RESTARTS   AGE
+pod/{{cookiecutter.folder_name}}-649966bb7f-r694l   1/1     Running   0          114s
+
+NAME           TYPE        CLUSTER-IP    EXTERNAL-IP   PORT(S)    AGE
+service/{{cookiecutter.folder_name}}   ClusterIP   10.97.16.46   <none>        8000/TCP   114s
+
+NAME                   READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/{{cookiecutter.folder_name}}   1/1     1            1           114s
+
+NAME                              DESIRED   CURRENT   READY   AGE
+replicaset.apps/{{cookiecutter.folder_name}}-649966bb7f   1         1         1       114s
+vagrant@ubuntu-focal:/syncd$ curl http://{{cookiecutter.folder_name}}.192.168.49.2.nip.io/api/ready
+{"status":"ok"}
+```
+
+{%- endif %}
 
 ## Installation
 
@@ -211,6 +239,7 @@ All application configuration is available in `{{cookiecutter.package_name}}.con
 | FASTAPI_USE_REDIS    | `"False"`                                                       | Whether or not to use Redis.                                   |
 | FASTAPI_GUNICORN_LOG_LEVEL | `"info"`                                                        | The granularity of gunicorn log output |
 | FASTAPI_GUNICORN_LOG_FORMAT | `'%(h)s %(l)s %(u)s %(t)s "%(r)s" %(s)s %(b)s "%(f)s" "%(a)s"'` | Gunicorn log format |
+{%- if cookiecutter.redis == "yes" %}
 
 #### Redis configuration
 
@@ -221,6 +250,7 @@ All application configuration is available in `{{cookiecutter.package_name}}.con
 | FASTAPI_REDIS_USERNAME     | `""`          | Redis username.                           |
 | FASTAPI_REDIS_PASSWORD     | `""`          | Redis password.                           |
 | FASTAPI_REDIS_USE_SENTINEL | `"False"`     | If provided Redis config is for Sentinel. |
+{%- endif %}
 
 ### gunicorn.conf.py
 
@@ -245,12 +275,17 @@ router.include_router(ready.router, tags=["ready"])
 ## Development
 
 You can implement your own web routes logic straight away in `{{cookiecutter.package_name}}.app.controllers.api.v1` submodule. For more information please see [FastAPI documentation](https://fastapi.tiangolo.com/tutorial/).
+{%- if cookiecutter.redis == "yes" or cookiecutter.aiohttp == "yes" %}
 
 ### Utilities
 
 For your discretion, I've provided some basic utilities:
+{%- if cookiecutter.redis == "yes" %}
 * RedisClient `{{cookiecutter.package_name}}.app.utils.redis`
+{%- endif %}
+{%- if cookiecutter.aiohttp == "yes" %}
 * AiohttpClient `{{cookiecutter.package_name}}.app.utils.aiohttp_client`
+{%- endif %}
 
 They're initialized in `asgi.py` on FastAPI startup event handler:
 
@@ -264,10 +299,19 @@ async def on_startup():
     log.debug("Execute FastAPI startup event handler.")
     # Initialize utilities for whole FastAPI application without passing object
     # instances within the logic. Feel free to disable it if you don't need it.
+    {%- if cookiecutter.redis == "yes" and cookiecutter.aiohttp == "yes" %}
     if settings.USE_REDIS:
         await RedisClient.open_redis_client()
 
     AiohttpClient.get_aiohttp_client()
+    {%- elif cookiecutter.redis == "yes" %}
+    if settings.USE_REDIS:
+        await RedisClient.open_redis_client()
+    {%- elif cookiecutter.aiohttp == "yes" %}
+    AiohttpClient.get_aiohttp_client()
+    {%- else %}
+    pass
+    {%- endif %}
 
 
 async def on_shutdown():
@@ -278,25 +322,39 @@ async def on_shutdown():
     """
     log.debug("Execute FastAPI shutdown event handler.")
     # Gracefully close utilities.
+    {%- if cookiecutter.redis == "yes" and cookiecutter.aiohttp == "yes" %}
     if settings.USE_REDIS:
         await RedisClient.close_redis_client()
 
     await AiohttpClient.close_aiohttp_client()
+    {%- elif cookiecutter.redis == "yes" %}
+    if settings.USE_REDIS:
+        await RedisClient.close_redis_client()
+    {%- elif cookiecutter.aiohttp == "yes" %}
+    await AiohttpClient.close_aiohttp_client()
+    {%- else %}
+    pass
+    {%- endif %}
 ```
 
 and are available for whole application scope without passing object instances. In order to utilize it just execute classmethods directly.
 
 Example:
+{%- if cookiecutter.redis == "yes" %}
 ```python
 from {{cookiecutter.package_name}}.app.utils import RedisClient
 
 response = RedisClient.get("Key")
 ```
+{%- endif %}
+{%- if cookiecutter.aiohttp == "yes" %}
 ```python
 from {{cookiecutter.package_name}}.app.utils import AiohttpClient
 
 response = AiohttpClient.get("http://foo.bar")
 ```
+{%- endif %}
+{%- endif %}
 
 ### Exceptions
 
@@ -313,7 +371,6 @@ This is needed in order to handle it globally.
 All routes documentation is available on:
 * `/` with Swagger
 * `/redoc` or ReDoc.
-
 
 ## License
 
