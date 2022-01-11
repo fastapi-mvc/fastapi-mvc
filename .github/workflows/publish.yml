@@ -1,9 +1,12 @@
 name: Publish
 
 on:
-  release:
-    types:
-      - created
+  workflow_dispatch:
+    inputs:
+      sha:
+        description: "Commit SHA"
+        required: false
+        default: $GITHUB_SHA
 
 jobs:
   publish:
@@ -12,13 +15,14 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Configure env
-        run: echo "whl_name=fastapi_mvc-$(cat TAG)-$GITHUB_SHA" >> $GITHUB_ENV
-      - name: Download wheel artifact
+        run: echo "pkg_build=fastapi_mvc-$(cat TAG)-${{ github.event.inputs.sha }}" >> $GITHUB_ENV
+      - name: Download build artifact
         uses: dawidd6/action-download-artifact@v2
         with:
           workflow: main.yml
           workflow_conclusion: success
-          name: ${{ env.whl_name }}
+          name: ${{ env.pkg_build }}
+          commit: ${{ github.event.inputs.sha }}
           path: dist
       - name: Publish package to PyPI
         uses: pypa/gh-action-pypi-publish@release/v1
