@@ -1,20 +1,21 @@
 <div align="center">
 <h1>fastapi-mvc</h1>
 
-![fastapi-mvc](assets/readme.gif)
+![fastapi-mvc](https://github.com/rszamszur/fastapi-mvc-template/blob/master/assets/readme.gif?raw=true)
 [![CI](https://github.com/rszamszur/fastapi-mvc/actions/workflows/main.yml/badge.svg?branch=master)](https://github.com/rszamszur/fastapi-mvc/actions/workflows/main.yml)
 [![codecov](https://codecov.io/gh/rszamszur/fastapi-mvc/branch/master/graph/badge.svg?token=7ESV30TYZS)](https://codecov.io/gh/rszamszur/fastapi-mvc)
 [![K8s integration](https://github.com/rszamszur/fastapi-mvc/actions/workflows/integration.yml/badge.svg)](https://github.com/rszamszur/fastapi-mvc/actions/workflows/integration.yml)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
-![GitHub](https://img.shields.io/badge/fastapi-v.0.70.0-blue)
-![GitHub](https://img.shields.io/badge/python-3.7%20%7C%203.8%20%7C%203.9-blue)
+![PyPI](https://img.shields.io/pypi/v/fastapi-mvc)
+![PyPI - Downloads](https://img.shields.io/pypi/dm/fastapi-mvc)
+![PyPI - Python Version](https://img.shields.io/pypi/pyversions/fastapi-mvc)
 ![GitHub](https://img.shields.io/github/license/rszamszur/fastapi-mvc?color=blue)
 
 </div>
 
 ---
 
-#### [Example generated project](https://github.com/rszamszur/fastapi-mvc-example)
+**Example generated project**: https://github.com/rszamszur/fastapi-mvc-example
 
 ---
 
@@ -87,7 +88,7 @@ Based on Google [Best practices for building containers](https://cloud.google.co
 <details>
   <summary>Extensive GitHub actions for CI</summary>
   
-![ci_example](assets/ci.png)
+![ci_example](https://github.com/rszamszur/fastapi-mvc-template/blob/master/assets/ci.png?raw=true)
 </details>
 
 <details>
@@ -120,7 +121,7 @@ They're initialized in `asgi.py` on FastAPI startup event handler, and are avail
   <summary>Kubernetes deployment with HA Redis cluster</summary>
   
 Application stack in Kubernetes:
-![k8s_arch](assets/k8s_arch.png)
+![k8s_arch](https://github.com/rszamszur/fastapi-mvc-template/blob/master/assets/k8s_arch.png?raw=true)
 </details>
 
 <details>
