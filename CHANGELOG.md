@@ -2,7 +2,7 @@
 
 This file documents changes to [fastapi-mvc](https://github.com/rszamszur/fastapi-mvc). The release numbering uses [semantic versioning](http://semver.org).
 
-### Unreleased
+### 0.5.0
 
 ### Features
 
@@ -20,7 +20,7 @@ This file documents changes to [fastapi-mvc](https://github.com/rszamszur/fastap
 - [x] Rename Test workflow to CI.
 - [x] Extend make targets for package and template.
 - [x] Add minor improvements to package and template GitHub CI workflows.
-- [x] Add GitHub workflows for release and publish (#8). PR #11
+- [x] Add GitHub workflows for publishing to PyPi (#8). PR #11
 
 ### 0.4.0
 
