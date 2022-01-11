@@ -72,7 +72,7 @@ Last but not least, gunicorn gives a ton of settings to configure (https://docs.
 </details>
 
 <details>
-  <summary>Proper Dockerfile created with best practises for the cloud and Kubernetes</summary>
+  <summary>Proper Dockerfile created with best practices for the cloud and Kubernetes</summary>
   
 Container image features:
 * Based on lightweight alpine.
