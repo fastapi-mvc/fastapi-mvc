@@ -8,9 +8,6 @@ set -o errexit
 set -o nounset
 set -o pipefail
 
-DIR=$(cd $(dirname "${BASH_SOURCE}") && pwd -P)
-
-
 if command -v docker &> /dev/null; then
   echo "[image] Found docker-engine, begin removing image."
   docker rmi -f {{cookiecutter.docker_image_name}}:"$TAG" || true
