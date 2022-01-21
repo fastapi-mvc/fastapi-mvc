@@ -8,15 +8,16 @@ set -o errexit
 set -o nounset
 set -o pipefail
 
-DIR=$(cd $(dirname "${BASH_SOURCE}") && pwd -P)
-
-if command -v python3 &> /dev/null; then
-  PYTHON=python3
-elif command -v python &> /dev/null; then
-  PYTHON=python
-else
-  echo "[install] Python is not installed."
-  exit 1
+PYTHON="${PYTHON:=NOT_SET}"
+if [[ $PYTHON == "NOT_SET" ]]; then
+  if command -v python3 &> /dev/null; then
+    PYTHON=python3
+  elif command -v python &> /dev/null; then
+    PYTHON=python
+  else
+    echo "[install] Python is not installed."
+    exit 1
+  fi
 fi
 
 PYTHON_VERSION=$($PYTHON -V 2>&1 | grep -Eo '([0-9]+\.[0-9]+\.[0-9]+)$')
