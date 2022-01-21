@@ -29,7 +29,7 @@ fi
 POETRY_HOME="${POETRY_HOME:=${HOME}/.poetry}"
 if ! command -v "$POETRY_HOME"/bin/poetry &> /dev/null; then
   echo "[install] Poetry is not installed. Begin download and install."
-  curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/install-poetry.py | POETRY_HOME=$POETRY_HOME $PYTHON -
+  curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/1.1.12/get-poetry.py | POETRY_HOME=$POETRY_HOME $PYTHON -
 fi
 
 echo "[install] Begin installing project."
