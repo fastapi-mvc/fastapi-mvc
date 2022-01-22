@@ -136,6 +136,12 @@ The metrics stage in CI workflow ensures important PEP rules are enforced. For a
 Generated application provides flexibility of configuration. All significant settings are defined by the environment variables, each with the default value.
 </details>
 
+<details>
+  <summary>Generated project uses <a href="https://github.com/python-poetry/poetry" target="_blank">Poetry</a> dependency management</summary>
+
+Poetry comes with all the tools you might need to manage your project in a deterministic way. Moreover, it's based on new unified Python project settings file - <a href="https://www.python.org/dev/peps/pep-0518/" target="_blank">PEP 518</a> that replaces `setup.py`.
+</details>
+
 ## Quick start
 
 ```shell
@@ -143,6 +149,8 @@ $ pip install fastapi-mvc
 $ fastapi-mvc new my-project
 $ cd my-project
 $ my-project serve
+# or
+$ poetry run my-project serve
 ```
 
 ## Prerequisites

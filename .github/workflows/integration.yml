@@ -30,6 +30,10 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.7
       - name: Install package
         run: |
           export POETRY_HOME=$HOME/.poetry
