@@ -2,11 +2,21 @@
 
 This file documents changes to [fastapi-mvc](https://github.com/rszamszur/fastapi-mvc). The release numbering uses [semantic versioning](http://semver.org).
 
-### 0.5.0
+## Unreleased
+
+### Fixed
+
+- [x] Template style guide: W293 error. PR #20
+
+### Internal
+
+- [x] Improve make target scripts both for package and template #18. PR #20
+
+## 0.5.0
 
 ### Features
 
-- [x] Refactor project from the pure template into the package which generates fastapi-mvc projects from cookiecutter template (#6). PR #10
+- [x] Refactor project from the pure template into the package which generates fastapi-mvc projects from cookiecutter template #6. PR #10
 
 ### Fixed
 
@@ -20,9 +30,9 @@ This file documents changes to [fastapi-mvc](https://github.com/rszamszur/fastap
 - [x] Rename Test workflow to CI.
 - [x] Extend make targets for package and template.
 - [x] Add minor improvements to package and template GitHub CI workflows.
-- [x] Add GitHub workflows for publishing to PyPi (#8). PR #11
+- [x] Add GitHub workflows for publishing to PyPi #8. PR #11
 
-### 0.4.0
+## 0.4.0
 
 ### Features
 
