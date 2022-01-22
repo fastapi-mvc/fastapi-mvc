@@ -4,6 +4,10 @@ This file documents changes to [fastapi-mvc](https://github.com/rszamszur/fastap
 
 ## Unreleased
 
+### Features
+
+- [x] Implement all major HTTP methods in aiohttp utility #17. PR #22
+
 ### Fixed
 
 - [x] Template style guide: W293 error. PR #20

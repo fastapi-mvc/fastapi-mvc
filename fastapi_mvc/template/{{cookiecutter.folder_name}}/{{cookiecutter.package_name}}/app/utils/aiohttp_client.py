@@ -2,12 +2,10 @@
 """Aiohttp client class utility."""
 import logging
 import asyncio
-from dataclasses import dataclass
 from typing import Optional
 from socket import AF_INET
 
 import aiohttp
-from pydantic import BaseModel
 
 
 SIZE_POOL_AIOHTTP = 100
@@ -61,46 +59,143 @@ class AiohttpClient(object):
             cls.aiohttp_client = None
 
     @classmethod
-    async def get(cls, url):
+    async def get(cls, url, headers=None, raise_for_status=False):
         """Execute HTTP GET request.
 
         Args:
             url (str): HTTP GET request endpoint.
+            headers (dict): Optional HTTP Headers to send with the request.
+            raise_for_status (bool): Automatically call
+                ClientResponse.raise_for_status() for response if set to True.
 
         Returns:
-            response: HTTP GET request response. Either aiohttp.ClientResponse
-                object instance, or if timeout occured returns CustomResponse
+            response: HTTP GET request response - aiohttp.ClientResponse
                 object instance.
 
         """
         client = cls.get_aiohttp_client()
 
-        try:
-            cls.log.debug("Started GET {}".format(url))
-            return await client.get(url)
-        except asyncio.TimeoutError:
-            cls.log.warning("Completed 408 Request Timeout")
-            return CustomResponse(
-                status=408, content={"detail": "Request Timeout"}
-            )
+        cls.log.debug("Started GET {}".format(url))
+        response = await client.get(
+            url,
+            headers=headers,
+            raise_for_status=raise_for_status,
+        )
 
+        return response
 
-@dataclass(init=False)
-class CustomResponse(BaseModel):
-    """Custom response model class.
+    @classmethod
+    async def post(cls, url, data=None, headers=None, raise_for_status=False):
+        """Execute HTTP POST request.
 
-    This utility helps to unify responses by keeping object-like attribute
-    calling for classes and methods which utilize AiohttpClient.
+        Args:
+            url (str): HTTP POST request endpoint.
+            data (any): The data to send in the body of the request. This can
+                be a FormData object or anything that can be passed into
+                FormData, e.g. a dictionary, bytes, or file-like object.
+            headers (dict): Optional HTTP Headers to send with the request.
+            raise_for_status (bool): Automatically call
+                ClientResponse.raise_for_status() for response if set to True.
 
-    Attributes:
-        status (int): Uses int(v) to coerce types to an int.
-        content (dict): dict(v) is used to attempt to convert a dictionary.
+        Returns:
+            response: HTTP POST request response - aiohttp.ClientResponse
+                object instance.
 
-    Raises:
-        pydantic.error_wrappers.ValidationError: If any of provided attribute
-            doesn't pass type validation.
+        """
+        client = cls.get_aiohttp_client()
 
-    """
+        cls.log.debug("Started POST {}".format(url))
+        response = await client.post(
+            url,
+            data=data,
+            headers=headers,
+            raise_for_status=raise_for_status,
+        )
 
-    status: int
-    content: dict
+        return response
+
+    @classmethod
+    async def put(cls, url, data=None, headers=None, raise_for_status=False):
+        """Execute HTTP PUT request.
+
+        Args:
+            url (str): HTTP PUT request endpoint.
+            data (any): The data to send in the body of the request. This can
+                be a FormData object or anything that can be passed into
+                FormData, e.g. a dictionary, bytes, or file-like object.
+            headers (dict): Optional HTTP Headers to send with the request.
+            raise_for_status (bool): Automatically call
+                ClientResponse.raise_for_status() for response if set to True.
+
+        Returns:
+            response: HTTP PUT request response - aiohttp.ClientResponse
+                object instance.
+
+        """
+        client = cls.get_aiohttp_client()
+
+        cls.log.debug("Started PUT {}".format(url))
+        response = await client.put(
+            url,
+            data=data,
+            headers=headers,
+            raise_for_status=raise_for_status,
+        )
+
+        return response
+
+    @classmethod
+    async def delete(cls, url, headers=None, raise_for_status=False):
+        """Execute HTTP DELETE request.
+
+        Args:
+            url (str): HTTP DELETE request endpoint.
+            headers (dict): Optional HTTP Headers to send with the request.
+            raise_for_status (bool): Automatically call
+                ClientResponse.raise_for_status() for response if set to True.
+
+        Returns:
+            response: HTTP DELETE request response - aiohttp.ClientResponse
+                object instance.
+
+        """
+        client = cls.get_aiohttp_client()
+
+        cls.log.debug("Started DELETE {}".format(url))
+        response = await client.delete(
+            url,
+            headers=headers,
+            raise_for_status=raise_for_status,
+        )
+
+        return response
+
+    @classmethod
+    async def patch(cls, url, data=None, headers=None, raise_for_status=False):
+        """Execute HTTP PATCH request.
+
+        Args:
+            url (str): HTTP PATCH request endpoint.
+            data (any): The data to send in the body of the request. This can
+                be a FormData object or anything that can be passed into
+                FormData, e.g. a dictionary, bytes, or file-like object.
+            headers (dict): Optional HTTP Headers to send with the request.
+            raise_for_status (bool): Automatically call
+                ClientResponse.raise_for_status() for response if set to True.
+
+        Returns:
+            response: HTTP PATCH request response - aiohttp.ClientResponse
+                object instance.
+
+        """
+        client = cls.get_aiohttp_client()
+
+        cls.log.debug("Started PATCH {}".format(url))
+        response = await client.patch(
+            url,
+            data=data,
+            headers=headers,
+            raise_for_status=raise_for_status,
+        )
+
+        return response
