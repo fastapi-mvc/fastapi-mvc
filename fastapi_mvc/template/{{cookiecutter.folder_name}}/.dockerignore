@@ -6,9 +6,8 @@ venv
 .github
 .idea
 assets
-__pycache__/
-*.py[cod]
-*$py.class
+**/__pycache__/
+**/*.pyc
 *.egg-info/
 .installed.cfg
 *.egg
