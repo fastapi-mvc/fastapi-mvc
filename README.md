@@ -75,15 +75,13 @@ Last but not least, gunicorn gives a ton of settings to configure (https://docs.
   <summary>Proper Dockerfile created with best practices for the cloud and Kubernetes</summary>
   
 Container image features:
-* Based on lightweight alpine.
+* Based on distroless image
 * Run as PID 1 (with child processes)
 * Utilizes multi-stage build for smallest size possible, also this results in having only necessary libraries/dependencies/tools in outcome container image.
 * DigestSHA - immutable identifier instead of tags, for better reproducibility and security.
 * Signal handling, for Kubernetes to be able to gracefully shut down pods.
 * Created with common layers.
-* Based on distroless image
 * By default runs as non-root user
-
 
 Based on Google [Best practices for building containers](https://cloud.google.com/architecture/best-practices-for-building-containers), [Top 20 Dockerfile best practices](https://sysdig.com/blog/dockerfile-best-practices), and own experience.
 </details>
