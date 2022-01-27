@@ -32,8 +32,9 @@ if ! command -v "$POETRY_HOME"/bin/poetry &> /dev/null; then
   curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/1.1.12/get-poetry.py | POETRY_HOME=$POETRY_HOME $PYTHON -
 fi
 
+POETRY_INSTALL_OPTS="${POETRY_INSTALL_OPTS:="--no-interaction"}"
 echo "[install] Begin installing project."
-"$POETRY_HOME"/bin/poetry install --no-interaction
+"$POETRY_HOME"/bin/poetry install $POETRY_INSTALL_OPTS
 
 cat << 'EOF'
 Project successfully installed.

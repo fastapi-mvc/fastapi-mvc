@@ -81,8 +81,11 @@ Container image features:
 * DigestSHA - immutable identifier instead of tags, for better reproducibility and security.
 * Signal handling, for Kubernetes to be able to gracefully shut down pods.
 * Created with common layers.
+* Based on distroless image
+* By default runs as non-root user
 
-Based on Google [Best practices for building containers](https://cloud.google.com/architecture/best-practices-for-building-containers) and own experience.
+
+Based on Google [Best practices for building containers](https://cloud.google.com/architecture/best-practices-for-building-containers), [Top 20 Dockerfile best practices](https://sysdig.com/blog/dockerfile-best-practices), and own experience.
 </details>
 
 <details>
