@@ -2,11 +2,12 @@
 
 This file documents changes to [fastapi-mvc](https://github.com/rszamszur/fastapi-mvc). The release numbering uses [semantic versioning](http://semver.org).
 
-## Unreleased
+## 0.6.0
 
 ### Features
 
 - [x] Implement all major HTTP methods in aiohttp utility #17. PR #22
+- [x] Make container image reproducible both for package and template #15. PR #23 by @r2r-dev
 
 ### Fixed
 
@@ -15,6 +16,7 @@ This file documents changes to [fastapi-mvc](https://github.com/rszamszur/fastap
 ### Internal
 
 - [x] Improve make target scripts both for package and template #18. PR #20
+- [x] Do not run fastapi as a root user inside container #16. PR #23 by @r2r-dev
 
 ## 0.5.0
 
