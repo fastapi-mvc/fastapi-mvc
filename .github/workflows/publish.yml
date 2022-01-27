@@ -5,8 +5,7 @@ on:
     inputs:
       sha:
         description: "Commit SHA"
-        required: false
-        default: $GITHUB_SHA
+        required: true
 
 jobs:
   publish:
