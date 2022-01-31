@@ -11,9 +11,9 @@ def test_ready(app):
 def test_ready_invalid(app):
     response = app.get("/api/ready/123")
     assert response.status_code == 404
+{%- if cookiecutter.redis == "yes" %}
 
 
-{% if cookiecutter.redis == "yes" %}
 def test_ready_invalid_with_redis(app):
     settings.USE_REDIS = True
     response = app.get("/api/ready")
@@ -22,7 +22,7 @@ def test_ready_invalid_with_redis(app):
         "error": {
             "code": 502,
             "message": "Could not connect to Redis",
-            "status": "BAD_GATEWAY"
+            "status": "BAD_GATEWAY",
         }
     }
 {% endif %}

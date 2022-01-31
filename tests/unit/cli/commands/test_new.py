@@ -28,7 +28,7 @@ def test_serve_invalid_option(cli_runner):
 @mock.patch("fastapi_mvc.cli.commands.new.cookiecutter")
 @mock.patch(
     "fastapi_mvc.cli.commands.new.subprocess.check_output",
-    side_effect=["Joe".encode("utf-8"), "email@test.com".encode("utf-8")]
+    side_effect=["Joe".encode("utf-8"), "email@test.com".encode("utf-8")],
 )
 @mock.patch("fastapi_mvc.cli.commands.new.subprocess.run")
 def test_new_default_options(run_mock, check_mock, cookie_mock, cli_runner):
@@ -47,14 +47,14 @@ def test_new_default_options(run_mock, check_mock, cookie_mock, cli_runner):
             "author": "Joe",
             "email": "email@test.com",
             "repo_url": "https://your.repo.url.here",
-            "year": datetime.today().year
+            "year": datetime.today().year,
         },
         no_input=True,
         output_dir="/tmp",
     )
     calls = [
         mock.call(["git", "config", "--get", "user.name"]),
-        mock.call(["git", "config", "--get", "user.email"])
+        mock.call(["git", "config", "--get", "user.email"]),
     ]
     check_mock.assert_has_calls(calls)
     run_mock.assert_called_once_with(["make", "install"], cwd="/tmp/testapp")
@@ -63,12 +63,11 @@ def test_new_default_options(run_mock, check_mock, cookie_mock, cli_runner):
 @mock.patch("fastapi_mvc.cli.commands.new.cookiecutter")
 @mock.patch(
     "fastapi_mvc.cli.commands.new.subprocess.check_output",
-    side_effect=["Joe".encode("utf-8"), "email@test.com".encode("utf-8")]
+    side_effect=["Joe".encode("utf-8"), "email@test.com".encode("utf-8")],
 )
 def test_new_skip_options(check_mock, cookie_mock, cli_runner):
     result = cli_runner.invoke(
-        new,
-        ["-R", "-A", "-V", "-H", "-G", "-C", "-I", "testapp"]
+        new, ["-R", "-A", "-V", "-H", "-G", "-C", "-I", "testapp"]
     )
     assert result.exit_code == 0
     cookie_mock.assert_called_once_with(
@@ -84,14 +83,14 @@ def test_new_skip_options(check_mock, cookie_mock, cli_runner):
             "author": "Joe",
             "email": "email@test.com",
             "repo_url": "https://your.repo.url.here",
-            "year": datetime.today().year
+            "year": datetime.today().year,
         },
         no_input=True,
         output_dir=".",
     )
     calls = [
         mock.call(["git", "config", "--get", "user.name"]),
-        mock.call(["git", "config", "--get", "user.email"])
+        mock.call(["git", "config", "--get", "user.email"]),
     ]
     check_mock.assert_has_calls(calls)
 
@@ -102,7 +101,7 @@ def test_new_skip_options(check_mock, cookie_mock, cli_runner):
 )
 @mock.patch(
     "fastapi_mvc.cli.commands.new.subprocess.check_output",
-    side_effect=CalledProcessError(1, [])
+    side_effect=CalledProcessError(1, []),
 )
 def test_new_no_git_config(check_mock, cookie_mock, cli_runner):
     result = cli_runner.invoke(new, ["testapp"])
@@ -120,14 +119,14 @@ def test_new_no_git_config(check_mock, cookie_mock, cli_runner):
             "author": "John Doe",
             "email": "example@email.com",
             "repo_url": "https://your.repo.url.here",
-            "year": datetime.today().year
+            "year": datetime.today().year,
         },
         no_input=True,
         output_dir=".",
     )
     calls = [
         mock.call(["git", "config", "--get", "user.name"]),
-        mock.call(["git", "config", "--get", "user.email"])
+        mock.call(["git", "config", "--get", "user.email"]),
     ]
     check_mock.assert_has_calls(calls)
 
@@ -138,7 +137,7 @@ def test_new_no_git_config(check_mock, cookie_mock, cli_runner):
 )
 @mock.patch(
     "fastapi_mvc.cli.commands.new.subprocess.check_output",
-    side_effect=["Joe".encode("utf-8"), "email@test.com".encode("utf-8")]
+    side_effect=["Joe".encode("utf-8"), "email@test.com".encode("utf-8")],
 )
 def test_new_dir_exists(check_mock, cookie_mock, cli_runner):
     result = cli_runner.invoke(new, ["testapp"])
@@ -156,13 +155,13 @@ def test_new_dir_exists(check_mock, cookie_mock, cli_runner):
             "author": "Joe",
             "email": "email@test.com",
             "repo_url": "https://your.repo.url.here",
-            "year": datetime.today().year
+            "year": datetime.today().year,
         },
         no_input=True,
         output_dir=".",
     )
     calls = [
         mock.call(["git", "config", "--get", "user.name"]),
-        mock.call(["git", "config", "--get", "user.email"])
+        mock.call(["git", "config", "--get", "user.email"]),
     ]
     check_mock.assert_has_calls(calls)

@@ -5,19 +5,25 @@ from {{cookiecutter.package_name}}.app.models.response import ErrorModel, ErrorR
 from pydantic.error_wrappers import ValidationError
 
 
-@pytest.mark.parametrize("code, message, details", [
-    (400, "test msg", None),
-    ("500", "test msg", [{}]),
-    (403, "test msg", [{"key": 123, "key2": 123.123, "foo": "bar"}]),
-    (404, "test msg", [{"key": {"foo": "bar"}, "key2": [1, 2, 3]}]),
-    ("401", "test msg", None),
-])
+@pytest.mark.parametrize(
+    "code, message, details",
+    [
+        (400, "test msg", None),
+        ("500", "test msg", [{}]),
+        (403, "test msg", [{"key": 123, "key2": 123.123, "foo": "bar"}]),
+        (404, "test msg", [{"key": {"foo": "bar"}, "key2": [1, 2, 3]}]),
+        ("401", "test msg", None),
+    ],
+)
 def test_error_model(code, message, details):
     error = ErrorModel(code=code, message=message, details=details)
 
     schema = error.schema()
     assert schema["description"] == "Error model."
-    assert schema["properties"]["status"] == {"title": "Status", "type": "string"}
+    assert schema["properties"]["status"] == {
+        "title": "Status",
+        "type": "string",
+    }
     assert "status" in schema["required"]
 
     error_response = error.dict()
@@ -27,25 +33,31 @@ def test_error_model(code, message, details):
     assert error_response["details"] == details
 
 
-@pytest.mark.parametrize("code, message, details", [
-    (500, {}, [{}]),
-    (403, "test msg", "foobar"),
-    (None, None, 123),
-    ({}, [], None),
-    (False, "test msg", None),
-])
+@pytest.mark.parametrize(
+    "code, message, details",
+    [
+        (500, {}, [{}]),
+        (403, "test msg", "foobar"),
+        (None, None, 123),
+        ({}, [], None),
+        (False, "test msg", None),
+    ],
+)
 def test_error_model_invalid(code, message, details):
     with pytest.raises(ValidationError):
         ErrorModel(code=code, message=message, details=details)
 
 
-@pytest.mark.parametrize("code, message, details", [
-    (400, "test msg", None),
-    ("500", "test msg", [{}]),
-    (403, "test msg", [{"key": 123, "key2": 123.123, "foo": "bar"}]),
-    (404, "test msg", [{"key": {"foo": "bar"}, "key2": [1, 2, 3]}]),
-    ("401", "test msg", None),
-])
+@pytest.mark.parametrize(
+    "code, message, details",
+    [
+        (400, "test msg", None),
+        ("500", "test msg", [{}]),
+        (403, "test msg", [{"key": 123, "key2": 123.123, "foo": "bar"}]),
+        (404, "test msg", [{"key": {"foo": "bar"}, "key2": [1, 2, 3]}]),
+        ("401", "test msg", None),
+    ],
+)
 def test_error_response(code, message, details):
     error = ErrorResponse(code=code, message=message, details=details)
 
@@ -59,13 +71,16 @@ def test_error_response(code, message, details):
     assert error_response["error"]["details"] == details
 
 
-@pytest.mark.parametrize("code, message, details", [
-    (500, {}, [{}]),
-    (403, "test msg", "foobar"),
-    (None, None, 123),
-    ({}, [], None),
-    (False, "test msg", None),
-])
+@pytest.mark.parametrize(
+    "code, message, details",
+    [
+        (500, {}, [{}]),
+        (403, "test msg", "foobar"),
+        (None, None, 123),
+        ({}, [], None),
+        (False, "test msg", None),
+    ],
+)
 def test_error_response_invalid(code, message, details):
     with pytest.raises(ValidationError):
         ErrorResponse(code=code, message=message, details=details)
