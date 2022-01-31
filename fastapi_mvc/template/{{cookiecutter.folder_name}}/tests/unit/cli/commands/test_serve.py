@@ -2,6 +2,7 @@ import os
 
 import mock
 import pytest
+from click import BadParameter
 from {{cookiecutter.package_name}}.cli.commands.serve import (
     serve,
     validate_directory,
