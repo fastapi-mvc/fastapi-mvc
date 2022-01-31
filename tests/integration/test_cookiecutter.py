@@ -2,11 +2,11 @@ import os
 
 
 template_dir = os.path.abspath(
-        os.path.join(
-            os.path.abspath(__file__),
-            "../../../fastapi_mvc/template",
-        )
+    os.path.join(
+        os.path.abspath(__file__),
+        "../../../fastapi_mvc/template",
     )
+)
 
 
 def test_cookiecutter_template(cookies):
@@ -24,7 +24,7 @@ def test_cookiecutter_template(cookies):
             "email": "jdoe@example.com",
             "repo_url": "https://test.repo",
             "year": "2022",
-        }
+        },
     )
 
     assert result.exit_code == 0
@@ -48,7 +48,7 @@ def test_cookiecutter_template_minimal(cookies):
             "email": "jdoe@example.com",
             "repo_url": "https://test.repo",
             "year": "2022",
-        }
+        },
     )
 
     assert result.exit_code == 0
@@ -63,7 +63,7 @@ def test_cookiecutter_template_minimal(cookies):
         "manifests",
         "tests/unit/app/utils/test_aiohttp_client.py",
         "test_project/app/utils/aiohttp_client.py",
-        "Vagrantfile"
+        "Vagrantfile",
     ]
 
     for path in paths:
