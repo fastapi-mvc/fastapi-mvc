@@ -5,18 +5,21 @@ from {{cookiecutter.package_name}}.app.utils import AiohttpClient
 
 
 @pytest.mark.asyncio
-@pytest.mark.parametrize("status, headers, raise_for_status", [
-    (200, None, True),
-    (201, {"foo": "bar"}, False),
-    (404, None, False),
-    (500, {"API": "KEY"}, False),
-])
+@pytest.mark.parametrize(
+    "status, headers, raise_for_status",
+    [
+        (200, None, True),
+        (201, {"foo": "bar"}, False),
+        (404, None, False),
+        (500, {"API": "KEY"}, False),
+    ],
+)
 async def test_get(status, headers, raise_for_status):
     with aioresponses() as mock:
         mock.get(
             "http://example.com/api",
             status=status,
-            payload=dict(master="exploder")
+            payload=dict(master="exploder"),
         )
         AiohttpClient.get_aiohttp_client()
         response = await AiohttpClient.get(
@@ -32,16 +35,19 @@ async def test_get(status, headers, raise_for_status):
 
 
 @pytest.mark.asyncio
-@pytest.mark.parametrize("status, headers", [
-    (404, None),
-    (500, {"API": "KEY"}),
-])
+@pytest.mark.parametrize(
+    "status, headers",
+    [
+        (404, None),
+        (500, {"API": "KEY"}),
+    ],
+)
 async def test_get_with_raise(status, headers):
     with aioresponses() as mock:
         mock.get(
             "http://example.com/api",
             status=status,
-            payload=dict(master="exploder")
+            payload=dict(master="exploder"),
         )
         AiohttpClient.get_aiohttp_client()
         with pytest.raises(aiohttp.ClientError):
@@ -53,18 +59,21 @@ async def test_get_with_raise(status, headers):
 
 
 @pytest.mark.asyncio
-@pytest.mark.parametrize("status, headers, raise_for_status", [
-    (200, None, True),
-    (201, {"foo": "bar"}, True),
-    (404, None, False),
-    (500, {"API": "KEY"}, False),
-])
+@pytest.mark.parametrize(
+    "status, headers, raise_for_status",
+    [
+        (200, None, True),
+        (201, {"foo": "bar"}, True),
+        (404, None, False),
+        (500, {"API": "KEY"}, False),
+    ],
+)
 async def test_delete(status, headers, raise_for_status):
     with aioresponses() as mock:
         mock.delete(
             "http://example.com/api",
             status=status,
-            payload=dict(master="exploder")
+            payload=dict(master="exploder"),
         )
         AiohttpClient.get_aiohttp_client()
         response = await AiohttpClient.delete(
@@ -80,16 +89,19 @@ async def test_delete(status, headers, raise_for_status):
 
 
 @pytest.mark.asyncio
-@pytest.mark.parametrize("status, headers", [
-    (404, None),
-    (500, {"API": "KEY"}),
-])
+@pytest.mark.parametrize(
+    "status, headers",
+    [
+        (404, None),
+        (500, {"API": "KEY"}),
+    ],
+)
 async def test_delete_with_raise(status, headers):
     with aioresponses() as mock:
         mock.delete(
             "http://example.com/api",
             status=status,
-            payload=dict(master="exploder")
+            payload=dict(master="exploder"),
         )
         AiohttpClient.get_aiohttp_client()
         with pytest.raises(aiohttp.ClientError):
@@ -99,19 +111,23 @@ async def test_delete_with_raise(status, headers):
                 raise_for_status=True,
             )
 
+
 @pytest.mark.asyncio
-@pytest.mark.parametrize("status, data, headers, raise_for_status", [
-    (200, None, None, True),
-    (201, {1: 2}, {"foo": "bar"}, True),
-    (404, "payload", None, False),
-    (500, None, {"API": "KEY"}, False),
-])
+@pytest.mark.parametrize(
+    "status, data, headers, raise_for_status",
+    [
+        (200, None, None, True),
+        (201, {1: 2}, {"foo": "bar"}, True),
+        (404, "payload", None, False),
+        (500, None, {"API": "KEY"}, False),
+    ],
+)
 async def test_post(status, data, headers, raise_for_status):
     with aioresponses() as mock:
         mock.post(
             "http://example.com/api",
             status=status,
-            payload=dict(master="exploder")
+            payload=dict(master="exploder"),
         )
         AiohttpClient.get_aiohttp_client()
         response = await AiohttpClient.post(
@@ -128,16 +144,19 @@ async def test_post(status, data, headers, raise_for_status):
 
 
 @pytest.mark.asyncio
-@pytest.mark.parametrize("status, data, headers", [
-    (404, "payload", None),
-    (500, None, {"API": "KEY"}),
-])
+@pytest.mark.parametrize(
+    "status, data, headers",
+    [
+        (404, "payload", None),
+        (500, None, {"API": "KEY"}),
+    ],
+)
 async def test_post_with_raise(status, data, headers):
     with aioresponses() as mock:
         mock.post(
             "http://example.com/api",
             status=status,
-            payload=dict(master="exploder")
+            payload=dict(master="exploder"),
         )
         AiohttpClient.get_aiohttp_client()
         with pytest.raises(aiohttp.ClientError):
@@ -150,18 +169,21 @@ async def test_post_with_raise(status, data, headers):
 
 
 @pytest.mark.asyncio
-@pytest.mark.parametrize("status, data, headers, raise_for_status", [
-    (200, None, None, True),
-    (201, {1: 2}, {"foo": "bar"}, True),
-    (404, "payload", None, False),
-    (500, None, {"API": "KEY"}, False),
-])
+@pytest.mark.parametrize(
+    "status, data, headers, raise_for_status",
+    [
+        (200, None, None, True),
+        (201, {1: 2}, {"foo": "bar"}, True),
+        (404, "payload", None, False),
+        (500, None, {"API": "KEY"}, False),
+    ],
+)
 async def test_put(status, data, headers, raise_for_status):
     with aioresponses() as mock:
         mock.put(
             "http://example.com/api",
             status=status,
-            payload=dict(master="exploder")
+            payload=dict(master="exploder"),
         )
         AiohttpClient.get_aiohttp_client()
         response = await AiohttpClient.put(
@@ -178,16 +200,19 @@ async def test_put(status, data, headers, raise_for_status):
 
 
 @pytest.mark.asyncio
-@pytest.mark.parametrize("status, data, headers", [
-    (404, "payload", None),
-    (500, None, {"API": "KEY"}),
-])
+@pytest.mark.parametrize(
+    "status, data, headers",
+    [
+        (404, "payload", None),
+        (500, None, {"API": "KEY"}),
+    ],
+)
 async def test_put_with_raise(status, data, headers):
     with aioresponses() as mock:
         mock.put(
             "http://example.com/api",
             status=status,
-            payload=dict(master="exploder")
+            payload=dict(master="exploder"),
         )
         AiohttpClient.get_aiohttp_client()
         with pytest.raises(aiohttp.ClientError):
@@ -198,19 +223,23 @@ async def test_put_with_raise(status, data, headers):
                 raise_for_status=True,
             )
 
+
 @pytest.mark.asyncio
-@pytest.mark.parametrize("status, data, headers, raise_for_status", [
-    (200, None, None, True),
-    (201, {1: 2}, {"foo": "bar"}, True),
-    (404, "payload", None, False),
-    (500, None, {"API": "KEY"}, False),
-])
+@pytest.mark.parametrize(
+    "status, data, headers, raise_for_status",
+    [
+        (200, None, None, True),
+        (201, {1: 2}, {"foo": "bar"}, True),
+        (404, "payload", None, False),
+        (500, None, {"API": "KEY"}, False),
+    ],
+)
 async def test_patch(status, data, headers, raise_for_status):
     with aioresponses() as mock:
         mock.patch(
             "http://example.com/api",
             status=status,
-            payload=dict(master="exploder")
+            payload=dict(master="exploder"),
         )
         AiohttpClient.get_aiohttp_client()
         response = await AiohttpClient.patch(
@@ -227,16 +256,19 @@ async def test_patch(status, data, headers, raise_for_status):
 
 
 @pytest.mark.asyncio
-@pytest.mark.parametrize("status, data, headers", [
-    (404, "payload", None),
-    (500, None, {"API": "KEY"}),
-])
+@pytest.mark.parametrize(
+    "status, data, headers",
+    [
+        (404, "payload", None),
+        (500, None, {"API": "KEY"}),
+    ],
+)
 async def test_patch_with_raise(status, data, headers):
     with aioresponses() as mock:
         mock.patch(
             "http://example.com/api",
             status=status,
-            payload=dict(master="exploder")
+            payload=dict(master="exploder"),
         )
         AiohttpClient.get_aiohttp_client()
         with pytest.raises(aiohttp.ClientError):
