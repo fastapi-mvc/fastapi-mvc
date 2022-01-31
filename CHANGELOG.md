@@ -11,6 +11,7 @@ This file documents changes to [fastapi-mvc](https://github.com/rszamszur/fastap
 ### Fixed
 
 - [x] Incomplete command in template `build/unit-test.sh` make script #28. PR #27
+- [x] Debian snapshot repository is expired causing container image build failure #29. PR #27
 
 ## 0.6.0
 
