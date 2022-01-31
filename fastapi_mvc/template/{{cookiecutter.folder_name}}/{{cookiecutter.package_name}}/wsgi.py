@@ -23,14 +23,13 @@ class ApplicationLoader(Application):
         return get_app()
 
 
-def run_wsgi(host, port, workers, daemon=None, env=None, config=None, pid=None):
+def run_wsgi(host, port, workers, daemon=False, env=(), config=None, pid=None):
     """Run gunicorn WSGI with ASGI workers."""
     log.info("Start gunicorn WSGI with ASGI workers.")
 
     if not config:
         config = os.path.join(
-            os.path.dirname(__file__),
-            "config/gunicorn.conf.py"
+            os.path.dirname(__file__), "config/gunicorn.conf.py"
         )
 
     sys.argv = [
@@ -48,10 +47,9 @@ def run_wsgi(host, port, workers, daemon=None, env=None, config=None, pid=None):
     if daemon:
         sys.argv.append("--daemon")
 
-    if env:
-        for var in env:
-            sys.argv.append("--env")
-            sys.argv.append(var)
+    for var in env:
+        sys.argv.append("--env")
+        sys.argv.append(var)
 
     if pid:
         sys.argv.append("--pid")

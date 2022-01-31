@@ -23,6 +23,9 @@ def validate_directory(ctx, param, value):
             is not writable.
 
     """
+    if not param.required and not value:
+        return value
+
     dirname = os.path.dirname(value)
 
     if not os.path.exists(dirname):
