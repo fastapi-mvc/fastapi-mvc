@@ -2,6 +2,16 @@
 
 This file documents changes to [fastapi-mvc](https://github.com/rszamszur/fastapi-mvc). The release numbering uses [semantic versioning](http://semver.org).
 
+## Unreleased
+
+### Features
+
+- [x] Implement new template CLI serve command options #24. PR #27
+
+### Fixed
+
+- [x] Incomplete command in template `build/unit-test.sh` make script #28. PR #27
+
 ## 0.6.0
 
 ### Features
