@@ -27,7 +27,7 @@ default_config = os.path.abspath(
                 "-w",
                 "2",
                 "-b localhost:5555",
-                "testproj.app.asgi:application",
+                "{{cookiecutter.package_name}}.app.asgi:application",
             ],
         ),
         (
@@ -54,7 +54,7 @@ default_config = os.path.abspath(
                 "USE_FORCE=True",
                 "--pid",
                 "/path/to/file.pid",
-                "testproj.app.asgi:application",
+                "{{cookiecutter.package_name}}.app.asgi:application",
             ],
         ),
     ],
