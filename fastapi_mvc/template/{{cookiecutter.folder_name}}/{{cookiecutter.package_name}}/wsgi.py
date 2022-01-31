@@ -23,13 +23,19 @@ class ApplicationLoader(Application):
         return get_app()
 
 
-def run_wsgi(host, port, workers):
+def run_wsgi(host, port, workers, daemon=False, env=(), config=None, pid=None):
     """Run gunicorn WSGI with ASGI workers."""
     log.info("Start gunicorn WSGI with ASGI workers.")
+
+    if not config:
+        config = os.path.join(
+            os.path.dirname(__file__), "config/gunicorn.conf.py"
+        )
+
     sys.argv = [
         "--gunicorn",
         "-c",
-        os.path.join(os.path.dirname(__file__), "config/gunicorn.conf.py"),
+        config,
         "-w",
         workers,
         "-b {host}:{port}".format(
@@ -37,6 +43,18 @@ def run_wsgi(host, port, workers):
             port=port,
         ),
     ]
+
+    if daemon:
+        sys.argv.append("--daemon")
+
+    for var in env:
+        sys.argv.append("--env")
+        sys.argv.append(var)
+
+    if pid:
+        sys.argv.append("--pid")
+        sys.argv.append(pid)
+
     sys.argv.append("{{cookiecutter.package_name}}.app.asgi:application")
 
     ApplicationLoader().run()

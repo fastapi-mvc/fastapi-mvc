@@ -9,4 +9,4 @@ set -o nounset
 set -o pipefail
 
 POETRY_HOME="${POETRY_HOME:=${HOME}/.poetry}"
-"$POETRY_HOME"/bin/poetry
+"$POETRY_HOME"/bin/poetry run pytest tests/unit
