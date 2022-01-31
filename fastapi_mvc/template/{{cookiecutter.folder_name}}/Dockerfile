@@ -22,9 +22,9 @@ ENV PYTHONUNBUFFERED=1 \
 ENV PATH="${POETRY_HOME}/bin:${VENV_PATH}/bin:${PATH}"
 
 # Configure Debian snapshot archive
-RUN echo "deb http://snapshot.debian.org/archive/debian/20220124 bullseye main" > /etc/apt/sources.list && \
-    echo "deb http://snapshot.debian.org/archive/debian-security/20220124 bullseye-security main" >> /etc/apt/sources.list && \
-    echo "deb http://snapshot.debian.org/archive/debian/20220124 bullseye-updates main" >> /etc/apt/sources.list
+RUN echo "deb [check-valid-until=no] http://snapshot.debian.org/archive/debian/20220124 bullseye main" > /etc/apt/sources.list && \
+    echo "deb [check-valid-until=no] http://snapshot.debian.org/archive/debian-security/20220124 bullseye-security main" >> /etc/apt/sources.list && \
+    echo "deb [check-valid-until=no] http://snapshot.debian.org/archive/debian/20220124 bullseye-updates main" >> /etc/apt/sources.list
 
 # Install build tools and dependencies
 RUN apt-get update && \
