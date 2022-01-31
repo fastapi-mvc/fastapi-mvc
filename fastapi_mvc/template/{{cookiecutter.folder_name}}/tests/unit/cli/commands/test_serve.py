@@ -2,7 +2,10 @@ import os
 
 import mock
 import pytest
-from {{cookiecutter.package_name}}.cli.commands.serve import serve
+from {{cookiecutter.package_name}}.cli.commands.serve import (
+    serve,
+    validate_directory,
+)
 
 
 current_dir = os.path.dirname(__file__)
