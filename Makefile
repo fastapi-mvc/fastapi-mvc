@@ -38,6 +38,16 @@ unit-test: install ## Run fastapi-mvc unit tests
 integration-test: install ## Run fastapi-mvc integration tests
 	@build/integration-test.sh
 
+.PHONY: test
+test: unit-test integration-test  ## Run fastapi-mvc tests
+
+.PHONY: template-checks
+template-checks: install ## Run fastapi-mvc template metrics and tests
+	@build/template-checks.sh
+
+.PHONY: pre-commit
+pre-commit: metrics test template-checks ## Run fastapi-mvc pre-commit checks
+
 .PHONY: show-version
 show-version:
 	echo -n $(TAG)
