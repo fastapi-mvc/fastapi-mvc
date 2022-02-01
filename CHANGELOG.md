@@ -9,6 +9,7 @@ This file documents changes to [fastapi-mvc](https://github.com/rszamszur/fastap
 - [x] Add make template-checks target for running metrics and tests on template.
 - [x] Add make pre-commit target for running package and template checks.
 - [x] Add make test target for running package unit and integration tests.
+- [x] Improve make scripts logging information.
 
 ## 0.7.0
 
