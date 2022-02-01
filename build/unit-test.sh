@@ -8,5 +8,6 @@ set -o errexit
 set -o nounset
 set -o pipefail
 
+echo "[unit-test] Run fastapi-mvc unit tests."
 POETRY_HOME="${POETRY_HOME:=${HOME}/.poetry}"
 "$POETRY_HOME"/bin/poetry run pytest tests/unit
