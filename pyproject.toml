@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "fastapi-mvc"
 version = "0.7.0"
-description = "Generate and manage FastAPI projects"
+description = "Generate production grade FastAPI projects based on MVC architectural pattern, WSGI + ASGI. Includes tests, GitHub actions, utilities, Helm, and more."
 authors = ["Radosław Szamszur <radoslawszamszur@gmail.com>"]
 license = "MIT"
 readme = "README.md"
