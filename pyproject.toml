@@ -39,6 +39,8 @@ flake8-import-order = "~0.18.1"
 flake8-todo = "^0.7"
 black = "^21.12b0"
 mock = "^4.0.3"
+mkdocs = "^1.2.3"
+mkdocs-material = "^8.1.9"
 
 [tool.poetry.scripts]
 fastapi-mvc = "fastapi_mvc.cli.cli:cli"
