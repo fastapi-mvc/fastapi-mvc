@@ -62,11 +62,11 @@ jobs:
         run: |
           $HOME/.poetry/bin/poetry config cache-dir $HOME/.poetry/store
           $HOME/.poetry/bin/poetry build
-          echo "whl_name=fastapi_mvc-$(cat TAG)-$GITHUB_SHA" >> $GITHUB_ENV
+          echo "build_name=fastapi_mvc-$(cat TAG)-$GITHUB_SHA" >> $GITHUB_ENV
       - name: Archive build artifacts
         uses: actions/upload-artifact@v2
         with:
-          name: ${{ env.whl_name }}
+          name: ${{ env.build_name }}
           path: dist
           retention-days: 7
   metrics:
