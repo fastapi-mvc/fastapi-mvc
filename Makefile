@@ -45,6 +45,10 @@ test: unit-test integration-test  ## Run fastapi-mvc tests
 template-checks: install ## Run fastapi-mvc template metrics and tests
 	@build/template-checks.sh
 
+.PHONY: docs
+docs: install ## Build fastapi-mvc documentation
+	@build/docs.sh
+
 .PHONY: pre-commit
 pre-commit: metrics test template-checks ## Run fastapi-mvc pre-commit checks
 
