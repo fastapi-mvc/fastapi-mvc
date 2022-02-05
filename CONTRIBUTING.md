@@ -3,6 +3,7 @@
 ## Issues
 
 **Before submitting**
+
 * **Check that your issue does not already exist in the [issue tracker](https://github.com/rszamszur/fastapi-mvc/issues)**
 
 ### Questions
@@ -22,6 +23,7 @@ If you encountered an unexpected behavior using [fastapi-mvc](https://github.com
 ### Codebase
 
 This project is made of two things:
+
 * Template: [cookiecutter template (`fastapi_mvc/template/*`)](https://github.com/rszamszur/fastapi-mvc/tree/master/fastapi_mvc/template) from which projects are generated.
 * Package: fastapi-mvc - implementation, tests, etc. Everything except `fastapi_mvc/template` directory.
 
@@ -38,6 +40,7 @@ Both package and template have their own tests and checks. However, since templa
 #### Package - fastapi-mvc
 
 Metrics stage ensure following rules are followed:
+
 * [PEP 8](https://www.python.org/dev/peps/pep-0008/)
 * [PEP 257](https://www.python.org/dev/peps/pep-0257/) for docstrings
 * [black](https://github.com/psf/black) for unified formatting
@@ -45,6 +48,7 @@ Metrics stage ensure following rules are followed:
 #### Template - `fastapi_mvc/template/*`
 
 Template metrics stage ensure following rules are followed:
+
 * [PEP 8](https://www.python.org/dev/peps/pep-0008/)
 * [PEP 257](https://www.python.org/dev/peps/pep-0257/) for docstrings
 * [black](https://github.com/psf/black) for unified formatting
