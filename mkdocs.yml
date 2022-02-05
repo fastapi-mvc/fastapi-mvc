@@ -22,7 +22,6 @@ repo_name: rszamszur/fastapi-mvc
 repo_url: https://github.com/rszamszur/fastapi-mvc/
 plugins:
   - search
-  - mkdocstrings
 nav:
   - Overview: index.md
   - Install: install.md
