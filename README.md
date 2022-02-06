@@ -15,6 +15,10 @@
 
 ---
 
+**Documentation**: [https://fastapi-mvc.netlify.app](https://fastapi-mvc.netlify.app)
+
+**Source Code**: [https://github.com/rszamszur/fastapi-mvc](https://github.com/rszamszur/fastapi-mvc)
+
 **Example generated project**: https://github.com/rszamszur/fastapi-mvc-example
 
 ---
@@ -259,7 +263,7 @@ $ curl localhost:8000/api/ready
 
 ## Contributing
 
-Questions, comments or improvements? Please create an issue on Github. I do my best to include every contribution proposed in any way that I can.
+[CONTRIBUTING](https://github.com/rszamszur/fastapi-mvc/blob/master/CONTRIBUTING.md)
 
 ## License
 

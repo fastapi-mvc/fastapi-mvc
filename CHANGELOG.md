@@ -6,111 +6,112 @@ This file documents changes to [fastapi-mvc](https://github.com/rszamszur/fastap
 
 ### Internal
 
-- [x] Add make template-checks target for running metrics and tests on template.
-- [x] Add make pre-commit target for running package and template checks.
-- [x] Add make test target for running package unit and integration tests.
-- [x] Improve make scripts logging information.
+* Add documentation [#9](https://github.com/rszamszur/fastapi-mvc/issues/9).
+* Add make template-checks target for running metrics and tests on template.
+* Add make pre-commit target for running package and template checks.
+* Add make test target for running package unit and integration tests.
+* Improve make scripts logging information.
 
-## 0.7.0
+## 0.7.0 (31.01.2022)
 
 ### Features
 
-- [x] Implement new template CLI serve command options #24. PR #27
+* Implement new template CLI serve command options [#24](https://github.com/rszamszur/fastapi-mvc/issues/24). PR [#27](https://github.com/rszamszur/fastapi-mvc/pull/27)
 
 ### Fixed
 
-- [x] Incomplete command in template `build/unit-test.sh` make script #28. PR #27
-- [x] Debian snapshot repository is expired causing container image build failure #29. PR #27
+* Incomplete command in template `build/unit-test.sh` make script [#28](https://github.com/rszamszur/fastapi-mvc/issues/28). PR [#27](https://github.com/rszamszur/fastapi-mvc/pull/27)
+* Debian snapshot repository is expired causing container image build failure [#29](https://github.com/rszamszur/fastapi-mvc/issues/29). PR [#27](https://github.com/rszamszur/fastapi-mvc/pull/27)
 
 ### Internal
 
-- [x] Lint tests. PR #30
+* Lint tests. PR #30
 
-## 0.6.0
+## 0.6.0 (27.01.2022)
 
 ### Features
 
-- [x] Implement all major HTTP methods in aiohttp utility #17. PR #22
-- [x] Make container image reproducible both for package and template #15. PR #23 by @r2r-dev
+* Implement all major HTTP methods in aiohttp utility [#17](https://github.com/rszamszur/fastapi-mvc/issues/17). PR [#22](https://github.com/rszamszur/fastapi-mvc/pull/22)
+* Make container image reproducible both for package and template [#15](https://github.com/rszamszur/fastapi-mvc/issues/15). PR [#23](https://github.com/rszamszur/fastapi-mvc/pull/23) by [@r2r-dev](https://github.com/r2r-dev)
 
 ### Fixed
 
-- [x] Template style guide: W293 error. PR #20
+* Template style guide: W293 error. PR #20
 
 ### Internal
 
-- [x] Improve make target scripts both for package and template #18. PR #20
-- [x] Do not run fastapi as a root user inside container #16. PR #23 by @r2r-dev
+* Improve make target scripts both for package and template [#18](https://github.com/rszamszur/fastapi-mvc/issues/18). PR [#20](https://github.com/rszamszur/fastapi-mvc/pull/20)
+* Do not run fastapi as a root user inside container [#16](https://github.com/rszamszur/fastapi-mvc/issues/16). PR [#23](https://github.com/rszamszur/fastapi-mvc/pull/23) by [@r2r-dev](https://github.com/r2r-dev)
 
-## 0.5.0
+## 0.5.0 (11.01.2022)
 
 ### Features
 
-- [x] Refactor project from the pure template into the package which generates fastapi-mvc projects from cookiecutter template #6. PR #10
+* Refactor project from the pure template into the package which generates fastapi-mvc projects from cookiecutter template [#6](https://github.com/rszamszur/fastapi-mvc/issues/6). PR [#10](https://github.com/rszamszur/fastapi-mvc/pull/10)
 
 ### Fixed
 
-- [x] Add missing FASTAPI_USE_REDIS env var in Helm chart config map and deployment.
+* Add missing `FASTAPI_USE_REDIS` env var in Helm chart config map and deployment.
 
 ### Internal
 
-- [x] Rename project to fastapi-mvc.
-- [x] Add FASTAPI_DEBUG env var in Helm chart config map and deployment.
-- [x] Add K8s integration test workflow.
-- [x] Rename Test workflow to CI.
-- [x] Extend make targets for package and template.
-- [x] Add minor improvements to package and template GitHub CI workflows.
-- [x] Add GitHub workflows for publishing to PyPi #8. PR #11
+* Rename project to fastapi-mvc.
+* Add `FASTAPI_DEBUG` env var in Helm chart config map and deployment.
+* Add K8s integration test workflow.
+* Rename Test workflow to CI.
+* Extend make targets for package and template.
+* Add minor improvements to package and template GitHub CI workflows.
+* Add GitHub workflows for publishing to PyPi [#8](https://github.com/rszamszur/fastapi-mvc/issues/8). PR [#11](https://github.com/rszamszur/fastapi-mvc/pull/11)
 
-## 0.4.0
+## 0.4.0 (10.12.2021)
 
 ### Features
 
-- [x] Implement model for error response rendering.
-- [x] Implement custom HTTPException, and its handler to have freedom to define returned response body.
-- [x] Extend application configuration from environment variables.
-- [x] Add and utilize gunicorn.conf.py file for better WSGI configuration.
+* Implement model for error response rendering.
+* Implement custom HTTPException, and its handler to have freedom to define returned response body.
+* Extend application configuration from environment variables.
+* Add and utilize `gunicorn.conf.py` file for better WSGI configuration.
 
 ### Internal
 
-- [x] Update project dependencies:
+* Update project dependencies:
   * fastapi (0.66.0 -> 0.70.0)
   * aioredis (2.0.0a1 -> 2.0.0)
   * aiohttp (3.7.4.post0 -> 3.8.1)
   * uvicorn (0.14.0 -> 0.15.0)
-- [x] Improve submodules import paths.
-- [x] Move fastapi_mvc.app.config submodule to fastapi_mvc.config.
-- [x] Refactor application and redis config with using pydantic.BaseSetting.
-- [x] Extend unit tests, and increase coverage to 99%.
-- [x] Change RedisClient.ping() method to return false instead of raising an RedisError exception.
+* Improve submodules import paths.
+* Move `fastapi_mvc.app.config` submodule to `fastapi_mvc.config`.
+* Refactor application and redis config with using `pydantic.BaseSetting`.
+* Extend unit tests, and increase coverage to 99%.
+* Change `RedisClient.ping()` method to return false instead of raising an RedisError exception.
 
-## 0.3.0
-
-### Features
-
-- [x] Add python-poetry pyproject.toml and poetry.lock for dependency management and packaging.
-- [x] Reduce container image size by ~500 MB with using multi-stage build.
-
-### Internal
-
-- [x] Remove setup.py and requirements.txt.
-- [x] Refactor make install to utilize poetry instead of pip.
-- [x] Update base container image digest sha.
-- [x] Improve GitHub Test workflow.
-
-## 0.2.0
+## 0.3.0 (28.11.2021)
 
 ### Features
 
-- [x] Implement make dev-env target for bootstrapping a local Kubernetes cluster with High Availability Redis cluster, and deploy application.
-- [x] Add Helm charts for fastapi-mvc.
-- [x] Add Vagrantfile.
+* Add python-poetry `pyproject.toml` and `poetry.lock` for dependency management and packaging.
+* Reduce container image size by ~500 MB with using multi-stage build.
 
 ### Internal
 
-- [x] Add manifests for spotathome/redis-operator.
-- [x] Fix minor documentation/comments typos.
+* Remove setup.py and requirements.txt.
+* Refactor make install to utilize poetry instead of pip.
+* Update base container image digest sha.
+* Improve GitHub Test workflow.
 
-## 0.1.0
+## 0.2.0 (09.11.2021)
 
-- [X] Initial release
+### Features
+
+* Implement make dev-env target for bootstrapping a local Kubernetes cluster with High Availability Redis cluster, and deploy application.
+* Add Helm charts for fastapi-mvc.
+* Add Vagrantfile.
+
+### Internal
+
+* Add manifests for [spotahome/redis-operator](https://github.com/spotahome/redis-operator).
+* Fix minor documentation/comments typos.
+
+## 0.1.0 (27.07.2021)
+
+* Initial release

@@ -14,7 +14,9 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Configure env
-        run: echo "pkg_build=fastapi_mvc-$(cat TAG)-${{ github.event.inputs.sha }}" >> $GITHUB_ENV
+        run: |
+          echo "pkg_build=fastapi_mvc-$(cat TAG)-${{ github.event.inputs.sha }}" >> $GITHUB_ENV
+          echo "docs_build=docs-$(cat TAG)-${{ github.event.inputs.sha }}" >> $GITHUB_ENV
       - name: Download build artifact
         uses: dawidd6/action-download-artifact@v2
         with:
@@ -28,3 +30,22 @@ jobs:
         with:
           user: __token__
           password: ${{ secrets.PYPI_TOKEN }}
+      - name: Download docs artifact
+        uses: dawidd6/action-download-artifact@v2
+        with:
+          workflow: docs.yml
+          workflow_conclusion: success
+          name: ${{ env.docs_build }}
+          commit: ${{ github.event.inputs.sha }}
+          path: site
+      - name: Publish docs to Netlify
+        uses: nwtgck/actions-netlify@v1.1.5
+        with:
+          publish-dir: site
+          production-deploy: true
+          production-branch: master
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          enable-commit-comment: false
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
