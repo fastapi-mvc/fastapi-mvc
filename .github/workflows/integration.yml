@@ -14,6 +14,7 @@ jobs:
   # twice for pull_request and push for identical commit sha.
   pre_job:
     runs-on: ubuntu-latest
+    if: ${{ !contains(github.event.head_commit.message, '[skip-k8s]') }}
     outputs:
       should_skip: ${{ steps.skip_check.outputs.should_skip }}
     steps:
