@@ -195,6 +195,7 @@ Usage:
 ### Utilities
 
 For your discretion, I've provided some basic utilities:
+
 * RedisClient `demo_project.app.utils.redis`
 * AiohttpClient `demo_project.app.utils.aiohttp_client`
 
@@ -258,5 +259,6 @@ This is needed in order to handle it globally.
 ### Web Routes
 
 All routes documentation is available on:
+
 * `/` with Swagger
 * `/redoc` or ReDoc.
