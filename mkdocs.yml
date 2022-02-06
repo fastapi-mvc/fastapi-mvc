@@ -1,6 +1,6 @@
 site_name: fastapi-mvc
-site_description: Generate and develop production grade FastaAPI projects.
-site_url: https://rszamszur.github.io/fastapi-mvc/
+site_description: Create and develop production grade FastaAPI projects.
+site_url: https://fastapi-mvc.netlify.app/
 theme:
   name: material
   palette:
@@ -37,6 +37,8 @@ nav:
   - Contributing to fastapi-mvc: contributing.md
   - Changelog: changelog.md
 markdown_extensions:
+- pymdownx.highlight:
+    anchor_linenums: true
 - toc:
     permalink: true
 - pymdownx.emoji:
@@ -44,3 +46,6 @@ markdown_extensions:
 - admonition
 - codehilite
 - extra
+- pymdownx.inlinehilite
+- pymdownx.snippets
+- pymdownx.superfences
