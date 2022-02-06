@@ -90,5 +90,8 @@ Your code must be accompanied by corresponding tests, if tests are not present y
 
 ### Pull requests
 
+*Note: Since K8s integration workflow can take up to 30 minutes, it only needs to be checked before merging. Feel free to use `[skip-k8s]` flag at the beginning of the commit message to skip it for work in progress.*
+
 * [Open a new pull request](https://github.com/rszamszur/fastapi-mvc/compare)
 * Update the `CHANGELOG.md` file with your changes.
+* Update documentation if required.
