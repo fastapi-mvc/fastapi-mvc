@@ -68,7 +68,7 @@ jobs:
         with:
           name: ${{ env.build_name }}
           path: dist
-          retention-days: 7
+          retention-days: 60
   metrics:
     needs: install
     runs-on: ubuntu-latest
