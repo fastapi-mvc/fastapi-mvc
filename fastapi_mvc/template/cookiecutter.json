@@ -28,5 +28,6 @@
         "LGPLv2",
         "no"
   ],
-  "year": "{{ cookiecutter.year }}"
+  "year": "{{ cookiecutter.year }}",
+  "fastapi_mvc_version": "{{ cookiecutter.fastapi_mvc_version }}"
 }
