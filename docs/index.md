@@ -20,7 +20,7 @@
 
 Documentation for version: **v0.7.0**
 
-Generate production grade FastAPI projects based on MVC architectural pattern, WSGI + ASGI. 
+Create and develop production grade FastaAPI projects, based on MVC architectural pattern, WSGI + ASGI. 
 Includes tests, GitHub actions, utilities, Helm, Dockerfile, Makefile, and more.
 
 ## Quick start

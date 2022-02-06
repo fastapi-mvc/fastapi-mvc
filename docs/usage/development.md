@@ -31,14 +31,14 @@ For infrastructure:
 
 First run `vagrant up` in project root directory and enter virtualized environment using `vagrant ssh`
 Then run following commands to bootstrap local development cluster exposing `fastapi-mvc` application.
-```sh
-$ cd /syncd
-$ make dev-env
+```shell
+cd /syncd
+make dev-env
 ```
 *Note: this process may take a while on first run.*
 
 Once development cluster is up and running you should see summary listing application address:
-```
+```shell
 Kubernetes cluster ready
 
 fastapi-mvc available under: http://demo-project.192.168.49.2.nip.io/
@@ -201,7 +201,7 @@ For your discretion, I've provided some basic utilities:
 
 They're initialized in `asgi.py` on FastAPI startup event handler:
 
-```python
+```python hl_lines="11 13 25 27"
 async def on_startup():
     """Fastapi startup event handler.
 
