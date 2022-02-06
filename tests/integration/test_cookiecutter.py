@@ -24,6 +24,7 @@ def test_cookiecutter_template(cookies):
             "email": "jdoe@example.com",
             "repo_url": "https://test.repo",
             "year": "2022",
+            "fastapi_mvc_version": "x.y,z",
         },
     )
 
@@ -48,6 +49,7 @@ def test_cookiecutter_template_minimal(cookies):
             "email": "jdoe@example.com",
             "repo_url": "https://test.repo",
             "year": "2022",
+            "fastapi_mvc_version": "x.y,z",
         },
     )
 
