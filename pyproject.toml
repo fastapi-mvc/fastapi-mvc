@@ -1,11 +1,12 @@
 [tool.poetry]
 name = "fastapi-mvc"
 version = "0.7.0"
-description = "Generate production grade FastAPI projects based on MVC architectural pattern, WSGI + ASGI. Includes tests, GitHub actions, utilities, Helm, and more."
+description = "Create and develop production grade FastAPI projects."
 authors = ["Radosław Szamszur <radoslawszamszur@gmail.com>"]
 license = "MIT"
 readme = "README.md"
 repository = "https://github.com/rszamszur/fastapi-mvc"
+documentation = "https://fastapi-mvc.netlify.app"
 classifiers = [
     "Development Status :: 3 - Alpha",
     "Intended Audience :: Developers",
