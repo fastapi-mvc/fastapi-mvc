@@ -3,6 +3,7 @@ import logging
 
 import click
 from fastapi_mvc.cli.commands.new import new
+from fastapi_mvc.cli.commands.run import run
 
 
 @click.group()
@@ -14,8 +15,11 @@ from fastapi_mvc.cli.commands.new import new
     default=False,
 )
 def cli(**options):
-    """Generate and manage fastapi-mvc projects. # noqa: D205,D400
+    """Create and develop production grade FastAPI projects.
 
+    Documentation: https://fastapi-mvc.netlify.app
+
+    Source Code: https://github.com/rszamszur/fastapi-mvc
     \f
 
     Args:
@@ -35,3 +39,4 @@ def cli(**options):
 
 
 cli.add_command(new)
+cli.add_command(run)

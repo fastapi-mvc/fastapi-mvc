@@ -4,6 +4,7 @@ from subprocess import CalledProcessError
 
 import mock
 from fastapi_mvc.cli.commands.new import new
+from fastapi_mvc.version import __version__
 from cookiecutter.exceptions import OutputDirExistsException
 
 
@@ -20,7 +21,7 @@ def test_new_help(cli_runner):
     assert result.exit_code == 0
 
 
-def test_serve_invalid_option(cli_runner):
+def test_new_invalid_option(cli_runner):
     result = cli_runner.invoke(new, ["--not_exists"])
     assert result.exit_code == 2
 
@@ -48,6 +49,7 @@ def test_new_default_options(run_mock, check_mock, cookie_mock, cli_runner):
             "email": "email@test.com",
             "repo_url": "https://your.repo.url.here",
             "year": datetime.today().year,
+            "fastapi_mvc_version": __version__,
         },
         no_input=True,
         output_dir="/tmp",
@@ -84,6 +86,7 @@ def test_new_skip_options(check_mock, cookie_mock, cli_runner):
             "email": "email@test.com",
             "repo_url": "https://your.repo.url.here",
             "year": datetime.today().year,
+            "fastapi_mvc_version": __version__,
         },
         no_input=True,
         output_dir=".",
@@ -120,6 +123,7 @@ def test_new_no_git_config(check_mock, cookie_mock, cli_runner):
             "email": "example@email.com",
             "repo_url": "https://your.repo.url.here",
             "year": datetime.today().year,
+            "fastapi_mvc_version": __version__,
         },
         no_input=True,
         output_dir=".",
@@ -156,6 +160,7 @@ def test_new_dir_exists(check_mock, cookie_mock, cli_runner):
             "email": "email@test.com",
             "repo_url": "https://your.repo.url.here",
             "year": datetime.today().year,
+            "fastapi_mvc_version": __version__,
         },
         no_input=True,
         output_dir=".",

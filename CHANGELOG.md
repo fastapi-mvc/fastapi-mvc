@@ -4,9 +4,13 @@ This file documents changes to [fastapi-mvc](https://github.com/rszamszur/fastap
 
 ## Unreleased
 
+### Features
+
+* Implement CLI `fastapi-mvc run` command for running uvicorn development server [#14](https://github.com/rszamszur/fastapi-mvc/issues/14), [#31](https://github.com/rszamszur/fastapi-mvc/issues/31). PR [#35](https://github.com/rszamszur/fastapi-mvc/pull/35)
+
 ### Internal
 
-* Add documentation [#9](https://github.com/rszamszur/fastapi-mvc/issues/9).
+* Add documentation [#9](https://github.com/rszamszur/fastapi-mvc/issues/9). PR [#33](https://github.com/rszamszur/fastapi-mvc/pull/33)
 * Add make template-checks target for running metrics and tests on template.
 * Add make pre-commit target for running package and template checks.
 * Add make test target for running package unit and integration tests.

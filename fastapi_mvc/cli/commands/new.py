@@ -7,6 +7,7 @@ from datetime import datetime
 import click
 from cookiecutter.exceptions import OutputDirExistsException
 from cookiecutter.main import cookiecutter
+from fastapi_mvc.version import __version__
 
 
 @click.command()
@@ -139,6 +140,7 @@ def new(app_path, **options):
         "email": email,
         "repo_url": options["repo_url"],
         "year": datetime.today().year,
+        "fastapi_mvc_version": __version__,
     }
 
     try:

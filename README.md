@@ -149,13 +149,30 @@ Poetry comes with all the tools you might need to manage your project in a deter
 
 ## Quick start
 
+Creating a new FastAPI project is as easy as:
 ```shell
-$ pip install fastapi-mvc
-$ fastapi-mvc new my-project
-$ cd my-project
-$ my-project serve
-# or
-$ poetry run my-project serve
+pip install fastapi-mvc
+fastapi-mvc new my-project
+```
+
+To run development uvicorn server:
+```shell
+cd my-project
+fastapi-mvc run
+```
+
+To run production WSGI + ASGI server:
+```shell
+cd my-project
+poetry run my-project serve
+# or if Poetry PATH is set
+my-project serve
+```
+
+To confirm it's working:
+```shell
+curl localhost:8000/api/ready
+{"status":"ok"}
 ```
 
 ## Prerequisites
@@ -170,46 +187,16 @@ $ poetry run my-project serve
 pip install fastapi-mvc
 ```
 
-## Usage
-
-This package exposes simple CLI for easier interaction:
-
+Or directly from source:
 ```shell
-$ fastapi-mvc --help
-Usage: fastapi-mvc [OPTIONS] COMMAND [ARGS]...
-
-  Generate and manage fastapi-mvc projects.
-
-Options:
-  -v, --verbose  Enable verbose logging.
-  --help         Show this message and exit.
-
-Commands:
-  new  Create a new FastAPI application.
-$ fastapi-mvc new --help
-Usage: fastapi-mvc new [OPTIONS] APP_PATH
-
-  Create a new FastAPI application.
-
-  The 'fastapi-mvc new' command creates a new FastAPI application with a
-  default directory structure and configuration at the path you specify.
-
-Options:
-  -R, --skip-redis                Skip Redis utility files.
-  -A, --skip-aiohttp              Skip aiohttp utility files.
-  -V, --skip-vagrantfile          Skip Vagrantfile.
-  -H, --skip-helm                 Skip Helm chart files.
-  -G, --skip-actions              Skip GitHub actions files.
-  -C, --skip-codecov              Skip codecov in GitHub actions.
-  -I, --skip-install              Dont run make install
-  --license [MIT|BSD2|BSD3|ISC|Apache2.0|LGPLv3+|LGPLv3|LGPLv2+|LGPLv2|no]
-                                  Choose license.  [default: MIT]
-  --repo-url TEXT                 Repository url.
-  --help                          Show this message and exit.
+git clone git@github.com:rszamszur/fastapi-mvc.git
+cd fastapi-mvc
+make install
 ```
 
-To generate new project:
+## Usage
 
+Creating a new FastAPI project is as easy as:
 ```shell
 $ fastapi-mvc new my-project
 [install] Begin installing project.
@@ -232,8 +219,16 @@ To activate shell completion:
  - for fish: $ echo 'eval "$(_MY_PROJECT_COMPLETE=source_fish my-project)' >> ~/.config/fish/completions/my-project.fish
 ```
 
-To serve api:
+To run development uvicorn server:
+```shell
+$ cd my-project/
+$ fastapi-mvc run
+[2022-02-07 20:31:11 +0100] [1687989] [INFO] Will watch for changes in these directories: ['/tmp/my-project']
+[2022-02-07 20:31:11 +0100] [1687989] [INFO] Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+[2022-02-07 20:31:11 +0100] [1687989] [INFO] Started reloader process [1687989] using watchgod
+```
 
+To run production WSGI + ASGI server:
 ```shell
 $ cd my-project/
 $ my-project serve
@@ -259,6 +254,69 @@ To confirm it's working:
 ```shell
 $ curl localhost:8000/api/ready
 {"status":"ok"}
+```
+
+## CLI
+
+This package exposes simple CLI for easier interaction:
+
+```shell
+$ fastapi-mvc --help
+Usage: fastapi-mvc [OPTIONS] COMMAND [ARGS]...
+
+  Create and develop production grade FastAPI projects.
+
+  Documentation: https://fastapi-mvc.netlify.app
+
+  Source Code: https://github.com/rszamszur/fastapi-mvc
+
+Options:
+  -v, --verbose  Enable verbose logging.
+  --help         Show this message and exit.
+
+Commands:
+  new  Create a new FastAPI application.
+  run  Run development uvicorn server.
+```
+```shell
+$ fastapi-mvc new --help
+Usage: fastapi-mvc new [OPTIONS] APP_PATH
+
+  Create a new FastAPI application.
+
+  The 'fastapi-mvc new' command creates a new FastAPI application with a
+  default directory structure and configuration at the path you specify.
+
+Options:
+  -R, --skip-redis                Skip Redis utility files.
+  -A, --skip-aiohttp              Skip aiohttp utility files.
+  -V, --skip-vagrantfile          Skip Vagrantfile.
+  -H, --skip-helm                 Skip Helm chart files.
+  -G, --skip-actions              Skip GitHub actions files.
+  -C, --skip-codecov              Skip codecov in GitHub actions.
+  -I, --skip-install              Dont run make install
+  --license [MIT|BSD2|BSD3|ISC|Apache2.0|LGPLv3+|LGPLv3|LGPLv2+|LGPLv2|no]
+                                  Choose license.  [default: MIT]
+  --repo-url TEXT                 Repository url.
+  --help                          Show this message and exit.
+```
+```shell
+$ fastapi-mvc run --help
+Usage: fastapi-mvc run [OPTIONS]
+
+  Run development uvicorn server.
+
+  The 'fastapi-mvc run' commands runs development uvicorn server for a
+  fastapi-mvc project at the current working directory.
+
+Options:
+  --host TEXT                  Host to bind.  [default: 127.0.0.1]
+  -p, --port INTEGER           Port to bind.  [default: 8000]
+  -w, --workers INTEGER RANGE  The number of worker processes for handling
+                               requests.  [default: 1]
+
+  --no-reload                  Disable auto-reload.
+  --help                       Show this message and exit.
 ```
 
 ## Contributing
