@@ -15,7 +15,7 @@
 
 ---
 
-**Documentation**: [https://fastapi-mvc.netlify.app](https://fastapi-mvc.netlify.app)
+**Documentation**: [https://fastapi-mvc.netlify.app](https://fastapi-mvc.netlify.app) (soon)
 
 **Source Code**: [https://github.com/rszamszur/fastapi-mvc](https://github.com/rszamszur/fastapi-mvc)
 
