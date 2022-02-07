@@ -55,7 +55,7 @@ def run(**options):
     cwd = os.getcwd()
     ini_file = os.path.join(cwd, "fastapi-mvc.ini")
 
-    if not os.path.exists(ini_file) and not os.path.isfile(ini_file):
+    if not os.path.exists(ini_file) or not os.path.isfile(ini_file):
         click.echo(
             "Not a fastapi-mvc project, fastapi-mvc.ini does not exist.",
         )
