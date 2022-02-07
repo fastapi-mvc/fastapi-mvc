@@ -43,7 +43,7 @@ def test_run_default_options(uvi_mck, os_mck, cli_runner):
 @mock.patch("fastapi_mvc.cli.commands.run.uvicorn.run", return_value=0)
 def test_run_with_options(uvi_mck, os_mck, cli_runner):
     result = cli_runner.invoke(
-        run, ["--host", "10.20.30.40", "-p", 1234, "--no-reload", "-w", 4]
+        run, ["--host", "10.20.30.40", "-p", 1234, "--no-reload", "-w", 2]
     )
     assert result.exit_code == 0
     os_mck.assert_called_once()
@@ -52,7 +52,7 @@ def test_run_with_options(uvi_mck, os_mck, cli_runner):
         host="10.20.30.40",
         port=1234,
         reload=False,
-        workers=4,
+        workers=2,
         log_config=None,
         access_log=True,
     )
