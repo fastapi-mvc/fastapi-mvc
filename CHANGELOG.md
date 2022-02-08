@@ -8,8 +8,13 @@ This file documents changes to [fastapi-mvc](https://github.com/rszamszur/fastap
 
 * Implement CLI `fastapi-mvc run` command for running uvicorn development server [#14](https://github.com/rszamszur/fastapi-mvc/issues/14), [#31](https://github.com/rszamszur/fastapi-mvc/issues/31). PR [#35](https://github.com/rszamszur/fastapi-mvc/pull/35)
 
+### Fixed
+
+* New project doesn't install correctly if created from activated virtualenv [#37](https://github.com/rszamszur/fastapi-mvc/issues/37). PR [#40](https://github.com/rszamszur/fastapi-mvc/pull/40)
+
 ### Internal
 
+* Refactor logic from CLI commands to separate classes [#38](https://github.com/rszamszur/fastapi-mvc/issues/38). PR [#40](https://github.com/rszamszur/fastapi-mvc/pull/40)
 * Add documentation [#9](https://github.com/rszamszur/fastapi-mvc/issues/9). PR [#33](https://github.com/rszamszur/fastapi-mvc/pull/33)
 * Add make template-checks target for running metrics and tests on template.
 * Add make pre-commit target for running package and template checks.
