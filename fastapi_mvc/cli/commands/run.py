@@ -1,11 +1,11 @@
 """FastAPI MVC CLI run command implementation."""
 import os
 import sys
-import configparser
 from multiprocessing import cpu_count
 
 import click
 import uvicorn
+from fastapi_mvc.parsers import IniParser
 
 
 @click.command()
@@ -52,26 +52,11 @@ def run(**options):
          options(dict): CLI command options.
 
     """
-    cwd = os.getcwd()
-    ini_file = os.path.join(cwd, "fastapi-mvc.ini")
-
-    if not os.path.exists(ini_file) or not os.path.isfile(ini_file):
-        click.echo(
-            "Not a fastapi-mvc project, fastapi-mvc.ini does not exist.",
-        )
-        sys.exit(1)
-
-    if not os.access(ini_file, os.R_OK):
-        click.echo("File fastapi-mvc.ini is not readable.")
-        sys.exit(1)
-
-    config = configparser.ConfigParser()
-    config.read(ini_file)
-    package_name = config["project"]["package_name"]
+    project = IniParser(os.getcwd())
 
     sys.exit(
         uvicorn.run(
-            "{0:s}.app.asgi:application".format(package_name),
+            "{0:s}.app.asgi:application".format(project.package_name),
             host=options["host"],
             port=options["port"],
             reload=True if not options["no_reload"] else False,

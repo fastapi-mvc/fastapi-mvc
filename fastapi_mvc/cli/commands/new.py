@@ -1,12 +1,10 @@
 """FastAPI MVC CLI new command implementation."""
-import sys
-import subprocess
 import os
 from datetime import datetime
 
 import click
-from cookiecutter.exceptions import OutputDirExistsException
-from cookiecutter.main import cookiecutter
+from fastapi_mvc.generators import ProjectGenerator
+from fastapi_mvc.utils import ShellUtils
 from fastapi_mvc.version import __version__
 
 
@@ -105,28 +103,7 @@ def new(app_path, **options):
     if not output_dir:
         output_dir = "."
 
-    template_dir = os.path.abspath(
-        os.path.join(
-            os.path.abspath(__file__),
-            "../../../template",
-        )
-    )
-
-    try:
-        author = subprocess.check_output(
-            ["git", "config", "--get", "user.name"]
-        )
-        author = author.decode("utf-8").strip()
-    except subprocess.CalledProcessError:
-        author = "John Doe"
-
-    try:
-        email = subprocess.check_output(
-            ["git", "config", "--get", "user.email"]
-        )
-        email = email.decode("utf-8").strip()
-    except subprocess.CalledProcessError:
-        email = "example@email.com"
+    author, email = ShellUtils.get_git_user_info()
 
     context = {
         "project_name": app_name,
@@ -143,16 +120,8 @@ def new(app_path, **options):
         "fastapi_mvc_version": __version__,
     }
 
-    try:
-        cookiecutter(
-            template_dir,
-            extra_context=context,
-            no_input=True,
-            output_dir=output_dir,
-        )
-    except OutputDirExistsException as ex:
-        click.echo(ex)
-        sys.exit(1)
+    generator = ProjectGenerator()
+    generator.new(context=context, output_dir=output_dir)
 
     if not options["skip_install"]:
-        subprocess.run(["make", "install"], cwd=app_path)
+        ShellUtils.run_project_install(app_path)
