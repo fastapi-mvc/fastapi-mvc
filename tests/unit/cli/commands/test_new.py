@@ -58,9 +58,9 @@ def test_new_default_values(gen_mock, utils_mock, cli_runner):
             "--skip-actions",
             "--skip-codecov",
             "--skip-install",
-            "/tmp/testapp"
-        ]
-    )
+            "/tmp/testapp",
+        ],
+    ),
 )
 @mock.patch("fastapi_mvc.cli.commands.new.ShellUtils")
 @mock.patch("fastapi_mvc.cli.commands.new.ProjectGenerator")

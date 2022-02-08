@@ -26,7 +26,10 @@ def test_parser_properties(parser):
 def test_parser_ini_not_exists(exists_mock):
     with pytest.raises(IniParserError) as ex:
         IniParser("/test/path")
-        assert str(ex) == "Not a fastapi-mvc project, fastapi-mvc.ini does not exist."
+        assert (
+            str(ex)
+            == "Not a fastapi-mvc project, fastapi-mvc.ini does not exist."
+        )
 
     exists_mock.assert_called_once_with("/test/path/fastapi-mvc.ini")
 
@@ -36,7 +39,10 @@ def test_parser_ini_not_exists(exists_mock):
 def test_parser_ini_not_a_file(exists_mock, isfile_mock):
     with pytest.raises(IniParserError) as ex:
         IniParser("/test/path")
-        assert str(ex) == "Not a fastapi-mvc project, fastapi-mvc.ini is not a file."
+        assert (
+            str(ex)
+            == "Not a fastapi-mvc project, fastapi-mvc.ini is not a file."
+        )
 
     exists_mock.assert_called_once_with("/test/path/fastapi-mvc.ini")
     isfile_mock.assert_called_once_with("/test/path/fastapi-mvc.ini")
