@@ -18,18 +18,37 @@
 
 ---
 
-Documentation for version: **v0.7.0**
+Documentation for version: **v0.8.0**
 
 Create and develop production grade FastaAPI projects, based on MVC architectural pattern, WSGI + ASGI. 
 Includes tests, GitHub actions, utilities, Helm, Dockerfile, Makefile, and more.
 
 ## Quick start
 
+Creating a new FastAPI project is as easy as:
 ```shell
 pip install fastapi-mvc
 fastapi-mvc new my-project
+```
+
+To run development uvicorn server:
+```shell
 cd my-project
 fastapi-mvc run
+```
+
+To run production WSGI + ASGI server:
+```shell
+cd my-project
+poetry run my-project serve
+# or if Poetry PATH is set
+my-project serve
+```
+
+To confirm it's working:
+```shell
+curl localhost:8000/api/ready
+{"status":"ok"}
 ```
 
 ## Features

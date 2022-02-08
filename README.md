@@ -15,7 +15,7 @@
 
 ---
 
-**Documentation**: [https://fastapi-mvc.netlify.app](https://fastapi-mvc.netlify.app) (soon)
+**Documentation**: [https://fastapi-mvc.netlify.app](https://fastapi-mvc.netlify.app)
 
 **Source Code**: [https://github.com/rszamszur/fastapi-mvc](https://github.com/rszamszur/fastapi-mvc)
 
@@ -149,30 +149,11 @@ Poetry comes with all the tools you might need to manage your project in a deter
 
 ## Quick start
 
-Creating a new FastAPI project is as easy as:
 ```shell
 pip install fastapi-mvc
-fastapi-mvc new my-project
-```
-
-To run development uvicorn server:
-```shell
-cd my-project
+fastapi-mvc new /tmp/demo-project
+cd /tmp/demo-project
 fastapi-mvc run
-```
-
-To run production WSGI + ASGI server:
-```shell
-cd my-project
-poetry run my-project serve
-# or if Poetry PATH is set
-my-project serve
-```
-
-To confirm it's working:
-```shell
-curl localhost:8000/api/ready
-{"status":"ok"}
 ```
 
 ## Prerequisites
@@ -194,65 +175,30 @@ cd fastapi-mvc
 make install
 ```
 
-## Usage
+## Getting started
 
 Creating a new FastAPI project is as easy as:
 ```shell
-$ fastapi-mvc new my-project
-[install] Begin installing project.
-Updating dependencies
-Resolving dependencies... (0.7s)
-
-Writing lock file
-
-No dependencies to install or update
-
-Installing the current project: my-project (0.1.0)
-Project successfully installed.
-To activate virtualenv run: $ poetry shell
-Now you should access CLI script: $ my-project --help
-Alternatively you can access CLI script via poetry run: $ poetry run my-project --help
-To deactivate virtualenv simply type: $ deactivate
-To activate shell completion:
- - for bash: $ echo 'eval "$(_MY_PROJECT_COMPLETE=source_bash my-project)' >> ~/.bashrc
- - for zsh: $ echo 'eval "$(_MY_PROJECT_COMPLETE=source_zsh my-project)' >> ~/.zshrc
- - for fish: $ echo 'eval "$(_MY_PROJECT_COMPLETE=source_fish my-project)' >> ~/.config/fish/completions/my-project.fish
+fastapi-mvc new my-project
 ```
 
 To run development uvicorn server:
 ```shell
-$ cd my-project/
-$ fastapi-mvc run
-[2022-02-07 20:31:11 +0100] [1687989] [INFO] Will watch for changes in these directories: ['/tmp/my-project']
-[2022-02-07 20:31:11 +0100] [1687989] [INFO] Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
-[2022-02-07 20:31:11 +0100] [1687989] [INFO] Started reloader process [1687989] using watchgod
+cd my-project
+fastapi-mvc run
 ```
 
 To run production WSGI + ASGI server:
 ```shell
-$ cd my-project/
-$ my-project serve
-[2022-01-08 21:47:06 +0100] [2268861] [INFO] Start gunicorn WSGI with ASGI workers.
-[2022-01-08 21:47:06 +0100] [2268861] [INFO] Starting gunicorn 20.1.0
-[2022-01-08 21:47:06 +0100] [2268861] [INFO] Listening at: http://127.0.0.1:8000 (2268861)
-[2022-01-08 21:47:06 +0100] [2268861] [INFO] Using worker: uvicorn.workers.UvicornWorker
-[2022-01-08 21:47:06 +0100] [2268861] [INFO] Server is ready. Spawning workers
-[2022-01-08 21:47:06 +0100] [2268867] [INFO] Booting worker with pid: 2268867
-[2022-01-08 21:47:06 +0100] [2268867] [INFO] Worker spawned (pid: 2268867)
-[2022-01-08 21:47:06 +0100] [2268867] [INFO] Started server process [2268867]
-[2022-01-08 21:47:06 +0100] [2268867] [INFO] Waiting for application startup.
-[2022-01-08 21:47:06 +0100] [2268867] [INFO] Application startup complete.
-[2022-01-08 21:47:06 +0100] [2268873] [INFO] Booting worker with pid: 2268873
-[2022-01-08 21:47:06 +0100] [2268873] [INFO] Worker spawned (pid: 2268873)
-[2022-01-08 21:47:06 +0100] [2268873] [INFO] Started server process [2268873]
-[2022-01-08 21:47:06 +0100] [2268873] [INFO] Waiting for application startup.
-[2022-01-08 21:47:06 +0100] [2268873] [INFO] Application startup complete.
+cd my-project
+poetry run my-project serve
+# or if project virtualenv PATH is set
+my-project serve
 ```
 
 To confirm it's working:
-
 ```shell
-$ curl localhost:8000/api/ready
+curl localhost:8000/api/ready
 {"status":"ok"}
 ```
 
