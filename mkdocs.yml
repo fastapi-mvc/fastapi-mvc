@@ -30,7 +30,6 @@ nav:
       - Development: usage/development.md
       - Configuration: usage/configuration.md
   - Deployment:
-      - Intro: deployment/intro.md
       - Kubernetes: deployment/kubernetes.md
       - Docker: deployment/docker.md
       - Manually on a Server: deployment/manually.md
