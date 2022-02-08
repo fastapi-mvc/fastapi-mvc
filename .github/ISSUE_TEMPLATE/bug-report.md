@@ -13,13 +13,13 @@ assignees: ''
 <!-- Now feel free to write your issue, but please be descriptive! Thanks again 🙌 ❤️ -->
 
 **Describe the bug**
-A clear and concise description of what the bug is.
+<!-- A clear and concise description of what the bug is. -->
 
 **Expected behavior**
-A clear and concise description of what you expected to happen.
+<!-- A clear and concise description of what you expected to happen. -->
 
 **To Reproduce**
-Steps to reproduce the behavior.
+<!-- Steps to reproduce the behavior. -->
 
 **Environment**
 * Python version:
@@ -27,4 +27,4 @@ Steps to reproduce the behavior.
 * fastapi-mvc version:
 
 **Additional context**
-Add any other context about the problem here.
+<!-- Add any other context about the problem here. -->
