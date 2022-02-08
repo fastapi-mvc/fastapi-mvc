@@ -115,6 +115,7 @@ def new(app_path, **options):
         "codecov": "no" if options["skip_codecov"] else "yes",
         "author": author,
         "email": email,
+        "license": options["license"],
         "repo_url": options["repo_url"],
         "year": datetime.today().year,
         "fastapi_mvc_version": __version__,
