@@ -14,7 +14,7 @@ Installation is as simple as:
 pip install fastapi-mvc
 ```
 
-Of directly from source:
+Or directly from source:
 
 ```shell
 git clone git@github.com:rszamszur/fastapi-mvc.git
@@ -22,7 +22,7 @@ cd fastapi-mvc
 make install
 ```
 
-## Usage
+## CLI
 
 This package exposes simple CLI for easier interaction:
 
@@ -30,7 +30,11 @@ This package exposes simple CLI for easier interaction:
 $ fastapi-mvc --help
 Usage: fastapi-mvc [OPTIONS] COMMAND [ARGS]...
 
-  Generate and manage fastapi-mvc projects.
+  Create and develop production grade FastAPI projects.
+
+  Documentation: https://fastapi-mvc.netlify.app
+
+  Source Code: https://github.com/rszamszur/fastapi-mvc
 
 Options:
   -v, --verbose  Enable verbose logging.
@@ -38,6 +42,7 @@ Options:
 
 Commands:
   new  Create a new FastAPI application.
+  run  Run development uvicorn server.
 ```
 ```shell
 $ fastapi-mvc new --help
@@ -60,4 +65,22 @@ Options:
                                   Choose license.  [default: MIT]
   --repo-url TEXT                 Repository url.
   --help                          Show this message and exit.
+```
+```shell
+$ fastapi-mvc run --help
+Usage: fastapi-mvc run [OPTIONS]
+
+  Run development uvicorn server.
+
+  The 'fastapi-mvc run' commands runs development uvicorn server for a
+  fastapi-mvc project at the current working directory.
+
+Options:
+  --host TEXT                  Host to bind.  [default: 127.0.0.1]
+  -p, --port INTEGER           Port to bind.  [default: 8000]
+  -w, --workers INTEGER RANGE  The number of worker processes for handling
+                               requests.  [default: 1]
+
+  --no-reload                  Disable auto-reload.
+  --help                       Show this message and exit.
 ```
