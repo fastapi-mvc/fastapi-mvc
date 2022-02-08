@@ -11,6 +11,7 @@ This file documents changes to [fastapi-mvc](https://github.com/rszamszur/fastap
 ### Fixed
 
 * New project doesn't install correctly if created from activated virtualenv [#37](https://github.com/rszamszur/fastapi-mvc/issues/37). PR [#40](https://github.com/rszamszur/fastapi-mvc/pull/40)
+* CLI `fastapi-mvc new` `--license` option value is not passed to cookiecutter [#39](https://github.com/rszamszur/fastapi-mvc/issues/39). PR [#42](https://github.com/rszamszur/fastapi-mvc/pull/42)
 
 ### Internal
 
