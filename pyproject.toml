@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "fastapi-mvc"
-version = "0.7.0"
+version = "0.8.0"
 description = "Create and develop production grade FastAPI projects."
 authors = ["Radosław Szamszur <radoslawszamszur@gmail.com>"]
 license = "MIT"
