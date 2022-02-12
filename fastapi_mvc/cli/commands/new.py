@@ -125,4 +125,4 @@ def new(app_path, **options):
     generator.new(context=context, output_dir=output_dir)
 
     if not options["skip_install"]:
-        ShellUtils.run_project_install(app_path)
+        ShellUtils.run_shell(cmd=["make", "install"], cwd=app_path)
