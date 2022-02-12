@@ -25,7 +25,7 @@ class ShellUtils(object):
             Tuple containing git username and email.
 
         """
-        cls._log.info("Try read git user information.")
+        cls._log.debug("Try read git user information.")
 
         try:
             author = subprocess.check_output(

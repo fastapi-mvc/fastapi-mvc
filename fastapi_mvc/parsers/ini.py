@@ -18,7 +18,7 @@ class IniParser(object):
 
         """
         self._log = logging.getLogger(self.__class__.__name__)
-        self._log.info("Initialize fastapi-mvc.ini parser.")
+        self._log.debug("Initialize fastapi-mvc.ini parser.")
         self._project_path = project_path
         self._ini_file = os.path.join(self._project_path, "fastapi-mvc.ini")
 
@@ -40,7 +40,7 @@ class IniParser(object):
             self._log.error("File fastapi-mvc.ini is not readable.")
             raise IniParserError("File fastapi-mvc.ini is not readable.")
 
-        self._log.info("Begin parsing: {0:s}".format(self._ini_file))
+        self._log.debug("Begin parsing: {0:s}".format(self._ini_file))
         self._config = configparser.ConfigParser()
         self._config.read(self._ini_file)
 

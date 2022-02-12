@@ -12,7 +12,7 @@ class ProjectGenerator(object):
     def __init__(self):
         """Initialize ProjectGenerator class object instance."""
         self._log = logging.getLogger(self.__class__.__name__)
-        self._log.info("Initialize fastapi-mvc project generator.")
+        self._log.debug("Initialize fastapi-mvc project generator.")
         self._template_dir = os.path.abspath(
             os.path.join(
                 os.path.abspath(__file__),
