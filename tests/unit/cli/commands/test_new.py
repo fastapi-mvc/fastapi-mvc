@@ -26,7 +26,9 @@ def test_new_default_values(gen_mock, utils_mock, cli_runner):
     assert result.exit_code == 0
 
     utils_mock.get_git_user_info.assert_called_once()
-    utils_mock.run_project_install.assert_called_once_with("testapp")
+    utils_mock.run_shell.assert_called_once_with(
+        cmd=["make", "install"], cwd="testapp"
+    )
     gen_mock.return_value.new.assert_called_once_with(
         context={
             "project_name": "testapp",
