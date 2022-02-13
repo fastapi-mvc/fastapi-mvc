@@ -19,7 +19,15 @@ def parser():
 
 
 def test_parser_properties(parser):
-    assert parser.package_name == "foobar"
+    assert parser.folder_name == "test-app"
+    assert parser.package_name == "test_app"
+    assert parser.script_name == "test-app"
+    assert parser.redis == "yes"
+    assert parser.github_actions == "yes"
+    assert parser.aiohttp == "yes"
+    assert parser.vagrantfile == "yes"
+    assert parser.helm == "yes"
+    assert parser.version == "x.y.z"
 
 
 @mock.patch("fastapi_mvc.parsers.ini.os.path.exists", return_value=False)

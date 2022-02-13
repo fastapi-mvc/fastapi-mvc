@@ -45,14 +45,94 @@ class IniParser(object):
         self._config.read(self._ini_file)
 
     @property
+    def folder_name(self):
+        """Folder name property.
+
+        Returns:
+            Folder name value read from a fastapi-mvc.ini file.
+
+        """
+        return self._config["project"]["folder_name"]
+
+    @property
     def package_name(self):
         """Package name property.
 
         Returns:
-            Package name read from a fastapi-mvc.ini file.
+            Package name value read from a fastapi-mvc.ini file.
 
         """
         return self._config["project"]["package_name"]
+
+    @property
+    def script_name(self):
+        """Script name property.
+
+        Returns:
+            Script name value read from a fastapi-mvc.ini file.
+
+        """
+        return self._config["project"]["script_name"]
+
+    @property
+    def redis(self):
+        """Redis property.
+
+        Returns:
+            Redis value read from a fastapi-mvc.ini file.
+
+        """
+        return self._config["project"]["redis"]
+
+    @property
+    def github_actions(self):
+        """GitHub actions property.
+
+        Returns:
+            GitHub actions value read from a fastapi-mvc.ini file.
+
+        """
+        return self._config["project"]["github_actions"]
+
+    @property
+    def aiohttp(self):
+        """Aiohttp property.
+
+        Returns:
+            Aiohttp value read from a fastapi-mvc.ini file.
+
+        """
+        return self._config["project"]["aiohttp"]
+
+    @property
+    def vagrantfile(self):
+        """Vagrantfile property.
+
+        Returns:
+            Vagrantfile value read from a fastapi-mvc.ini file.
+
+        """
+        return self._config["project"]["vagrantfile"]
+
+    @property
+    def helm(self):
+        """Helm property.
+
+        Returns:
+            Helm value read from a fastapi-mvc.ini file.
+
+        """
+        return self._config["project"]["helm"]
+
+    @property
+    def version(self):
+        """Fastapi-mvc version property.
+
+        Returns:
+            Fastapi-mvc version value read from a fastapi-mvc.ini file.
+
+        """
+        return self._config["fastapi-mvc"]["version"]
 
 
 class IniParserError(Exception):
