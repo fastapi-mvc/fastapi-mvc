@@ -1,10 +1,6 @@
 """FastAPI MVC CLI run command implementation."""
-import os
-import sys
-
 import click
-from fastapi_mvc.parsers import IniParser
-from fastapi_mvc.utils import ShellUtils
+from fastapi_mvc.actions import Context, RunDevelopmentServer
 
 
 @click.command()
@@ -36,18 +32,5 @@ def run(**options):
          options(dict): CLI command options.
 
     """
-    project = IniParser(os.getcwd())
-
-    cmd = [
-        "poetry",
-        "run",
-        "uvicorn",
-        "--host",
-        options["host"],
-        "--port",
-        options["port"],
-        "--reload",
-        "{0:s}.app.asgi:application".format(project.package_name),
-    ]
-
-    ShellUtils.run_shell(cmd)
+    context = Context(action=RunDevelopmentServer())
+    context.execute(host=options["host"], port=options["port"])
