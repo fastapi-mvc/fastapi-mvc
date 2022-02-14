@@ -281,7 +281,7 @@ jobs:
           echo "$HOME/.poetry/bin" >> $GITHUB_PATH
           $HOME/.poetry/bin/poetry config cache-dir $HOME/.poetry/store
       - name: Run package coverage
-        run: poetry run pytest --cov=fastapi_mvc/cli --cov-fail-under=90 --cov-report=xml --cov-report=term-missing tests
+        run: poetry run pytest --cov-config=.coveragerc --cov=fastapi_mvc --cov-fail-under=90 --cov-report=xml --cov-report=term-missing tests
       - name: Run template coverage
         run: |
           cd ~/.poetry/store/test-project
