@@ -46,7 +46,7 @@ class IniParser(object):
 
     @property
     def folder_name(self):
-        """Folder name property.
+        """Class folder name property.
 
         Returns:
             Folder name value read from a fastapi-mvc.ini file.
@@ -56,7 +56,7 @@ class IniParser(object):
 
     @property
     def package_name(self):
-        """Package name property.
+        """Class package name property.
 
         Returns:
             Package name value read from a fastapi-mvc.ini file.
@@ -66,7 +66,7 @@ class IniParser(object):
 
     @property
     def script_name(self):
-        """Script name property.
+        """Class script name property.
 
         Returns:
             Script name value read from a fastapi-mvc.ini file.
@@ -76,7 +76,7 @@ class IniParser(object):
 
     @property
     def redis(self):
-        """Redis property.
+        """Class Redis property.
 
         Returns:
             Redis value read from a fastapi-mvc.ini file.
@@ -86,7 +86,7 @@ class IniParser(object):
 
     @property
     def github_actions(self):
-        """GitHub actions property.
+        """Class GitHub actions property.
 
         Returns:
             GitHub actions value read from a fastapi-mvc.ini file.
@@ -96,7 +96,7 @@ class IniParser(object):
 
     @property
     def aiohttp(self):
-        """Aiohttp property.
+        """Class Aiohttp property.
 
         Returns:
             Aiohttp value read from a fastapi-mvc.ini file.
@@ -106,7 +106,7 @@ class IniParser(object):
 
     @property
     def vagrantfile(self):
-        """Vagrantfile property.
+        """Class Vagrantfile property.
 
         Returns:
             Vagrantfile value read from a fastapi-mvc.ini file.
@@ -116,7 +116,7 @@ class IniParser(object):
 
     @property
     def helm(self):
-        """Helm property.
+        """Class Helm property.
 
         Returns:
             Helm value read from a fastapi-mvc.ini file.
@@ -126,7 +126,7 @@ class IniParser(object):
 
     @property
     def version(self):
-        """Fastapi-mvc version property.
+        """Class fastapi-mvc version property.
 
         Returns:
             Fastapi-mvc version value read from a fastapi-mvc.ini file.
