@@ -10,9 +10,7 @@ from fastapi_mvc.utils import ShellUtils
 class InstallProject(Command):
     """Command InstallProject class definition."""
 
-    __slots__ = (
-        "_app_path"
-    )
+    __slots__ = "_app_path"
 
     def __init__(self, app_path):
         """Initialize InstallProject class object instance.
@@ -22,9 +20,7 @@ class InstallProject(Command):
 
         """
         Command.__init__(self)
-        self._log.debug(
-            "Initialize InstallProject class object instance."
-        )
+        self._log.debug("Initialize InstallProject class object instance.")
         self._app_path = app_path
 
     def execute(self):

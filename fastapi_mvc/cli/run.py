@@ -34,6 +34,7 @@ def run(**options):
     """
     invoker = Invoker()
     invoker.on_start = RunUvicorn(
-        host=options["host"], port=options["port"],
+        host=options["host"],
+        port=options["port"],
     )
     invoker.execute()

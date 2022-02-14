@@ -13,9 +13,7 @@ from fastapi_mvc.parsers import IniParser
 class RunUvicorn(Command):
     """Command RunUvicorn class definition."""
 
-    __slots__ = (
-        "_cmd"
-    )
+    __slots__ = "_cmd"
 
     def __init__(self, host, port):
         """Initialize RunUvicorn class object instance.
@@ -26,9 +24,7 @@ class RunUvicorn(Command):
 
         """
         Command.__init__(self)
-        self._log.debug(
-            "Initialize RunUvicorn class object instance."
-        )
+        self._log.debug("Initialize RunUvicorn class object instance.")
         parser = IniParser(os.getcwd())
         self._cmd = [
             "poetry",

@@ -10,9 +10,7 @@ import logging
 class Command(object, metaclass=ABCMeta):
     """Defines the common interface for all concrete commands."""
 
-    __slots__ = (
-        "_log",
-    )
+    __slots__ = "_log"
 
     def __init__(self):
         """Initialize Command base class object instance."""

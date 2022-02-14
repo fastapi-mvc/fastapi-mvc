@@ -93,9 +93,7 @@ def new(app_path, **options):
 
     """
     invoker = Invoker()
-    invoker.on_start = GenerateNewProject(
-        app_path=app_path, options=options
-    )
+    invoker.on_start = GenerateNewProject(app_path=app_path, options=options)
 
     if not options["skip_install"]:
         invoker.on_finish = InstallProject(app_path=app_path)

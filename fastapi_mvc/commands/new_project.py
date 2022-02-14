@@ -29,9 +29,7 @@ class GenerateNewProject(Command):
 
         """
         Command.__init__(self)
-        self._log.debug(
-            "Initialize GenerateNewProject class object instance."
-        )
+        self._log.debug("Initialize GenerateNewProject class object instance.")
         self._app_path = app_path
         self._options = options
 
@@ -48,7 +46,7 @@ class GenerateNewProject(Command):
         if self._options[option]:
             return "no"
         else:
-            return"yes"
+            return "yes"
 
     def execute(self):
         """Generate a new fastapi-mvc project from cookiecutter template."""
