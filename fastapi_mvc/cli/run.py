@@ -1,6 +1,9 @@
 """FastAPI MVC CLI run command implementation."""
+import os
+
 import click
-from fastapi_mvc.commands import Invoker, RunUvicorn
+from fastapi_mvc.commands import Invoker, RunUvicorn, VerifyInstall
+from fastapi_mvc.parsers import IniParser
 
 
 @click.command()
@@ -32,9 +35,13 @@ def run(**options):
          options(dict): CLI command options.
 
     """
+    parser = IniParser(os.getcwd())
+
     invoker = Invoker()
-    invoker.on_start = RunUvicorn(
+    invoker.on_start = VerifyInstall(script_name=parser.script_name)
+    invoker.on_finish = RunUvicorn(
         host=options["host"],
         port=options["port"],
+        package_name=parser.package_name,
     )
     invoker.execute()

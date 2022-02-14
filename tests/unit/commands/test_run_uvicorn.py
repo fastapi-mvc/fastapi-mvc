@@ -4,22 +4,19 @@ from fastapi_mvc.commands import RunUvicorn
 
 
 @pytest.mark.parametrize(
-    "host, port",
+    "host, port, package_name",
     [
-        ("127.0.0.1", "8000"),
-        ("localhost", "1234"),
+        ("127.0.0.1", "8000", "test_app"),
+        ("localhost", "1234", "foobar"),
     ]
 )
-@mock.patch("fastapi_mvc.commands.run_uvicorn.IniParser")
 @mock.patch("fastapi_mvc.commands.run_uvicorn.ShellUtils.run_shell")
-def test_execute(run_mock, ini_mock, host, port):
-    ini_mock.return_value.package_name = "foobar"
-
-    command = RunUvicorn(host=host, port=port)
+def test_execute(run_mock, host, port, package_name):
+    command = RunUvicorn(host=host, port=port, package_name=package_name)
     command.execute()
 
     run_mock.assert_called_once_with(
-        [
+        cmd=[
             "poetry",
             "run",
             "uvicorn",
@@ -28,6 +25,6 @@ def test_execute(run_mock, ini_mock, host, port):
             "--port",
             port,
             "--reload",
-            "foobar.app.asgi:application",
+            "{0:s}.app.asgi:application".format(package_name),
         ]
     )
