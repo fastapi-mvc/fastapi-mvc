@@ -39,6 +39,7 @@ Options:
 
 ```shell
 $ fastapi-mvc new /tmp/demo-project
+[2022-02-14 21:30:47 +0100] [2189261] [INFO] Creating a new fastapi-mvc project: /tmp/demo-project
 [2022-02-14 21:30:47 +0100] [2189261] [INFO] Installing project
 [install] Begin installing project.
 Creating virtualenv demo-project in /tmp/demo-project/.venv
