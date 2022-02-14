@@ -20,5 +20,11 @@ def test_root_with_options(cli_runner):
     result = cli_runner.invoke(cli, ["--verbose", "new", "--help"])
     assert result.exit_code == 0
 
+    result = cli_runner.invoke(cli, ["new", "--help"])
+    assert result.exit_code == 0
+
     result = cli_runner.invoke(cli, ["--verbose", "run", "--help"])
+    assert result.exit_code == 0
+
+    result = cli_runner.invoke(cli, ["run", "--help"])
     assert result.exit_code == 0

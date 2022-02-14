@@ -157,3 +157,21 @@ def test_run_shell_defaults(run_mock):
             stdout=None,
             stderr=None,
         )
+
+
+def test_run_shell_exception():
+    with pytest.raises(subprocess.CalledProcessError):
+        ShellUtils.run_shell(
+            cmd=["/bin/false"],
+            check=True,
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL,
+        )
+
+    process = ShellUtils.run_shell(
+        cmd=["/bin/false"],
+        check=False,
+        stdout=subprocess.DEVNULL,
+        stderr=subprocess.DEVNULL,
+    )
+    assert process.returncode != 0
