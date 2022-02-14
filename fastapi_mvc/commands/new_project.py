@@ -1,4 +1,4 @@
-"""FastAPI MVC GenerateNewProject command class implementation.
+"""FastAPI MVC command GenerateNewProject class implementation.
 
 The fastapi-mvc.commands submodule implements command design pattern:
 https://refactoring.guru/design-patterns/command
@@ -13,14 +13,21 @@ from fastapi_mvc.version import __version__
 
 
 class GenerateNewProject(Command):
-    """"""
+    """Command GenerateNewProject class definition."""
+
     __slots__ = (
         "_app_path",
         "_options",
     )
 
     def __init__(self, app_path, options):
-        """"""
+        """Initialize GenerateNewProject class object instance.
+
+        Args:
+            app_path(str): Path to new fastapi-mvc project.
+            options(dict): New project creation options.
+
+        """
         Command.__init__(self)
         self._log.debug(
             "Initialize GenerateNewProject class object instance."
@@ -29,13 +36,22 @@ class GenerateNewProject(Command):
         self._options = options
 
     def _get_value(self, option):
+        """Parse boolean value to cookiecutter context string yes or no value.
+
+        Args:
+            option(str): Option dictionary key.
+
+        Returns:
+            String "yes" or "no" value.
+
+        """
         if self._options[option]:
             return "no"
         else:
             return"yes"
 
     def execute(self):
-        """"""
+        """Generate a new fastapi-mvc project from cookiecutter template."""
         app_name = os.path.basename(self._app_path)
         output_dir = os.path.dirname(self._app_path)
 

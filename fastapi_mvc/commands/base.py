@@ -1,4 +1,4 @@
-"""FastAPI MVC base Command abstract class implementation.
+"""FastAPI MVC Command abstract class implementation.
 
 The fastapi-mvc.commands submodule implements command design pattern:
 https://refactoring.guru/design-patterns/command
@@ -8,7 +8,8 @@ import logging
 
 
 class Command(object, metaclass=ABCMeta):
-    """Command class defines the common interface for all concrete commands."""
+    """Defines the common interface for all concrete commands."""
+
     __slots__ = (
         "_log",
     )
@@ -19,5 +20,5 @@ class Command(object, metaclass=ABCMeta):
 
     @abstractmethod
     def execute(self):
-        """Declaration of execute abstract method for all inheriting classes."""
+        """Execute abstract method for all inheriting classes."""
         pass

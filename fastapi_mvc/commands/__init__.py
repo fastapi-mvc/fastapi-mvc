@@ -1,4 +1,4 @@
-"""fastapi-mvc"""
+"""fastapi-mvc."""
 from fastapi_mvc.commands.base import Command
 from fastapi_mvc.commands.invoker import Invoker
 from fastapi_mvc.commands.new_project import GenerateNewProject
