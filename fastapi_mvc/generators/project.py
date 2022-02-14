@@ -32,7 +32,7 @@ class ProjectGenerator(object):
                 exists.
 
         """
-        self._log.info(
+        self._log.debug(
             "Begin generating a new project at path: {0:s}".format(output_dir)
         )
         self._log.debug("Cookiecutter context: {0}".format(context))
