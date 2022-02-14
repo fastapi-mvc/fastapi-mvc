@@ -256,13 +256,9 @@ Usage: fastapi-mvc run [OPTIONS]
   fastapi-mvc project at the current working directory.
 
 Options:
-  --host TEXT                  Host to bind.  [default: 127.0.0.1]
-  -p, --port INTEGER           Port to bind.  [default: 8000]
-  -w, --workers INTEGER RANGE  The number of worker processes for handling
-                               requests.  [default: 1]
-
-  --no-reload                  Disable auto-reload.
-  --help                       Show this message and exit.
+  --host TEXT      Host to bind.  [default: 127.0.0.1]
+  -p, --port TEXT  Port to bind.  [default: 8000]
+  --help           Show this message and exit.
 ```
 
 ## Contributing
