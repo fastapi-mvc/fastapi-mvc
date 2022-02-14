@@ -46,7 +46,7 @@ class ShellUtils(object):
         return author, email
 
     @classmethod
-    def run_shell(cls, cmd, cwd=None, check=False):
+    def run_shell(cls, cmd, cwd=None, check=False, stdout=None, stderr=None):
         """Run shell command without activated virtualenv.
 
         If virtual env is activated, remove it from PATH in order to ensure
@@ -54,11 +54,15 @@ class ShellUtils(object):
         https://github.com/rszamszur/fastapi-mvc/issues/37
 
         Args:
-            cmd(list): Command to run.
+            cmd(list): Shell command to run.
             cwd(str): Path under which proces should execute command. Defaults
                 to current working directory.
             check(bool): If True raise a subprocess.CalledProcessError error
                 when a process returns non-zero exit status.
+            stdout(Union[None, int, IO[Any]]): Specify the executed program’s
+                standard output file handles.
+            stderr(Union[None, int, IO[Any]]): Specify the executed program’s
+                standard error file handles.
 
         Raises:
             subprocess.CalledProcessError: If spawned proces finishes with an
@@ -84,7 +88,14 @@ class ShellUtils(object):
             env["PATH"] = env["PATH"].replace(venv_path, "").strip(":")
 
         try:
-            process = subprocess.run(cmd, cwd=cwd, env=env, check=check)
+            process = subprocess.run(
+                cmd,
+                cwd=cwd,
+                env=env,
+                check=check,
+                stdout=stdout,
+                stderr=stderr,
+            )
             return process
         except subprocess.CalledProcessError as ex:
             cls._log.exception(
