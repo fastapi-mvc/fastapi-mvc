@@ -12,7 +12,7 @@ class ProjectGenerator(object):
     def __init__(self):
         """Initialize ProjectGenerator class object instance."""
         self._log = logging.getLogger(self.__class__.__name__)
-        self._log.info("Initialize fastapi-mvc project generator.")
+        self._log.debug("Initialize fastapi-mvc project generator.")
         self._template_dir = os.path.abspath(
             os.path.join(
                 os.path.abspath(__file__),
@@ -32,7 +32,7 @@ class ProjectGenerator(object):
                 exists.
 
         """
-        self._log.info(
+        self._log.debug(
             "Begin generating a new project at path: {0:s}".format(output_dir)
         )
         self._log.debug("Cookiecutter context: {0}".format(context))

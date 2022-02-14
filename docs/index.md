@@ -18,7 +18,7 @@
 
 ---
 
-Documentation for version: **v0.8.0**
+Documentation for version: **v0.9.0**
 
 Create and develop production grade FastaAPI projects, based on MVC architectural pattern, WSGI + ASGI. 
 Includes tests, GitHub actions, utilities, Helm, Dockerfile, Makefile, and more.
@@ -41,7 +41,7 @@ To run production WSGI + ASGI server:
 ```shell
 cd my-project
 poetry run my-project serve
-# or if Poetry PATH is set
+# or if project virtualenv PATH is set
 my-project serve
 ```
 

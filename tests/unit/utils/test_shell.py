@@ -1,3 +1,5 @@
+import os
+import subprocess
 from subprocess import CalledProcessError
 
 import pytest
@@ -41,9 +43,14 @@ def test_get_git_user_info_defaults(check_mock):
 
 
 @pytest.mark.parametrize(
-    "env, expected",
+    "cmd, cwd, check, stdout, stderr, env, expected",
     [
         (
+            ["make", "install"],
+            "/path/to/execute",
+            False,
+            None,
+            None,
             {
                 "SHELL": "/bin/bash",
                 "HOSTNAME": "foobar",
@@ -69,6 +76,11 @@ def test_get_git_user_info_defaults(check_mock):
             },
         ),
         (
+            ["--opt", "/test/value", "--opt2", "False"],
+            "/path/to/execute",
+            True,
+            subprocess.DEVNULL,
+            subprocess.DEVNULL,
             {
                 "SHELL": "/bin/bash",
                 "HOSTNAME": "foobar",
@@ -89,6 +101,11 @@ def test_get_git_user_info_defaults(check_mock):
             },
         ),
         (
+            ["make", "install"],
+            os.getcwd(),
+            False,
+            subprocess.PIPE,
+            subprocess.PIPE,
             {
                 "VIRTUAL_ENV": "/home/foobar/repos/fastapi-mvc/.venv",
                 "PATH": "/home/foobar/.local/bin:/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin:/home/foobar/repos/fastapi-mvc/.venv/bin",
@@ -100,12 +117,61 @@ def test_get_git_user_info_defaults(check_mock):
     ],
 )
 @mock.patch("fastapi_mvc.utils.shell.subprocess.run")
-def test_run_project_install(run_mock, env, expected):
+def test_run_shell(run_mock, cmd, cwd, check, stdout, stderr, env, expected):
     with mock.patch("fastapi_mvc.utils.shell.os.environ.copy") as os_mock:
         os_mock.return_value = env
 
-        ShellUtils.run_project_install("/path/to/project")
+        ShellUtils.run_shell(
+            cmd=cmd,
+            cwd=cwd,
+            check=check,
+            stdout=stdout,
+            stderr=stderr,
+        )
         os_mock.assert_called_once()
         run_mock.assert_called_once_with(
-            ["make", "install"], cwd="/path/to/project", env=expected
+            cmd,
+            cwd=cwd,
+            env=expected,
+            check=check,
+            stdout=stdout,
+            stderr=stderr,
         )
+
+
+@mock.patch("fastapi_mvc.utils.shell.subprocess.run")
+def test_run_shell_defaults(run_mock):
+    env = {"FOO": "BAR"}
+
+    with mock.patch("fastapi_mvc.utils.shell.os.environ.copy") as os_mock:
+        os_mock.return_value = env
+
+        ShellUtils.run_shell(["test"])
+
+        os_mock.assert_called_once()
+        run_mock.assert_called_once_with(
+            ["test"],
+            cwd=os.getcwd(),
+            env=env,
+            check=False,
+            stdout=None,
+            stderr=None,
+        )
+
+
+def test_run_shell_exception():
+    with pytest.raises(subprocess.CalledProcessError):
+        ShellUtils.run_shell(
+            cmd=["/bin/false"],
+            check=True,
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL,
+        )
+
+    process = ShellUtils.run_shell(
+        cmd=["/bin/false"],
+        check=False,
+        stdout=subprocess.DEVNULL,
+        stderr=subprocess.DEVNULL,
+    )
+    assert process.returncode != 0

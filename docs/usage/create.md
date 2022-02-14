@@ -39,15 +39,11 @@ Options:
 
 ```shell
 $ fastapi-mvc new /tmp/demo-project
-[2022-02-08 21:58:26 +0100] [241470] [INFO] Try read git user information.
-[2022-02-08 21:58:26 +0100] [241470] [INFO] Initialize fastapi-mvc project generator.
-[2022-02-08 21:58:26 +0100] [241470] [INFO] Begin generating a new project at path: /tmp
-[2022-02-08 21:58:26 +0100] [241470] [INFO] Run make install for project: /tmp/demo-project
-[2022-02-08 21:58:26 +0100] [241470] [INFO] Activated virtual env detected.
+[2022-02-14 21:30:47 +0100] [2189261] [INFO] Installing project
 [install] Begin installing project.
 Creating virtualenv demo-project in /tmp/demo-project/.venv
 Updating dependencies
-Resolving dependencies... (10.0s)
+Resolving dependencies... (10.2s)
 
 Writing lock file
 
@@ -62,7 +58,7 @@ Package operations: 57 installs, 0 updates, 0 removals
   • Installing anyio (3.5.0)
   • Installing async-timeout (4.0.2)
   • Installing attrs (21.4.0)
-  • Installing charset-normalizer (2.0.11)
+  • Installing charset-normalizer (2.0.12)
   • Installing iniconfig (1.1.1)
   • Installing mccabe (0.6.1)
   • Installing packaging (21.3)
@@ -72,11 +68,31 @@ Package operations: 57 installs, 0 updates, 0 removals
   • Installing pyflakes (2.3.1)
   • Installing snowballstemmer (2.2.0)
   • Installing toml (0.10.2)
-  • Installing typing-extensions (4.0.1)
+  • Installing typing-extensions (4.1.1)
   • Installing yarl (1.7.2)
   • Installing aiohttp (3.8.1): Installing...
   • Installing asgiref (3.5.0)
+  • Installing certifi (2021.10.8)
+  • Installing chardet (4.0.0): Installing...
+  • Installing click (7.1.2)
+  • Installing coverage (6.3.1): Installing...
+  • Installing coverage (6.3.1)
+  • Installing flake8 (3.9.2)
+  • Installing click (7.1.2)
+  • Installing coverage (6.3.1)
+  • Installing flake8 (3.9.2)
+  • Installing chardet (4.0.0)
+  • Installing click (7.1.2)
+  • Installing coverage (6.3.1)
+  • Installing flake8 (3.9.2)
+  • Installing h11 (0.13.0)
   • Installing asgiref (3.5.0)
+  • Installing certifi (2021.10.8)
+  • Installing chardet (4.0.0)
+  • Installing click (7.1.2)
+  • Installing coverage (6.3.1)
+  • Installing flake8 (3.9.2)
+  • Installing h11 (0.13.0)
   • Installing aiohttp (3.8.1)
   • Installing asgiref (3.5.0)
   • Installing certifi (2021.10.8)
@@ -88,7 +104,7 @@ Package operations: 57 installs, 0 updates, 0 removals
   • Installing httptools (0.2.0)
   • Installing mypy-extensions (0.4.3)
   • Installing pathspec (0.9.0)
-  • Installing platformdirs (2.4.1)
+  • Installing platformdirs (2.5.0)
   • Installing pydantic (1.9.0)
   • Installing pydocstyle (6.1.1)
   • Installing pytest (6.2.5)
@@ -121,9 +137,9 @@ Now you should access CLI script: $ demo-project --help
 Alternatively you can access CLI script via poetry run: $ poetry run demo-project --help
 To deactivate virtualenv simply type: $ deactivate
 To activate shell completion:
- - for bash: $ echo 'eval "$(_MY_PROJECT_COMPLETE=source_bash demo-project)' >> ~/.bashrc
- - for zsh: $ echo 'eval "$(_MY_PROJECT_COMPLETE=source_zsh demo-project)' >> ~/.zshrc
- - for fish: $ echo 'eval "$(_MY_PROJECT_COMPLETE=source_fish demo-project)' >> ~/.config/fish/completions/demo-project.fish
+ - for bash: $ echo 'eval "$(_DEMO_PROJECT_COMPLETE=source_bash demo-project)' >> ~/.bashrc
+ - for zsh: $ echo 'eval "$(_DEMO_PROJECT_COMPLETE=source_zsh demo-project)' >> ~/.zshrc
+ - for fish: $ echo 'eval "$(_DEMO_PROJECT_COMPLETE=source_fish demo-project)' >> ~/.config/fish/completions/demo-project.fish
 ```
 
 ### Run it
@@ -132,30 +148,36 @@ To run development uvicorn server:
 ```shell
 $ cd /tmp/demo-project/
 $ fastapi-mvc run
-[2022-02-07 20:31:11 +0100] [1687989] [INFO] Will watch for changes in these directories: ['/tmp/demo-project']
-[2022-02-07 20:31:11 +0100] [1687989] [INFO] Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
-[2022-02-07 20:31:11 +0100] [1687989] [INFO] Started reloader process [1687989] using watchgod
+[2022-02-14 21:32:14 +0100] [2191860] [INFO] Starting uvicorn development server.
+INFO:     Will watch for changes in these directories: ['/tmp/demo-project']
+INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+INFO:     Started reloader process [2191879] using watchgod
+INFO:     Started server process [2191887]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
 ```
 
 To run production WSGI + ASGI server:
 ```shell
 $ cd /tmp/demo-project/
+$ poetry run demo-project serve
+# or if project virtualenv PATH is set
 $ demo-project serve
-[2022-01-08 21:47:06 +0100] [2268861] [INFO] Start gunicorn WSGI with ASGI workers.
-[2022-01-08 21:47:06 +0100] [2268861] [INFO] Starting gunicorn 20.1.0
-[2022-01-08 21:47:06 +0100] [2268861] [INFO] Listening at: http://127.0.0.1:8000 (2268861)
-[2022-01-08 21:47:06 +0100] [2268861] [INFO] Using worker: uvicorn.workers.UvicornWorker
-[2022-01-08 21:47:06 +0100] [2268861] [INFO] Server is ready. Spawning workers
-[2022-01-08 21:47:06 +0100] [2268867] [INFO] Booting worker with pid: 2268867
-[2022-01-08 21:47:06 +0100] [2268867] [INFO] Worker spawned (pid: 2268867)
-[2022-01-08 21:47:06 +0100] [2268867] [INFO] Started server process [2268867]
-[2022-01-08 21:47:06 +0100] [2268867] [INFO] Waiting for application startup.
-[2022-01-08 21:47:06 +0100] [2268867] [INFO] Application startup complete.
-[2022-01-08 21:47:06 +0100] [2268873] [INFO] Booting worker with pid: 2268873
-[2022-01-08 21:47:06 +0100] [2268873] [INFO] Worker spawned (pid: 2268873)
-[2022-01-08 21:47:06 +0100] [2268873] [INFO] Started server process [2268873]
-[2022-01-08 21:47:06 +0100] [2268873] [INFO] Waiting for application startup.
-[2022-01-08 21:47:06 +0100] [2268873] [INFO] Application startup complete.
+[2022-02-14 21:33:08 +0100] [2193401] [INFO] Start gunicorn WSGI with ASGI workers.
+[2022-02-14 21:33:08 +0100] [2193401] [INFO] Starting gunicorn 20.1.0
+[2022-02-14 21:33:08 +0100] [2193401] [INFO] Listening at: http://127.0.0.1:8000 (2193401)
+[2022-02-14 21:33:08 +0100] [2193401] [INFO] Using worker: uvicorn.workers.UvicornWorker
+[2022-02-14 21:33:08 +0100] [2193401] [INFO] Server is ready. Spawning workers
+[2022-02-14 21:33:08 +0100] [2193410] [INFO] Booting worker with pid: 2193410
+[2022-02-14 21:33:08 +0100] [2193410] [INFO] Worker spawned (pid: 2193410)
+[2022-02-14 21:33:09 +0100] [2193410] [INFO] Started server process [2193410]
+[2022-02-14 21:33:09 +0100] [2193410] [INFO] Waiting for application startup.
+[2022-02-14 21:33:09 +0100] [2193410] [INFO] Application startup complete.
+[2022-02-14 21:33:09 +0100] [2193416] [INFO] Booting worker with pid: 2193416
+[2022-02-14 21:33:09 +0100] [2193416] [INFO] Worker spawned (pid: 2193416)
+[2022-02-14 21:33:09 +0100] [2193416] [INFO] Started server process [2193416]
+[2022-02-14 21:33:09 +0100] [2193416] [INFO] Waiting for application startup.
+[2022-02-14 21:33:09 +0100] [2193416] [INFO] Application startup complete.
 ```
 
 ### Check it
