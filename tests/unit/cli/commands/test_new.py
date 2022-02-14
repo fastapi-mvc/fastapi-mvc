@@ -13,12 +13,15 @@ def test_new_invalid_options(cli_runner):
     assert result.exit_code == 2
 
 
-@mock.patch("fastapi_mvc.cli.commands.new.Context")
-def test_new_default_values(context_mock, cli_runner):
+@mock.patch("fastapi_mvc.cli.commands.new.InstallProject")
+@mock.patch("fastapi_mvc.cli.commands.new.GenerateNewProject")
+@mock.patch("fastapi_mvc.cli.commands.new.Invoker")
+def test_new_default_values(invoker_mock, gen_mock, install_mock, cli_runner):
     result = cli_runner.invoke(new, ["test-project"])
     assert result.exit_code == 0
 
-    context_mock.return_value.execute.assert_called_once_with(
+    invoker_mock.assert_called_once()
+    gen_mock.assert_called_once_with(
         app_path="test-project",
         options={
             "skip_redis": False,
@@ -32,6 +35,10 @@ def test_new_default_values(context_mock, cli_runner):
             "repo_url": "https://your.repo.url.here"
         }
     )
+    install_mock.assert_called_once_with(app_path="test-project")
+    assert invoker_mock.return_value.on_start == gen_mock.return_value
+    assert invoker_mock.return_value.on_finish == install_mock.return_value
+    invoker_mock.return_value.execute.assert_called_once()
 
 
 @pytest.mark.parametrize(
@@ -99,9 +106,21 @@ def test_new_default_values(context_mock, cli_runner):
         )
     ]
 )
-@mock.patch("fastapi_mvc.cli.commands.new.Context")
-def test_new_with_options(context_mock, cli_runner, args, expected):
+@mock.patch("fastapi_mvc.cli.commands.new.InstallProject")
+@mock.patch("fastapi_mvc.cli.commands.new.GenerateNewProject")
+@mock.patch("fastapi_mvc.cli.commands.new.Invoker")
+def test_new_with_options(invoker_mock, gen_mock, install_mock, cli_runner, args, expected):
     result = cli_runner.invoke(new, args)
     assert result.exit_code == 0
 
-    context_mock.return_value.execute.assert_called_once_with(**expected)
+    invoker_mock.assert_called_once()
+    gen_mock.assert_called_once_with(**expected)
+
+    if "--skip-install" in args or "-I" in args:
+        install_mock.assert_not_called()
+    else:
+        install_mock.assert_called_once_with(app_path=expected["app_path"])
+        assert invoker_mock.return_value.on_finish == install_mock.return_value
+
+    assert invoker_mock.return_value.on_start == gen_mock.return_value
+    invoker_mock.return_value.execute.assert_called_once()

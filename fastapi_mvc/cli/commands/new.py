@@ -1,6 +1,6 @@
 """FastAPI MVC CLI new command implementation."""
 import click
-from fastapi_mvc.actions import Context, GenerateNewProject
+from fastapi_mvc.commands import Invoker, GenerateNewProject, InstallProject
 
 
 @click.command()
@@ -92,5 +92,12 @@ def new(app_path, **options):
         options(dict): CLI command options.
 
     """
-    context = Context(action=GenerateNewProject())
-    context.execute(app_path=app_path, options=options)
+    invoker = Invoker()
+    invoker.on_start = GenerateNewProject(
+        app_path=app_path, options=options
+    )
+
+    if not options["skip_install"]:
+        invoker.on_finish = InstallProject(app_path=app_path)
+
+    invoker.execute()

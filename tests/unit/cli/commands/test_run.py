@@ -13,18 +13,20 @@ def test_run_invalid_options(cli_runner):
     assert result.exit_code == 2
 
 
-@mock.patch("fastapi_mvc.cli.commands.run.Context")
-def test_run_default_values(context_mock, cli_runner):
+@mock.patch("fastapi_mvc.cli.commands.run.RunUvicorn")
+@mock.patch("fastapi_mvc.cli.commands.run.Invoker")
+def test_run_default_values(invoker_mock, run_mock, cli_runner):
     result = cli_runner.invoke(run, [])
     assert result.exit_code == 0
 
-    context_mock.return_value.execute.assert_called_once_with(
-        host="127.0.0.1", port="8000"
-    )
+    invoker_mock.assert_called_once()
+    run_mock.assert_called_once_with(host="127.0.0.1", port="8000")
+    assert invoker_mock.return_value.on_start == run_mock.return_value
+    invoker_mock.return_value.execute.assert_called_once()
 
 
 @pytest.mark.parametrize(
-    "options, expected",
+    "args, expected",
     [
         (
             ["--host", "10.20.30.40", "--port", "1234"],
@@ -36,9 +38,13 @@ def test_run_default_values(context_mock, cli_runner):
         )
     ]
 )
-@mock.patch("fastapi_mvc.cli.commands.run.Context")
-def test_run_with_options(context_mock, cli_runner, options, expected):
-    result = cli_runner.invoke(run, options)
+@mock.patch("fastapi_mvc.cli.commands.run.RunUvicorn")
+@mock.patch("fastapi_mvc.cli.commands.run.Invoker")
+def test_run_with_options(invoker_mock, run_mock, cli_runner, args, expected):
+    result = cli_runner.invoke(run, args)
     assert result.exit_code == 0
 
-    context_mock.return_value.execute.assert_called_once_with(**expected)
+    invoker_mock.assert_called_once()
+    run_mock.assert_called_once_with(**expected)
+    assert invoker_mock.return_value.on_start == run_mock.return_value
+    invoker_mock.return_value.execute.assert_called_once()

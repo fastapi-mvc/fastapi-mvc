@@ -1,11 +1,6 @@
 import mock
 import pytest
-from fastapi_mvc.actions import RunDevelopmentServer
-
-
-@pytest.fixture
-def rds_obj():
-    yield RunDevelopmentServer()
+from fastapi_mvc.commands import RunUvicorn
 
 
 @pytest.mark.parametrize(
@@ -15,12 +10,13 @@ def rds_obj():
         ("localhost", "1234"),
     ]
 )
-@mock.patch("fastapi_mvc.actions.run.IniParser")
-@mock.patch("fastapi_mvc.actions.run.ShellUtils.run_shell")
-def test_execute(run_mock, ini_mock, rds_obj, host, port):
+@mock.patch("fastapi_mvc.commands.run_uvicorn.IniParser")
+@mock.patch("fastapi_mvc.commands.run_uvicorn.ShellUtils.run_shell")
+def test_execute(run_mock, ini_mock, host, port):
     ini_mock.return_value.package_name = "foobar"
 
-    rds_obj.execute(host=host, port=port)
+    command = RunUvicorn(host=host, port=port)
+    command.execute()
 
     run_mock.assert_called_once_with(
         [
