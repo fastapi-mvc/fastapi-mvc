@@ -1,6 +1,6 @@
 import mock
 import pytest
-from fastapi_mvc.cli.commands.run import run
+from fastapi_mvc.cli.run import run
 
 
 def test_run_help(cli_runner):
@@ -13,8 +13,8 @@ def test_run_invalid_options(cli_runner):
     assert result.exit_code == 2
 
 
-@mock.patch("fastapi_mvc.cli.commands.run.RunUvicorn")
-@mock.patch("fastapi_mvc.cli.commands.run.Invoker")
+@mock.patch("fastapi_mvc.cli.run.RunUvicorn")
+@mock.patch("fastapi_mvc.cli.run.Invoker")
 def test_run_default_values(invoker_mock, run_mock, cli_runner):
     result = cli_runner.invoke(run, [])
     assert result.exit_code == 0
@@ -38,8 +38,8 @@ def test_run_default_values(invoker_mock, run_mock, cli_runner):
         )
     ]
 )
-@mock.patch("fastapi_mvc.cli.commands.run.RunUvicorn")
-@mock.patch("fastapi_mvc.cli.commands.run.Invoker")
+@mock.patch("fastapi_mvc.cli.run.RunUvicorn")
+@mock.patch("fastapi_mvc.cli.run.Invoker")
 def test_run_with_options(invoker_mock, run_mock, cli_runner, args, expected):
     result = cli_runner.invoke(run, args)
     assert result.exit_code == 0

@@ -2,8 +2,8 @@
 import logging
 
 import click
-from fastapi_mvc.cli.commands.new import new
-from fastapi_mvc.cli.commands.run import run
+from fastapi_mvc.cli.new import new
+from fastapi_mvc.cli.run import run
 
 
 @click.group()

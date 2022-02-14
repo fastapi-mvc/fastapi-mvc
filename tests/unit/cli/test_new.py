@@ -1,6 +1,6 @@
 import mock
 import pytest
-from fastapi_mvc.cli.commands.new import new
+from fastapi_mvc.cli.new import new
 
 
 def test_new_help(cli_runner):
@@ -13,9 +13,9 @@ def test_new_invalid_options(cli_runner):
     assert result.exit_code == 2
 
 
-@mock.patch("fastapi_mvc.cli.commands.new.InstallProject")
-@mock.patch("fastapi_mvc.cli.commands.new.GenerateNewProject")
-@mock.patch("fastapi_mvc.cli.commands.new.Invoker")
+@mock.patch("fastapi_mvc.cli.new.InstallProject")
+@mock.patch("fastapi_mvc.cli.new.GenerateNewProject")
+@mock.patch("fastapi_mvc.cli.new.Invoker")
 def test_new_default_values(invoker_mock, gen_mock, install_mock, cli_runner):
     result = cli_runner.invoke(new, ["test-project"])
     assert result.exit_code == 0
@@ -106,9 +106,9 @@ def test_new_default_values(invoker_mock, gen_mock, install_mock, cli_runner):
         )
     ]
 )
-@mock.patch("fastapi_mvc.cli.commands.new.InstallProject")
-@mock.patch("fastapi_mvc.cli.commands.new.GenerateNewProject")
-@mock.patch("fastapi_mvc.cli.commands.new.Invoker")
+@mock.patch("fastapi_mvc.cli.new.InstallProject")
+@mock.patch("fastapi_mvc.cli.new.GenerateNewProject")
+@mock.patch("fastapi_mvc.cli.new.Invoker")
 def test_new_with_options(invoker_mock, gen_mock, install_mock, cli_runner, args, expected):
     result = cli_runner.invoke(new, args)
     assert result.exit_code == 0
