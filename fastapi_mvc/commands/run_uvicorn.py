@@ -3,11 +3,8 @@
 The fastapi-mvc.commands submodule implements command design pattern:
 https://refactoring.guru/design-patterns/command
 """
-import os
-
 from fastapi_mvc.commands import Command
 from fastapi_mvc.utils import ShellUtils
-from fastapi_mvc.parsers import IniParser
 
 
 class RunUvicorn(Command):
@@ -15,17 +12,17 @@ class RunUvicorn(Command):
 
     __slots__ = "_cmd"
 
-    def __init__(self, host, port):
+    def __init__(self, host, port, package_name):
         """Initialize RunUvicorn class object instance.
 
         Args:
             host(str): Host to bind uvicorn server to.
             port(port): Port to bind uvicorn server to.
+            package_name(str): A fastapi-mvc generated project package name.
 
         """
         Command.__init__(self)
         self._log.debug("Initialize RunUvicorn class object instance.")
-        parser = IniParser(os.getcwd())
         self._cmd = [
             "poetry",
             "run",
@@ -35,9 +32,10 @@ class RunUvicorn(Command):
             "--port",
             port,
             "--reload",
-            "{0:s}.app.asgi:application".format(parser.package_name),
+            "{0:s}.app.asgi:application".format(package_name),
         ]
 
     def execute(self):
         """Run uvicorn development server for fastapi-mvc project."""
-        ShellUtils.run_shell(self._cmd)
+        self._log.info("Starting uvicorn development server.")
+        ShellUtils.run_shell(cmd=self._cmd)

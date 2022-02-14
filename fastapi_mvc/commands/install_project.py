@@ -25,4 +25,5 @@ class InstallProject(Command):
 
     def execute(self):
         """Run fastapi-mvc project installation."""
+        self._log.info("Installing project")
         ShellUtils.run_shell(cmd=["make", "install"], cwd=self._app_path)

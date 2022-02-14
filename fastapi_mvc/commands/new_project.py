@@ -50,6 +50,9 @@ class GenerateNewProject(Command):
 
     def execute(self):
         """Generate a new fastapi-mvc project from cookiecutter template."""
+        self._log.debug(
+            "Creating a new fastapi-mvc project: {0:s}".format(self._app_path)
+        )
         app_name = os.path.basename(self._app_path)
         output_dir = os.path.dirname(self._app_path)
 

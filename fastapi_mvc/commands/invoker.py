@@ -68,7 +68,9 @@ class Invoker(object):
     def execute(self):
         """Execute associated Invoker commands."""
         if isinstance(self._on_start, Command):
+            self._log.debug("Execute Invoker on_start command.")
             self._on_start.execute()
 
         if isinstance(self._on_finish, Command):
+            self._log.debug("Execute Invoker on_finish command.")
             self._on_finish.execute()
