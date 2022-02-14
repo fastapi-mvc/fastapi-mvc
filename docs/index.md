@@ -18,7 +18,7 @@
 
 ---
 
-Documentation for version: **v0.8.0**
+Documentation for version: **v0.9.0**
 
 Create and develop production grade FastaAPI projects, based on MVC architectural pattern, WSGI + ASGI. 
 Includes tests, GitHub actions, utilities, Helm, Dockerfile, Makefile, and more.
