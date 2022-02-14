@@ -1,0 +1,4 @@
+[run]
+omit =
+    fastapi_mvc/template/*
+    fastapi_mvc/__main__.py
