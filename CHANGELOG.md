@@ -2,6 +2,18 @@
 
 This file documents changes to [fastapi-mvc](https://github.com/rszamszur/fastapi-mvc). The release numbering uses [semantic versioning](http://semver.org).
 
+## Unreleased
+
+### Fixed
+
+* CLI`fastapi-mvc run` command implementation [#48](https://github.com/rszamszur/fastapi-mvc/issues/48). PR [#52](https://github.com/rszamszur/fastapi-mvc/pull/52)
+* GitHub main workflow package coverage sources. PR [#52](https://github.com/rszamszur/fastapi-mvc/pull/52)
+
+### Internal
+
+* Implement all `1fastapi-mvc.ini` parser properties [#50](https://github.com/rszamszur/fastapi-mvc/issues/50). PR [#52](https://github.com/rszamszur/fastapi-mvc/pull/52)
+* Refactor execution logic from CLI into command design pattern [#51](https://github.com/rszamszur/fastapi-mvc/issues/51). PR [#52](https://github.com/rszamszur/fastapi-mvc/pull/52)
+
 ## 0.8.0 (08.02.2022)
 
 ### Features
