@@ -3,6 +3,8 @@ import os
 import logging
 import configparser
 
+from fastapi_mvc.exceptions import IniParserError
+
 
 class IniParser(object):
     """Project fastapi-mvc.ini file parser class definition."""
@@ -133,9 +135,3 @@ class IniParser(object):
 
         """
         return self._config["fastapi-mvc"]["version"]
-
-
-class IniParserError(Exception):
-    """Custom IniParser exception class definition."""
-
-    pass
