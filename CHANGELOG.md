@@ -2,6 +2,14 @@
 
 This file documents changes to [fastapi-mvc](https://github.com/rszamszur/fastapi-mvc). The release numbering uses [semantic versioning](http://semver.org).
 
+## Unreleased
+
+### Internal
+
+* Update template dependencies:
+  * fastapi (0.70.0 -> 0.75.0)
+  * uvicorn (0.15.0 -> 0.17.0)
+
 ## 0.9.0 (14.02.2022)
 
 ### Fixed
