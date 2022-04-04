@@ -4,11 +4,17 @@ This file documents changes to [fastapi-mvc](https://github.com/rszamszur/fastap
 
 ## Unreleased
 
+### Features
+
+* Add nix shell config for local development environment [#57](https://github.com/rszamszur/fastapi-mvc/issues/57). PR [#58](https://github.com/rszamszur/fastapi-mvc/pull/58)
+* Allow overriding poetry version for make install target via env variable: $POETRY_VERSION [#59](https://github.com/rszamszur/fastapi-mvc/issues/59). PR [#58](https://github.com/rszamszur/fastapi-mvc/pull/58)
+
 ### Internal
 
 * Update template dependencies:
   * fastapi (0.70.0 -> 0.75.0)
   * uvicorn (0.15.0 -> 0.17.0)
+* Add minor `ShellUtils` unit test case improvement.
 
 ## 0.9.0 (14.02.2022)
 
@@ -19,7 +25,7 @@ This file documents changes to [fastapi-mvc](https://github.com/rszamszur/fastap
 
 ### Internal
 
-* Implement all `1fastapi-mvc.ini` parser properties [#50](https://github.com/rszamszur/fastapi-mvc/issues/50). PR [#52](https://github.com/rszamszur/fastapi-mvc/pull/52)
+* Implement all `fastapi-mvc.ini` parser properties [#50](https://github.com/rszamszur/fastapi-mvc/issues/50). PR [#52](https://github.com/rszamszur/fastapi-mvc/pull/52)
 * Refactor execution logic from CLI into command design pattern [#51](https://github.com/rszamszur/fastapi-mvc/issues/51). PR [#52](https://github.com/rszamszur/fastapi-mvc/pull/52)
 
 ## 0.8.0 (08.02.2022)
