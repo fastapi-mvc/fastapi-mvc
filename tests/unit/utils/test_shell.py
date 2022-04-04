@@ -162,14 +162,14 @@ def test_run_shell_defaults(run_mock):
 def test_run_shell_exception():
     with pytest.raises(subprocess.CalledProcessError):
         ShellUtils.run_shell(
-            cmd=["/bin/false"],
+            cmd=["/usr/bin/env", "false"],
             check=True,
             stdout=subprocess.DEVNULL,
             stderr=subprocess.DEVNULL,
         )
 
     process = ShellUtils.run_shell(
-        cmd=["/bin/false"],
+        cmd=["/usr/bin/env", "false"],
         check=False,
         stdout=subprocess.DEVNULL,
         stderr=subprocess.DEVNULL,
