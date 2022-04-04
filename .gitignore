@@ -32,3 +32,6 @@ venv
 
 # vagrant
 .vagrant
+
+# direnv
+.direnv

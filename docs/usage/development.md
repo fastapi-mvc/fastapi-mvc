@@ -27,6 +27,13 @@ For infrastructure:
 * kubectl version 1.16 up to 1.20.8 [How_to_install_kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/)
 * Container runtime interface. NOTE! dev-env script uses docker for minikube, for other CRI you'll need to modify this line in dev-env.sh `MINIKUBE_IN_STYLE=0 minikube start --driver=docker 2>/dev/null`
 
+### Environment with [Nix](https://nixos.org/)
+
+To start a shell with development environment run:
+```shell
+nix-shell shell.nix
+```
+
 ## Quick start
 
 First run `vagrant up` in project root directory and enter virtualized environment using `vagrant ssh`
