@@ -162,6 +162,13 @@ fastapi-mvc run
 * Poetry [How to install poetry](https://python-poetry.org/docs/#installation) or pip [How to install pip](https://pip.pypa.io/en/stable/installation/) installed
 * make (optional)
 
+### Environment with [Nix](https://nixos.org/)
+
+To start a shell with development environment run:
+```shell
+nix-shell shell.nix
+```
+
 ## Installation
 
 ```shell
