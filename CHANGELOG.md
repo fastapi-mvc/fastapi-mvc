@@ -4,6 +4,10 @@ This file documents changes to [fastapi-mvc](https://github.com/rszamszur/fastap
 
 ## Unreleased
 
+### Fixed
+
+* New project cannot install with Python version > 3.10 [#60](https://github.com/rszamszur/fastapi-mvc/issues/60). PR [#61](https://github.com/rszamszur/fastapi-mvc/pull/61)
+
 ### Features
 
 * Add nix shell config for local development environment [#57](https://github.com/rszamszur/fastapi-mvc/issues/57). PR [#58](https://github.com/rszamszur/fastapi-mvc/pull/58)
