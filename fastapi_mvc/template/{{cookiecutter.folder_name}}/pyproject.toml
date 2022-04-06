@@ -37,7 +37,7 @@ requests = "~2.25.1"
 aioresponses = "~0.7.2"
 {%- endif %}
 mock = "~4.0.3"
-flake8 = "~3.9.2"
+flake8 = "~4.0.1"
 flake8-docstrings = "~1.6.0"
 flake8-import-order = "~0.18.1"
 flake8-todo = "^0.7"
