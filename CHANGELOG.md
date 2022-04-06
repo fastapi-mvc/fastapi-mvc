@@ -6,7 +6,8 @@ This file documents changes to [fastapi-mvc](https://github.com/rszamszur/fastap
 
 ### Fixed
 
-* New project cannot install with Python version > 3.10 [#60](https://github.com/rszamszur/fastapi-mvc/issues/60). PR [#61](https://github.com/rszamszur/fastapi-mvc/pull/61)
+* New project cannot install with Python version > 3.10 [#60](https://github.com/rszamszur/fastapi-mvc/issues/60). PR [#61](https://github.com/rszamszur/fastapi-mvc/pull/61) by [@Merinorus](https://github.com/Merinorus)
+* Metrics job for Python 3.10 [#63](https://github.com/rszamszur/fastapi-mvc/issues/63). PR [#65](https://github.com/rszamszur/fastapi-mvc/pull/65) by [@Merinorus](https://github.com/Merinorus)
 
 ### Features
 
@@ -19,6 +20,7 @@ This file documents changes to [fastapi-mvc](https://github.com/rszamszur/fastap
   * fastapi (0.70.0 -> 0.75.0)
   * uvicorn (0.15.0 -> 0.17.0)
 * Add minor `ShellUtils` unit test case improvement.
+* Add python 3.10 in CI tests [#62](https://github.com/rszamszur/fastapi-mvc/issues/62). PR [#61](https://github.com/rszamszur/fastapi-mvc/pull/61) by [@Merinorus](https://github.com/Merinorus)
 
 ## 0.9.0 (14.02.2022)
 
