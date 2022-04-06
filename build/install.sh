@@ -20,8 +20,9 @@ if [[ $PYTHON == "NOT_SET" ]]; then
   fi
 fi
 
-PYTHON_VERSION=$($PYTHON -V 2>&1 | grep -Eo '([0-9]+\.[0-9]+\.[0-9]+)$')
-if [[ ${PYTHON_VERSION} < "3.7.0" && ${PYTHON_VERSION} < "3.10.0" ]]; then
+PYTHON_MAJOR_VERSION=$($PYTHON -c 'import sys; print(sys.version_info[0])')
+PYTHON_MINOR_VERSION=$($PYTHON -c 'import sys; print(sys.version_info[1])')
+if [[ "$PYTHON_MAJOR_VERSION" -lt 3 ]] || [[ "$PYTHON_MINOR_VERSION" -lt 7 ]]; then
   echo "[install] Python version 3.7.0 or higher is required."
   exit 1
 fi
