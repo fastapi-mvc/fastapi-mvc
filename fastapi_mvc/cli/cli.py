@@ -4,6 +4,7 @@ import logging
 import click
 from fastapi_mvc.cli.new import new
 from fastapi_mvc.cli.run import run
+from fastapi_mvc.cli.generate import generate
 
 
 @click.group()
@@ -40,3 +41,4 @@ def cli(**options):
 
 cli.add_command(new)
 cli.add_command(run)
+cli.add_command(generate)
