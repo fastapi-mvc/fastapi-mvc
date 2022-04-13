@@ -1,0 +1,39 @@
+"""Fastapi-mvc cookiecutter controller template post_gen_project hook."""
+import os
+
+
+def edit_router():
+    """Add import and router entry to config/router.rb if not skipped."""
+    if not {{cookiecutter.skip_routes}}:
+        router = os.path.join(
+            os.getcwd(),
+            "{{cookiecutter.package_name}}/config/router.py"
+        )
+
+        with open(router, "r") as f:
+            lines = f.readlines()
+
+        for i in range(len(lines)):
+            if lines[i].strip() == "from fastapi import APIRouter":
+                index = i + 1
+                break
+        else:
+            index = 0
+
+        lines.insert(
+            index,
+            "from {0:s}.app.controllers import {1:s}\n".format(
+                "{{cookiecutter.package_name}}",
+                "{{cookiecutter.controller_name}}"
+            )
+        )
+        lines.append(
+            "router.include_router({{cookiecutter.controller_name}}.router)\n"
+        )
+
+        with open(router, "w") as f:
+            f.writelines(lines)
+
+
+if __name__ == "__main__":
+    edit_router()

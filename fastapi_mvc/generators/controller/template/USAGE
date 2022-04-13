@@ -1,0 +1,14 @@
+Description:
+    Creates a new controller and its methods. Pass the controller name
+    under_scored, and a list of endpoints as arguments.
+
+    This generates a controller file in app/controllers with unit test
+    file. Finally, edits config/router.py in order to add controller to
+    FastAPI router.
+
+Example:
+    `fastapi-mvc generate controller credit_cards open debit credit close`
+
+    Creates controller with URLs like /credit_cards/debit.
+        Controller: app/controllers/credit_cards.py
+        Test:       tests/unit/app/controllers/test_credit_cards.py
