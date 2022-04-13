@@ -3,7 +3,7 @@ import os
 import importlib.util
 import pkgutil
 
-from fastapi_mvc.generators import Generator
+from fastapi_mvc.generators import Generator, ControllerGenerator
 
 
 PROJECT_ROOT = os.getcwd()
@@ -16,14 +16,10 @@ def load_generators():
     Returns:
 
     """
-    generators = dict()
+    generators = {
+        ControllerGenerator.name: ControllerGenerator
+    }
 
-    builtins = os.path.abspath(
-        os.path.join(
-            os.path.abspath(__file__),
-            "../code",
-        )
-    )
     local = os.path.abspath(
         os.path.join(
             PROJECT_ROOT,
@@ -31,7 +27,7 @@ def load_generators():
         )
     )
 
-    for item in pkgutil.iter_modules([builtins, local]):
+    for item in pkgutil.iter_modules([local]):
         m_path = os.path.join(
             item.module_finder.path,
             item.name,
