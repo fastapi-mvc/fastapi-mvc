@@ -55,7 +55,7 @@ class ShellUtils(object):
 
         Args:
             cmd(list): Shell command to run.
-            cwd(str): Path under which proces should execute command. Defaults
+            cwd(str): Path under which process should execute command. Defaults
                 to current working directory.
             check(bool): If True raise a subprocess.CalledProcessError error
                 when a process returns non-zero exit status.
