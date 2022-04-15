@@ -6,10 +6,7 @@ import pkgutil
 from fastapi_mvc.generators import Generator, ControllerGenerator
 
 
-PROJECT_ROOT = os.getcwd()
-
-
-def load_generators():
+def load_generators(project_root):
     """
     https://docs.python.org/3/library/importlib.html#importing-programmatically
 
@@ -22,7 +19,7 @@ def load_generators():
 
     local = os.path.abspath(
         os.path.join(
-            PROJECT_ROOT,
+            project_root,
             "lib/generators",
         )
     )
