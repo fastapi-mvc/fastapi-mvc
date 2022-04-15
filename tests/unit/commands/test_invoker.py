@@ -14,22 +14,21 @@ def test_invoker(invoker):
     command_3 = mock.Mock(spec=Command)
     command_4 = mock.Mock()
 
-    invoker.on_start = command_1
-    invoker.on_finish = command_2
-    assert invoker.on_start == command_1
-    assert invoker.on_finish == command_2
+    invoker.enqueue(command_1)
+    invoker.enqueue(command_2)
     invoker.execute()
+    command_1.execute.assert_called_once()
+    command_2.execute.assert_called_once()
 
-    invoker.on_start = command_3
-    invoker.on_finish = None
-    assert invoker.on_start == command_3
+    invoker.enqueue(command_3)
     invoker.execute()
+    command_3.execute.assert_called_once()
 
-    invoker.on_finish = command_4
-    assert invoker.on_finish == command_4
+    invoker.enqueue(command_3)
+    invoker.enqueue(command_4)
     invoker.execute()
 
     command_1.execute.assert_called_once()
     command_2.execute.assert_called_once()
     assert command_3.execute.call_count == 2
-    command_4.assert_not_called()
+    command_4.execute.assert_not_called()

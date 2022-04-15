@@ -4,6 +4,7 @@ The fastapi-mvc.commands submodule implements command design pattern:
 https://refactoring.guru/design-patterns/command
 """
 import logging
+from collections import deque
 
 from fastapi_mvc.commands import Command
 
@@ -13,64 +14,29 @@ class Invoker(object):
 
     __slots__ = (
         "_log",
-        "_on_start",
-        "_on_finish",
+        "_queue",
     )
 
     def __init__(self):
         """Initialize Invoker class object instance."""
         self._log = logging.getLogger(self.__class__.__name__)
         self._log.debug("Initialize Invoker class object instance.")
-        self._on_start = None
-        self._on_finish = None
+        self._queue = deque()
 
-    @property
-    def on_start(self):
-        """Class on_start property.
-
-        Returns:
-            A Command object instance.
-
-
-        """
-        return self._on_start
-
-    @on_start.setter
-    def on_start(self, value):
-        """Class on_start setter.
+    def enqueue(self, command):
+        """Enqueue command to execute.
 
         Args:
-            value(Command): A Command object instance.
+            command(Command): Command class object instance.
 
         """
-        self._on_start = value
-
-    @property
-    def on_finish(self):
-        """Class on_finish property.
-
-        Returns:
-            A Command object instance.
-
-        """
-        return self._on_finish
-
-    @on_finish.setter
-    def on_finish(self, value):
-        """Class on_finish setter.
-
-        Args:
-            value(Command): A Command object instance.
-
-        """
-        self._on_finish = value
+        if isinstance(command, Command):
+            self._queue.append(command)
+        else:
+            self._log.warning("You can only enqueue Command subclasses.")
 
     def execute(self):
-        """Execute associated Invoker commands."""
-        if isinstance(self._on_start, Command):
-            self._log.debug("Execute Invoker on_start command.")
-            self._on_start.execute()
-
-        if isinstance(self._on_finish, Command):
-            self._log.debug("Execute Invoker on_finish command.")
-            self._on_finish.execute()
+        """Execute enqueued Invoker commands."""
+        while self._queue:
+            command = self._queue.popleft()
+            command.execute()
