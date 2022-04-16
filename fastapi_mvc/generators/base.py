@@ -1,8 +1,5 @@
 from abc import ABCMeta, abstractmethod
 import logging
-import os
-
-from fastapi_mvc.parsers import IniParser
 
 
 class Generator(object, metaclass=ABCMeta):
@@ -11,6 +8,7 @@ class Generator(object, metaclass=ABCMeta):
     __slots__ = (
         "_log",
         "_parser",
+        "_project_root",
         "_context",
     )
 
@@ -34,10 +32,11 @@ class Generator(object, metaclass=ABCMeta):
         }
     ]
 
-    def __init__(self):
+    def __init__(self, parser, project_root):
         """Initialize Command base class object instance."""
         self._log = logging.getLogger(self.__class__.__name__)
-        self._parser = IniParser(os.getcwd())
+        self._parser = parser
+        self._project_root = project_root
         self._context = {
             "package_name": self._parser.package_name,
             "folder_name": self._parser.folder_name,
