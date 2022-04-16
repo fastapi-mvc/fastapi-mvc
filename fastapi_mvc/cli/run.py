@@ -1,9 +1,7 @@
 """FastAPI MVC CLI run command implementation."""
-import os
-
 import click
-from fastapi_mvc.commands import Invoker, RunUvicorn, VerifyInstall
-from fastapi_mvc.parsers import IniParser
+from fastapi_mvc import Borg
+from fastapi_mvc.commands import RunShell
 
 
 @click.command()
@@ -35,13 +33,21 @@ def run(**options):
          options(dict): CLI command options.
 
     """
-    parser = IniParser(os.getcwd())
-
-    invoker = Invoker()
-    invoker.on_start = VerifyInstall(script_name=parser.script_name)
-    invoker.on_finish = RunUvicorn(
-        host=options["host"],
-        port=options["port"],
-        package_name=parser.package_name,
+    borg = Borg()
+    borg.require_installed()
+    borg.enqueue_command(
+        RunShell(
+            cmd=[
+                "poetry",
+                "run",
+                "uvicorn",
+                "--host",
+                options["host"],
+                "--port",
+                options["port"],
+                "--reload",
+                "{0:s}.app.asgi:application".format(borg.parser.package_name),
+            ]
+        )
     )
-    invoker.execute()
+    borg.execute()
