@@ -32,8 +32,8 @@ class ControllerGenerator(Generator):
         }
     ]
 
-    def __init__(self):
-        Generator.__init__(self)
+    def __init__(self, parser, project_root):
+        Generator.__init__(self, parser, project_root)
 
     def new(self, name, skip, skip_routes, endpoints=("hello_world",)):
         self._context["controller_name"] = name
