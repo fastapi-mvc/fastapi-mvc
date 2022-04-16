@@ -23,23 +23,35 @@ def test_run_invalid_options(cli_runner):
     assert result.exit_code == 2
 
 
-@mock.patch("fastapi_mvc.cli.run.os.getcwd", return_value=DATA_DIR)
-@mock.patch("fastapi_mvc.cli.run.VerifyInstall")
-@mock.patch("fastapi_mvc.cli.run.RunUvicorn")
-@mock.patch("fastapi_mvc.cli.run.Invoker")
-def test_run_default_values(invoker_mock, run_mock, verify_mock, os_mock, cli_runner):
+@mock.patch("fastapi_mvc.cli.run.RunShell")
+@mock.patch("fastapi_mvc.cli.run.Borg")
+def test_run_default_values(borg_mock, shell_mock, cli_runner):
+    borg_mock.return_value.parser.package_name = "test_app"
+
     result = cli_runner.invoke(run, [])
     assert result.exit_code == 0
 
-    os_mock.assert_called_once()
-    verify_mock.assert_called_once_with(script_name="test-app")
-    invoker_mock.assert_called_once()
-    run_mock.assert_called_once_with(
-        host="127.0.0.1", port="8000", package_name="test_app",
+    borg_mock.assert_called_once()
+    borg_mock.return_value.require_installed.assert_called_once()
+
+    shell_mock.assert_called_once_with(
+        cmd=[
+            "poetry",
+            "run",
+            "uvicorn",
+            "--host",
+            "127.0.0.1",
+            "--port",
+            "8000",
+            "--reload",
+            "test_app.app.asgi:application",
+        ]
     )
-    assert invoker_mock.return_value.on_start == verify_mock.return_value
-    assert invoker_mock.return_value.on_finish == run_mock.return_value
-    invoker_mock.return_value.execute.assert_called_once()
+
+    borg_mock.return_value.enqueue_command.assert_called_once_with(
+        shell_mock.return_value
+    )
+    borg_mock.return_value.execute.assert_called_once()
 
 
 @pytest.mark.parametrize(
@@ -47,26 +59,50 @@ def test_run_default_values(invoker_mock, run_mock, verify_mock, os_mock, cli_ru
     [
         (
             ["--host", "10.20.30.40", "--port", "1234"],
-            {"host": "10.20.30.40", "port": "1234", "package_name": "test_app"}
+            {
+                "cmd": [
+                    "poetry",
+                    "run",
+                    "uvicorn",
+                    "--host",
+                    "10.20.30.40",
+                    "--port",
+                    "1234",
+                    "--reload",
+                    "test_app.app.asgi:application",
+                ]
+            }
         ),
         (
             ["--host", "192.168.0.10", "-p", "9001"],
-            {"host": "192.168.0.10", "port": "9001", "package_name": "test_app"}
+            {
+                "cmd": [
+                    "poetry",
+                    "run",
+                    "uvicorn",
+                    "--host",
+                    "192.168.0.10",
+                    "--port",
+                    "9001",
+                    "--reload",
+                    "test_app.app.asgi:application",
+                ]
+            }
         )
     ]
 )
-@mock.patch("fastapi_mvc.cli.run.os.getcwd", return_value=DATA_DIR)
-@mock.patch("fastapi_mvc.cli.run.VerifyInstall")
-@mock.patch("fastapi_mvc.cli.run.RunUvicorn")
-@mock.patch("fastapi_mvc.cli.run.Invoker")
-def test_run_with_options(invoker_mock, run_mock, verify_mock, os_mock, cli_runner, args, expected):
+@mock.patch("fastapi_mvc.cli.run.RunShell")
+@mock.patch("fastapi_mvc.cli.run.Borg")
+def test_run_with_options(borg_mock, shell_mock, cli_runner, args, expected):
+    borg_mock.return_value.parser.package_name = "test_app"
+
     result = cli_runner.invoke(run, args)
     assert result.exit_code == 0
 
-    os_mock.assert_called_once()
-    verify_mock.assert_called_once_with(script_name="test-app")
-    invoker_mock.assert_called_once()
-    run_mock.assert_called_once_with(**expected)
-    assert invoker_mock.return_value.on_start == verify_mock.return_value
-    assert invoker_mock.return_value.on_finish == run_mock.return_value
-    invoker_mock.return_value.execute.assert_called_once()
+    borg_mock.assert_called_once()
+    shell_mock.assert_called_once_with(**expected)
+
+    borg_mock.return_value.enqueue_command.assert_called_once_with(
+        shell_mock.return_value
+    )
+    borg_mock.return_value.execute.assert_called_once()
