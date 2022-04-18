@@ -3,19 +3,15 @@ import os
 import importlib.util
 import pkgutil
 
-from fastapi_mvc.generators import Generator, ControllerGenerator
 
-
-def load_generators(project_root):
+def load_generators(project_root, base_class):
     """
     https://docs.python.org/3/library/importlib.html#importing-programmatically
 
     Returns:
 
     """
-    generators = {
-        ControllerGenerator.name: ControllerGenerator
-    }
+    generators = dict()
 
     local = os.path.abspath(
         os.path.join(
@@ -44,7 +40,7 @@ def load_generators(project_root):
 
         generator = getattr(module, "__all__")
 
-        if issubclass(generator, Generator):
+        if issubclass(generator, base_class):
             generators[generator.name] = generator
 
     return generators
