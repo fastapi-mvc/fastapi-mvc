@@ -53,7 +53,12 @@ class ControllerGenerator(Generator):
         cookiecutter(
             self.__class__.template,
             extra_context=self._context,
-            output_dir="../code/",
+            output_dir=os.path.abspath(
+                os.path.join(
+                    self._project_root,
+                    "../",
+                )
+            ),
             no_input=True,
             overwrite_if_exists=True,
             skip_if_file_exists=skip,
