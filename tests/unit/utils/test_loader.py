@@ -19,15 +19,15 @@ def test_loader():
     parser.folder_name = "test-app"
 
     generators = load_generators(DATA_DIR, Generator)
-    assert sorted(generators.keys()) == sorted(["test_generator", "foobar"])
-    assert issubclass(generators["test_generator"], Generator)
-    assert generators["test_generator"].__name__ == "TestGeneratorGenerator"
+    assert sorted(generators.keys()) == sorted(["my_controller", "foobar"])
+    assert issubclass(generators["my_controller"], Generator)
+    assert generators["my_controller"].__name__ == "MyControllerGenerator"
     assert isinstance(
-        generators["test_generator"](
+        generators["my_controller"](
             parser=parser,
             project_root="/path/to/project"
         ),
-        generators["test_generator"],
+        generators["my_controller"],
     )
     assert issubclass(generators["foobar"], Generator)
     assert generators["foobar"].__name__ == "FoobarGenerator"

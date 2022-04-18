@@ -1,13 +1,13 @@
-"""FastAPI MVC test_generator generator implementation."""
+"""FastAPI MVC my_controller generator implementation."""
 import os
 
 from cookiecutter.main import cookiecutter
 from fastapi_mvc.generators import Generator
 
 
-class TestGeneratorGenerator(Generator):
+class MyControllerGenerator(Generator):
 
-    name = "test_generator"
+    name = "my_controller"
     template = os.path.abspath(
         os.path.join(
             os.path.abspath(__file__),
@@ -20,7 +20,7 @@ class TestGeneratorGenerator(Generator):
         Generator.__init__(self, parser, project_root)
 
     def new(self, name, skip):
-        self._context["test_generator_name"] = name
+        self._context["my_controller_name"] = name
         self._log.debug("Cookiecutter context: {0}".format(self._context))
 
         cookiecutter(
