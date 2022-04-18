@@ -35,7 +35,7 @@ class ControllerGenerator(Generator):
     def __init__(self, parser, project_root):
         Generator.__init__(self, parser, project_root)
 
-    def new(self, name, skip, skip_routes, endpoints=("hello_world",)):
+    def new(self, name, skip, skip_routes, endpoints):
         self._context["controller_name"] = name
         self._context["controller_endpoints"] = dict()
         self._context["skip_routes"] = skip_routes

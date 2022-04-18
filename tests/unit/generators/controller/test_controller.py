@@ -78,12 +78,13 @@ def test_object_attrs(gen_obj):
             "name": "test-controller",
             "skip": False,
             "skip_routes": False,
+            "endpoints": (),
         },
         {
             "package_name": "test_app",
             "folder_name": "test-app",
             "controller_name": "test-controller",
-            "controller_endpoints": {"hello_world": "get"},
+            "controller_endpoints": {},
             "skip_routes": False
         },
     ),
@@ -111,7 +112,7 @@ def test_object_attrs(gen_obj):
         },
     )
 ])
-@mock.patch("fastapi_mvc.generators.controller.generator.cookiecutter")
+@mock.patch("fastapi_mvc.generators.controller.controller.cookiecutter")
 def test_new(cookie_mock, kwargs, expected_ctx, gen_obj):
     gen_obj.new(**kwargs)
 
