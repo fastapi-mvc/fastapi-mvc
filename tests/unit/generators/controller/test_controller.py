@@ -111,7 +111,7 @@ def test_object_attrs(gen_obj):
         },
     )
 ])
-@mock.patch("fastapi_mvc.generators.controller.controller.cookiecutter")
+@mock.patch("fastapi_mvc.generators.controller.generator.cookiecutter")
 def test_new(cookie_mock, kwargs, expected_ctx, gen_obj):
     gen_obj.new(**kwargs)
 

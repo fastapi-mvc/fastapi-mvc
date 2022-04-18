@@ -1,4 +1,4 @@
 """fastapi-mvc."""
-from .controller import ControllerGenerator
+from .generator import ControllerGenerator
 
 __all__ = ControllerGenerator
