@@ -13,14 +13,18 @@ DATA_DIR = os.path.abspath(
 )
 
 
-def test_run_help(cli_runner):
+@mock.patch("fastapi_mvc.cli.run.Borg")
+def test_run_help(borg_mock, cli_runner):
     result = cli_runner.invoke(run, ["--help"])
     assert result.exit_code == 0
+    borg_mock.assert_not_called()
 
 
-def test_run_invalid_options(cli_runner):
+@mock.patch("fastapi_mvc.cli.run.Borg")
+def test_run_invalid_options(borg_mock, cli_runner):
     result = cli_runner.invoke(run, ["--not_exists"])
     assert result.exit_code == 2
+    borg_mock.assert_not_called()
 
 
 @mock.patch("fastapi_mvc.cli.run.RunShell")

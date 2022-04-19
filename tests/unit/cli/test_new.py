@@ -3,14 +3,18 @@ import pytest
 from fastapi_mvc.cli.new import new
 
 
-def test_new_help(cli_runner):
+@mock.patch("fastapi_mvc.cli.new.Borg")
+def test_new_help(borg_mock, cli_runner):
     result = cli_runner.invoke(new, ["--help"])
     assert result.exit_code == 0
+    borg_mock.assert_not_called()
 
 
-def test_new_invalid_options(cli_runner):
+@mock.patch("fastapi_mvc.cli.new.Borg")
+def test_new_invalid_options(borg_mock, cli_runner):
     result = cli_runner.invoke(new, ["--not_exists"])
     assert result.exit_code == 2
+    borg_mock.assert_not_called()
 
 
 @mock.patch("fastapi_mvc.cli.new.RunShell")
