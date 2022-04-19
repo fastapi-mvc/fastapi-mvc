@@ -19,6 +19,7 @@ def parser():
 
 
 def test_parser_properties(parser):
+    assert parser.project_root == DATA_DIR
     assert parser.folder_name == "test-app"
     assert parser.package_name == "test_app"
     assert parser.script_name == "test-app"
