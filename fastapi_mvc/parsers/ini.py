@@ -15,7 +15,7 @@ class IniParser(object):
         "_config",
     )
 
-    def __init__(self, project_root):
+    def __init__(self, project_root=None):
         """Initialize IniParser class object instance.
 
         Args:
@@ -27,7 +27,10 @@ class IniParser(object):
         """
         self._log = logging.getLogger(self.__class__.__name__)
         self._log.debug("Initialize fastapi-mvc.ini parser.")
-        self._project_root = project_root
+        if not project_root:
+            self._project_root = os.getcwd()
+        else:
+            self._project_root = project_root
         ini_file = os.path.join(self._project_root, "fastapi-mvc.ini")
 
         if not os.path.exists(ini_file):

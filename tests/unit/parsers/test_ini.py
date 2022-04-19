@@ -30,6 +30,12 @@ def test_parser_properties(parser):
     assert parser.helm == "yes"
     assert parser.version == "x.y.z"
 
+    with mock.patch("fastapi_mvc.parsers.ini.os.getcwd") as mck:
+        mck.return_value = DATA_DIR
+
+        default = IniParser()
+        assert default.project_root == DATA_DIR
+
 
 @mock.patch("fastapi_mvc.parsers.ini.os.path.exists", return_value=False)
 def test_parser_ini_not_exists(exists_mock):

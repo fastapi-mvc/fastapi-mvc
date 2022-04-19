@@ -1,7 +1,7 @@
 import os
 
 import mock
-from fastapi_mvc.utils import load_generators
+from fastapi_mvc.core import load_generators
 from fastapi_mvc.generators import Generator
 
 

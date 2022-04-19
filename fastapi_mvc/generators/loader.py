@@ -24,7 +24,7 @@ def load_generators(project_root, base_class):
         m_path = os.path.join(
             item.module_finder.path,
             item.name,
-            "__init__.py",
+            "../utils/__init__.py",
         )
         spec = importlib.util.spec_from_file_location(
             "fastapi_mvc_generators",
