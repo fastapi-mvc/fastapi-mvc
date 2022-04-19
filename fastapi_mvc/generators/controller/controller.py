@@ -32,13 +32,17 @@ class ControllerGenerator(Generator):
         }
     ]
 
-    def __init__(self, parser, project_root):
-        Generator.__init__(self, parser, project_root)
+    def __init__(self, parser):
+        Generator.__init__(self, parser)
 
     def new(self, name, skip, skip_routes, endpoints):
-        self._context["controller_name"] = name
-        self._context["controller_endpoints"] = dict()
-        self._context["skip_routes"] = skip_routes
+        context = {
+            "package_name": self._parser.package_name,
+            "folder_name": self._parser.folder_name,
+            "controller_name": name,
+            "skip_routes": skip_routes,
+            "controller_endpoints": dict()
+        }
 
         for item in endpoints:
             try:
@@ -46,16 +50,16 @@ class ControllerGenerator(Generator):
             except ValueError:
                 endpoint, method = item, "get"
 
-            self._context["controller_endpoints"][endpoint] = method
+            context["controller_endpoints"][endpoint] = method
 
-        self._log.debug("Cookiecutter context: {0}".format(self._context))
+        self._log.debug("Cookiecutter context: {0}".format(context))
 
         cookiecutter(
             self.__class__.template,
-            extra_context=self._context,
+            extra_context=context,
             output_dir=os.path.abspath(
                 os.path.join(
-                    self._project_root,
+                    self._parser.project_root,
                     "../",
                 )
             ),

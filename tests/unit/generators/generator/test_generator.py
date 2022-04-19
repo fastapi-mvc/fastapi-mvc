@@ -19,12 +19,9 @@ def gen_obj():
     parser = mock.Mock()
     parser.package_name = "test_app"
     parser.folder_name = "test-app"
+    parser.project_root = "/path/to/project_root"
 
-    gen = GeneratorGenerator(
-        parser=parser,
-        project_root="/path/to/project_root"
-    )
-
+    gen = GeneratorGenerator(parser=parser)
     yield gen
 
 
@@ -55,11 +52,6 @@ def test_class_attrs():
 
 
 def test_object_attrs(gen_obj):
-    assert gen_obj._project_root == "/path/to/project_root"
-    assert gen_obj._context == {
-        "package_name": "test_app",
-        "folder_name": "test-app",
-    }
     assert gen_obj._builtins == ["controller", "generator"]
 
 
@@ -98,7 +90,7 @@ def test_new(cookie_mock, kwargs, expected_ctx, gen_obj):
         extra_context=expected_ctx,
         output_dir=os.path.abspath(
             os.path.join(
-                gen_obj._project_root,
+                "/path/to/project_root",
                 "../",
             )
         ),

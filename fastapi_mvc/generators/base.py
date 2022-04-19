@@ -21,16 +21,12 @@ class Generator(object, metaclass=ABCMeta):
         _log (logging.Logger): Logger class object instance.
         _parser (fastapi_mvc.parsers.IniParser): IniParser object instance
             for current fastapi-mvc project.
-        _project_root (str): Path to current fastapi-mvc project root.
-        _context (dict): Cookiecutter template minimal required context.
 
     """
 
     __slots__ = (
         "_log",
         "_parser",
-        "_project_root",
-        "_context",
     )
 
     name: str
@@ -53,22 +49,16 @@ class Generator(object, metaclass=ABCMeta):
         }
     ]
 
-    def __init__(self, parser, project_root):
+    def __init__(self, parser):
         """Initialize Generator base class object instance.
 
         Args:
             parser (fastapi_mvc.parsers.IniParser): IniParser object instance
                 for current fastapi-mvc project.
-            project_root(str): Path to current fastapi-mvc project root.
 
         """
         self._log = logging.getLogger(self.__class__.__name__)
         self._parser = parser
-        self._project_root = project_root
-        self._context = {
-            "package_name": self._parser.package_name,
-            "folder_name": self._parser.folder_name,
-        }
 
     @abstractmethod
     def new(self, **kwargs):

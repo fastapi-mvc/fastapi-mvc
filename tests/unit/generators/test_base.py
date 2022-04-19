@@ -30,12 +30,9 @@ def test_base_generator():
     parser = mock.Mock()
     parser.package_name = "test_app"
     parser.folder_name = "test-app"
+    parser.project_root = "/path/to/project_root"
 
-    generator = Generator(
-        parser=parser,
-        project_root="/some/path"
-    )
-
+    generator = Generator(parser=parser,)
     generator.new()
     generator.destroy()
 
@@ -45,14 +42,7 @@ def test_base_generator():
     assert generator.__slots__ == (
         "_log",
         "_parser",
-        "_project_root",
-        "_context",
     )
 
     assert isinstance(generator._log, Logger)
     assert generator._parser == parser
-    assert generator._project_root == "/some/path"
-    assert generator._context == {
-        "package_name": "test_app",
-        "folder_name": "test-app",
-    }

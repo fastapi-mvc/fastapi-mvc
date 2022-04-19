@@ -19,8 +19,8 @@ class GeneratorGenerator(Generator):
     )
     usage = os.path.join(template, "USAGE")
 
-    def __init__(self, parser, project_root):
-        Generator.__init__(self, parser, project_root)
+    def __init__(self, parser):
+        Generator.__init__(self, parser)
         self._builtins = ["controller", "generator"]
 
     def new(self, name, skip):
@@ -28,23 +28,26 @@ class GeneratorGenerator(Generator):
             self._log.error("Shadows built-in generator: {0:s}".format(name))
             sys.exit(1)
 
-        self._context["generator_name"] = name
-
         words = name.replace("-", " ").replace("_", " ").split()
         class_name = ''.join(w.capitalize() for w in words)
 
-        self._context["class_name"] = "{0:s}Generator".format(
-            class_name
-        )
+        context = {
+            "package_name": self._parser.package_name,
+            "folder_name": self._parser.folder_name,
+            "generator_name": name,
+            "class_name": "{0:s}Generator".format(
+                class_name
+            )
+        }
 
-        self._log.debug("Cookiecutter context: {0}".format(self._context))
+        self._log.debug("Cookiecutter context: {0}".format(context))
 
         cookiecutter(
             self.__class__.template,
-            extra_context=self._context,
+            extra_context=context,
             output_dir=os.path.abspath(
                 os.path.join(
-                    self._project_root,
+                    self._parser.project_root,
                     "../",
                 )
             ),
