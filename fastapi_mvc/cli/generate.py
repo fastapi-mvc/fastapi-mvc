@@ -1,5 +1,6 @@
 """FastAPI MVC CLI generate command implementation."""
 import os
+from collections import defaultdict
 
 import click
 from fastapi_mvc import Borg
@@ -72,17 +73,34 @@ class DynamicMultiCommand(click.MultiCommand):
             commands.append((subcommand, cmd))
 
         # allow for 3 times the default spacing
-        if len(commands):
+        if commands:
             limit = formatter.width - 6 - max(len(cmd[0]) for cmd in commands)
 
-            rows = []
+            rows = defaultdict(list)
+            other = []
+
             for subcommand, cmd in commands:
                 help = cmd.get_short_help_str(limit)
-                rows.append((subcommand, help))
 
-            if rows:
-                with formatter.section("Generators"):
-                    formatter.write_dl(rows)
+                if hasattr(cmd.callback, "category"):
+                    rows[cmd.callback.category].append((subcommand, help))
+                else:
+                    other.append((subcommand, help))
+
+            formatter.write_paragraph()
+            formatter.write("Please choose a generator below.")
+            formatter.write_paragraph()
+
+            with formatter.section("Builtins"):
+                formatter.write_dl(rows.pop("Builtins"))
+
+            for key, value in rows.items():
+                with formatter.section(key):
+                    formatter.write_dl(value)
+
+            if other:
+                with formatter.section("Other"):
+                    formatter.write_dl(other)
 
     def list_commands(self, ctx):
         """Returns a list of subcommand names in the order they should appear.
