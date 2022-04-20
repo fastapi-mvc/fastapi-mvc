@@ -3,8 +3,10 @@ import os
 import importlib.util
 import pkgutil
 
+from fastapi_mvc.generators import Generator
 
-def load_generators(project_root, base_class):
+
+def load_generators(project_root):
     """
     https://docs.python.org/3/library/importlib.html#importing-programmatically
 
@@ -24,7 +26,7 @@ def load_generators(project_root, base_class):
         m_path = os.path.join(
             item.module_finder.path,
             item.name,
-            "../utils/__init__.py",
+            "__init__.py",
         )
         spec = importlib.util.spec_from_file_location(
             "fastapi_mvc_generators",
@@ -40,7 +42,7 @@ def load_generators(project_root, base_class):
 
         generator = getattr(module, "__all__")
 
-        if issubclass(generator, base_class):
+        if issubclass(generator, Generator):
             generators[generator.name] = generator
 
     return generators

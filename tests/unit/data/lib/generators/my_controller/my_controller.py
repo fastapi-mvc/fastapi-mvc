@@ -16,19 +16,24 @@ class MyControllerGenerator(Generator):
     )
     usage = os.path.join(template, "USAGE")
 
-    def __init__(self, parser, project_root):
-        Generator.__init__(self, parser, project_root)
+    def __init__(self, parser):
+        Generator.__init__(self, parser)
 
     def new(self, name, skip):
-        self._context["my_controller_name"] = name
-        self._log.debug("Cookiecutter context: {0}".format(self._context))
+        context = {
+            "package_name": self._parser.package_name,
+            "folder_name": self._parser.folder_name,
+            "my_controller_name": name,
+        }
+
+        self._log.debug("Cookiecutter context: {0}".format(context))
 
         cookiecutter(
             self.__class__.template,
-            extra_context=self._context,
+            extra_context=context,
             output_dir=os.path.abspath(
                 os.path.join(
-                    self._project_root,
+                    self._parser.project_root,
                     "../",
                 )
             ),
