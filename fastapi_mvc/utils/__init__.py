@@ -1,9 +1,9 @@
 """fastapi-mvc."""
 from fastapi_mvc.utils.shell import ShellUtils
-from fastapi_mvc.utils.loader import load_generators
+from fastapi_mvc.utils.excepthook import global_except_hook
 
 
 __all__ = (
     ShellUtils,
-    load_generators,
+    global_except_hook,
 )
