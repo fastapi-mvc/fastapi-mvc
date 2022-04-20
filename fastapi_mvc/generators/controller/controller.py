@@ -15,6 +15,7 @@ class ControllerGenerator(Generator):
         )
     )
     usage = os.path.join(template, "USAGE")
+    category = "Builtins"
     cli_arguments = [
         *Generator.cli_arguments,
         {
@@ -39,7 +40,7 @@ class ControllerGenerator(Generator):
         context = {
             "package_name": self._parser.package_name,
             "folder_name": self._parser.folder_name,
-            "controller_name": name,
+            "controller_name": name.lower().replace("-", "_"),
             "skip_routes": skip_routes,
             "controller_endpoints": dict()
         }

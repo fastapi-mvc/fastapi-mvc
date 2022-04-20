@@ -32,6 +32,7 @@ class Generator(object, metaclass=ABCMeta):
     name: str
     template: str
     usage: str
+    category: str
     # Usage https://click.palletsprojects.com/en/8.1.x/api/?highlight=click%20argument#click.Argument
     cli_arguments = [
         {

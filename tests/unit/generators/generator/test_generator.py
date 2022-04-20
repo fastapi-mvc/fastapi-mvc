@@ -35,6 +35,7 @@ def test_class_attrs():
         CONTROLLER_DIR,
         "template/USAGE"
     )
+    assert GeneratorGenerator.category == "Builtins"
     assert GeneratorGenerator.cli_arguments == [
         {
             "param_decls": ["NAME"],

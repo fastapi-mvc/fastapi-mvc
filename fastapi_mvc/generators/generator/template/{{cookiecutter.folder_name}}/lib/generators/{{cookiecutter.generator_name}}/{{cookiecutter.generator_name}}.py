@@ -14,6 +14,7 @@ class {{cookiecutter.class_name}}(Generator):
             "../template",
         )
     )
+    category = "MyGenerators"
     usage = os.path.join(template, "USAGE")
 
     def __init__(self, parser):

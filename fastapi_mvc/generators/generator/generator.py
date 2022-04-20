@@ -18,6 +18,7 @@ class GeneratorGenerator(Generator):
         )
     )
     usage = os.path.join(template, "USAGE")
+    category = "Builtins"
 
     def __init__(self, parser):
         Generator.__init__(self, parser)
@@ -34,7 +35,7 @@ class GeneratorGenerator(Generator):
         context = {
             "package_name": self._parser.package_name,
             "folder_name": self._parser.folder_name,
-            "generator_name": name,
+            "generator_name": name.lower().replace("-", "_"),
             "class_name": "{0:s}Generator".format(
                 class_name
             )

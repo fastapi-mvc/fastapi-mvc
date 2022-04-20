@@ -12,6 +12,7 @@ def test_base_generator():
     assert not hasattr(Generator, "name")
     assert not hasattr(Generator, "template")
     assert not hasattr(Generator, "usage")
+    assert not hasattr(Generator, "category")
     assert Generator.cli_arguments == [
         {
             "param_decls": ["NAME"],
