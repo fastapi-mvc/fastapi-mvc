@@ -3,7 +3,7 @@ import os
 import logging
 import configparser
 
-from fastapi_mvc.exceptions import IniParserError
+from fastapi_mvc.exceptions import FileError
 
 
 class IniParser(object):
@@ -22,36 +22,39 @@ class IniParser(object):
             project_root (str): A fastapi-mvc project root path.
 
         Raises:
-             IniParserError: If fastapi-mvc.ini does not exist or not readable.
+             FileError: If fastapi-mvc.ini does not exist or not readable.
 
         """
         self._log = logging.getLogger(self.__class__.__name__)
         self._log.debug("Initialize fastapi-mvc.ini parser.")
+
         if not project_root:
             self._project_root = os.getcwd()
         else:
             self._project_root = project_root
+
         ini_file = os.path.join(self._project_root, "fastapi-mvc.ini")
+        self._log.debug("Begin parsing: {0:s}".format(ini_file))
 
         if not os.path.exists(ini_file):
-            self._log.error(
-                "Not a fastapi-mvc project, fastapi-mvc.ini does not exist."
+            msg = "{0:s}/fastapi-mvc.ini does not exist.".format(
+                self._project_root
             )
-            raise IniParserError(
-                "Not a fastapi-mvc project, fastapi-mvc.ini does not exist."
-            )
+            self._log.debug(msg)
+            raise FileError(msg)
         elif not os.path.isfile(ini_file):
-            self._log.error(
-                "Not a fastapi-mvc project, fastapi-mvc.ini is not a file."
+            msg = "{0:s}/fastapi-mvc.ini is not a file.".format(
+                self._project_root
             )
-            raise IniParserError(
-                "Not a fastapi-mvc project, fastapi-mvc.ini is not a file."
-            )
+            self._log.debug(msg)
+            raise FileError(msg)
         elif not os.access(ini_file, os.R_OK):
-            self._log.error("File fastapi-mvc.ini is not readable.")
-            raise IniParserError("File fastapi-mvc.ini is not readable.")
+            msg = "{0:s}/fastapi-mvc.ini is not readable.".format(
+                self._project_root
+            )
+            self._log.debug(msg)
+            raise FileError(msg)
 
-        self._log.debug("Begin parsing: {0:s}".format(ini_file))
         self._config = configparser.ConfigParser()
         self._config.read(ini_file)
 
