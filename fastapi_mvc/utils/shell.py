@@ -8,7 +8,7 @@ class ShellUtils(object):
     """Shell utilities class definition.
 
     Attributes:
-        _log(logging.Logger): Logger class object instance.
+        _log (logging.Logger): Logger class object instance.
 
     """
 
@@ -98,8 +98,5 @@ class ShellUtils(object):
             )
             return process
         except subprocess.CalledProcessError as ex:
-            cls._log.exception(
-                "Proces finished with an exception.",
-                exc_info=(type(ex), ex, ex.__traceback__),
-            )
+            cls._log.debug(ex)
             raise ex
