@@ -57,7 +57,7 @@ def test_class_attrs():
         {
             "param_decls": ["-R", "--skip-routes"],
             "is_flag": True,
-            "help": "Wether to skip routes entry",
+            "help": "Weather to skip routes entry",
         },
     ]
 
@@ -73,7 +73,7 @@ def test_class_attrs():
         {
             "package_name": "test_app",
             "folder_name": "test-app",
-            "controller_name": "test-controller",
+            "controller_name": "test_controller",
             "controller_endpoints": {},
             "skip_routes": False
         },

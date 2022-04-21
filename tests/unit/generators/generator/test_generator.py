@@ -65,7 +65,7 @@ def test_object_attrs(gen_obj):
         {
             "package_name": "test_app",
             "folder_name": "test-app",
-            "generator_name": "test-generator",
+            "generator_name": "test_generator",
             "class_name": "TestGeneratorGenerator",
         },
     ),
