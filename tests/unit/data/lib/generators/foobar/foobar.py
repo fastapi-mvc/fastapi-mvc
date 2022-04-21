@@ -14,6 +14,7 @@ class FoobarGenerator(Generator):
             "../template",
         )
     )
+    category = "UnitTests"
     usage = os.path.join(template, "USAGE")
 
     def __init__(self, parser):

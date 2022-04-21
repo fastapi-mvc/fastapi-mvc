@@ -96,28 +96,18 @@ class DynamicMultiCommand(click.MultiCommand):
         commands = []
         for subcommand in self.list_commands(ctx):
             cmd = self.get_command(ctx, subcommand)
-            # What is this, the tool lied about a command.  Ignore it
-            if cmd is None:
-                continue
-            if cmd.hidden:
-                continue
-
             commands.append((subcommand, cmd))
 
-        # allow for 3 times the default spacing
         if commands:
             limit = formatter.width - 6 - max(len(cmd[0]) for cmd in commands)
 
             rows = defaultdict(list)
-            other = []
 
             for subcommand, cmd in commands:
                 help = cmd.get_short_help_str(limit)
 
-                if hasattr(cmd.callback, "category"):
-                    rows[cmd.callback.category].append((subcommand, help))
-                else:
-                    other.append((subcommand, help))
+                category = getattr(cmd.callback, "category", "Other")
+                rows[category].append((subcommand, help))
 
             formatter.write_paragraph()
             formatter.write("Please choose a generator below.")
@@ -129,10 +119,6 @@ class DynamicMultiCommand(click.MultiCommand):
             for key, value in rows.items():
                 with formatter.section(key):
                     formatter.write_dl(value)
-
-            if other:
-                with formatter.section("Other"):
-                    formatter.write_dl(other)
 
     def list_commands(self, ctx):
         """Return a list of subcommand names in the order they should appear.
