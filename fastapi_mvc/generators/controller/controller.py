@@ -6,6 +6,7 @@ from fastapi_mvc.generators import Generator
 
 
 class ControllerGenerator(Generator):
+    """Controller generator implementation."""
 
     name = "controller"
     template = os.path.abspath(
@@ -29,14 +30,25 @@ class ControllerGenerator(Generator):
         {
             "param_decls": ["-R", "--skip-routes"],
             "is_flag": True,
-            "help": "Wether to skip routes entry",
+            "help": "Weather to skip routes entry",
         }
     ]
 
     def __init__(self, parser):
+        """Initialize ControllerGenerator class object instance."""
         Generator.__init__(self, parser)
 
     def new(self, name, skip, skip_routes, endpoints):
+        """Generate a new controller.
+
+        Args:
+            name (str): Given controller name.
+            skip (bool): If True skip the files in the corresponding directories
+                if they already exist.
+            skip_routes (bool): If True do not edit `config/router.py`.
+            endpoints (list): List of controller endpoints to create.
+
+        """
         context = {
             "package_name": self._parser.package_name,
             "folder_name": self._parser.folder_name,
@@ -70,4 +82,10 @@ class ControllerGenerator(Generator):
         )
 
     def destroy(self, **kwargs):
+        """Not yet implemented.
+
+        Args:
+            **kwargs(dict): Abstract methods kwargs.
+
+        """
         raise NotImplementedError

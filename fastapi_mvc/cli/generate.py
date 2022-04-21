@@ -8,9 +8,15 @@ from fastapi_mvc.commands import Generate
 
 
 class GeneratorCommand(click.Command):
+    """Custom click.Command class implementation.
+
+    Base class (click.Command) documentation:
+    https://click.palletsprojects.com/en/8.0.x/api/#click.Command
+
+    """
 
     def format_epilog(self, ctx, formatter):
-        """Writes the epilog into the formatter if it exists.
+        """Write the epilog into the formatter if it exists.
 
         Args:
             ctx(click.Context): Click Context class object instance.
@@ -23,8 +29,14 @@ class GeneratorCommand(click.Command):
             formatter.write(self.epilog)
 
     def invoke(self, ctx):
-        """Given a context, this invokes the attached callback (if it exists)
-        in the right way.
+        """Invoke generate command with attached generator in callback.
+
+        Base class (click.MultiCommand) documentation:
+        https://click.palletsprojects.com/en/8.0.x/api/#click.MultiCommand
+
+        Args:
+            ctx(click.Context): Context class object instance.
+
         """
         Generate(
             generator=self.callback,
@@ -33,14 +45,34 @@ class GeneratorCommand(click.Command):
 
 
 class DynamicMultiCommand(click.MultiCommand):
+    """Custom click.MultiCommand class implementation.
+
+    Args:
+        *args (list): Base class constructor args.
+        **kwargs (dict): Base class constructor kwargs.
+
+    Attributes:
+        _generators (dict[str, Generator]): Dictionary containing all available
+            fastapi-mvc generator classes.
+        _parser (IniParser): IniParser class object instance.
+
+    """
 
     def __init__(self, *args, **kwargs):
+        """Initialize DynamicMultiCommand class object instance."""
         super().__init__(*args, **kwargs)
         self._generators = None
         self._parser = None
 
     @property
     def generators(self):
+        """Load fastapi-mvc project and generators.
+
+        Returns:
+            dict[str, Generator]: Dictionary containing loaded fastapi-mvc
+                generator classes.
+
+        """
         if not self._generators:
             borg = Borg()
             borg.load_generators()
@@ -50,7 +82,7 @@ class DynamicMultiCommand(click.MultiCommand):
         return self._generators
 
     def format_commands(self, ctx, formatter):
-        """Writes all the generators into the formatter if they exist.
+        """Write all the generators into the formatter if they exist.
 
         Extra format methods for multi methods that adds all the generators
         after the options.
@@ -103,7 +135,7 @@ class DynamicMultiCommand(click.MultiCommand):
                     formatter.write_dl(other)
 
     def list_commands(self, ctx):
-        """Returns a list of subcommand names in the order they should appear.
+        """Return a list of subcommand names in the order they should appear.
 
         Args:
             ctx (click.Context): Click Context class object instance.
@@ -115,7 +147,7 @@ class DynamicMultiCommand(click.MultiCommand):
         return self.generators.keys()
 
     def get_command(self, ctx, name):
-        """Returns GeneratorCommand object instance.
+        """Return GeneratorCommand object instance.
 
         Given a context and a command name, this returns a GeneratorCommand
         object instance if it exists or aborts the execution of the program.
@@ -160,4 +192,11 @@ class DynamicMultiCommand(click.MultiCommand):
     subcommand_metavar="GENERATOR [ARGS]...",
 )
 def generate():
+    """Run chosen fastapi-mvc generator.
+
+    The 'fastapi-mvc generate' commands runs a generator of your choice for a
+    fastapi-mvc project at the current working directory.
+    \f
+
+    """
     pass

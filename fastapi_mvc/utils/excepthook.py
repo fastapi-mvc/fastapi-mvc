@@ -1,3 +1,10 @@
+"""FastAPI MVC excepthook.
+
+Attributes:
+    log (logging.Logger): Logger class object instance.
+    template (str): Unhandled exception issue message template.
+
+"""
 import logging
 import sys
 import platform
@@ -10,8 +17,8 @@ from fastapi_mvc import __version__
 log = logging.getLogger("GlobalExceptHook")
 template = """Help improve fastapi-mvc :)
 
-It does not have to be a defect immediately. But if you think this should not 
-happen or it would make a nice feature, feel free to create an issue: 
+It does not have to be a defect immediately. But if you think this should not
+happen or it would make a nice feature, feel free to create an issue:
 {issues}
 
 I've formated copy-paste markdown with details for you to make things easier.
@@ -46,6 +53,14 @@ fastapi-mvc {argv}
 
 
 def global_except_hook(exctype, value, traceback):
+    """Global except hook method.
+
+    Args:
+        exctype: Exception object instance.
+        value: Exception value.
+        traceback: Traceback object instance.
+
+    """
     if issubclass(exctype, RootException):
         if log.isEnabledFor(logging.DEBUG):
             log.exception(

@@ -7,6 +7,12 @@ from fastapi_mvc.generators import Generator
 
 
 class GeneratorGenerator(Generator):
+    """Generator generator implementation.
+
+    Attributes:
+        _builtins (list): List of builtins generator names.
+
+    """
 
     __slots__ = "_builtins"
 
@@ -21,10 +27,19 @@ class GeneratorGenerator(Generator):
     category = "Builtins"
 
     def __init__(self, parser):
+        """Initialize GeneratorGenerator class object instance."""
         Generator.__init__(self, parser)
         self._builtins = ["controller", "generator"]
 
     def new(self, name, skip):
+        """Generate a new generator.
+
+        Args:
+            name (str): Given generator name.
+            skip (bool): If True skip the files in the corresponding directories
+                if they already exist.
+
+        """
         if name in self._builtins:
             self._log.error("Shadows built-in generator: {0:s}".format(name))
             sys.exit(1)
@@ -58,4 +73,10 @@ class GeneratorGenerator(Generator):
         )
 
     def destroy(self, **kwargs):
+        """Not yet implemented.
+
+        Args:
+            **kwargs(dict): Abstract methods kwargs.
+
+        """
         raise NotImplementedError

@@ -1,21 +1,4 @@
-"""Borg design pattern (or monostate if you will) implementation.
-
-It is a way to implement singleton behavior, but instead of having only one
-instance of a class, there are multiple instances that share the same state.
-In other words, the focus is on sharing state instead of sharing instance
-identity.
-
-I am aware that singleton and monostate do not have a good reputation
-and are often considered an anty pattern. However, a little experiment never
-killed nobody :); I'm genuinely curious how this plays out.
-
-Besides, it has a cool name.
-
-Resources:
-        1. http://www.aleax.it/5ep.html
-        2. https://code.activestate.com/recipes/66531/
-
-"""
+"""Borg design pattern (or monostate if you will) implementation."""
 import os
 import sys
 import logging
@@ -34,7 +17,30 @@ from fastapi_mvc.version import __version__
 
 
 class Borg(object):
-    """We are the Borg."""
+    """We are the Borg.
+
+    Borg design pattern (or monostate if you will) implementation.
+
+    It is a way to implement singleton behavior, but instead of having only one
+    instance of a class, there are multiple instances that share the same state.
+    In other words, the focus is on sharing state instead of sharing instance
+    identity.
+
+    Note:
+        I am aware that singleton and monostate do not have a good reputation
+        and are often considered an anty pattern. However, a little experiment
+        never killed nobody :); I'm genuinely curious how this plays out.
+
+        Besides, it has a cool name.
+
+    Resources:
+        1. http://www.aleax.it/5ep.html
+        2. https://code.activestate.com/recipes/66531/
+
+    Attributes:
+        _log (logging.Logger): Logger class object instance.
+
+    """
 
     __shared_state = dict()
 
@@ -56,27 +62,41 @@ class Borg(object):
             }
 
     def __str__(self):
+        """Class custom __str__ method implementation."""
         return "We are the Borg. You will be assimilated. Resistance is futile."
 
     @property
     def generators(self):
-        """Borg generators property.
+        """Get loaded fastapi-mvc generators.
 
         Returns:
-            dict: Return fastapi-mvc loaded generators.
+            dict: Loaded fastapi-mvc generators.
 
         """
         return self._generators
 
     @property
     def parser(self):
+        """Get IniParser class object instance.
+
+        Returns:
+            IniParser: IniParser class object instance if set otherwise None.
+
+        """
         return self._parser
 
     @property
     def version(self):
+        """Get fastapi-mvc version..
+
+        Returns:
+            str: Fastapi-mvc version.
+
+        """
         return __version__
 
     def require_project(self):
+        """Verify if fastapi-mvc project is valid."""
         if self._parser:
             return
 
@@ -104,6 +124,7 @@ class Borg(object):
         self._parser = parser
 
     def require_installed(self):
+        """Verify if fastapi-mvc project is installed."""
         if not self._parser:
             self.require_project()
 
@@ -133,6 +154,7 @@ class Borg(object):
             self._project_installed = True
 
     def load_generators(self):
+        """Load local fastapi-mvc generators."""
         if not self._parser:
             self.require_project()
 
@@ -145,7 +167,14 @@ class Borg(object):
             self._generators_loaded = True
 
     def enqueue_command(self, command):
+        """Enqueue command for Invoker to execute.
+
+        Args:
+            command (Command): Command subclass object instance.
+
+        """
         self._invoker.enqueue(command)
 
     def execute(self):
+        """Execute enqueued Invoker commands."""
         self._invoker.execute()

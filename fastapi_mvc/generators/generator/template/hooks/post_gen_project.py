@@ -11,15 +11,15 @@ def add_root_dirs():
         "{% raw %}{{cookiecutter.folder_name}}{% endraw %}"
     )
     package_dir = os.path.join(
-            root_dir,
-            "{% raw %}{{cookiecutter.package_name}}{% endraw %}"
+        root_dir,
+        "{% raw %}{{cookiecutter.package_name}}{% endraw %}"
     )
 
     try:
         os.mkdir(root_dir)
     except OSError:
         pass
-    
+
     try:
         os.mkdir(package_dir)
     except OSError:

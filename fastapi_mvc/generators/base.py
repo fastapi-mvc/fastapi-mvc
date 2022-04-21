@@ -1,4 +1,4 @@
-"""FastAPI MVC Generate abstract class implementation."""
+"""FastAPI MVC Generator abstract class implementation."""
 from abc import ABCMeta, abstractmethod
 import logging
 
@@ -12,6 +12,8 @@ class Generator(object, metaclass=ABCMeta):
         template (str): (class attribute)  Path to generator cookiecutter
             template directory.
         usage (str): (class attribute) Path to generator usage file.
+        category (str): (class attribute) Name under which generator should be
+            displayed in CLI help.
         cli_arguments (list[dict]): (class attribute) Click arguments as kwargs,
             that will be available in dynamically generated command for this
             generator.
@@ -19,7 +21,7 @@ class Generator(object, metaclass=ABCMeta):
             that will be available in dynamically generated command for this
             generator.
         _log (logging.Logger): Logger class object instance.
-        _parser (fastapi_mvc.parsers.IniParser): IniParser object instance
+        _parser (IniParser): IniParser object instance
             for current fastapi-mvc project.
 
     """
@@ -33,7 +35,6 @@ class Generator(object, metaclass=ABCMeta):
     template: str
     usage: str
     category: str
-    # Usage https://click.palletsprojects.com/en/8.1.x/api/?highlight=click%20argument#click.Argument
     cli_arguments = [
         {
             "param_decls": ["NAME"],
@@ -41,7 +42,6 @@ class Generator(object, metaclass=ABCMeta):
             "nargs": 1,
         }
     ]
-    # Usage https://click.palletsprojects.com/en/8.1.x/api/?highlight=click%20option#click.Option
     cli_options = [
         {
             "param_decls": ["-S", "--skip"],
@@ -63,7 +63,7 @@ class Generator(object, metaclass=ABCMeta):
 
     @abstractmethod
     def new(self, **kwargs):
-        """New abstract method for all inheriting classes.
+        """Abstract method new for all inheriting classes.
 
         Args:
             **kwargs(dict): Abstract methods kwargs.
@@ -73,7 +73,7 @@ class Generator(object, metaclass=ABCMeta):
 
     @abstractmethod
     def destroy(self, **kwargs):
-        """Destroy abstract method for all inheriting classes.
+        """Abstract method destroy for all inheriting classes.
 
         Args:
             **kwargs(dict): Abstract methods kwargs.

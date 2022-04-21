@@ -1,3 +1,4 @@
+"""FastAPI dynamic loader."""
 import sys
 import os
 import importlib.util
@@ -7,10 +8,16 @@ from fastapi_mvc.generators import Generator
 
 
 def load_generators(project_root):
-    """
+    """Load all user fastapi-mvc generators.
+
+    At given fastapi-mvc project root programmatically import all available user
+    generators.
+
     https://docs.python.org/3/library/importlib.html#importing-programmatically
 
     Returns:
+        dict[str, Generator]: Dictionary containing loaded fastapi-mvc
+            generator classes.
 
     """
     generators = dict()
@@ -34,7 +41,7 @@ def load_generators(project_root):
         )
         module = importlib.util.module_from_spec(spec)
         # Register module before running `exec_module()` to make all submodules
-        # in it able to find their parent package (i.e. `fastapi_mvc_generators`).
+        # in it able to find their parent package: `fastapi_mvc_generators`.
         # Otherwise, we will got the following error:
         #     `ModuleNotFoundError: No module named 'fastapi_mvc_generators'`
         sys.modules[spec.name] = module
