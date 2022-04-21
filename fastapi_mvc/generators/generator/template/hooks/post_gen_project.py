@@ -7,12 +7,10 @@ def add_root_dirs():
     template_dir = "lib/generators/{{cookiecutter.generator_name}}/template"
 
     root_dir = os.path.join(
-        template_dir,
-        "{% raw %}{{cookiecutter.folder_name}}{% endraw %}"
+        template_dir, "{% raw %}{{cookiecutter.folder_name}}{% endraw %}"
     )
     package_dir = os.path.join(
-        root_dir,
-        "{% raw %}{{cookiecutter.package_name}}{% endraw %}"
+        root_dir, "{% raw %}{{cookiecutter.package_name}}{% endraw %}"
     )
 
     try:
