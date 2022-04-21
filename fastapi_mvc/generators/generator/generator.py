@@ -45,15 +45,13 @@ class GeneratorGenerator(Generator):
             sys.exit(1)
 
         words = name.replace("-", " ").replace("_", " ").split()
-        class_name = ''.join(w.capitalize() for w in words)
+        class_name = "".join(w.capitalize() for w in words)
 
         context = {
             "package_name": self._parser.package_name,
             "folder_name": self._parser.folder_name,
             "generator_name": name.lower().replace("-", "_"),
-            "class_name": "{0:s}Generator".format(
-                class_name
-            )
+            "class_name": "{0:s}Generator".format(class_name),
         }
 
         self._log.debug("Cookiecutter context: {0}".format(context))

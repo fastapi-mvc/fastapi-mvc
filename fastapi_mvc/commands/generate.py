@@ -9,10 +9,7 @@ from fastapi_mvc.commands import Command
 class Generate(Command):
     """Generate command class definition."""
 
-    __slots__ = (
-        "_generator",
-        "_options"
-    )
+    __slots__ = ("_generator", "_options")
 
     def __init__(self, generator, options):
         """Initialize Generate class object instance.

@@ -23,7 +23,7 @@ class ControllerGenerator(Generator):
             "param_decls": ["ENDPOINTS"],
             "required": False,
             "nargs": -1,
-        }
+        },
     ]
     cli_options = [
         *Generator.cli_options,
@@ -31,7 +31,7 @@ class ControllerGenerator(Generator):
             "param_decls": ["-R", "--skip-routes"],
             "is_flag": True,
             "help": "Weather to skip routes entry",
-        }
+        },
     ]
 
     def __init__(self, parser):
@@ -54,7 +54,7 @@ class ControllerGenerator(Generator):
             "folder_name": self._parser.folder_name,
             "controller_name": name.lower().replace("-", "_"),
             "skip_routes": skip_routes,
-            "controller_endpoints": dict()
+            "controller_endpoints": dict(),
         }
 
         for item in endpoints:

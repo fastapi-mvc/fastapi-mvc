@@ -109,10 +109,7 @@ class Borg(object):
             )
             raise ex
 
-        pkg_path = os.path.join(
-            parser.project_root,
-            parser.package_name
-        )
+        pkg_path = os.path.join(parser.project_root, parser.package_name)
 
         if not os.path.isdir(pkg_path):
             self._log.error(

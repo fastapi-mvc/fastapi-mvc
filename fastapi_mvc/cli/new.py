@@ -94,9 +94,7 @@ def new(app_path, **options):
 
     """
     borg = Borg()
-    borg.enqueue_command(
-        GenerateNewProject(app_path=app_path, options=options)
-    )
+    borg.enqueue_command(GenerateNewProject(app_path=app_path, options=options))
 
     if not options["skip_install"]:
         borg.enqueue_command(RunShell(cmd=["make", "install"], cwd=app_path))
