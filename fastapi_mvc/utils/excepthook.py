@@ -10,11 +10,20 @@ import sys
 import platform
 from traceback import format_exception
 
-from fastapi_mvc.exceptions import RootException
 from fastapi_mvc import __version__
 
 
 log = logging.getLogger("GlobalExceptHook")
+hint = """Help improve fastapi-mvc :)
+
+It does not have to be a defect immediately. But if you think this should not
+happen or it would make a nice feature, feel free to create an issue:
+{issues}
+
+Hint: Running with `--verbose` will preformat markdown issues template for you:
+fastapi-mvc --verbose {argv}
+
+"""
 template = """Help improve fastapi-mvc :)
 
 It does not have to be a defect immediately. But if you think this should not
@@ -61,24 +70,26 @@ def global_except_hook(exctype, value, traceback):
         traceback: Traceback object instance.
 
     """
-    if issubclass(exctype, RootException):
-        if log.isEnabledFor(logging.DEBUG):
-            log.exception(
-                "Reason exception occurred:",
-                exc_info=(exctype, value, traceback),
+    log.exception(
+        "Unhandled exception occurred during RunTime.",
+        exc_info=(exctype, value, traceback),
+    )
+
+    if log.isEnabledFor(logging.DEBUG):
+        log.info(
+            template.format(
+                issues="https://github.com/rszamszur/fastapi-mvc/issues/new",
+                details="".join(format_exception(exctype, value, traceback)),
+                argv=" ".join(sys.argv[1:]),
+                py_ver=platform.python_version(),
+                os_info=platform.platform(),
+                version=__version__,
             )
-        sys.exit(exctype.code)
+        )
     else:
-        log.exception(
-            "Unhandled exception occurred during RunTime.",
-            exc_info=(exctype, value, traceback),
+        log.info(
+            hint.format(
+                issues="https://github.com/rszamszur/fastapi-mvc/issues/new",
+                argv=" ".join(sys.argv[1:]),
+            )
         )
-        msg = template.format(
-            issues="https://github.com/rszamszur/fastapi-mvc/issues/new",
-            details="".join(format_exception(exctype, value, traceback)),
-            argv=" ".join(sys.argv[1:]),
-            py_ver=platform.python_version(),
-            os_info=platform.platform(),
-            version=__version__,
-        )
-        log.info(msg)
