@@ -2,6 +2,20 @@
 
 This file documents changes to [fastapi-mvc](https://github.com/rszamszur/fastapi-mvc). The release numbering uses [semantic versioning](http://semver.org).
 
+## Unreleased
+
+### Features
+
+* Implement controller generator [#47](https://github.com/rszamszur/fastapi-mvc/issues/47). PR [#70](https://github.com/rszamszur/fastapi-mvc/pull/70)
+* Implement generator generator [#68](https://github.com/rszamszur/fastapi-mvc/issues/68). PR [#70](https://github.com/rszamszur/fastapi-mvc/pull/70)
+* Implement logic for loading user generators into fastapi-mvc CLI at RunTime [#69](https://github.com/rszamszur/fastapi-mvc/issues/69). PR [#70](https://github.com/rszamszur/fastapi-mvc/pull/70)
+
+### Internal
+
+* Implement global except hook, refactor current exceptions handling [#73](https://github.com/rszamszur/fastapi-mvc/issues/73). PR [#70](https://github.com/rszamszur/fastapi-mvc/pull/70)
+* Refactor `Invoker` class with using queue [#71](https://github.com/rszamszur/fastapi-mvc/issues/71). PR [#70](https://github.com/rszamszur/fastapi-mvc/pull/70)
+* Refactor `fastapi_mvc.commands` to be more generic [#72](https://github.com/rszamszur/fastapi-mvc/issues/72). PR [#70](https://github.com/rszamszur/fastapi-mvc/pull/70)
+
 ## 0.10.0 (07.04.2022)
 
 ### Fixed
