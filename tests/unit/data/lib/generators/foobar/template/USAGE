@@ -1,0 +1,8 @@
+Description:
+    Explain the generator
+
+Example:
+    fastapi-mvc generate test thing
+
+    This will create:
+        what/will/it/create

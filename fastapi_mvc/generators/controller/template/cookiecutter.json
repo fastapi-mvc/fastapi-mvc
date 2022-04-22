@@ -1,0 +1,7 @@
+{
+  "folder_name": "{{ cookiecutter.folder_name }}",
+  "package_name": "{{ cookiecutter.package_name }}",
+  "controller_name": "{{ cookiecutter.controller_name }}",
+  "controller_endpoints": "{{ cookiecutter.controller_endpoints }}",
+  "skip_routes": "{{ cookiecutter.skip_routes }}"
+}

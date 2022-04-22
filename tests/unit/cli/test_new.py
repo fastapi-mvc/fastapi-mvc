@@ -3,24 +3,28 @@ import pytest
 from fastapi_mvc.cli.new import new
 
 
-def test_new_help(cli_runner):
+@mock.patch("fastapi_mvc.cli.new.Borg")
+def test_new_help(borg_mock, cli_runner):
     result = cli_runner.invoke(new, ["--help"])
     assert result.exit_code == 0
+    borg_mock.assert_not_called()
 
 
-def test_new_invalid_options(cli_runner):
+@mock.patch("fastapi_mvc.cli.new.Borg")
+def test_new_invalid_options(borg_mock, cli_runner):
     result = cli_runner.invoke(new, ["--not_exists"])
     assert result.exit_code == 2
+    borg_mock.assert_not_called()
 
 
-@mock.patch("fastapi_mvc.cli.new.InstallProject")
+@mock.patch("fastapi_mvc.cli.new.RunShell")
 @mock.patch("fastapi_mvc.cli.new.GenerateNewProject")
-@mock.patch("fastapi_mvc.cli.new.Invoker")
-def test_new_default_values(invoker_mock, gen_mock, install_mock, cli_runner):
+@mock.patch("fastapi_mvc.cli.new.Borg")
+def test_new_default_values(borg_mock, gen_mock, shell_mock, cli_runner):
     result = cli_runner.invoke(new, ["test-project"])
     assert result.exit_code == 0
 
-    invoker_mock.assert_called_once()
+    borg_mock.assert_called_once()
     gen_mock.assert_called_once_with(
         app_path="test-project",
         options={
@@ -35,10 +39,18 @@ def test_new_default_values(invoker_mock, gen_mock, install_mock, cli_runner):
             "repo_url": "https://your.repo.url.here"
         }
     )
-    install_mock.assert_called_once_with(app_path="test-project")
-    assert invoker_mock.return_value.on_start == gen_mock.return_value
-    assert invoker_mock.return_value.on_finish == install_mock.return_value
-    invoker_mock.return_value.execute.assert_called_once()
+    shell_mock.assert_called_once_with(
+        cmd=["make", "install"],
+        cwd="test-project",
+    )
+
+    calls = [
+        mock.call(gen_mock.return_value),
+        mock.call(shell_mock.return_value),
+    ]
+
+    borg_mock.return_value.enqueue_command.assert_has_calls(calls)
+    borg_mock.return_value.execute.assert_called_once()
 
 
 @pytest.mark.parametrize(
@@ -106,21 +118,28 @@ def test_new_default_values(invoker_mock, gen_mock, install_mock, cli_runner):
         )
     ]
 )
-@mock.patch("fastapi_mvc.cli.new.InstallProject")
+@mock.patch("fastapi_mvc.cli.new.RunShell")
 @mock.patch("fastapi_mvc.cli.new.GenerateNewProject")
-@mock.patch("fastapi_mvc.cli.new.Invoker")
-def test_new_with_options(invoker_mock, gen_mock, install_mock, cli_runner, args, expected):
+@mock.patch("fastapi_mvc.cli.new.Borg")
+def test_new_with_options(borg_mock, gen_mock, shell_mock, cli_runner, args, expected):
     result = cli_runner.invoke(new, args)
     assert result.exit_code == 0
 
-    invoker_mock.assert_called_once()
+    borg_mock.assert_called_once()
     gen_mock.assert_called_once_with(**expected)
 
-    if "--skip-install" in args or "-I" in args:
-        install_mock.assert_not_called()
-    else:
-        install_mock.assert_called_once_with(app_path=expected["app_path"])
-        assert invoker_mock.return_value.on_finish == install_mock.return_value
+    calls = [
+        mock.call(gen_mock.return_value),
+    ]
 
-    assert invoker_mock.return_value.on_start == gen_mock.return_value
-    invoker_mock.return_value.execute.assert_called_once()
+    if "--skip-install" in args or "-I" in args:
+        shell_mock.assert_not_called()
+    else:
+        shell_mock.assert_called_once_with(
+            cmd=["make", "install"],
+            cwd="test-project",
+        )
+        calls.append(mock.call(shell_mock.return_value))
+
+    borg_mock.return_value.enqueue_command.assert_has_calls(calls)
+    borg_mock.return_value.execute.assert_called_once()

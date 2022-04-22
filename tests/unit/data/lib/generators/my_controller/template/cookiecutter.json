@@ -1,0 +1,5 @@
+{
+  "folder_name": "{{ cookiecutter.folder_name }}",
+  "package_name": "{{ cookiecutter.package_name }}",
+  "my_controller_name": "{{ cookiecutter.my_controller_name }}"
+}

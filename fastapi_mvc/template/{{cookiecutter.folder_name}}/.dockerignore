@@ -17,3 +17,4 @@ pep257_violations.txt
 pep8_violations.txt
 code_complexity.txt
 xunit-*.xml
+lib

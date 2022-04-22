@@ -1,0 +1,6 @@
+{%- raw %}{
+  "folder_name": "{{ cookiecutter.folder_name }}",
+  "package_name": "{{ cookiecutter.package_name }}",
+{%- endraw %}
+  "{{cookiecutter.generator_name}}_name": "{% raw %}{{ cookiecutter.{% endraw %}{{cookiecutter.generator_name}}{% raw %}_name }}"
+}{% endraw %}

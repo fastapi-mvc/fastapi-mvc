@@ -8,7 +8,7 @@ class ShellUtils(object):
     """Shell utilities class definition.
 
     Attributes:
-        _log(logging.Logger): Logger class object instance.
+        _log (logging.Logger): Logger class object instance.
 
     """
 
@@ -55,7 +55,7 @@ class ShellUtils(object):
 
         Args:
             cmd(list): Shell command to run.
-            cwd(str): Path under which proces should execute command. Defaults
+            cwd(str): Path under which process should execute command. Defaults
                 to current working directory.
             check(bool): If True raise a subprocess.CalledProcessError error
                 when a process returns non-zero exit status.
@@ -98,8 +98,5 @@ class ShellUtils(object):
             )
             return process
         except subprocess.CalledProcessError as ex:
-            cls._log.exception(
-                "Proces finished with an exception.",
-                exc_info=(type(ex), ex, ex.__traceback__),
-            )
+            cls._log.debug(ex)
             raise ex

@@ -1,0 +1,14 @@
+Description:
+    Creates a new controller and its endpoints. Pass the controller name
+    under_scored, and a list of endpoints as arguments.
+
+    This generates a controller file in app/controllers with unit test
+    file. Finally, edits config/router.py in order to add controller to
+    FastAPI router.
+
+Example:
+    `fastapi-mvc generate controller stock_market ticker buy:post sell:delete`
+
+    Creates controller with URLs like /stock_market/ticker.
+        Controller: app/controllers/stock_market.py
+        Test:       tests/unit/app/controllers/test_stock_market.py

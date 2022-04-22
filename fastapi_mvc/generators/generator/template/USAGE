@@ -1,0 +1,13 @@
+Description:
+    Creates a new generator at lib/generators. Pass the generator name
+    under_scored.
+
+Example:
+    `fastapi-mvc generate generator my_controller`
+
+    creates a project local my_controller generator:
+        lib/generators/my_controller/
+        lib/generators/my_controller/__init__.py
+        lib/generators/my_controller/generator.py
+        lib/generators/my_controller/template/USAGE
+        lib/generators/my_controller/template/

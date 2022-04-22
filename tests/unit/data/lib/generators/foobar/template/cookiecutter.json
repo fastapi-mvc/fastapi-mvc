@@ -1,0 +1,5 @@
+{
+  "folder_name": "{{ cookiecutter.folder_name }}",
+  "package_name": "{{ cookiecutter.package_name }}",
+  "foobar_name": "{{ cookiecutter.foobar_name }}"
+}

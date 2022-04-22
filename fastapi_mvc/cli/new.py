@@ -1,6 +1,7 @@
 """FastAPI MVC CLI new command implementation."""
 import click
-from fastapi_mvc.commands import Invoker, GenerateNewProject, InstallProject
+from fastapi_mvc import Borg
+from fastapi_mvc.commands import GenerateNewProject, RunShell
 
 
 @click.command()
@@ -92,10 +93,10 @@ def new(app_path, **options):
         options(dict): CLI command options.
 
     """
-    invoker = Invoker()
-    invoker.on_start = GenerateNewProject(app_path=app_path, options=options)
+    borg = Borg()
+    borg.enqueue_command(GenerateNewProject(app_path=app_path, options=options))
 
     if not options["skip_install"]:
-        invoker.on_finish = InstallProject(app_path=app_path)
+        borg.enqueue_command(RunShell(cmd=["make", "install"], cwd=app_path))
 
-    invoker.execute()
+    borg.execute()
