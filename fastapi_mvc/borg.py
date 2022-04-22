@@ -1,18 +1,12 @@
 """Borg design pattern (or monostate if you will) implementation."""
 import os
-import sys
 import logging
 import subprocess
 
 from fastapi_mvc.commands import Invoker
 from fastapi_mvc.parsers import IniParser
-from fastapi_mvc.generators import (
-    ControllerGenerator,
-    GeneratorGenerator,
-    load_generators,
-)
+from fastapi_mvc.generators import builtins, load_generators
 from fastapi_mvc.utils import ShellUtils
-from fastapi_mvc.exceptions import FileError
 from fastapi_mvc.version import __version__
 
 
@@ -48,18 +42,15 @@ class Borg(object):
         """I am the beginning, the end, the one who is many. I am the Borg."""
         self.__dict__ = self.__shared_state
 
-        if not getattr(self, "__borg_initialized", False):
-            setattr(self, "__borg_initialized", True)
+        if not getattr(self, "__borg_assimilated", False):
+            setattr(self, "__borg_assimilated", True)
             self._log = logging.getLogger(self.__class__.__name__)
             self._log.debug("Initialize first Borg class object instance.")
             self._invoker = Invoker()
             self._parser = None
             self._project_installed = None
             self._generators_loaded = False
-            self._generators = {
-                ControllerGenerator.name: ControllerGenerator,
-                GeneratorGenerator.name: GeneratorGenerator,
-            }
+            self._generators = builtins
 
     def __str__(self):
         """Class custom __str__ method implementation."""
@@ -102,21 +93,22 @@ class Borg(object):
 
         try:
             parser = IniParser()
-        except FileError as ex:
+        except (FileNotFoundError, PermissionError, IsADirectoryError):
             self._log.error(
                 "Not a fastapi-mvc project. Try 'fastapi-mvc new --help' for "
                 "details how to create one."
             )
-            raise ex
+            raise SystemExit(1)
 
         pkg_path = os.path.join(parser.project_root, parser.package_name)
 
         if not os.path.isdir(pkg_path):
+            self._log.debug("{0:s} is not a directory.".format(pkg_path))
             self._log.error(
                 "Could not find required project files. Most likely project or "
                 "fastapi-mvc.ini is corrupted."
             )
-            raise FileError("{0:s} is not a directory.".format(pkg_path))
+            raise SystemExit(1)
 
         self._parser = parser
 
@@ -146,7 +138,7 @@ class Borg(object):
                 self._log.error(
                     "Project is not installed. To install run: $ make install"
                 )
-                sys.exit(1)
+                raise SystemExit(1)
 
             self._project_installed = True
 
