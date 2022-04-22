@@ -3,7 +3,6 @@ import os
 import mock
 import pytest
 from fastapi_mvc.parsers import IniParser
-from fastapi_mvc.exceptions import FileError
 
 
 DATA_DIR = os.path.abspath(
@@ -40,7 +39,7 @@ def test_parser_properties(parser):
 
 @mock.patch("fastapi_mvc.parsers.ini.os.path.exists", return_value=False)
 def test_parser_ini_not_exists(exists_mock):
-    with pytest.raises(FileError) as ex:
+    with pytest.raises(FileNotFoundError) as ex:
         IniParser("/test/path")
         assert str(ex) == "/test/path/fastapi-mvc.ini does not exist."
 
@@ -50,7 +49,7 @@ def test_parser_ini_not_exists(exists_mock):
 @mock.patch("fastapi_mvc.parsers.ini.os.path.isfile", return_value=False)
 @mock.patch("fastapi_mvc.parsers.ini.os.path.exists", return_value=True)
 def test_parser_ini_not_a_file(exists_mock, isfile_mock):
-    with pytest.raises(FileError) as ex:
+    with pytest.raises(IsADirectoryError) as ex:
         IniParser("/test/path")
         assert str(ex) == "/test/path/fastapi-mvc.ini is not a file."
 
@@ -62,7 +61,7 @@ def test_parser_ini_not_a_file(exists_mock, isfile_mock):
 @mock.patch("fastapi_mvc.parsers.ini.os.path.isfile", return_value=True)
 @mock.patch("fastapi_mvc.parsers.ini.os.path.exists", return_value=True)
 def test_parser_ini_not_readable(exists_mock, isfile_mock, access_mock):
-    with pytest.raises(FileError) as ex:
+    with pytest.raises(PermissionError) as ex:
         IniParser("/test/path")
         assert str(ex) == "/test/path/fastapi-mvc.ini is not readable."
 

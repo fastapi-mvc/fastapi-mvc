@@ -15,8 +15,7 @@ from copy import copy
 import mock
 import pytest
 from fastapi_mvc.cli.generate import generate
-from fastapi_mvc.exceptions import FileError
-from fastapi_mvc.generators import ControllerGenerator, GeneratorGenerator
+from fastapi_mvc.generators import builtins
 from ..data.cli_outputs import (
     generate_root_help,
     generate_controller_help,
@@ -51,7 +50,7 @@ def mock_generators_factory(only_builtins=False):
     object which kinda imitates class.
 
     """
-    generators = [ControllerGenerator, GeneratorGenerator]
+    generators = list(builtins.values())
     mock_gens = dict()
     class_variables = [
         "name",
@@ -141,10 +140,10 @@ def test_generate_subcommands_help(borg_mock, cli_runner, sub_cmd, help_tmpl):
 @mock.patch("fastapi_mvc.cli.generate.Borg")
 def test_subcommands_no_project(borg_mock, cli_runner):
     borg_mock.return_value.parser = parser
-    borg_mock.return_value.load_generators.side_effect = FileError("Ups")
+    borg_mock.return_value.load_generators.side_effect = FileNotFoundError("Ups")
 
     result = cli_runner.invoke(copy(generate), ["controller", "--help"])
-    assert result.exit_code == FileError.code
+    assert result.exit_code == 1
 
     borg_mock.assert_called_once()
     borg_mock.return_value.load_generators.assert_called_once()

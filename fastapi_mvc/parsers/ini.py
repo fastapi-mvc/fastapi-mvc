@@ -3,8 +3,6 @@ import os
 import logging
 import configparser
 
-from fastapi_mvc.exceptions import FileError
-
 
 class IniParser(object):
     """Project fastapi-mvc.ini file parser class definition."""
@@ -22,7 +20,9 @@ class IniParser(object):
             project_root (str): A fastapi-mvc project root path.
 
         Raises:
-             FileError: If fastapi-mvc.ini does not exist or not readable.
+             FileNotFoundError: If fastapi-mvc.ini does not exist.
+             IsADirectoryError: If fastapi-mvc.ini is a directory.
+             PermissionError: If fastapi-mvc.ini is not readable.
 
         """
         self._log = logging.getLogger(self.__class__.__name__)
@@ -41,19 +41,19 @@ class IniParser(object):
                 self._project_root
             )
             self._log.debug(msg)
-            raise FileError(msg)
+            raise FileNotFoundError(msg)
         elif not os.path.isfile(ini_file):
             msg = "{0:s}/fastapi-mvc.ini is not a file.".format(
                 self._project_root
             )
             self._log.debug(msg)
-            raise FileError(msg)
+            raise IsADirectoryError(msg)
         elif not os.access(ini_file, os.R_OK):
             msg = "{0:s}/fastapi-mvc.ini is not readable.".format(
                 self._project_root
             )
             self._log.debug(msg)
-            raise FileError(msg)
+            raise PermissionError(msg)
 
         self._config = configparser.ConfigParser()
         self._config.read(ini_file)
