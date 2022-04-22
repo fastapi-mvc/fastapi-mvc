@@ -38,16 +38,16 @@ def mock_generators_factory(only_builtins=False):
     """Create mocks based on builtins generators.
 
     Programmatically creating generators mocks to unit test programmatically
-    generated CLI subcommands based on generators (in this case created mocks).
+    generated CLI subcommands based on generators classes (in this case created mocks).
 
     I know what you're thinking, this shouldn't be that complex the first place.
     Me to :D!
 
     Thing is, programmatically generated CLI uses class attributes
     (or class variables if you will) to create `click.Command` objects, without the need
-    to create generator class object instance. It doesn't make sense to have X
+    to create a concrete generator class object instance. It doesn't make sense to have X
     generators objects if you will at most use only one. Unfortunately mock doesn't have any
-    magic tool/function to inherit data for mock object created out of mock
+    magic tool/function to inherit data from mock object created out of mock
     object which kinda imitates class.
 
     """
@@ -71,12 +71,8 @@ def mock_generators_factory(only_builtins=False):
         obj_mock = mock.Mock()
 
         for attr in class_variables:
-            try:
-                setattr(cls_mock, attr, getattr(gen, attr))
-                setattr(obj_mock, attr, getattr(gen, attr))
-            except AttributeError:
-                setattr(cls_mock, attr, None)
-                setattr(obj_mock, attr, None)
+            setattr(cls_mock, attr, getattr(gen, attr, None))
+            setattr(obj_mock, attr, getattr(gen, attr, None))
 
         cls_mock.return_value = obj_mock
         mock_gens[cls_mock.name] = cls_mock
@@ -213,7 +209,7 @@ def test_subcommands_with_options(borg_mock, cli_runner, sub_cmd, args, expected
     result = cli_runner.invoke(copy(generate), args)
     assert result.exit_code == 0
 
-    borg_mock.assert_called_once()
+    assert borg_mock.call_count == 2
     borg_mock.return_value.load_generators.assert_called_once()
 
     mock_gen = borg_mock.return_value.generators[sub_cmd]

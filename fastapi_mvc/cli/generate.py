@@ -38,8 +38,11 @@ class GeneratorCommand(click.Command):
             ctx(click.Context): Context class object instance.
 
         """
+        borg = Borg()
+        generator = self.callback(parser=borg.parser)
+
         Generate(
-            generator=self.callback,
+            generator=generator,
             options=ctx.params,
         ).execute()
 
@@ -62,7 +65,6 @@ class DynamicMultiCommand(click.MultiCommand):
         """Initialize DynamicMultiCommand class object instance."""
         super().__init__(*args, **kwargs)
         self._generators = None
-        self._parser = None
 
     @property
     def generators(self):
@@ -77,7 +79,6 @@ class DynamicMultiCommand(click.MultiCommand):
             borg = Borg()
             borg.load_generators()
             self._generators = borg.generators
-            self._parser = borg.parser
 
         return self._generators
 
@@ -168,7 +169,7 @@ class DynamicMultiCommand(click.MultiCommand):
         return GeneratorCommand(
             name,
             params=params,
-            callback=generator(self._parser),
+            callback=generator,
             epilog=epilog,
         )
 
