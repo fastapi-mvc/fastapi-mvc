@@ -19,4 +19,4 @@ echo "[metrics] Run fastapi-mvc code complexity checks."
 echo "[metrics] Run fastapi-mvc open TODO checks."
 "$POETRY_HOME"/bin/poetry run flake8 --select=T --tee --exclude fastapi_mvc/template,fastapi_mvc/generators/**/template --output-file=todo_occurence.txt --statistics --count fastapi_mvc tests
 echo "[metrics] Run fastapi-mvc black checks."
-"$POETRY_HOME"/bin/poetry run black -l 80 --verbose --extend-exclude "fastapi_mvc/template" --exclude "fastapi_mvc/generators/.*/template"  --check fastapi_mvc
+"$POETRY_HOME"/bin/poetry run black -l 80 --extend-exclude "fastapi_mvc/template" --exclude "fastapi_mvc/generators/.*/template"  --check fastapi_mvc
