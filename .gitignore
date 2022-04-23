@@ -35,3 +35,6 @@ venv
 
 # direnv
 .direnv
+
+# Sphinx build dir
+site
