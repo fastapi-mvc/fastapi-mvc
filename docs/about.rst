@@ -1,13 +1,43 @@
+Why fastapi-mvc?
+================
+
+Motivation
+----------
+
+FastAPI is an excellent, modern, fast (high-performance), web framework, but it lacks essential
+utilities and generators for the developer, for instance: creating new project structure.
+
+In some podcast (I believe it was one of Kubernetes Podcast from Google) I heard this quote:
+
+"The common denominator in excellent frameworks is that they got people working very quickly on what they're trying to learn, experiment with, or use."
+
+An excellent example of that is Ruby On Rails, you experience success rapidly, but then success merely opens the door to learn the underlying technology you're using and relying upon.
+
+Think of FastAPI + fastapi-mvc as Ruby on Rails, at least that's the goal.
+
+What is fastapi-mvc?
+--------------------
+
+Fastapi-mvc is a developer productivity tool for `FastAPI <https://fastapi.tiangolo.com/>`__ web framework.
+It is designed to make programming FastAPI applications easier by making assumptions about what every developer needs to get started.
+It allows you to write less code while accomplishing more. It comes with a number of scripts called generators that are designed to make your development life easier by
+creating everything necessary to start working on a particular task.
+
+Fastapi-mvc is opinionated software. It assumes that there is a "best" way to do things, and it's designed to encourage that way - and in some cases, to discourage alternatives.
+If you learn "fastapi-mvc way" you'll probably discover a tremendous increase in productivity.
+However, suppose you persist in bringing old habits from other languages to your fastapi-mvc development, and trying to use patterns you learned elsewhere.
+In that case, you may have a less happy experience.
+
 Features
-========
+--------
 
 Implemented using MVC architectural pattern
--------------------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Generated project by fastapi-mvc is structured in MVC architectural pattern to help developers who don't know FastAPI yet but are familiar with MVC to get up to speed quickly.
 
-WSGI + ASGI
------------
+WSGI + ASGI production server
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 **TLDR;**
 
@@ -55,13 +85,15 @@ when uvicorn (or other ASGI for that matter) will catch up to this benchmark.
 
 Last but not least, gunicorn gives a ton of `settings to configure <https://docs.gunicorn.org/en/stable/settings.html>`__, which can come in handy.
 
-Generated project comes with tests at 99% coverage
---------------------------------------------------
+Generated project comes with docstrings and 99% unit tests coverage
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Unit test coverage is at 99% regardless of chosen configuration. There is also a placeholder for integration tests with an example dummy test.
+The metrics stage in CI workflow ensures important PEP rules are enforced. For additional readability and formatting checks - black is used.
+Every piece of generated code is documented with docstrings. Last but not least there is also extended README with how to.
 
-Dockerfile created with best practices for the cloud
-----------------------------------------------------
+Dockerfile with K8s and cloud in mind
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Container image features:
 
@@ -76,24 +108,29 @@ Container image features:
 Based on `Google Best practices for building containers <https://cloud.google.com/architecture/best-practices-for-building-containers>`__, `Top 20 Dockerfile best practices <https://sysdig.com/blog/dockerfile-best-practices>`__, and own experience.
 
 Extensive GitHub actions for CI
--------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. image:: _static/ci.png
 
 Helm chart
-----------
+~~~~~~~~~~
 
-For easily deploying application in Kubernetes cluster.
+For easy deployments in Kubernetes cluster.
 
 Kubernetes deployment with HA Redis cluster
--------------------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Application stack in Kubernetes:
 
 .. image:: _static/k8s_arch.png
 
+Uses `Poetry <https://github.com/python-poetry/poetry>`__ dependency management
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Poetry comes with all the tools you might need to manage your project in a deterministic way. Moreover, it's based on new unified Python project settings file - `PEP 518 <https://www.python.org/dev/peps/pep-0518/>`__ that replaces setup.py.
+
 Reproducible virtualized development environment
-------------------------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Easily boot virtual machine with Vagrant. Code and test straight away.
 
@@ -102,7 +139,7 @@ Easily boot virtual machine with Vagrant. Code and test straight away.
 *Note2: provided Vagrant vm doesn't have port forwarding configured which means, that application won't be accessible on Host OS.*
 
 Builtin utilities
------------------
+~~~~~~~~~~~~~~~~~
 
 For your discretion, I've provided some basic utilities:
 
@@ -111,18 +148,12 @@ For your discretion, I've provided some basic utilities:
 
 They're initialized in ``asgi.py`` on FastAPI startup event handler, and are available for whole application scope without passing object instances between controllers.
 
-Readable and documented code
-----------------------------
-
-The metrics stage in CI workflow ensures important PEP rules are enforced. For additional readability and formatting checks - black is used.
-Every piece of generated code is documented with docstrings. Last but not least there is also extended README with how to.
-
 Configurable from env
----------------------
+~~~~~~~~~~~~~~~~~~~~~
 
 Generated application provides flexibility of configuration. All significant settings are defined by the environment variables, each with the default value.
 
-Uses `Poetry <https://github.com/python-poetry/poetry>`__ dependency management
---------------------------------------------------------------------------------
+Roadmap
+-------
 
-Poetry comes with all the tools you might need to manage your project in a deterministic way. Moreover, it's based on new unified Python project settings file - `PEP 518 <https://www.python.org/dev/peps/pep-0518/>`__ that replaces setup.py.
+Feature roadmap can be found `here <https://github.com/rszamszur/fastapi-mvc/issues/53>`__.

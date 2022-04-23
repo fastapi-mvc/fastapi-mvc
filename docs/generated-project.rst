@@ -1,5 +1,5 @@
-Development
-===========
+Generated project
+=================
 
 Once a new project is generated, you can jump straight into API endpoints development. Below you'll find some information that should help you get started.
 
@@ -19,6 +19,7 @@ Otherwise, for local complete project environment with Kubernetes infrastructure
 For application:
 
 * Python 3.7 or later `(How to install python) <https://docs.python-guide.org/starting/installation/>`__
+* curl
 * make
 
 For infrastructure:
@@ -193,6 +194,30 @@ Generated project comes with Dockerfile for virtualized environment.
     $ curl localhost:8000/api/ready
     {"status":"ok"}
 
+WSGI + ASGI production server
+-----------------------------
+
+To run production unicorn + uvicorn (WSGI + ASGI) server you can use project CLI serve command:
+
+.. code-block:: bash
+
+    poetry run demo-project serve
+    [2022-04-23 20:21:49 +0000] [4769] [INFO] Start gunicorn WSGI with ASGI workers.
+    [2022-04-23 20:21:49 +0000] [4769] [INFO] Starting gunicorn 20.1.0
+    [2022-04-23 20:21:49 +0000] [4769] [INFO] Listening at: http://127.0.0.1:8000 (4769)
+    [2022-04-23 20:21:49 +0000] [4769] [INFO] Using worker: uvicorn.workers.UvicornWorker
+    [2022-04-23 20:21:49 +0000] [4769] [INFO] Server is ready. Spawning workers
+    [2022-04-23 20:21:49 +0000] [4771] [INFO] Booting worker with pid: 4771
+    [2022-04-23 20:21:49 +0000] [4771] [INFO] Worker spawned (pid: 4771)
+    [2022-04-23 20:21:49 +0000] [4771] [INFO] Started server process [4771]
+    [2022-04-23 20:21:49 +0000] [4771] [INFO] Waiting for application startup.
+    [2022-04-23 20:21:49 +0000] [4771] [INFO] Application startup complete.
+    [2022-04-23 20:21:49 +0000] [4772] [INFO] Booting worker with pid: 4772
+    [2022-04-23 20:21:49 +0000] [4772] [INFO] Worker spawned (pid: 4772)
+    [2022-04-23 20:21:49 +0000] [4772] [INFO] Started server process [4772]
+    [2022-04-23 20:21:49 +0000] [4772] [INFO] Waiting for application startup.
+    [2022-04-23 20:21:49 +0000] [4772] [INFO] Application startup complete.
+
 Development
 -----------
 
@@ -292,3 +317,87 @@ All routes documentation is available on:
 
 * ``/`` with Swagger
 * ``/redoc`` or ReDoc.
+
+
+Configuration
+-------------
+
+This application provides flexibility of configuration. All significant settings are defined by the environment variables, each with the default value.
+Moreover, package CLI allows overriding core ones: host, port, workers. You can modify all other available configuration settings in the gunicorn.conf.py file.
+
+Priority of overriding configuration:
+
+1. cli
+2. environment variables
+3. gunicorn.conf.py
+
+All application configuration is available in ``demo_project.config`` submodule.
+
+Environment variables
+~~~~~~~~~~~~~~~~~~~~~
+
+**Application configuration**
+
++-----------------------------+--------------------------------------------------------------------+-----------------------------------------------------------------+
+| Key                         | Default                                                            | Description                                                     |
++=============================+====================================================================+=================================================================+
+| FASTAPI_HOST                | ``"127.0.0.1"``                                                    | FastAPI host to bind.                                           |
++-----------------------------+--------------------------------------------------------------------+-----------------------------------------------------------------+
+| FASTAPI_PORT                | ``"8000"``                                                         | FastAPI port to bind.                                           |
++-----------------------------+--------------------------------------------------------------------+-----------------------------------------------------------------+
+| FASTAPI_WORKERS             | ``"2"``                                                            | Number of gunicorn workers (uvicorn.workers.UvicornWorker)      |
++-----------------------------+--------------------------------------------------------------------+-----------------------------------------------------------------+
+| FASTAPI_DEBUG               | ``"True"``                                                         | FastAPI logging level. You should disable this for production.  |
++-----------------------------+--------------------------------------------------------------------+-----------------------------------------------------------------+
+| FASTAPI_PROJECT_NAME        | ``"fastapi-mvc-example"``                                          | FastAPI project name.                                           |
++-----------------------------+--------------------------------------------------------------------+-----------------------------------------------------------------+
+| FASTAPI_VERSION             | ``"0.4.0"``                                                        | Application version.                                            |
++-----------------------------+--------------------------------------------------------------------+-----------------------------------------------------------------+
+| FASTAPI_DOCS_URL            | ``"/"``                                                            | Path where swagger ui will be served at.                        |
++-----------------------------+--------------------------------------------------------------------+-----------------------------------------------------------------+
+| FASTAPI_USE_REDIS           | ``"False"``                                                        | Whether or not to use Redis.                                    |
++-----------------------------+--------------------------------------------------------------------+-----------------------------------------------------------------+
+| FASTAPI_GUNICORN_LOG_LEVEL  | ``"info"``                                                         | The granularity of gunicorn log output                          |
++-----------------------------+--------------------------------------------------------------------+-----------------------------------------------------------------+
+| FASTAPI_GUNICORN_LOG_FORMAT | ``'%(h)s %(l)s %(u)s %(t)s "%(r)s" %(s)s %(b)s "%(f)s" "%(a)s"'``  | Gunicorn log format                                             |
++-----------------------------+--------------------------------------------------------------------+-----------------------------------------------------------------+
+
+
+**Redis configuration**
+
++-----------------------------+------------------+--------------------------------------------+
+| Key                         | Default          | Description                                |
++=============================+==================+============================================+
+| FASTAPI_REDIS_HOTS          | ``"127.0.0.1"``  | Redis host.                                |
++-----------------------------+------------------+--------------------------------------------+
+| FASTAPI_REDIS_PORT          | ``"6379"``       | Redis port.                                |
++-----------------------------+------------------+--------------------------------------------+
+| FASTAPI_REDIS_USERNAME      | ``""``           | Redis username.                            |
++-----------------------------+------------------+--------------------------------------------+
+| FASTAPI_REDIS_PASSWORD      | ``""``           | Redis password.                            |
++-----------------------------+------------------+--------------------------------------------+
+| FASTAPI_REDIS_USE_SENTINEL  | ``"False"``      | If provided Redis config is for Sentinel.  |
++-----------------------------+------------------+--------------------------------------------+
+
+
+Gunicorn
+~~~~~~~~
+
+1. Source: ``.config/gunicorn.conf.py``
+2. `Gunicorn configuration file documentation <https://docs.gunicorn.org/en/latest/settings.html>`__
+
+Routes
+~~~~~~
+
+Endpoints are defined in ``.config.router``. Just simply import your controller and include it to FastAPI router:
+
+.. code-block:: python
+
+    from fastapi import APIRouter
+    from demo_project.app.controllers.api.v1 import ready
+
+    router = APIRouter(
+        prefix="/api"
+    )
+
+    router.include_router(ready.router, tags=["ready"])

@@ -33,9 +33,11 @@ Welcome to fastapi-mvc
 
 --------------
 
-Create and develop production grade `FastAPI <https://fastapi.tiangolo.com/>`__ projects, core features:
+Fastapi-mvc is a developer productivity tool for `FastAPI <https://fastapi.tiangolo.com/>`__ web framework.
+It is designed to make programming FastAPI applications easier by making assumptions about what every developer needs to get started.
+It allows you to write less code while accomplishing more. Core features:
 
-* Based on MVC architectural pattern
+* Generated project Based on MVC architectural pattern
 * WSGI + ASGI production server
 * Generated project comes with docstrings and 99% unit tests coverage
 * Kubernetes deployment with Redis HA cluster
@@ -53,18 +55,18 @@ Creating a new project is as easy as:
 
 .. code-block:: bash
 
-    $ fastapi-mvc new /tmp/demo-project
+    $ fastapi-mvc new /tmp/galactic-empire
 
-This will create a `FastAPI <https://fastapi.tiangolo.com/>`__ application called demo-project in a ``/tmp/demo-project`` directory and install its dependencies using ``make install``.
+This will create a fastapi-mvc project called galactic-empire in a ``/tmp/galactic-empire`` directory and install its dependencies using ``make install``.
 
 Once project is generated and installed lets run development uvicorn server (ASGI):
 
 .. code-block:: bash
 
-    $ cd /tmp/demo-project
+    $ cd /tmp/galactic-empire
     $ fastapi-mvc run
-    [INFO] Executing shell command: ['poetry', 'run', 'uvicorn', '--host', '127.0.0.1', '--port', '8000', '--reload', 'demo_project.app.asgi:application'].
-    INFO:     Will watch for changes in these directories: ['/tmp/demo-project']
+    [INFO] Executing shell command: ['poetry', 'run', 'uvicorn', '--host', '127.0.0.1', '--port', '8000', '--reload', 'galactic_empire.app.asgi:application'].
+    INFO:     Will watch for changes in these directories: ['/tmp/galactic-empire']
     INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
     INFO:     Started reloader process [4713] using watchgod
     INFO:     Started server process [4716]
@@ -82,17 +84,17 @@ Great, now lets add new API endpoints. For that we need to generate new controll
 
 .. code-block:: bash
 
-    $ fastapi-mvc generate controller stock_market ticker buy:post sell:delete
+    $ fastapi-mvc generate controller death_star status load:post fire:delete
 
 And then test generated controller endpoints:
 
 .. code-block:: bash
 
-    $ curl localhost:8000/api/stock_market/ticker
+    $ curl 127.0.0.1:8000/api/death_star/status
     {"hello":"world"}
-    $ curl -X POST localhost:8000/api/stock_market/buy
+    $ curl -X POST 127.0.0.1:8000/api/death_star/load
     {"hello":"world"}
-    $ curl -X DELETE localhost:8000/api/stock_market/sell
+    $ curl -X DELETE 127.0.0.1:8000/api/death_star/fire
     {"hello":"world"}
 
 You will also see it in server logs:
@@ -100,9 +102,9 @@ You will also see it in server logs:
 .. code-block:: bash
 
     INFO:     127.0.0.1:47284 - "GET /api/ready HTTP/1.1" 200 OK
-    INFO:     127.0.0.1:47286 - "GET /api/stock_market/ticker HTTP/1.1" 200 OK
-    INFO:     127.0.0.1:47294 - "POST /api/stock_market/buy HTTP/1.1" 200 OK
-    INFO:     127.0.0.1:47296 - "DELETE /api/stock_market/sell HTTP/1.1" 200 OK
+    INFO:     127.0.0.1:55648 - "GET /api/death_star/status HTTP/1.1" 200 OK
+    INFO:     127.0.0.1:55650 - "POST /api/death_star/load HTTP/1.1" 200 OK
+    INFO:     127.0.0.1:55652 - "DELETE /api/death_star/fire HTTP/1.1" 200 OK
 
 You can get the project directly from PyPI:
 
@@ -118,11 +120,10 @@ This part of the documentation guides you through all of the features and usage.
 .. toctree::
    :maxdepth: 2
 
-   features
+   about
    quickstart
-   create
-   development
-   configuration
+   generated-project
+   generators
    deployment
 
 API Reference
