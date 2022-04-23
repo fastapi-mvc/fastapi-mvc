@@ -23,7 +23,7 @@ For instance, Ruby on Rails uses Puma. The result of any of those servers is a T
 later on utilized by reverse proxy ex: Nginx (a TCP/IP socket you can access directly over the network, but still in
 production, usually it'll be behind a reverse proxy).
 
-Now to WSGI + ASGI part. FastAPI is implemented with `asyncio <https://docs.python.org/3/library/asyncio.html>`__:, so having a pure WSGI server doesn't make sense since
+Now to WSGI + ASGI part. FastAPI is implemented with `asyncio <https://docs.python.org/3/library/asyncio.html>`__, so having a pure WSGI server doesn't make sense since
 you'd lose all the benefits of asynchronous concurrency. That's where ASGI comes in. However, Python journey with
 asyncio is still pretty young. Most projects have yet to reach maturity level (you should expect early bugs and a limited feature set).
 FastAPI, as ASGI server uses uvicorn, which is still prior 1.x.x release (17 in total so far, current 0.16.0) and lacks support for some protocols (ex: no HTTP/2).
@@ -53,7 +53,7 @@ Pure Uvicorn with 4 workers:
 I guess gunicorn does a better job in worker management. However, it's a more mature project, so it's probably a matter of time
 when uvicorn (or other ASGI for that matter) will catch up to this benchmark.
 
-Last but not least, gunicorn gives a ton of `settings to configure <https://docs.gunicorn.org/en/stable/settings.html>`__:, which can come in handy.
+Last but not least, gunicorn gives a ton of `settings to configure <https://docs.gunicorn.org/en/stable/settings.html>`__, which can come in handy.
 
 Generated project comes with tests at 99% coverage
 --------------------------------------------------
@@ -73,7 +73,7 @@ Container image features:
 * Created with common layers.
 * By default runs as non-root user
 
-Based on `Google Best practices for building containers <https://cloud.google.com/architecture/best-practices-for-building-containers>`__:, `Top 20 Dockerfile best practices <https://sysdig.com/blog/dockerfile-best-practices>`__:, and own experience.
+Based on `Google Best practices for building containers <https://cloud.google.com/architecture/best-practices-for-building-containers>`__, `Top 20 Dockerfile best practices <https://sysdig.com/blog/dockerfile-best-practices>`__, and own experience.
 
 Extensive GitHub actions for CI
 -------------------------------
@@ -106,10 +106,10 @@ Builtin utilities
 
 For your discretion, I've provided some basic utilities:
 
-* RedisClient .app.utils.redis
-* AiohttpClient .app.utils.aiohttp_client
+* RedisClient ``.app.utils.redis``
+* AiohttpClient ``.app.utils.aiohttp_client``
 
-They're initialized in asgi.py on FastAPI startup event handler, and are available for whole application scope without passing object instances between controllers.
+They're initialized in ``asgi.py`` on FastAPI startup event handler, and are available for whole application scope without passing object instances between controllers.
 
 Readable and documented code
 ----------------------------
@@ -122,8 +122,7 @@ Configurable from env
 
 Generated application provides flexibility of configuration. All significant settings are defined by the environment variables, each with the default value.
 
-Uses `Poetry <https://github.com/python-poetry/poetry>`__: dependency management
+Uses `Poetry <https://github.com/python-poetry/poetry>`__ dependency management
 --------------------------------------------------------------------------------
 
-Poetry comes with all the tools you might need to manage your project in a deterministic way. Moreover, it's based on new unified Python project settings file - `PEP 518 <https://www.python.org/dev/peps/pep-0518/>`__: that replaces setup.py.
-
+Poetry comes with all the tools you might need to manage your project in a deterministic way. Moreover, it's based on new unified Python project settings file - `PEP 518 <https://www.python.org/dev/peps/pep-0518/>`__ that replaces setup.py.

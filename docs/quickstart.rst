@@ -4,7 +4,7 @@ Quickstart
 Prerequisites
 -------------
 
-* Python 3.7 or later `(How to install python) <https://docs.python-guide.org/starting/installation/>`__:
+* Python 3.7 or later `(How to install python) <https://docs.python-guide.org/starting/installation/>`__
 * make
 
 Environment with `Nix <https://nixos.org/>`__

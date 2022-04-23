@@ -84,7 +84,7 @@ This part of the documentation guides you through all of the features and usage.
    create
    development
    configuration
-
+   deployment
 
 API Reference
 -------------
@@ -96,3 +96,13 @@ method, this part of the documentation is for you.
    :maxdepth: 2
 
    api
+
+Miscellaneous Pages
+-------------------
+
+.. toctree::
+   :maxdepth: 2
+
+   CONTRIBUTING.md
+   license
+   CHANGELOG.md

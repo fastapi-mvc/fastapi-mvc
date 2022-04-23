@@ -184,7 +184,7 @@ To run production WSGI + ASGI server:
 Check it
 --------
 
-Open you browser at `http://127.0.0.1:8000/api/ready <http://127.0.0.1:8000/api/ready>`__:
+Open you browser at `http://127.0.0.1:8000/api/ready <http://127.0.0.1:8000/api/ready>`__
 
 You will see the JSON response as:
 
@@ -202,14 +202,14 @@ Or test with curl:
 Interactive API docs
 --------------------
 
-Now go to `http://127.0.0.1:8000/ <http://127.0.0.1:8000/>`__:
+Now go to `http://127.0.0.1:8000/ <http://127.0.0.1:8000/>`__
 
 You will see the automatic interactive API documentation.
 
 Alternative API docs
 --------------------
 
-Now go to `http://127.0.0.1:8000/redoc <http://127.0.0.1:8000/redoc>`__:
+Now go to `http://127.0.0.1:8000/redoc <http://127.0.0.1:8000/redoc>`__
 
 You will see the alternative automatic documentation.
 

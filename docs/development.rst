@@ -11,23 +11,23 @@ Prerequisites
 If You want to go easy way and use provided virtualized environment You'll need to have installed:
 
 * rsync
-* Vagrant `(How to install vagrant) <https://www.vagrantup.com/downloads>`__:
+* Vagrant `(How to install vagrant) <https://www.vagrantup.com/downloads>`__
 * (Optional) Enabled virtualization in BIOS
 
 Otherwise, for local complete project environment with Kubernetes infrastructure bootstrapping You'll need:
 
 For application:
 
-* Python 3.7 or later `(How to install python) <https://docs.python-guide.org/starting/installation/>`__:
+* Python 3.7 or later `(How to install python) <https://docs.python-guide.org/starting/installation/>`__
 * make
 
 For infrastructure:
 
 * make, gcc, golang
-* minikube version 1.22.0 `(How to install_minikube) <https://minikube.sigs.k8s.io/docs/start/>`__:
-* helm version 3.0.0 or higher `(How to install helm) <https://helm.sh/docs/intro/install/>`__:
-* kubectl version 1.16 up to 1.20.8 `(How to install kubectl) <https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/>`__:
-* Container runtime interface. NOTE! dev-env script uses docker for minikube, for other CRI you'll need to modify this line in dev-env.sh `MINIKUBE_IN_STYLE=0 minikube start --driver=docker 2>/dev/null`
+* minikube version 1.22.0 `(How to install_minikube) <https://minikube.sigs.k8s.io/docs/start/>`__
+* helm version 3.0.0 or higher `(How to install helm) <https://helm.sh/docs/intro/install/>`__
+* kubectl version 1.16 up to 1.20.8 `(How to install kubectl) <https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/>`__
+* Container runtime interface. NOTE! dev-env script uses docker for minikube, for other CRI you'll need to modify this line in dev-env.sh ``MINIKUBE_IN_STYLE=0 minikube start --driver=docker 2>/dev/null``
 
 Environment with `Nix <https://nixos.org/>`__
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -41,7 +41,7 @@ To start a shell with development environment run:
 Quick start
 -----------
 
-First run `vagrant up` in project root directory and enter virtualized environment using `vagrant ssh` Then run following commands to bootstrap local development cluster exposing `fastapi-mvc` application.
+First run ``vagrant up`` in project root directory and enter virtualized environment using ``vagrant ssh`` Then run following commands to bootstrap local development cluster exposing ``fastapi-mvc`` application.
 
 .. code-block:: bash
 
@@ -129,7 +129,7 @@ Or using poetry directly:
 
     poetry install
 
-To bootstrap local minikube Kubernetes cluster exposing `demo-project` application:
+To bootstrap local minikube Kubernetes cluster exposing ``demo-project`` application:
 
 .. code-block:: bash
 
@@ -138,7 +138,7 @@ To bootstrap local minikube Kubernetes cluster exposing `demo-project` applicati
 CLI
 ---
 
-Generated `demo-project` application exposes simple CLI for easier interaction:
+Generated ``demo-project`` application exposes simple CLI for easier interaction:
 
 .. code-block:: bash
 
@@ -196,7 +196,7 @@ Generated project comes with Dockerfile for virtualized environment.
 Development
 -----------
 
-You can implement your own web routes logic straight away in `demo_project.app.controllers.api.v1` submodule. For more information please see `FastAPI documentation <https://fastapi.tiangolo.com/tutorial/>`__:.
+You can implement your own web routes logic straight away in ``demo_project.app.controllers.api.v1`` submodule. For more information please see `FastAPI documentation <https://fastapi.tiangolo.com/tutorial/>`__.
 
 Makefile
 ~~~~~~~~
@@ -222,10 +222,10 @@ Utilities
 
 For your discretion, I've provided some basic utilities:
 
-* RedisClient `demo_project.app.utils.redis`
-* AiohttpClient `demo_project.app.utils.aiohttp_client`
+* RedisClient ``demo_project.app.utils.redis``
+* AiohttpClient ``demo_project.app.utils.aiohttp_client``
 
-They're initialized in `asgi.py` on FastAPI startup event handler:
+They're initialized in ``asgi.py`` on FastAPI startup event handler:
 
 .. code-block:: python
     :emphasize-lines: 11, 13, 25, 27
@@ -279,16 +279,16 @@ Exceptions
 
 **HTTPException and handler**
 
-Source: `demo_project.app.exceptions.http.py`
+Source: ``demo_project.app.exceptions.http.py``
 
-This exception combined with `http_exception_handler` method allows you to use it the same manner as you'd use `FastAPI.HTTPException` with one difference.
-You have freedom to define returned response body, whereas in `FastAPI.HTTPException` content is returned under "detail" JSON key.
-In this application custom handler is added in `asgi.py` while initializing FastAPI application. This is needed in order to handle it globally.
+This exception combined with ``http_exception_handler`` method allows you to use it the same manner as you'd use ``FastAPI.HTTPException`` with one difference.
+You have freedom to define returned response body, whereas in ``FastAPI.HTTPException`` content is returned under "detail" JSON key.
+In this application custom handler is added in ``asgi.py`` while initializing FastAPI application. This is needed in order to handle it globally.
 
 Web Routes
 ~~~~~~~~~~
 
 All routes documentation is available on:
 
-* `/` with Swagger
-* `/redoc` or ReDoc.
+* ``/`` with Swagger
+* ``/redoc`` or ReDoc.
