@@ -3,7 +3,6 @@ Welcome to fastapi-mvc
 
 .. image:: _static/readme.gif
     :align: center
-    :scale: 50%
     :target: https://fastapi-mvc.netlify.app/
 
 --------------
@@ -34,7 +33,7 @@ Welcome to fastapi-mvc
 --------------
 
 Fastapi-mvc is a developer productivity tool for `FastAPI <https://fastapi.tiangolo.com/>`__ web framework.
-It is designed to make programming FastAPI applications easier by making assumptions about what every developer needs to get started.
+It is designed to make programming `FastAPI <https://fastapi.tiangolo.com/>`__ applications easier by making assumptions about what every developer needs to get started.
 It allows you to write less code while accomplishing more. Core features:
 
 * Generated project Based on MVC architectural pattern
@@ -80,7 +79,7 @@ To confirm it's actually working:
     $ curl 127.0.0.1:8000/api/ready
     {"status":"ok"}
 
-Great, now lets add new API endpoints. For that we need to generate new controller:
+Now let's add new API endpoints. For that we need to generate new controller:
 
 .. code-block:: bash
 

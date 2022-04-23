@@ -4,7 +4,7 @@ Why fastapi-mvc?
 Motivation
 ----------
 
-FastAPI is an excellent, modern, fast (high-performance), web framework, but it lacks essential
+`FastAPI <https://fastapi.tiangolo.com/>`__ is an excellent, modern, fast (high-performance), web framework, but it lacks essential
 utilities and generators for the developer, for instance: creating new project structure.
 
 In some podcast (I believe it was one of Kubernetes Podcast from Google) I heard this quote:
@@ -13,13 +13,13 @@ In some podcast (I believe it was one of Kubernetes Podcast from Google) I heard
 
 An excellent example of that is Ruby On Rails, you experience success rapidly, but then success merely opens the door to learn the underlying technology you're using and relying upon.
 
-Think of FastAPI + fastapi-mvc as Ruby on Rails, at least that's the goal.
+Think of `FastAPI <https://fastapi.tiangolo.com/>`__ + fastapi-mvc as Ruby on Rails, at least that's the goal.
 
 What is fastapi-mvc?
 --------------------
 
 Fastapi-mvc is a developer productivity tool for `FastAPI <https://fastapi.tiangolo.com/>`__ web framework.
-It is designed to make programming FastAPI applications easier by making assumptions about what every developer needs to get started.
+It is designed to make programming `FastAPI <https://fastapi.tiangolo.com/>`__ applications easier by making assumptions about what every developer needs to get started.
 It allows you to write less code while accomplishing more. It comes with a number of scripts called generators that are designed to make your development life easier by
 creating everything necessary to start working on a particular task.
 
