@@ -15,6 +15,7 @@ This file documents changes to [fastapi-mvc](https://github.com/rszamszur/fastap
 * Implement global except hook, refactor current exceptions handling [#73](https://github.com/rszamszur/fastapi-mvc/issues/73). PR [#70](https://github.com/rszamszur/fastapi-mvc/pull/70)
 * Refactor `Invoker` class with using queue [#71](https://github.com/rszamszur/fastapi-mvc/issues/71). PR [#70](https://github.com/rszamszur/fastapi-mvc/pull/70)
 * Refactor `fastapi_mvc.commands` to be more generic [#72](https://github.com/rszamszur/fastapi-mvc/issues/72). PR [#70](https://github.com/rszamszur/fastapi-mvc/pull/70)
+* Refactor existing documentation with Sphinx [#74](https://github.com/rszamszur/fastapi-mvc/issues/74). PR [#83](https://github.com/rszamszur/fastapi-mvc/pull/70)
 
 ## 0.10.0 (07.04.2022)
 
