@@ -112,7 +112,7 @@ pip install fastapi-mvc
 
 ## Projects created with fastapi-mvc
 
-If you have created a project with fastapi-mvc, feel free to open PR and add yourself to the list. Share your story and project. My success is your success :)
+If you have created a project with fastapi-mvc, feel free to open PR and add yourself to the list. Share your story and project. Your success is my success :)
 
 Projects:
 * [fastapi-mvc-example](https://github.com/rszamszur/fastapi-mvc-example) - Default generated project by `fastapi-mvc new ...`
