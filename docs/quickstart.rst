@@ -214,8 +214,13 @@ You can do this by running the following command in the galactic-empire director
 .. code-block:: bash
 
     $ fastapi-mvc run
-    fastapi-mvc run
-    [INFO] Executing shell command: ['poetry', 'run', 'uvicorn', '--host', '127.0.0.1', '--port', '8000', '--reload', 'galactic_empire.app.asgi:application'].
+    [INFO] Executing shell command: ['/home/demo/.poetry/bin/poetry', 'install', '--no-interaction'].
+    Installing dependencies from lock file
+
+    No dependencies to install or update
+
+    Installing the current project: galactic-empire (0.1.0)
+    [INFO] Executing shell command: ['/home/demo/.poetry/bin/poetry', 'run', 'uvicorn', '--host', '127.0.0.1', '--port', '8000', '--reload', 'galactic_empire.app.asgi:application'].
     INFO:     Will watch for changes in these directories: ['/tmp/galactic-empire']
     INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
     INFO:     Started reloader process [4694] using watchgod

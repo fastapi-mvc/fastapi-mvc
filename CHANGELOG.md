@@ -17,6 +17,11 @@ This file documents changes to [fastapi-mvc](https://github.com/rszamszur/fastap
 * Refactor `fastapi_mvc.commands` to be more generic [#72](https://github.com/rszamszur/fastapi-mvc/issues/72). PR [#70](https://github.com/rszamszur/fastapi-mvc/pull/70)
 * Refactor existing documentation with Sphinx [#74](https://github.com/rszamszur/fastapi-mvc/issues/74). PR [#83](https://github.com/rszamszur/fastapi-mvc/pull/83)
 
+### Fixed
+
+* CLI `fastapi-mvc run` command doesn't distinguish whether project is installed or crashed due to error [#82](https://github.com/rszamszur/fastapi-mvc/issues/82). PR [#86](https://github.com/rszamszur/fastapi-mvc/pull/86)
+* CLI `fastapi-mvc run` command should use absolute path to poetry binary [#84](https://github.com/rszamszur/fastapi-mvc/issues/84). PR [#86](https://github.com/rszamszur/fastapi-mvc/pull/86)
+
 ## 0.10.0 (07.04.2022)
 
 ### Fixed

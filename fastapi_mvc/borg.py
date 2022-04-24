@@ -1,12 +1,10 @@
 """Borg design pattern (or monostate if you will) implementation."""
 import os
 import logging
-import subprocess
 
 from fastapi_mvc.commands import Invoker
 from fastapi_mvc.parsers import IniParser
 from fastapi_mvc.generators import builtins, load_generators
-from fastapi_mvc.utils import ShellUtils
 from fastapi_mvc.version import __version__
 
 
@@ -35,7 +33,6 @@ class Borg(object):
         _log (logging.Logger): Logger class object instance.
         _invoker (Invoker): Invoker class object instance.
         _parser (IniParser): IniParser class object instance.
-        _project_installed (typing.Optional[bool]): Weather, project is
             installed.
         _generators_loaded (bool): True if load_generators() was called,
             otherwise False.
@@ -56,7 +53,6 @@ class Borg(object):
             self._log.debug("Initialize first Borg class object instance.")
             self._invoker = Invoker()
             self._parser = None
-            self._project_installed = None
             self._generators_loaded = False
             self._generators = builtins
 
@@ -94,8 +90,20 @@ class Borg(object):
         """
         return __version__
 
+    @property
+    def poetry_path(self):
+        """Get Poetry binary abspath.
+
+        Returns:
+            str: Poetry binary abspath.
+
+        """
+        return "{0:s}/bin/poetry".format(
+            os.getenv("POETRY_HOME", "{0:s}/.poetry".format(os.getenv("HOME")))
+        )
+
     def require_project(self):
-        """Verify if fastapi-mvc project is valid."""
+        """Require valid fastapi-mvc project."""
         if self._parser:
             return
 
@@ -119,36 +127,6 @@ class Borg(object):
             raise SystemExit(1)
 
         self._parser = parser
-
-    def require_installed(self):
-        """Verify if fastapi-mvc project is installed."""
-        if not self._parser:
-            self.require_project()
-
-        if not self._project_installed:
-            self._log.debug("Verifying if fastapi-mvc project is installed.")
-            cmd = [
-                "poetry",
-                "run",
-                self._parser.script_name,
-                "--help",
-            ]
-
-            try:
-                ShellUtils.run_shell(
-                    cmd=cmd,
-                    stdout=subprocess.DEVNULL,
-                    stderr=subprocess.DEVNULL,
-                    check=True,
-                    cwd=self._parser.project_root,
-                )
-            except subprocess.CalledProcessError:
-                self._log.error(
-                    "Project is not installed. To install run: $ make install"
-                )
-                raise SystemExit(1)
-
-            self._project_installed = True
 
     def load_generators(self):
         """Load local fastapi-mvc generators."""
