@@ -28,6 +28,9 @@ Welcome to fastapi-mvc
 .. image:: https://img.shields.io/badge/code%20style-black-000000.svg
     :target: https://github.com/psf/black
 
+.. image:: https://img.shields.io/github/stars/rszamszur/fastapi-mvc?style=social
+   :target: https://GitHub.com/rszamszur/fastapi-mvc/stargazers/
+
 **Example generated project:** `https://github.com/rszamszur/fastapi-mvc-example <https://github.com/rszamszur/fastapi-mvc-example>`__
 
 --------------

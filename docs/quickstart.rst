@@ -322,7 +322,7 @@ For more information please refer toFastAPI documentation, some useful links:
 Now lets look at router configuration:
 
 .. code-block:: python
-    :emphasize-lines: 4, 10
+    :emphasize-lines: 6, 12
 
     """Application routes configuration.
 

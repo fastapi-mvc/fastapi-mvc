@@ -1,6 +1,19 @@
 Why fastapi-mvc?
 ================
 
+What is fastapi-mvc?
+--------------------
+
+Fastapi-mvc is a developer productivity tool for `FastAPI <https://fastapi.tiangolo.com/>`__ web framework.
+It is designed to make programming `FastAPI <https://fastapi.tiangolo.com/>`__ applications easier by making assumptions about what every developer needs to get started.
+It allows you to write less code while accomplishing more. It comes with a number of scripts called generators that are designed to make your development life easier by
+creating everything necessary to start working on a particular task.
+
+Fastapi-mvc is opinionated software. It assumes that there is a "best" way to do things, and it's designed to encourage that way - and in some cases, to discourage alternatives.
+If you learn "fastapi-mvc way" you'll probably discover a tremendous increase in productivity.
+However, suppose you persist in bringing old habits from other languages to your fastapi-mvc development, and trying to use patterns you learned elsewhere.
+In that case, you may have a less happy experience.
+
 Motivation
 ----------
 
@@ -14,19 +27,6 @@ In some podcast (I believe it was one of Kubernetes Podcast from Google) I heard
 An excellent example of that is Ruby On Rails, you experience success rapidly, but then success merely opens the door to learn the underlying technology you're using and relying upon.
 
 Think of `FastAPI <https://fastapi.tiangolo.com/>`__ + fastapi-mvc as Ruby on Rails, at least that's the goal.
-
-What is fastapi-mvc?
---------------------
-
-Fastapi-mvc is a developer productivity tool for `FastAPI <https://fastapi.tiangolo.com/>`__ web framework.
-It is designed to make programming `FastAPI <https://fastapi.tiangolo.com/>`__ applications easier by making assumptions about what every developer needs to get started.
-It allows you to write less code while accomplishing more. It comes with a number of scripts called generators that are designed to make your development life easier by
-creating everything necessary to start working on a particular task.
-
-Fastapi-mvc is opinionated software. It assumes that there is a "best" way to do things, and it's designed to encourage that way - and in some cases, to discourage alternatives.
-If you learn "fastapi-mvc way" you'll probably discover a tremendous increase in productivity.
-However, suppose you persist in bringing old habits from other languages to your fastapi-mvc development, and trying to use patterns you learned elsewhere.
-In that case, you may have a less happy experience.
 
 Features
 --------
