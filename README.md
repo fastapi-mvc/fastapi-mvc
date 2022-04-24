@@ -1,6 +1,6 @@
 <div align="center">
 
-![fastapi-mvc](https://github.com/rszamszur/fastapi-mvc-template/blob/master/docs/_static/logo.pngf?raw=true)
+![fastapi-mvc](https://github.com/rszamszur/fastapi-mvc-template/blob/master/docs/_static/logo.png?raw=true)
 
 ![fastapi-mvc](https://github.com/rszamszur/fastapi-mvc-template/blob/master/docs/_static/readme.gif?raw=true)
 [![CI](https://github.com/rszamszur/fastapi-mvc/actions/workflows/main.yml/badge.svg?branch=master)](https://github.com/rszamszur/fastapi-mvc/actions/workflows/main.yml)
