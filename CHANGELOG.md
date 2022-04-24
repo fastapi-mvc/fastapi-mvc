@@ -2,7 +2,7 @@
 
 This file documents changes to [fastapi-mvc](https://github.com/rszamszur/fastapi-mvc). The release numbering uses [semantic versioning](http://semver.org).
 
-## Unreleased
+## 0.11.0 (24.04.2022)
 
 ### Features
 
