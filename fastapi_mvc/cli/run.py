@@ -22,6 +22,12 @@ from fastapi_mvc.commands import RunShell
     required=False,
     show_default=True,
 )
+@click.option(
+    "-I",
+    "--skip-install",
+    help="Do not run poetry install.",
+    is_flag=True,
+)
 def run(**options):
     """Run development uvicorn server.
 
@@ -34,11 +40,25 @@ def run(**options):
 
     """
     borg = Borg()
-    borg.require_installed()
+    borg.require_project()
+
+    if not options["skip_install"]:
+        borg.enqueue_command(
+            RunShell(
+                cmd=[
+                    borg.poetry_path,
+                    "install",
+                    "--no-interaction",
+                ],
+                check=True,
+                cwd=borg.parser.project_root,
+            )
+        )
+
     borg.enqueue_command(
         RunShell(
             cmd=[
-                "poetry",
+                borg.poetry_path,
                 "run",
                 "uvicorn",
                 "--host",
@@ -47,7 +67,8 @@ def run(**options):
                 options["port"],
                 "--reload",
                 "{0:s}.app.asgi:application".format(borg.parser.package_name),
-            ]
+            ],
+            cwd=borg.parser.project_root,
         )
     )
     borg.execute()
