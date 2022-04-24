@@ -1,7 +1,8 @@
 <div align="center">
-<h1>fastapi-mvc</h1>
 
-![fastapi-mvc](https://github.com/rszamszur/fastapi-mvc-template/blob/master/assets/readme.gif?raw=true)
+![fastapi-mvc](https://github.com/rszamszur/fastapi-mvc-template/blob/master/docs/_static/logo.pngf?raw=true)
+
+![fastapi-mvc](https://github.com/rszamszur/fastapi-mvc-template/blob/master/docs/_static/readme.gif?raw=true)
 [![CI](https://github.com/rszamszur/fastapi-mvc/actions/workflows/main.yml/badge.svg?branch=master)](https://github.com/rszamszur/fastapi-mvc/actions/workflows/main.yml)
 [![codecov](https://codecov.io/gh/rszamszur/fastapi-mvc/branch/master/graph/badge.svg?token=7ESV30TYZS)](https://codecov.io/gh/rszamszur/fastapi-mvc)
 [![K8s integration](https://github.com/rszamszur/fastapi-mvc/actions/workflows/integration.yml/badge.svg)](https://github.com/rszamszur/fastapi-mvc/actions/workflows/integration.yml)
