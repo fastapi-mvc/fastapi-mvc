@@ -16,6 +16,7 @@ This file documents changes to [fastapi-mvc](https://github.com/rszamszur/fastap
 * Refactor `Invoker` class with using queue [#71](https://github.com/rszamszur/fastapi-mvc/issues/71). PR [#70](https://github.com/rszamszur/fastapi-mvc/pull/70)
 * Refactor `fastapi_mvc.commands` to be more generic [#72](https://github.com/rszamszur/fastapi-mvc/issues/72). PR [#70](https://github.com/rszamszur/fastapi-mvc/pull/70)
 * Refactor existing documentation with Sphinx [#74](https://github.com/rszamszur/fastapi-mvc/issues/74). PR [#83](https://github.com/rszamszur/fastapi-mvc/pull/83)
+* Migrate to `install-poetry.py` script prior Poetry 1.2.x release migration [#87](https://github.com/rszamszur/fastapi-mvc/issues/87). PR [#88](https://github.com/rszamszur/fastapi-mvc/pull/88)
 
 ### Fixed
 
