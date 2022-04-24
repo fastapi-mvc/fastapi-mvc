@@ -14,7 +14,8 @@ class Invoker(object):
 
     Attributes:
         _log (logging.Logger): Logger class object instance.
-        _queue (collections.deque): Invoker double ended queue with commands to execute.
+        _queue (collections.deque): Invoker double ended queue with commands to
+            execute.
 
     """
 
