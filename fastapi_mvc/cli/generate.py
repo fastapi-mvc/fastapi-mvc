@@ -19,8 +19,8 @@ class GeneratorCommand(click.Command):
         """Write the epilog into the formatter if it exists.
 
         Args:
-            ctx(click.Context): Click Context class object instance.
-            formatter(click.HelpFormatter): Click HelpFormatter class object
+            ctx (click.Context): Click Context class object instance.
+            formatter (click.HelpFormatter): Click HelpFormatter class object
                 instance.
 
         """
@@ -31,11 +31,8 @@ class GeneratorCommand(click.Command):
     def invoke(self, ctx):
         """Invoke generate command with attached generator in callback.
 
-        Base class (click.MultiCommand) documentation:
-        https://click.palletsprojects.com/en/8.0.x/api/#click.MultiCommand
-
         Args:
-            ctx(click.Context): Context class object instance.
+            ctx (click.Context): Context class object instance.
 
         """
         borg = Borg()
@@ -49,6 +46,9 @@ class GeneratorCommand(click.Command):
 
 class DynamicMultiCommand(click.MultiCommand):
     """Custom click.MultiCommand class implementation.
+
+    Base class (click.MultiCommand) documentation:
+    https://click.palletsprojects.com/en/8.0.x/api/#click.MultiCommand
 
     Args:
         *args (list): Base class constructor args.
@@ -71,8 +71,8 @@ class DynamicMultiCommand(click.MultiCommand):
         """Load fastapi-mvc project and generators.
 
         Returns:
-            dict[str, Generator]: Dictionary containing loaded fastapi-mvc
-                generator classes.
+            typing.Dict[str, Generator]: Dictionary containing loaded
+                fastapi-mvc generator classes.
 
         """
         if not self._generators:

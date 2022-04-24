@@ -33,6 +33,14 @@ class Borg(object):
 
     Attributes:
         _log (logging.Logger): Logger class object instance.
+        _invoker (Invoker): Invoker class object instance.
+        _parser (IniParser): IniParser class object instance.
+        _project_installed (typing.Optional[bool]): Weather, project is
+            installed.
+        _generators_loaded (bool): True if load_generators() was called,
+            otherwise False.
+        _generators (typing.Dict[str, Generator]): Dictionary containing all
+            available fastapi-mvc generators.
 
     """
 
@@ -61,7 +69,7 @@ class Borg(object):
         """Get loaded fastapi-mvc generators.
 
         Returns:
-            dict: Loaded fastapi-mvc generators.
+            typing.Dict[str, Generator]: Loaded fastapi-mvc generators.
 
         """
         return self._generators

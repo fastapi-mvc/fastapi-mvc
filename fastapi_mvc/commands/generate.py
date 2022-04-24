@@ -7,18 +7,24 @@ from fastapi_mvc.commands import Command
 
 
 class Generate(Command):
-    """Generate command class definition."""
+    """Generate command class definition.
+
+    Args:
+        generator(Generator): Concrete Generator class object instance to
+            invoke.
+        options(dict): CLI options and arguments for the generator.
+
+    Attributes:
+        _log (logging.Logger): Logger class object instance.
+        _generator (Generator): Generator subclass object instance.
+        _options (dict): CLI options and arguments for the generator.
+
+    """
 
     __slots__ = ("_generator", "_options")
 
     def __init__(self, generator, options):
-        """Initialize Generate class object instance.
-
-        Args:
-            generator(Generator): Generator subclass object instance.
-            options(dict): CLI options and arguments for the generator.
-
-        """
+        """Initialize Generate class object instance."""
         Command.__init__(self)
         self._log.debug("Initialize Generate class object instance.")
         self._generator = generator

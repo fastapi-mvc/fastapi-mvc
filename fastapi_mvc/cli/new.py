@@ -89,8 +89,8 @@ def new(app_path, **options):
     \f
 
     Args:
-        app_path(str): CLI command argument - new application path.
-        options(dict): CLI command options.
+        app_path (str): CLI command argument - new application path.
+        options (dict): CLI command options.
 
     """
     borg = Borg()

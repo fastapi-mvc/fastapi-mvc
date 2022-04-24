@@ -15,9 +15,12 @@ def load_generators(project_root):
 
     https://docs.python.org/3/library/importlib.html#importing-programmatically
 
+    Args:
+        project_root (str): Fastapi-mvc projec root from which try to load user
+            custom generators.
+
     Returns:
-        dict[str, Generator]: Dictionary containing loaded fastapi-mvc
-            generator classes.
+        typing.Dict[str, Generator]: Loaded fastapi-mvc generator classes.
 
     """
     generators = dict()

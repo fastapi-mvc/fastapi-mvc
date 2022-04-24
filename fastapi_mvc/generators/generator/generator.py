@@ -9,8 +9,27 @@ from fastapi_mvc.generators import Generator
 class GeneratorGenerator(Generator):
     """Generator generator implementation.
 
+    Args:
+        parser (IniParser): IniParser object instance of a fastapi-mvc project.
+
     Attributes:
-        _builtins (list): List of builtins generator names.
+        name (str): (class attribute) A distinguishable generator name, that
+            will be used in fastapi-mvc generate CLI command
+        template (str): (class attribute)  Path to generator cookiecutter
+            template directory.
+        usage (str): (class attribute) Path to generator usage file.
+        category (str): (class attribute) Name under which generator should be
+            displayed in CLI help.
+        cli_arguments (typing.List[dict]): (class attribute) Click arguments as
+            kwargs, that will be available in dynamically generated command for
+            this generator.
+        cli_options (typing.List[dict]): (class attribute) Click options as
+            kwargs, that will be available in dynamically generated command for
+            this generator.
+        _log (logging.Logger): Logger class object instance.
+        _parser (IniParser): IniParser object instance
+            for current fastapi-mvc project.
+        _builtins (typing.List[str]): List of builtins generator names.
 
     """
 

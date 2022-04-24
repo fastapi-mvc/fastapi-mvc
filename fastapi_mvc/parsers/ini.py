@@ -5,7 +5,23 @@ import configparser
 
 
 class IniParser(object):
-    """Project fastapi-mvc.ini file parser class definition."""
+    """Project fastapi-mvc.ini file parser class definition.
+
+    Attributes:
+        _log (logging.Logger): Logger class object instance.
+        _project_root (str): A fastapi-mvc project root path.
+        _config (ConfigParser): Parserd fastapi-mvc.ini ConfigParser class
+            object instance.
+
+    Args:
+        project_root (str): A fastapi-mvc project root path.
+
+    Raises:
+        FileNotFoundError: If fastapi-mvc.ini does not exist.
+        IsADirectoryError: If fastapi-mvc.ini is a directory.
+        PermissionError: If fastapi-mvc.ini is not readable.
+
+    """
 
     __slots__ = (
         "_log",
@@ -14,17 +30,7 @@ class IniParser(object):
     )
 
     def __init__(self, project_root=None):
-        """Initialize IniParser class object instance.
-
-        Args:
-            project_root (str): A fastapi-mvc project root path.
-
-        Raises:
-             FileNotFoundError: If fastapi-mvc.ini does not exist.
-             IsADirectoryError: If fastapi-mvc.ini is a directory.
-             PermissionError: If fastapi-mvc.ini is not readable.
-
-        """
+        """Initialize IniParser class object instance."""
         self._log = logging.getLogger(self.__class__.__name__)
         self._log.debug("Initialize fastapi-mvc.ini parser.")
 
@@ -63,7 +69,7 @@ class IniParser(object):
         """Object instance project root path property.
 
         Returns:
-            Path to project root from which object `fastapi-mvc.ini` was parsed.
+            str: Path to project root from which `fastapi-mvc.ini` was parsed.
 
         """
         return self._project_root
@@ -73,7 +79,7 @@ class IniParser(object):
         """Object instance folder name property.
 
         Returns:
-            Folder name value read from a fastapi-mvc.ini file.
+            str: Folder name value read from a fastapi-mvc.ini file.
 
         """
         return self._config["project"]["folder_name"]
@@ -83,7 +89,7 @@ class IniParser(object):
         """Object instance package name property.
 
         Returns:
-            Package name value read from a fastapi-mvc.ini file.
+            str: Package name value read from a fastapi-mvc.ini file.
 
         """
         return self._config["project"]["package_name"]
@@ -93,7 +99,7 @@ class IniParser(object):
         """Object instance script name property.
 
         Returns:
-            Script name value read from a fastapi-mvc.ini file.
+            str: Script name value read from a fastapi-mvc.ini file.
 
         """
         return self._config["project"]["script_name"]
@@ -103,7 +109,7 @@ class IniParser(object):
         """Object instance Redis property.
 
         Returns:
-            Redis value read from a fastapi-mvc.ini file.
+            str: Redis value read from a fastapi-mvc.ini file.
 
         """
         return self._config["project"]["redis"]
@@ -113,7 +119,7 @@ class IniParser(object):
         """Object instance GitHub actions property.
 
         Returns:
-            GitHub actions value read from a fastapi-mvc.ini file.
+            str: GitHub actions value read from a fastapi-mvc.ini file.
 
         """
         return self._config["project"]["github_actions"]
@@ -123,7 +129,7 @@ class IniParser(object):
         """Object instance Aiohttp property.
 
         Returns:
-            Aiohttp value read from a fastapi-mvc.ini file.
+            str: Aiohttp value read from a fastapi-mvc.ini file.
 
         """
         return self._config["project"]["aiohttp"]
@@ -133,7 +139,7 @@ class IniParser(object):
         """Object instance Vagrantfile property.
 
         Returns:
-            Vagrantfile value read from a fastapi-mvc.ini file.
+            str: Vagrantfile value read from a fastapi-mvc.ini file.
 
         """
         return self._config["project"]["vagrantfile"]
@@ -143,7 +149,7 @@ class IniParser(object):
         """Object instance Helm property.
 
         Returns:
-            Helm value read from a fastapi-mvc.ini file.
+            str: Helm value read from a fastapi-mvc.ini file.
 
         """
         return self._config["project"]["helm"]
@@ -153,7 +159,7 @@ class IniParser(object):
         """Object instance fastapi-mvc version property.
 
         Returns:
-            Fastapi-mvc version value read from a fastapi-mvc.ini file.
+            str: Fastapi-mvc version value read from a fastapi-mvc.ini file.
 
         """
         return self._config["fastapi-mvc"]["version"]

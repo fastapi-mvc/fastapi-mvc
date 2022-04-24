@@ -10,7 +10,13 @@ from fastapi_mvc.commands import Command
 
 
 class Invoker(object):
-    """Defines the common interface for executing associated commands."""
+    """Defines the common interface for executing associated commands.
+
+    Attributes:
+        _log (logging.Logger): Logger class object instance.
+        _queue (collections.deque): Invoker double ended queue with commands to execute.
+
+    """
 
     __slots__ = (
         "_log",
@@ -27,7 +33,7 @@ class Invoker(object):
         """Enqueue command to execute.
 
         Args:
-            command(Command): Command class object instance.
+            command (Command): Command class object instance.
 
         """
         if isinstance(command, Command):

@@ -7,7 +7,13 @@ from cookiecutter.exceptions import OutputDirExistsException
 
 
 class ProjectGenerator(object):
-    """Project generator class definition."""
+    """Project generator class definition.
+
+    Attributes:
+        _log (logging.Logger): Logger class object instance.
+        _template (str): Path to generator cookiecutter template.
+
+    """
 
     def __init__(self):
         """Initialize ProjectGenerator class object instance."""

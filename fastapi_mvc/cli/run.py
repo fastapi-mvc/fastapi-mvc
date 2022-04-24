@@ -30,7 +30,7 @@ def run(**options):
     \f
 
     Args:
-         options(dict): CLI command options.
+         options (dict): CLI command options.
 
     """
     borg = Borg()
