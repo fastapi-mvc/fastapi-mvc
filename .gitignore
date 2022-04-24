@@ -21,6 +21,7 @@ flake8_code_errors.txt
 pep257_violations.txt
 pep8_violations.txt
 code_complexity.txt
+todo_occurence.txt
 xunit-*.xml
 
 # PyCharm
@@ -35,3 +36,6 @@ venv
 
 # direnv
 .direnv
+
+# Sphinx build dir
+site

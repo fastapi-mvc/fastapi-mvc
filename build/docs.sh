@@ -9,6 +9,6 @@ set -o nounset
 set -o pipefail
 
 POETRY_HOME="${POETRY_HOME:=${HOME}/.poetry}"
-MKDOCS_INSTALL_OPTS="${MKDOCS_INSTALL_OPTS:=""}"
+SPHINX_BUILD_OPTS="${SPHINX_BUILD_OPTS:=""}"
 echo "[docs] Build fastapi-mvc documentation."
-"$POETRY_HOME"/bin/poetry run mkdocs build $MKDOCS_INSTALL_OPTS
+"$POETRY_HOME"/bin/poetry run sphinx-build docs site $SPHINX_BUILD_OPTS

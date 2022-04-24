@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "fastapi-mvc"
 version = "0.10.0"
-description = "Create and develop production grade FastAPI projects."
+description = "Developer productivity tool for making high-quality FastAPI production-ready APIs."
 authors = ["Radosław Szamszur <radoslawszamszur@gmail.com>"]
 license = "MIT"
 readme = "README.md"
@@ -34,14 +34,15 @@ click = "~7.1.2"
 pytest = "~6.2.5"
 pytest-cov = "~2.12.0"
 pytest-cookies = "~0.6.1"
-flake8 = "~4.0.1"
+flake8 = "3.9.2"
 flake8-docstrings = "~1.6.0"
 flake8-import-order = "~0.18.1"
 flake8-todo = "^0.7"
 black = "^21.12b0"
 mock = "^4.0.3"
-mkdocs = "^1.2.3"
-mkdocs-material = "^8.1.9"
+Sphinx = "^4.5.0"
+Pallets-Sphinx-Themes = "^2.0.2"
+myst-parser = "^0.17.2"
 
 [tool.poetry.scripts]
 fastapi-mvc = "fastapi_mvc.cli.cli:cli"

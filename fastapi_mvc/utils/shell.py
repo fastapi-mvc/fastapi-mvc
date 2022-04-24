@@ -22,7 +22,7 @@ class ShellUtils(object):
         defaults values.
 
         Returns:
-            Tuple containing git username and email.
+            typing.Tuple[str, str]: Tuple containing git username and email.
 
         """
         cls._log.debug("Try read git user information.")
@@ -54,15 +54,15 @@ class ShellUtils(object):
         https://github.com/rszamszur/fastapi-mvc/issues/37
 
         Args:
-            cmd(list): Shell command to run.
-            cwd(str): Path under which process should execute command. Defaults
+            cmd (list): Shell command to run.
+            cwd (str): Path under which process should execute command. Defaults
                 to current working directory.
-            check(bool): If True raise a subprocess.CalledProcessError error
+            check (bool): If True raise a subprocess.CalledProcessError error
                 when a process returns non-zero exit status.
-            stdout(Union[None, int, IO[Any]]): Specify the executed program’s
-                standard output file handles.
-            stderr(Union[None, int, IO[Any]]): Specify the executed program’s
-                standard error file handles.
+            stdout (typing.Union[None, int, typing.IO[typing.Any]]): Specify the
+                executed program’s standard output file handles.
+            stderr (typing.Union[None, int, typing.IO[typing.Any]]): Specify the
+                executed program’s standard error file handles.
 
         Raises:
             subprocess.CalledProcessError: If spawned proces finishes with an

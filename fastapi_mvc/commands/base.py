@@ -8,7 +8,12 @@ import logging
 
 
 class Command(object, metaclass=ABCMeta):
-    """Defines the common interface for all concrete commands."""
+    """Defines the common interface for all concrete commands.
+
+    Attributes:
+        _log (logging.Logger): Logger class object instance.
+
+    """
 
     __slots__ = "_log"
 
@@ -18,5 +23,5 @@ class Command(object, metaclass=ABCMeta):
 
     @abstractmethod
     def execute(self):
-        """Execute abstract method for all inheriting classes."""
+        """Abstract method execute for all inheriting classes."""
         pass
