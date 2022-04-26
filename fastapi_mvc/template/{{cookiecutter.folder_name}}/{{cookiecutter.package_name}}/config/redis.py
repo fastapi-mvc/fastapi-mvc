@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """Redis configuration."""
 from pydantic import BaseSettings
 

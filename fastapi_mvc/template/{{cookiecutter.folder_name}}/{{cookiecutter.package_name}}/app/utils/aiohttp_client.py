@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """Aiohttp client class utility."""
 import logging
 import asyncio

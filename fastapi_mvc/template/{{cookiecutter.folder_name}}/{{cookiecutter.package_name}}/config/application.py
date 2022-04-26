@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """Application configuration."""
 from pydantic import BaseSettings
 from {{cookiecutter.package_name}}.version import __version__

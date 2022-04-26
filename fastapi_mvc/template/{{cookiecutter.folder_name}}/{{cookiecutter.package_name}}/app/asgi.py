@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """Application Asynchronous Server Gateway Interface."""
 import logging
 

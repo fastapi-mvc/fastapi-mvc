@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """Response models."""
 from typing import Dict, Any, Optional, List
 from http import HTTPStatus

@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """{{cookiecutter.project_name}} CLI root."""
 import logging
 
