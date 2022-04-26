@@ -2,6 +2,12 @@
 
 This file documents changes to [fastapi-mvc](https://github.com/rszamszur/fastapi-mvc). The release numbering uses [semantic versioning](http://semver.org).
 
+## Unreleased
+
+### Internal
+
+* Remove redundant `# -*- coding: utf-8 -*-` in file headers [#66](https://github.com/rszamszur/fastapi-mvc/issues/66).
+
 ## 0.11.0 (24.04.2022)
 
 ### Features
