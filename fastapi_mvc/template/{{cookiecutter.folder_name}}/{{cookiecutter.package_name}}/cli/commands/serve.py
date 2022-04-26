@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """{{cookiecutter.project_name}} CLI serve command."""
 import os
 from multiprocessing import cpu_count

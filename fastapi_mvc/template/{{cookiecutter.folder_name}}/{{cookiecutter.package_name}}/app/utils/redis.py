@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """Redis client class utility."""
 import logging
 

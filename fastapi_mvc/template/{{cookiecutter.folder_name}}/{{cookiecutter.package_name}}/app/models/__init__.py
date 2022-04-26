@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """{{cookiecutter.project_description}}"""
 from .ready import ReadyResponse
 from .response import ErrorResponse

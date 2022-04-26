@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """Application Web Server Gateway Interface - gunicorn."""
 import os
 import sys

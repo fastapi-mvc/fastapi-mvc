@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """Ready model."""
 from typing import Any, Dict
 

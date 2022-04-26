@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """{{cookiecutter.project_description}}"""
 {%- if cookiecutter.aiohttp == "yes" %}
 from .aiohttp_client import AiohttpClient

@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """{{cookiecutter.project_description}}"""
 from .application import settings
 {%- if cookiecutter.redis == "yes" %}
