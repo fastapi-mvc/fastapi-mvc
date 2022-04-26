@@ -4,9 +4,13 @@ This file documents changes to [fastapi-mvc](https://github.com/rszamszur/fastap
 
 ## Unreleased
 
+### Fixed
+
+* Controller generator creating duplicates entries in config/router.py [#78](https://github.com/rszamszur/fastapi-mvc/issues/78). PR [#92](https://github.com/rszamszur/fastapi-mvc/pull/92)
+
 ### Internal
 
-* Remove redundant `# -*- coding: utf-8 -*-` in file headers [#66](https://github.com/rszamszur/fastapi-mvc/issues/66).
+* Remove redundant `# -*- coding: utf-8 -*-` in file headers [#66](https://github.com/rszamszur/fastapi-mvc/issues/66). PR [#91](https://github.com/rszamszur/fastapi-mvc/pull/91)
 
 ## 0.11.0 (24.04.2022)
 
