@@ -8,9 +8,16 @@ def edit_router():
         router = os.path.join(
             os.getcwd(), "{{cookiecutter.package_name}}/config/router.py"
         )
+        import_str = "from {0:s}.app.controllers import {1:s}\n".format(
+            "{{cookiecutter.package_name}}",
+            "{{cookiecutter.controller_name}}",
+        )
 
         with open(router, "r") as f:
             lines = f.readlines()
+
+        if import_str in lines:
+            return
 
         for i in range(len(lines)):
             if lines[i].strip() == "from fastapi import APIRouter":
@@ -19,13 +26,7 @@ def edit_router():
         else:
             index = 0
 
-        lines.insert(
-            index,
-            "from {0:s}.app.controllers import {1:s}\n".format(
-                "{{cookiecutter.package_name}}",
-                "{{cookiecutter.controller_name}}",
-            ),
-        )
+        lines.insert(index, import_str)
         lines.append(
             "router.include_router({{cookiecutter.controller_name}}.router)\n"
         )
