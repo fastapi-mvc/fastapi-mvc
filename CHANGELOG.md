@@ -2,6 +2,12 @@
 
 This file documents changes to [fastapi-mvc](https://github.com/rszamszur/fastapi-mvc). The release numbering uses [semantic versioning](http://semver.org).
 
+## Unreleased
+
+### Internal
+
+* Extend and improve k8s integration workflow [#93](https://github.com/rszamszur/fastapi-mvc/issues/93). PR [#94](https://github.com/rszamszur/fastapi-mvc/pull/94)
+
 ## 0.11.1 (27.04.2022)
 
 ### Fixed
