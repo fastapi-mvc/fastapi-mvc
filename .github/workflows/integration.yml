@@ -66,7 +66,7 @@ jobs:
           echo "$HOME/.poetry/bin" >> $GITHUB_PATH
           $HOME/.poetry/bin/poetry config cache-dir $HOME/.poetry/store
       - name: Generate test-project
-        run: poetry run fastapi-mvc new test-project
+        run: poetry run fastapi-mvc new --skip-install test-project
       - name: Load/Init Vagrant cache
         uses: actions/cache@v2
         with:
@@ -104,7 +104,7 @@ jobs:
           echo "$HOME/.poetry/bin" >> $GITHUB_PATH
           $HOME/.poetry/bin/poetry config cache-dir $HOME/.poetry/store
       - name: Generate test-project
-        run: poetry run fastapi-mvc new --skip-redis --skip-aiohttp --skip-actions test-project
+        run: poetry run fastapi-mvc new --skip-redis --skip-aiohttp --skip-actions --skip-install test-project
       - name: Load/Init Vagrant cache
         uses: actions/cache@v2
         with:
@@ -142,7 +142,7 @@ jobs:
           echo "$HOME/.poetry/bin" >> $GITHUB_PATH
           $HOME/.poetry/bin/poetry config cache-dir $HOME/.poetry/store
       - name: Generate test-project
-        run: poetry run fastapi-mvc new --skip-redis --skip-aiohttp --skip-actions test-project
+        run: poetry run fastapi-mvc new --skip-redis --skip-aiohttp --skip-actions --skip-install test-project
       - name: Load/Init Vagrant cache
         uses: actions/cache@v2
         with:
