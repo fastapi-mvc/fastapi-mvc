@@ -2,6 +2,7 @@
 import os
 
 from cookiecutter.main import cookiecutter
+from click import Argument, Option
 from fastapi_mvc.generators import Generator
 
 
@@ -9,27 +10,43 @@ class ControllerGenerator(Generator):
     """Controller generator implementation.
 
     Args:
-        parser (IniParser): IniParser object instance of a fastapi-mvc project.
+        parser (IniParser): IniParser object instance for current fastapi-mvc
+            project.
 
     Attributes:
-        name (str): (class attribute) A distinguishable generator name, that
-            will be used in fastapi-mvc generate CLI command
-        template (str): (class attribute)  Path to generator cookiecutter
-            template directory.
-        usage (str): (class attribute) Path to generator usage file.
-        category (str): (class attribute) Name under which generator should be
-            displayed in CLI help.
-        cli_arguments (typing.List[dict]): (class attribute) Click arguments as
-            kwargs, that will be available in dynamically generated command for
-            this generator.
-        cli_options (typing.List[dict]): (class attribute) Click options as
-            kwargs, that will be available in dynamically generated command for
-            this generator.
-        _log (logging.Logger): Logger class object instance.
-        _parser (IniParser): IniParser object instance
-            for current fastapi-mvc project.
+        name (str): **(class variable)** A distinguishable generator name, that
+            will be used as subcommand for ``fastapi-mvc generate`` CLI command.
+        template (str): **(class variable)**  Path to generator cookiecutter
+            template root directory.
+        usage (typing.Optional[str]): **(class variable)** Path to generator
+            usage file, that will be printed at the end of its CLI command help
+            page.
+        category (str): (class variable) Name under which generator should be
+            printed in ``fastapi-mvc generate`` CLI command help page.
+        cli_arguments (typing.List[click.Argument]): **(class variable)** Click
+            arguments to register with this generator CLI command.
+        cli_options (typing.List[click.Option]): **(class variable)** Click
+            options to register with this generator CLI command.
+        _parser (IniParser): IniParser object instance for current fastapi-mvc
+            project.
+
+    Resources:
+        1. `Click Arguments`_
+        2. `Click Options`_
+        3. `Cookiecutter Docs`_
+
+    .. _Click Arguments:
+        https://click.palletsprojects.com/en/8.1.x/arguments/
+
+    .. _Click Options:
+        https://click.palletsprojects.com/en/8.1.x/options/
+
+    .. _Cookiecutter Docs:
+        https://cookiecutter.readthedocs.io/en/1.7.2/
 
     """
+
+    __slots__ = ("_parser",)
 
     name = "controller"
     template = os.path.abspath(
@@ -42,24 +59,25 @@ class ControllerGenerator(Generator):
     category = "Builtins"
     cli_arguments = [
         *Generator.cli_arguments,
-        {
-            "param_decls": ["ENDPOINTS"],
-            "required": False,
-            "nargs": -1,
-        },
+        Argument(
+            param_decls=["ENDPOINTS"],
+            required=False,
+            nargs=-1,
+        ),
     ]
     cli_options = [
         *Generator.cli_options,
-        {
-            "param_decls": ["-R", "--skip-routes"],
-            "is_flag": True,
-            "help": "Weather to skip routes entry",
-        },
+        Option(
+            param_decls=["-R", "--skip-routes"],
+            help="Weather to skip routes entry.",
+            is_flag=True,
+        ),
     ]
 
     def __init__(self, parser):
         """Initialize ControllerGenerator class object instance."""
-        Generator.__init__(self, parser)
+        Generator.__init__(self)
+        self._parser = parser
 
     def new(self, name, skip, skip_routes, endpoints):
         """Generate a new controller.
@@ -91,7 +109,7 @@ class ControllerGenerator(Generator):
         self._log.debug("Cookiecutter context: {0}".format(context))
 
         cookiecutter(
-            self.__class__.template,
+            self.template,
             extra_context=context,
             output_dir=os.path.abspath(
                 os.path.join(
