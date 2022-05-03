@@ -3,7 +3,7 @@ import inspect
 
 import pytest
 import mock
-from fastapi_mvc.generators import GeneratorGenerator
+from fastapi_mvc.generators import GeneratorGenerator, Generator
 
 
 CONTROLLER_DIR = os.path.abspath(
@@ -14,18 +14,18 @@ CONTROLLER_DIR = os.path.abspath(
 )
 
 
+parser = mock.Mock()
+parser.package_name = "test_app"
+parser.folder_name = "test-app"
+parser.project_root = "/path/to/project_root"
+
+
 @pytest.fixture
 def gen_obj():
-    parser = mock.Mock()
-    parser.package_name = "test_app"
-    parser.folder_name = "test-app"
-    parser.project_root = "/path/to/project_root"
-
-    gen = GeneratorGenerator(parser=parser)
-    yield gen
+    yield GeneratorGenerator(parser=parser)
 
 
-def test_class_attrs():
+def test_class_variables():
     assert GeneratorGenerator.name == "generator"
     assert GeneratorGenerator.template == os.path.join(
         CONTROLLER_DIR,
@@ -36,23 +36,12 @@ def test_class_attrs():
         "template/USAGE"
     )
     assert GeneratorGenerator.category == "Builtins"
-    assert GeneratorGenerator.cli_arguments == [
-        {
-            "param_decls": ["NAME"],
-            "required": True,
-            "nargs": 1,
-        },
-    ]
-    assert GeneratorGenerator.cli_options == [
-        {
-            "param_decls": ["-S", "--skip"],
-            "is_flag": True,
-            "help": "Skip files that already exist.",
-        },
-    ]
+    assert GeneratorGenerator.cli_arguments == Generator.cli_arguments
+    assert GeneratorGenerator.cli_options == Generator.cli_options
 
 
 def test_object_attrs(gen_obj):
+    assert gen_obj._parser == parser
     assert gen_obj._builtins == ["controller", "generator"]
 
 
