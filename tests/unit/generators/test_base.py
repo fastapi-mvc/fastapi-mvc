@@ -1,9 +1,18 @@
+import os
 from logging import Logger
 
 import mock
 import pytest
 from click import Argument, Option
 from fastapi_mvc.generators import Generator
+
+
+DATA_DIR = os.path.abspath(
+    os.path.join(
+        os.path.abspath(__file__),
+        "../../data",
+    )
+)
 
 
 @mock.patch.multiple(
@@ -50,3 +59,14 @@ def test_init_subclass():
 
     obj = type('SubClass', (Generator,), {"template": "/some/path"})
     obj.name = "SubClass"
+
+
+@mock.patch.multiple(
+    "fastapi_mvc.generators.base.Generator",
+    __abstractmethods__=set()
+)
+def test_read_usage():
+    assert not Generator.read_usage()
+
+    Generator.usage = os.path.join(DATA_DIR, "USAGE")
+    assert Generator.read_usage() == "Dummy usage file for unit tests sake."
