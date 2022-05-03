@@ -6,12 +6,6 @@ from fastapi_mvc.generators.generator import GeneratorGenerator
 from fastapi_mvc.generators.loader import load_generators
 
 
-builtins = {
-    ControllerGenerator.name: ControllerGenerator,
-    GeneratorGenerator.name: GeneratorGenerator,
-}
-
-
 __all__ = (
     Generator,
     ProjectGenerator,
