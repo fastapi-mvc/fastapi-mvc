@@ -31,8 +31,6 @@ Generators
 .. autoclass:: GeneratorGenerator
    :members:
 
-.. autofunction:: load_generators
-
 Commands
 --------
 
@@ -44,7 +42,7 @@ Commands
 .. autoclass:: Invoker
    :members:
 
-.. autoclass:: Generate
+.. autoclass:: RunGenerator
    :members:
 
 .. autoclass:: RunShell
@@ -59,12 +57,14 @@ CLI
 
 .. autofunction:: fastapi_mvc.cli.new.new
 
-.. autofunction:: fastapi_mvc.cli.generate.generate
+.. autofunction:: fastapi_mvc.cli.generate.get_generate_cmd
 
-.. autoclass:: fastapi_mvc.cli.generate.DynamicMultiCommand
+.. autofunction:: fastapi_mvc.cli.generate.invoke_generator
+
+.. autoclass:: fastapi_mvc.cli.click_custom.GeneratorsMultiCommand
    :members:
 
-.. autoclass:: fastapi_mvc.cli.generate.GeneratorCommand
+.. autoclass:: fastapi_mvc.cli.click_custom.GeneratorCommand
    :members:
 
 Utils
