@@ -19,7 +19,7 @@ def invoke_generator(ctx, **options):
 
     generator = ctx.command.generator_cls(borg.parser)
 
-    borg.enqueue_command(RunGenerator(generator=generator, options=options))
+    borg.enqueue(RunGenerator(generator=generator, options=options))
     borg.execute()
 
 

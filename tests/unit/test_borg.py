@@ -69,9 +69,9 @@ def test_borg(parser_mock, invoker_mock, getcwd_mock, getenv_mock, isdir_mock):
     second.my_attr = "foobar"
     assert first.my_attr == "foobar"
 
-    first.enqueue_command("CMD1")
-    second.enqueue_command("CMD2")
-    first.enqueue_command("CMD3")
+    first.enqueue("CMD1")
+    second.enqueue("CMD2")
+    first.enqueue("CMD3")
     first.execute()
 
     parser_mock.assert_called_once()

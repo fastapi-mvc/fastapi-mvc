@@ -43,7 +43,7 @@ def run(**options):
     borg.require_project()
 
     if not options["skip_install"]:
-        borg.enqueue_command(
+        borg.enqueue(
             RunShell(
                 cmd=[
                     borg.poetry_path,
@@ -55,7 +55,7 @@ def run(**options):
             )
         )
 
-    borg.enqueue_command(
+    borg.enqueue(
         RunShell(
             cmd=[
                 borg.poetry_path,

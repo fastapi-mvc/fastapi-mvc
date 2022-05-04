@@ -138,7 +138,7 @@ def test_subcommands_with_options(borg_mock, run_gen_mock, cli_runner, sub_cmd, 
         generator=mock_gen.return_value,
         options=expected,
     )
-    borg_mock.return_value.enqueue_command.assert_called_once_with(
+    borg_mock.return_value.enqueue.assert_called_once_with(
         run_gen_mock.return_value
     )
     borg_mock.return_value.execute.assert_called_once()

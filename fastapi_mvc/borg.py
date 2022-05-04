@@ -208,7 +208,7 @@ class Borg(object):
 
         self._imported_paths = self._imported_paths.union(self._import_paths)
 
-    def enqueue_command(self, command):
+    def enqueue(self, command):
         """Enqueue command for Invoker to execute.
 
         Args:
