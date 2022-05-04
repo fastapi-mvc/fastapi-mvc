@@ -39,6 +39,10 @@ class Borg(object):
             installed.
         _generators (typing.Dict[str, Generator]): Dictionary containing all
             available fastapi-mvc generators.
+        _import_paths (typing.Set[str]): Set containing paths from which try to
+            import custom generators.
+        _imported_paths (typing.FrozenSet[str]): FrozenSet containing already
+            imported paths.
 
     Resources:
         1. http://www.aleax.it/5ep.html

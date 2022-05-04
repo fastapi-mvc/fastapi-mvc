@@ -19,9 +19,7 @@ def invoke_generator(ctx, **options):
 
     generator = ctx.command.generator_cls(borg.parser)
 
-    borg.enqueue_command(
-        Generate(generator=generator, options=options)
-    )
+    borg.enqueue_command(Generate(generator=generator, options=options))
     borg.execute()
 
 
@@ -35,9 +33,11 @@ def get_generate_cmd():
     borg = Borg()
     borg.load_generators()
 
-    cmd_help = "The 'fastapi-mvc generate' commands runs a generator of your " \
-               "choice for a fastapi-mvc project at the current working " \
-               "directory."
+    cmd_help = (
+        "The 'fastapi-mvc generate' commands runs a generator of your "
+        "choice for a fastapi-mvc project at the current working "
+        "directory."
+    )
 
     return GeneratorsMultiCommand(
         name="generate",

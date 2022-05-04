@@ -1,5 +1,6 @@
 """FastAPI MVC Click CLI custom command classes."""
 from collections import defaultdict
+
 import click
 
 

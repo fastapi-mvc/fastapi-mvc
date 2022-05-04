@@ -44,9 +44,7 @@ class Generator(object, metaclass=ABCMeta):
 
     """
 
-    __slots__ = (
-        "_log",
-    )
+    __slots__ = ("_log",)
 
     name: str = NotImplemented
     template: str = NotImplemented
