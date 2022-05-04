@@ -7,7 +7,7 @@ from fastapi_mvc.commands import Command
 
 
 class RunGenerator(Command):
-    """RunGenerator command class definition.
+    """Defines the common interface for running any ``fastapi-mvc`` generator.
 
     Args:
         generator(Generator): Concrete Generator class object instance to
@@ -31,6 +31,6 @@ class RunGenerator(Command):
         self._options = options
 
     def execute(self):
-        """RunGenerator a new controller."""
+        """Execute RunGenerator command."""
         self._log.info("Running {0:s} generator".format(self._generator.name))
         self._generator.new(**self._options)

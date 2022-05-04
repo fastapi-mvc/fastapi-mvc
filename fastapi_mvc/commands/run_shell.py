@@ -8,9 +8,7 @@ from fastapi_mvc.utils import ShellUtils
 
 
 class RunShell(Command):
-    """RunShell command class definition.
-
-    This command is basically an interface for ShellUtils.run_shell method.
+    """Defines the common interface for ShellUtils.run_shell method.
 
     Args:
         cmd (list): Shell command to run.
@@ -56,7 +54,7 @@ class RunShell(Command):
         self._stderr = stderr
 
     def execute(self):
-        """Run shell command."""
+        """Execute RunShell command."""
         self._log.info("Executing shell command: {cmd}.".format(cmd=self._cmd))
         ShellUtils.run_shell(
             cmd=self._cmd,
