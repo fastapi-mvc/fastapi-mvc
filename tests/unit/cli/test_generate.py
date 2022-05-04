@@ -118,7 +118,7 @@ def test_generate_subcommands_help(borg_mock, cli_runner, sub_cmd, help_tmpl, mo
         },
     )
 ])
-@mock.patch("fastapi_mvc.cli.generate.Generate")
+@mock.patch("fastapi_mvc.cli.generate.RunGenerator")
 @mock.patch("fastapi_mvc.cli.generate.Borg")
 def test_subcommands_with_options(borg_mock, run_gen_mock, cli_runner, sub_cmd, args, expected, mock_generators):
     borg_mock.return_value.parser = parser

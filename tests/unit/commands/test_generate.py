@@ -1,7 +1,7 @@
 import pytest
 import mock
 
-from fastapi_mvc.commands import Generate
+from fastapi_mvc.commands import RunGenerator
 
 
 @pytest.mark.parametrize(
@@ -28,7 +28,7 @@ def test_execute(options):
     generator = mock.Mock()
     generator.name = "test-gen"
 
-    command = Generate(
+    command = RunGenerator(
         generator=generator,
         options=options,
     )

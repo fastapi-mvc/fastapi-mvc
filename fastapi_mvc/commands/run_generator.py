@@ -1,4 +1,4 @@
-"""FastAPI MVC command Generate class implementation.
+"""FastAPI MVC command RunGenerator class implementation.
 
 The fastapi-mvc.commands submodule implements command design pattern:
 https://refactoring.guru/design-patterns/command
@@ -6,8 +6,8 @@ https://refactoring.guru/design-patterns/command
 from fastapi_mvc.commands import Command
 
 
-class Generate(Command):
-    """Generate command class definition.
+class RunGenerator(Command):
+    """RunGenerator command class definition.
 
     Args:
         generator(Generator): Concrete Generator class object instance to
@@ -24,13 +24,13 @@ class Generate(Command):
     __slots__ = ("_generator", "_options")
 
     def __init__(self, generator, options):
-        """Initialize Generate class object instance."""
+        """Initialize RunGenerator class object instance."""
         Command.__init__(self)
-        self._log.debug("Initialize Generate class object instance.")
+        self._log.debug("Initialize RunGenerator class object instance.")
         self._generator = generator
         self._options = options
 
     def execute(self):
-        """Generate a new controller."""
+        """RunGenerator a new controller."""
         self._log.info("Running {0:s} generator".format(self._generator.name))
         self._generator.new(**self._options)

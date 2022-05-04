@@ -1,7 +1,7 @@
 """FastAPI MVC CLI generate command implementation."""
 import click
 from fastapi_mvc import Borg
-from fastapi_mvc.commands import Generate
+from fastapi_mvc.commands import RunGenerator
 from fastapi_mvc.cli.click_custom import GeneratorsMultiCommand
 
 
@@ -19,7 +19,7 @@ def invoke_generator(ctx, **options):
 
     generator = ctx.command.generator_cls(borg.parser)
 
-    borg.enqueue_command(Generate(generator=generator, options=options))
+    borg.enqueue_command(RunGenerator(generator=generator, options=options))
     borg.execute()
 
 
