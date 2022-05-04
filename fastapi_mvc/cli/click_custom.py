@@ -17,9 +17,9 @@ class GeneratorCommand(click.Command):
             CLI command.
 
     Resources:
-        1. `Base class documentation`_
+        1. `click.Command class documentation`_
 
-    .. _Base class documentation:
+    .. _click.Command class documentation:
         https://click.palletsprojects.com/en/8.1.x/api/#click.Command
 
     """
@@ -72,9 +72,9 @@ class GeneratorsMultiCommand(click.MultiCommand):
             invoke.
 
     Resources:
-        1. `Base class documentation`_
+        1. `click.MultiCommand class documentation`_
 
-    .. _Base class documentation:
+    .. _click.MultiCommand class documentation:
         https://click.palletsprojects.com/en/8.1.x/api/#click.MultiCommand
 
     """
