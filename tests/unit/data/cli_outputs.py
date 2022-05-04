@@ -15,7 +15,7 @@ Builtins:
 
 MyGenerators:
   foobar
-  my_controller
+  MyControllerGenerator
 """
 
 

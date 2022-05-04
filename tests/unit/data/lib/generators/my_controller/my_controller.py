@@ -60,7 +60,7 @@ class MyControllerGenerator(Generator):
     # understand the difference. Who knows maybe it will be useful.
     __slots__ = ("_parser",)
 
-    name = "my_controller"
+    name = "controller"
     template = os.path.abspath(
         os.path.join(
             os.path.abspath(__file__),
