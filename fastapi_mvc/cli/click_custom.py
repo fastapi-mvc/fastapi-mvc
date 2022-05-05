@@ -1,16 +1,16 @@
-"""FastAPI MVC Click CLI custom command classes."""
+"""Custom Click implementations."""
 from collections import defaultdict
 
 import click
 
 
 class GeneratorCommand(click.Command):
-    """Custom click.Command class implementation.
+    """Defines CLI command based on concrete Generator class.
 
     Args:
         generator_cls (Generator): Concrete Generator class associated with this
             CLI command.
-        callback (str): Generator method to invoke.
+        callback (typing.Callable[[...], typing.Any]): The callback to invoke.
 
     Attributes:
         generator_cls (Generator): Concrete Generator class associated with this
@@ -60,16 +60,16 @@ class GeneratorsMultiCommand(click.MultiCommand):
     Args:
         generators (typing.Dict[str, Generator]): Dictionary containing all
             available fastapi-mvc generators.
-        command_callback (typing.Callable): Generator command callback to
-            invoke.
-        *args (list): Base class constructor args.
-        **kwargs (dict): Base class constructor kwargs.
+        command_callback (typing.Callable[[...], typing.Any]): The callback to
+            invoke by the GeneratorCommand.
+        *args (list): Parent class constructor args.
+        **kwargs (dict): Parent class constructor kwargs.
 
     Attributes:
         generators (typing.Dict[str, Generator]): Dictionary containing all
             available fastapi-mvc generators.
-        command_callback (typing.Callable): Generator command callback to
-            invoke.
+        command_callback (typing.Callable[[...], typing.Any]): The callback to
+            invoke by the GeneratorCommand.
 
     Resources:
         1. `click.MultiCommand class documentation`_
@@ -137,18 +137,19 @@ class GeneratorsMultiCommand(click.MultiCommand):
         return self.generators.keys()
 
     def get_command(self, ctx, name):
-        """Return GeneratorCommand object instance.
+        """Return GeneratorCommand class object instance.
 
-        Given a context and a command name, this returns a GeneratorCommand
-        object instance if it exists or aborts the execution of the program.
+        Given a context and a command name, this returns a ``GeneratorCommand``
+        class object instance if it exists or aborts the execution of the
+        program.
 
         Args:
             ctx (click.Context): Click Context class object instance.
             name (str): Chosen generator name.
 
         Returns:
-            GeneratorCommand: GeneratorCommand object instance for concrete
-                generator name.
+            GeneratorCommand: Class object instance for given command
+                name.
 
         """
         if name not in self.generators:

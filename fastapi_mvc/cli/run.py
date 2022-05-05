@@ -1,10 +1,20 @@
-"""FastAPI MVC CLI run command implementation."""
+"""Command-line interface - run command."""
 import click
 from fastapi_mvc import Borg
 from fastapi_mvc.commands import RunShell
 
 
-@click.command()
+cmd_short_help = "Run development uvicorn server."
+cmd_help = """\
+The 'fastapi-mvc run' commands runs development uvicorn server for a
+fastapi-mvc project at the current working directory.
+"""
+
+
+@click.command(
+    help=cmd_help,
+    short_help=cmd_short_help,
+)
 @click.option(
     "--host",
     help="Host to bind.",
@@ -29,14 +39,11 @@ from fastapi_mvc.commands import RunShell
     is_flag=True,
 )
 def run(**options):
-    """Run development uvicorn server.
-
-    The 'fastapi-mvc run' commands runs development uvicorn server for a
-    fastapi-mvc project at the current working directory.
-    \f
+    """Define command-line interface run command.
 
     Args:
-         options (dict): CLI command options.
+         options (typing.Dict[str, typing.Any]): Map of command option names to
+            their parsed values.
 
     """
     borg = Borg()
