@@ -1,4 +1,4 @@
-"""FastAPI MVC excepthook.
+"""Fastapi-mvc utilities - excepthook.
 
 Attributes:
     log (logging.Logger): Logger class object instance.

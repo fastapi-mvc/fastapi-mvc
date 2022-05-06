@@ -1,4 +1,4 @@
-"""FastAPI MVC controller generator implementation."""
+"""Fastapi-mvc generators - controller generator."""
 import os
 
 from cookiecutter.main import cookiecutter
@@ -29,20 +29,6 @@ class ControllerGenerator(Generator):
             options to register with this generator CLI command.
         _parser (IniParser): IniParser object instance for current fastapi-mvc
             project.
-
-    Resources:
-        1. `Click Arguments`_
-        2. `Click Options`_
-        3. `Cookiecutter Docs`_
-
-    .. _Click Arguments:
-        https://click.palletsprojects.com/en/8.1.x/arguments/
-
-    .. _Click Options:
-        https://click.palletsprojects.com/en/8.1.x/options/
-
-    .. _Cookiecutter Docs:
-        https://cookiecutter.readthedocs.io/en/1.7.2/
 
     """
 

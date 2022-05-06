@@ -37,7 +37,6 @@ def cli(**options):
         options (typing.Dict[str, typing.Any]): Map of command option names to
             their parsed values.
 
-
     """
     if options["verbose"]:
         level = logging.DEBUG

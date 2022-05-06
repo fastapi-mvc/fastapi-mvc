@@ -1,4 +1,4 @@
-"""FastAPI MVC Generator abstract class implementation."""
+"""Fastapi-mvc generators - abstract base class."""
 from abc import ABCMeta, abstractmethod
 import logging
 import os
@@ -7,7 +7,7 @@ from click import Option, Argument
 
 
 class Generator(object, metaclass=ABCMeta):
-    """Defines the common interface for all concrete generators.
+    """Define the common interface for all concrete generators.
 
     Attributes:
         name (str): **(class variable)** A distinguishable generator name, that
@@ -31,16 +31,6 @@ class Generator(object, metaclass=ABCMeta):
         cli_deprecated (bool): **(class variable)** Issues a message indicating
             that the generator CLI command is deprecated.
         _log (logging.Logger): Logger class object instance.
-
-    Resources:
-        1. `Click Arguments`_
-        2. `Click Options`_
-
-    .. _Click Arguments:
-        https://click.palletsprojects.com/en/8.1.x/arguments/
-
-    .. _Click Options:
-        https://click.palletsprojects.com/en/8.1.x/options/
 
     """
 
@@ -73,7 +63,7 @@ class Generator(object, metaclass=ABCMeta):
         self._log = logging.getLogger(self.__class__.__name__)
 
     def __init_subclass__(cls, **kwargs):
-        """Validate presence of required class variables in a subclass."""
+        """Validate required class variables in a subclass."""
         super().__init_subclass__(**kwargs)
 
         if cls.name is NotImplemented:
@@ -85,7 +75,7 @@ class Generator(object, metaclass=ABCMeta):
 
     @classmethod
     def read_usage(cls):
-        """Read and return concrete generator USAGE file contents.
+        """Return concrete generator USAGE file contents.
 
         Returns:
             str: Concrete generator USAGE file contents.
@@ -99,7 +89,7 @@ class Generator(object, metaclass=ABCMeta):
 
     @abstractmethod
     def new(self, **kwargs):
-        """Abstract method new for all inheriting classes.
+        """Define abstract new method for all inheriting classes.
 
         Args:
             **kwargs(dict): Abstract methods kwargs.
@@ -109,7 +99,7 @@ class Generator(object, metaclass=ABCMeta):
 
     @abstractmethod
     def destroy(self, **kwargs):
-        """Abstract method destroy for all inheriting classes.
+        """Define abstract destroy method for all inheriting classes.
 
         Args:
             **kwargs(dict): Abstract methods kwargs.

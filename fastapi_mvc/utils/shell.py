@@ -1,4 +1,4 @@
-"""FastAPI MVC shell utilities implementation."""
+"""Fastapi-mvc utilities - shell."""
 import os
 import logging
 import subprocess

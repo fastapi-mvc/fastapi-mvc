@@ -1,4 +1,4 @@
-"""FastAPI MVC generator generator implementation."""
+"""Fastapi-mvc generators - generator generator."""
 import os
 
 from cookiecutter.main import cookiecutter
@@ -6,7 +6,7 @@ from fastapi_mvc.generators import Generator
 
 
 class GeneratorGenerator(Generator):
-    """Generator generator implementation.
+    """Define generator generator.
 
     Args:
         parser (IniParser): IniParser object instance for current fastapi-mvc
@@ -25,20 +25,6 @@ class GeneratorGenerator(Generator):
         _parser (IniParser): IniParser object instance for current fastapi-mvc
             project.
         _builtins (typing.List[str]): List of builtins generator names.
-
-    Resources:
-        1. `Click Arguments`_
-        2. `Click Options`_
-        3. `Cookiecutter Docs`_
-
-    .. _Click Arguments:
-        https://click.palletsprojects.com/en/8.1.x/arguments/
-
-    .. _Click Options:
-        https://click.palletsprojects.com/en/8.1.x/options/
-
-    .. _Cookiecutter Docs:
-        https://cookiecutter.readthedocs.io/en/1.7.2/
 
     """
 
