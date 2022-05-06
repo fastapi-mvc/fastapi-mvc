@@ -1,25 +1,25 @@
-"""FastAPI MVC ini parser implementation."""
+"""Fastapi-mvc parsers - ini parser."""
 import os
 import logging
 import configparser
 
 
 class IniParser(object):
-    """Project fastapi-mvc.ini file parser class definition.
+    """Define ``fastapi-mvc.ini`` file parser.
 
     Attributes:
         _log (logging.Logger): Logger class object instance.
         _project_root (str): A fastapi-mvc project root path.
-        _config (ConfigParser): Parserd fastapi-mvc.ini ConfigParser class
+        _config (ConfigParser): Parserd ``fastapi-mvc.ini`` ConfigParser class
             object instance.
 
     Args:
         project_root (str): A fastapi-mvc project root path.
 
     Raises:
-        FileNotFoundError: If fastapi-mvc.ini does not exist.
-        IsADirectoryError: If fastapi-mvc.ini is a directory.
-        PermissionError: If fastapi-mvc.ini is not readable.
+        FileNotFoundError: If ``fastapi-mvc.ini`` does not exist.
+        IsADirectoryError: If ``fastapi-mvc.ini`` is a directory.
+        PermissionError: If ``fastapi-mvc.ini`` is not readable.
 
     """
 
@@ -66,100 +66,100 @@ class IniParser(object):
 
     @property
     def project_root(self):
-        """Object instance project root path property.
+        """Get project root path.
 
         Returns:
-            str: Path to project root from which `fastapi-mvc.ini` was parsed.
+            str: Path to project root from which ``fastapi-mvc.ini`` was parsed.
 
         """
         return self._project_root
 
     @property
     def folder_name(self):
-        """Object instance folder name property.
+        """Get folder name.
 
         Returns:
-            str: Folder name value read from a fastapi-mvc.ini file.
+            str: Folder name value read from a ``fastapi-mvc.ini`` file.
 
         """
         return self._config["project"]["folder_name"]
 
     @property
     def package_name(self):
-        """Object instance package name property.
+        """Get package name.
 
         Returns:
-            str: Package name value read from a fastapi-mvc.ini file.
+            str: Package name value read from a ``fastapi-mvc.ini`` file.
 
         """
         return self._config["project"]["package_name"]
 
     @property
     def script_name(self):
-        """Object instance script name property.
+        """Get script name.
 
         Returns:
-            str: Script name value read from a fastapi-mvc.ini file.
+            str: Script name value read from a ``fastapi-mvc.ini`` file.
 
         """
         return self._config["project"]["script_name"]
 
     @property
     def redis(self):
-        """Object instance Redis property.
+        """Get Redis value.
 
         Returns:
-            str: Redis value read from a fastapi-mvc.ini file.
+            str: Redis value read from a ``fastapi-mvc.ini`` file.
 
         """
         return self._config["project"]["redis"]
 
     @property
     def github_actions(self):
-        """Object instance GitHub actions property.
+        """Get GitHub actions value.
 
         Returns:
-            str: GitHub actions value read from a fastapi-mvc.ini file.
+            str: GitHub actions value read from a ``fastapi-mvc.ini`` file.
 
         """
         return self._config["project"]["github_actions"]
 
     @property
     def aiohttp(self):
-        """Object instance Aiohttp property.
+        """Get Aiohttp value.
 
         Returns:
-            str: Aiohttp value read from a fastapi-mvc.ini file.
+            str: Aiohttp value read from a ``fastapi-mvc.ini`` file.
 
         """
         return self._config["project"]["aiohttp"]
 
     @property
     def vagrantfile(self):
-        """Object instance Vagrantfile property.
+        """Get Vagrantfile value.
 
         Returns:
-            str: Vagrantfile value read from a fastapi-mvc.ini file.
+            str: Vagrantfile value read from a ``fastapi-mvc.ini`` file.
 
         """
         return self._config["project"]["vagrantfile"]
 
     @property
     def helm(self):
-        """Object instance Helm property.
+        """Get Helm value.
 
         Returns:
-            str: Helm value read from a fastapi-mvc.ini file.
+            str: Helm value read from a ``fastapi-mvc.ini`` file.
 
         """
         return self._config["project"]["helm"]
 
     @property
     def version(self):
-        """Object instance fastapi-mvc version property.
+        """Get fastapi-mvc version.
 
         Returns:
-            str: Fastapi-mvc version value read from a fastapi-mvc.ini file.
+            str: Fastapi-mvc version value read from a ``fastapi-mvc.ini`` file.
 
         """
         return self._config["fastapi-mvc"]["version"]

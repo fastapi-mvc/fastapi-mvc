@@ -1,18 +1,28 @@
-"""FastAPI MVC CLI root implementation."""
+"""Command-line interface - root."""
 import logging
 import sys
 
 import click
 from fastapi_mvc.cli.new import new
 from fastapi_mvc.cli.run import run
-from fastapi_mvc.cli.generate import generate
+from fastapi_mvc.cli.generate import get_generate_cmd
 from fastapi_mvc.utils import global_except_hook
 
 
 sys.excepthook = global_except_hook
+cmd_help = """\
+Developer productivity tool for making high-quality FastAPI production-ready
+APIs.
+
+Documentation: https://fastapi-mvc.netlify.app
+
+Source: https://github.com/rszamszur/fastapi-mvc
+"""
 
 
-@click.group()
+@click.group(
+    help=cmd_help,
+)
 @click.option(
     "-v",
     "--verbose",
@@ -21,15 +31,11 @@ sys.excepthook = global_except_hook
     default=False,
 )
 def cli(**options):
-    """Create and develop production grade FastAPI projects.
-
-    Documentation: https://fastapi-mvc.netlify.app
-
-    Source Code: https://github.com/rszamszur/fastapi-mvc
-    \f
+    """Define command-line interface root.
 
     Args:
-        options(dict): CLI command options.
+        options (typing.Dict[str, typing.Any]): Map of command option names to
+            their parsed values.
 
     """
     if options["verbose"]:
@@ -48,4 +54,4 @@ def cli(**options):
 
 cli.add_command(new)
 cli.add_command(run)
-cli.add_command(generate)
+cli.add_command(get_generate_cmd())

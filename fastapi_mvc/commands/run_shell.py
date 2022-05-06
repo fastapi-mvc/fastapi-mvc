@@ -1,16 +1,10 @@
-"""FastAPI MVC command RunShell class implementation.
-
-The fastapi-mvc.commands submodule implements command design pattern:
-https://refactoring.guru/design-patterns/command
-"""
+"""Command design pattern - run shell command."""
 from fastapi_mvc.commands import Command
 from fastapi_mvc.utils import ShellUtils
 
 
 class RunShell(Command):
-    """RunShell command class definition.
-
-    This command is basically an interface for ShellUtils.run_shell method.
+    """Define the common interface for ShellUtils.run_shell method.
 
     Args:
         cmd (list): Shell command to run.
@@ -24,7 +18,6 @@ class RunShell(Command):
             standard error file handles.
 
     Attributes:
-        _log (logging.Logger): Logger class object instance.
         _cmd (list): Shell command to run.
         _cwd (str): Path under which process should execute command. Defaults
             to current working directory.
@@ -56,7 +49,7 @@ class RunShell(Command):
         self._stderr = stderr
 
     def execute(self):
-        """Run shell command."""
+        """Execute RunShell command."""
         self._log.info("Executing shell command: {cmd}.".format(cmd=self._cmd))
         ShellUtils.run_shell(
             cmd=self._cmd,

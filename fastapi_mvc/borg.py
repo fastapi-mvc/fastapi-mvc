@@ -1,10 +1,17 @@
 """Borg design pattern (or monostate if you will) implementation."""
 import os
+import sys
+import importlib.util
+import pkgutil
 import logging
 
 from fastapi_mvc.commands import Invoker
 from fastapi_mvc.parsers import IniParser
-from fastapi_mvc.generators import builtins, load_generators
+from fastapi_mvc.generators import (
+    Generator,
+    ControllerGenerator,
+    GeneratorGenerator,
+)
 from fastapi_mvc.version import __version__
 
 
@@ -25,19 +32,21 @@ class Borg(object):
 
         Besides, it has a cool name.
 
-    Resources:
-        1. http://www.aleax.it/5ep.html
-        2. https://code.activestate.com/recipes/66531/
-
     Attributes:
         _log (logging.Logger): Logger class object instance.
         _invoker (Invoker): Invoker class object instance.
         _parser (IniParser): IniParser class object instance.
             installed.
-        _generators_loaded (bool): True if load_generators() was called,
-            otherwise False.
         _generators (typing.Dict[str, Generator]): Dictionary containing all
             available fastapi-mvc generators.
+        _import_paths (typing.Set[str]): Set containing paths from which try to
+            import custom generators.
+        _imported_paths (typing.FrozenSet[str]): FrozenSet containing already
+            imported paths.
+
+    Resources:
+        1. http://www.aleax.it/5ep.html
+        2. https://code.activestate.com/recipes/66531/
 
     """
 
@@ -53,8 +62,12 @@ class Borg(object):
             self._log.debug("Initialize first Borg class object instance.")
             self._invoker = Invoker()
             self._parser = None
-            self._generators_loaded = False
-            self._generators = builtins
+            self._generators = {
+                ControllerGenerator.name: ControllerGenerator,
+                GeneratorGenerator.name: GeneratorGenerator,
+            }
+            self._import_paths = {os.path.join(os.getcwd(), "lib/generators")}
+            self._imported_paths = frozenset()
 
     def __str__(self):
         """Class custom __str__ method implementation."""
@@ -71,6 +84,16 @@ class Borg(object):
         return self._generators
 
     @property
+    def import_paths(self):
+        """Get generators import paths.
+
+        Returns:
+            typing.Set[str]: generators import paths.
+
+        """
+        return self._import_paths
+
+    @property
     def parser(self):
         """Get IniParser class object instance.
 
@@ -79,16 +102,6 @@ class Borg(object):
 
         """
         return self._parser
-
-    @property
-    def version(self):
-        """Get fastapi-mvc version..
-
-        Returns:
-            str: Fastapi-mvc version.
-
-        """
-        return __version__
 
     @property
     def poetry_path(self):
@@ -101,6 +114,16 @@ class Borg(object):
         return "{0:s}/bin/poetry".format(
             os.getenv("POETRY_HOME", "{0:s}/.poetry".format(os.getenv("HOME")))
         )
+
+    @property
+    def version(self):
+        """Get fastapi-mvc version.
+
+        Returns:
+            str: Fastapi-mvc version.
+
+        """
+        return __version__
 
     def require_project(self):
         """Require valid fastapi-mvc project."""
@@ -127,21 +150,65 @@ class Borg(object):
             raise SystemExit(1)
 
         self._parser = parser
+        self._import_paths.add(
+            os.path.join(
+                self._parser.project_root,
+                "lib/generators",
+            )
+        )
 
     def load_generators(self):
-        """Load local fastapi-mvc generators."""
-        if not self._parser:
-            self.require_project()
+        """Load user fastapi-mvc generators.
 
-        if not self._generators_loaded:
-            generators = load_generators(self._parser.project_root)
-            # Updating in the reversed way to override local generators
-            # that shadows built-in ones.
-            generators.update(self._generators)
-            self._generators = generators
-            self._generators_loaded = True
+        Programmatically import all available user generators from known paths
+        to search in.
 
-    def enqueue_command(self, command):
+        References:
+            1. Importing programmatically
+
+        .. _Importing programmatically:
+            https://docs.python.org/3/library/importlib.html#importing-programmatically
+
+        """
+        paths = self._import_paths.difference(self._imported_paths)
+
+        for item in pkgutil.iter_modules(paths):
+            m_path = os.path.join(
+                item.module_finder.path,
+                item.name,
+                "__init__.py",
+            )
+            spec = importlib.util.spec_from_file_location(
+                "fastapi_mvc_generators",
+                m_path,
+            )
+            module = importlib.util.module_from_spec(spec)
+            # Register module before running `exec_module()` to make all
+            # submodules in it able to find their parent package:
+            # `fastapi_mvc_generators`.
+            # Otherwise, the following error will be raised:
+            #     ModuleNotFoundError: No module named 'fastapi_mvc_generators'
+            sys.modules[spec.name] = module
+            try:
+                spec.loader.exec_module(module)
+            except (ModuleNotFoundError, ImportError) as err:
+                self._log.error(
+                    "Could not load custom generator: {}".format(m_path)
+                )
+                self._log.error(err)
+                continue
+
+            generator = getattr(module, "__all__", None)
+
+            if generator and issubclass(generator, Generator):
+                if generator.name in self._generators:
+                    generator.name = generator.__name__
+
+                self._generators[generator.name] = generator
+
+        self._imported_paths = self._imported_paths.union(self._import_paths)
+
+    def enqueue(self, command):
         """Enqueue command for Invoker to execute.
 
         Args:

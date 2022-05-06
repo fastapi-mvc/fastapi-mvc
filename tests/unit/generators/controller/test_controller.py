@@ -3,6 +3,7 @@ import inspect
 
 import pytest
 import mock
+from click import Argument, Option
 from fastapi_mvc.generators import ControllerGenerator
 
 
@@ -14,15 +15,15 @@ CONTROLLER_DIR = os.path.abspath(
 )
 
 
+parser = mock.Mock()
+parser.package_name = "test_app"
+parser.folder_name = "test-app"
+parser.project_root = "/path/to/project_root"
+
+
 @pytest.fixture
 def gen_obj():
-    parser = mock.Mock()
-    parser.package_name = "test_app"
-    parser.folder_name = "test-app"
-    parser.project_root = "/path/to/project_root"
-
-    gen = ControllerGenerator(parser=parser)
-    yield gen
+    yield ControllerGenerator(parser=parser)
 
 
 def test_class_attrs():
@@ -36,30 +37,30 @@ def test_class_attrs():
         "template/USAGE"
     )
     assert ControllerGenerator.category == "Builtins"
-    assert ControllerGenerator.cli_arguments == [
-        {
-            "param_decls": ["NAME"],
-            "required": True,
-            "nargs": 1,
-        },
-        {
-            "param_decls": ["ENDPOINTS"],
-            "required": False,
-            "nargs": -1,
-        },
-    ]
-    assert ControllerGenerator.cli_options == [
-        {
-            "param_decls": ["-S", "--skip"],
-            "is_flag": True,
-            "help": "Skip files that already exist.",
-        },
-        {
-            "param_decls": ["-R", "--skip-routes"],
-            "is_flag": True,
-            "help": "Weather to skip routes entry",
-        },
-    ]
+
+    assert len(ControllerGenerator.cli_arguments) == 2
+    assert isinstance(ControllerGenerator.cli_arguments[0], Argument)
+    assert ControllerGenerator.cli_arguments[0].opts == ["NAME"]
+    assert ControllerGenerator.cli_arguments[0].required
+    assert ControllerGenerator.cli_arguments[0].nargs == 1
+    assert isinstance(ControllerGenerator.cli_arguments[1], Argument)
+    assert ControllerGenerator.cli_arguments[1].opts == ["ENDPOINTS"]
+    assert not ControllerGenerator.cli_arguments[1].required
+    assert ControllerGenerator.cli_arguments[1].nargs == -1
+
+    assert len(ControllerGenerator.cli_options) == 2
+    assert isinstance(ControllerGenerator.cli_options[0], Option)
+    assert ControllerGenerator.cli_options[0].opts == ["-S", "--skip"]
+    assert ControllerGenerator.cli_options[0].help == "Skip files that already exist."
+    assert ControllerGenerator.cli_options[0].is_flag
+    assert isinstance(ControllerGenerator.cli_options[1], Option)
+    assert ControllerGenerator.cli_options[1].opts == ["-R", "--skip-routes"]
+    assert ControllerGenerator.cli_options[1].help == "Weather to skip routes entry."
+    assert ControllerGenerator.cli_options[1].is_flag
+
+
+def test_object_attrs(gen_obj):
+    assert gen_obj._parser == parser
 
 
 @pytest.mark.parametrize("kwargs, expected_ctx", [

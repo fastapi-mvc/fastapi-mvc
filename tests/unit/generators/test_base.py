@@ -1,7 +1,18 @@
+import os
 from logging import Logger
 
 import mock
+import pytest
+from click import Argument, Option
 from fastapi_mvc.generators import Generator
+
+
+DATA_DIR = os.path.abspath(
+    os.path.join(
+        os.path.abspath(__file__),
+        "../../data",
+    )
+)
 
 
 @mock.patch.multiple(
@@ -9,41 +20,53 @@ from fastapi_mvc.generators import Generator
     __abstractmethods__=set()
 )
 def test_base_generator():
-    assert not hasattr(Generator, "name")
-    assert not hasattr(Generator, "template")
-    assert not hasattr(Generator, "usage")
-    assert not hasattr(Generator, "category")
-    assert Generator.cli_arguments == [
-        {
-            "param_decls": ["NAME"],
-            "required": True,
-            "nargs": 1,
-        }
-    ]
-    assert Generator.cli_options == [
-        {
-            "param_decls": ["-S", "--skip"],
-            "is_flag": True,
-            "help": "Skip files that already exist.",
-        }
-    ]
+    assert Generator.name == NotImplemented
+    assert Generator.template == NotImplemented
+    assert not Generator.usage
+    assert Generator.category == "Other"
 
-    parser = mock.Mock()
-    parser.package_name = "test_app"
-    parser.folder_name = "test-app"
-    parser.project_root = "/path/to/project_root"
+    assert len(Generator.cli_arguments) == 1
+    assert isinstance(Generator.cli_arguments[0], Argument)
+    assert Generator.cli_arguments[0].opts == ["NAME"]
+    assert Generator.cli_arguments[0].required
+    assert Generator.cli_arguments[0].nargs == 1
 
-    generator = Generator(parser=parser,)
+    assert len(Generator.cli_options) == 1
+    assert isinstance(Generator.cli_options[0], Option)
+    assert Generator.cli_options[0].opts == ["-S", "--skip"]
+    assert Generator.cli_options[0].help == "Skip files that already exist."
+    assert Generator.cli_options[0].is_flag
+
+    assert not Generator.cli_help
+    assert not Generator.cli_short_help
+    assert not Generator.cli_deprecated
+
+    generator = Generator()
     generator.new()
     generator.destroy()
 
     assert isinstance(generator, Generator)
     assert not hasattr(generator, "__dict__")
     assert hasattr(generator, "__slots__")
-    assert generator.__slots__ == (
-        "_log",
-        "_parser",
-    )
+    assert generator.__slots__ == ("_log",)
 
     assert isinstance(generator._log, Logger)
-    assert generator._parser == parser
+
+
+def test_init_subclass():
+    with pytest.raises(NotImplementedError):
+        type('SubClass', (Generator,), {})
+
+    obj = type('SubClass', (Generator,), {"template": "/some/path"})
+    obj.name = "SubClass"
+
+
+@mock.patch.multiple(
+    "fastapi_mvc.generators.base.Generator",
+    __abstractmethods__=set()
+)
+def test_read_usage():
+    assert not Generator.read_usage()
+
+    Generator.usage = os.path.join(DATA_DIR, "USAGE")
+    assert Generator.read_usage() == "Dummy usage file for unit tests sake."

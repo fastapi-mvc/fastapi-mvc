@@ -71,7 +71,7 @@ def test_run_default_values(borg_mock, shell_mock, cli_runner):
         ]
     )
 
-    borg_mock.return_value.enqueue_command.assert_has_calls(
+    borg_mock.return_value.enqueue.assert_has_calls(
         shell_mock.return_value
     )
     borg_mock.return_value.execute.assert_called_once()
@@ -163,7 +163,7 @@ def test_run_with_options(borg_mock, shell_mock, cli_runner, args, expected):
     calls.append(mock.call(**expected))
 
     shell_mock.assert_has_calls(calls)
-    borg_mock.return_value.enqueue_command.assert_has_calls(
+    borg_mock.return_value.enqueue.assert_has_calls(
         shell_mock.return_value
     )
     borg_mock.return_value.execute.assert_called_once()

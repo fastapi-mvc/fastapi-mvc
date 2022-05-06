@@ -1,8 +1,6 @@
 generate_root_help = """\
 Usage: generate [OPTIONS] GENERATOR [ARGS]...
 
-  Run chosen fastapi-mvc generator.
-
   The 'fastapi-mvc generate' commands runs a generator of your choice for a
   fastapi-mvc project at the current working directory.
 
@@ -15,9 +13,9 @@ Builtins:
   controller
   generator
 
-UnitTests:
+MyGenerators:
   foobar
-  my_controller
+  MyControllerGenerator
 """
 
 
@@ -37,7 +35,7 @@ Usage: generate controller [OPTIONS] NAME [ENDPOINTS]...
 
 Options:
   -S, --skip         Skip files that already exist.
-  -R, --skip-routes  Weather to skip routes entry
+  -R, --skip-routes  Weather to skip routes entry.
   --help             Show this message and exit.
 
 {usage}

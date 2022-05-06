@@ -1,57 +1,67 @@
 API
 ===
 
-.. module:: fastapi_mvc
+This part of the documentation lists the full API reference of all classes and functions.
 
 Borg
 ----
 
-.. autoclass:: Borg
+.. autoclass:: fastapi_mvc.Borg
    :members:
+   :special-members: __init__
+   :show-inheritance:
 
 Parsers
 -------
 
-.. currentmodule:: fastapi_mvc.parsers
+.. automodule:: fastapi_mvc.parsers
 
 .. autoclass:: IniParser
    :members:
+   :show-inheritance:
 
 Generators
 ----------
 
-.. currentmodule:: fastapi_mvc.generators
+.. automodule:: fastapi_mvc.generators
 
-.. autoclass:: Generator
+.. autoclass:: fastapi_mvc.generators.Generator
    :members:
+   :show-inheritance:
 
-.. autoclass:: ControllerGenerator
+.. autoclass:: fastapi_mvc.generators.ControllerGenerator
    :members:
+   :show-inheritance:
 
-.. autoclass:: GeneratorGenerator
+.. autoclass:: fastapi_mvc.generators.GeneratorGenerator
    :members:
-
-.. autofunction:: load_generators
+   :show-inheritance:
 
 Commands
 --------
 
-.. currentmodule:: fastapi_mvc.commands
+.. automodule:: fastapi_mvc.commands
 
-.. autoclass:: Command
+.. autoclass:: fastapi_mvc.commands.Command
    :members:
+   :show-inheritance:
 
-.. autoclass:: Invoker
+.. autoclass:: fastapi_mvc.commands.Invoker
    :members:
+   :show-inheritance:
 
-.. autoclass:: Generate
+.. autoclass:: fastapi_mvc.commands.RunGenerator
    :members:
+   :show-inheritance:
 
-.. autoclass:: RunShell
+.. autoclass:: fastapi_mvc.commands.RunShell
    :members:
+   :show-inheritance:
 
 CLI
 ---
+
+.. automodule:: fastapi_mvc.cli
 
 .. autofunction:: fastapi_mvc.cli.cli.cli
 
@@ -59,18 +69,25 @@ CLI
 
 .. autofunction:: fastapi_mvc.cli.new.new
 
-.. autofunction:: fastapi_mvc.cli.generate.generate
+.. autofunction:: fastapi_mvc.cli.generate.get_generate_cmd
 
-.. autoclass:: fastapi_mvc.cli.generate.DynamicMultiCommand
-   :members:
+.. autofunction:: fastapi_mvc.cli.generate.invoke_generator
 
-.. autoclass:: fastapi_mvc.cli.generate.GeneratorCommand
+.. autoclass:: fastapi_mvc.cli.click_custom.GeneratorsMultiCommand
    :members:
+   :show-inheritance:
+
+.. autoclass:: fastapi_mvc.cli.click_custom.GeneratorCommand
+   :members:
+   :show-inheritance:
 
 Utils
 -----
 
-.. currentmodule:: fastapi_mvc.utils
+.. automodule:: fastapi_mvc.utils
 
-.. autoclass:: ShellUtils
+.. autoclass:: fastapi_mvc.utils.ShellUtils
    :members:
+   :show-inheritance:
+
+.. autofunction:: fastapi_mvc.utils.excepthook.global_except_hook

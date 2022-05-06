@@ -7,6 +7,10 @@ This file documents changes to [fastapi-mvc](https://github.com/rszamszur/fastap
 ### Internal
 
 * Extend and improve k8s integration workflow [#93](https://github.com/rszamszur/fastapi-mvc/issues/93). PR [#94](https://github.com/rszamszur/fastapi-mvc/pull/94)
+* Improve generators implementation [#96](https://github.com/rszamszur/fastapi-mvc/issues/96). PR [#97](https://github.com/rszamszur/fastapi-mvc/pull/97)
+* Update package dependencies:
+  * click (7.1.2 -> 8.1.3)
+  * black (21.12b0 -> 22.3.0)
 
 ## 0.11.1 (27.04.2022)
 

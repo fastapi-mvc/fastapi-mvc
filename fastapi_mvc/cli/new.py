@@ -1,10 +1,20 @@
-"""FastAPI MVC CLI new command implementation."""
+"""Command-line interface - new command."""
 import click
 from fastapi_mvc import Borg
 from fastapi_mvc.commands import GenerateNewProject, RunShell
 
 
-@click.command()
+cmd_short_help = "Create a new FastAPI application."
+cmd_help = """\
+The 'fastapi-mvc new' command creates a new FastAPI application with a
+default directory structure and configuration at the path you specify.
+"""
+
+
+@click.command(
+    help=cmd_help,
+    short_help=cmd_short_help,
+)
 @click.argument(
     "APP_PATH",
     nargs=1,
@@ -82,21 +92,18 @@ from fastapi_mvc.commands import GenerateNewProject, RunShell
     default="https://your.repo.url.here",
 )
 def new(app_path, **options):
-    """Create a new FastAPI application.
-
-    The 'fastapi-mvc new' command creates a new FastAPI application with a
-    default directory structure and configuration at the path you specify.
-    \f
+    """Define command-line interface new command.
 
     Args:
-        app_path (str): CLI command argument - new application path.
-        options (dict): CLI command options.
+        app_path (str): Command argument - new application path.
+        options (typing.Dict[str, typing.Any]): Map of command option names to
+            their parsed values.
 
     """
     borg = Borg()
-    borg.enqueue_command(GenerateNewProject(app_path=app_path, options=options))
+    borg.enqueue(GenerateNewProject(app_path=app_path, options=options))
 
     if not options["skip_install"]:
-        borg.enqueue_command(RunShell(cmd=["make", "install"], cwd=app_path))
+        borg.enqueue(RunShell(cmd=["make", "install"], cwd=app_path))
 
     borg.execute()

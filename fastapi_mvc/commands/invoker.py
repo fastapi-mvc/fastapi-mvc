@@ -1,8 +1,4 @@
-"""FastAPI MVC Invoker class implementation.
-
-The fastapi-mvc.commands submodule implements command design pattern:
-https://refactoring.guru/design-patterns/command
-"""
+"""Command design pattern - Invoker class."""
 import logging
 from collections import deque
 
@@ -10,7 +6,7 @@ from fastapi_mvc.commands import Command
 
 
 class Invoker(object):
-    """Defines the common interface for executing associated commands.
+    """Define the common interface for executing associated commands.
 
     Attributes:
         _log (logging.Logger): Logger class object instance.
