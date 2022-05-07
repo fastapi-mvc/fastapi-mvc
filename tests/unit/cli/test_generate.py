@@ -36,18 +36,17 @@ def test_generate_invalid_options(borg_mock, cli_runner):
     borg_mock.return_value.load_generators.assert_called_once()
 
 
-@pytest.mark.parametrize("sub_cmd, help_tmpl", [
-    (
-        "controller",
-        generate_controller_help
-    ),
-    (
-        "generator",
-        generate_generator_help
-    ),
-])
+@pytest.mark.parametrize(
+    "sub_cmd, help_tmpl",
+    [
+        ("controller", generate_controller_help),
+        ("generator", generate_generator_help),
+    ],
+)
 @mock.patch("fastapi_mvc.cli.generate.Borg")
-def test_generate_subcommands_help(borg_mock, cli_runner, sub_cmd, help_tmpl, mock_generators):
+def test_generate_subcommands_help(
+    borg_mock, cli_runner, sub_cmd, help_tmpl, mock_generators
+):
     borg_mock.return_value.parser = parser
     borg_mock.return_value.generators = mock_generators
 
@@ -59,68 +58,71 @@ def test_generate_subcommands_help(borg_mock, cli_runner, sub_cmd, help_tmpl, mo
     with open(usage, "r") as f:
         epilog = f.read()
 
-    assert result.output == help_tmpl.format(
-        usage=epilog.strip()
-    )
+    assert result.output == help_tmpl.format(usage=epilog.strip())
 
     borg_mock.assert_called_once()
     borg_mock.return_value.load_generators.assert_called_once()
 
 
-@pytest.mark.parametrize("sub_cmd, args, expected", [
-    (
-        "controller",
-        ["controller", "foobar"],
-        {
-            "name": "foobar",
-            "skip": False,
-            "skip_routes": False,
-            "endpoints": (),
-        },
-    ),
-    (
-        "controller",
-        ["controller", "--skip", "--skip-routes", "my_controller"],
-        {
-            "name": "my_controller",
-            "skip": True,
-            "skip_routes": True,
-            "endpoints": (),
-        },
-    ),
-    (
-        "controller",
-        ["controller", "-S", "-R", "stock_market", "ticker", "buy:post"],
-        {
-            "name": "stock_market",
-            "skip": True,
-            "skip_routes": True,
-            "endpoints": (
-                "ticker",
-                "buy:post",
-            ),
-        },
-    ),
-    (
-        "generator",
-        ["generator", "foobar"],
-        {
-            "name": "foobar",
-            "skip": False,
-        },
-    ),
-    (
-        "generator",
-        ["generator", "--skip", "my_gen"],
-        {
-            "name": "my_gen",
-            "skip": True,
-        },
-    )
-])
+@pytest.mark.parametrize(
+    "sub_cmd, args, expected",
+    [
+        (
+            "controller",
+            ["controller", "foobar"],
+            {
+                "name": "foobar",
+                "skip": False,
+                "skip_routes": False,
+                "endpoints": (),
+            },
+        ),
+        (
+            "controller",
+            ["controller", "--skip", "--skip-routes", "my_controller"],
+            {
+                "name": "my_controller",
+                "skip": True,
+                "skip_routes": True,
+                "endpoints": (),
+            },
+        ),
+        (
+            "controller",
+            ["controller", "-S", "-R", "stock_market", "ticker", "buy:post"],
+            {
+                "name": "stock_market",
+                "skip": True,
+                "skip_routes": True,
+                "endpoints": (
+                    "ticker",
+                    "buy:post",
+                ),
+            },
+        ),
+        (
+            "generator",
+            ["generator", "foobar"],
+            {
+                "name": "foobar",
+                "skip": False,
+            },
+        ),
+        (
+            "generator",
+            ["generator", "--skip", "my_gen"],
+            {
+                "name": "my_gen",
+                "skip": True,
+            },
+        ),
+    ],
+)
 @mock.patch("fastapi_mvc.cli.generate.RunGenerator")
 @mock.patch("fastapi_mvc.cli.generate.Borg")
-def test_subcommands_with_options(borg_mock, run_gen_mock, cli_runner, sub_cmd, args, expected, mock_generators):
+def test_subcommands_with_options(
+    borg_mock, run_gen_mock, cli_runner, sub_cmd, args, expected, mock_generators
+):
     borg_mock.return_value.parser = parser
     borg_mock.return_value.generators = mock_generators
 
@@ -138,9 +140,7 @@ def test_subcommands_with_options(borg_mock, run_gen_mock, cli_runner, sub_cmd, 
         generator=mock_gen.return_value,
         options=expected,
     )
-    borg_mock.return_value.enqueue.assert_called_once_with(
-        run_gen_mock.return_value
-    )
+    borg_mock.return_value.enqueue.assert_called_once_with(run_gen_mock.return_value)
     borg_mock.return_value.execute.assert_called_once()
 
 

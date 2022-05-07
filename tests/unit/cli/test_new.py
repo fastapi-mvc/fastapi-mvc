@@ -37,13 +37,11 @@ def test_new_default_values(borg_mock, run_mock, cli_runner, mock_project_gen):
             "skip_codecov": False,
             "skip_install": False,
             "license": "MIT",
-            "repo_url": "https://your.repo.url.here"
-        }
+            "repo_url": "https://your.repo.url.here",
+        },
     )
 
-    borg_mock.return_value.enqueue.assert_called_once_with(
-        run_mock.return_value
-    )
+    borg_mock.return_value.enqueue.assert_called_once_with(run_mock.return_value)
     borg_mock.return_value.execute.assert_called_once()
 
 
@@ -63,7 +61,7 @@ def test_new_default_values(borg_mock, run_mock, cli_runner, mock_project_gen):
                 "LGPLv3+",
                 "--repo-url",
                 "https://github.com/gandalf/gondorapi",
-                "test-project"
+                "test-project",
             ],
             {
                 "app_path": "test-project",
@@ -75,8 +73,8 @@ def test_new_default_values(borg_mock, run_mock, cli_runner, mock_project_gen):
                 "skip_codecov": True,
                 "skip_install": True,
                 "license": "LGPLv3+",
-                "repo_url": "https://github.com/gandalf/gondorapi"
-            }
+                "repo_url": "https://github.com/gandalf/gondorapi",
+            },
         ),
         (
             [
@@ -103,14 +101,16 @@ def test_new_default_values(borg_mock, run_mock, cli_runner, mock_project_gen):
                 "skip_codecov": True,
                 "skip_install": True,
                 "license": "LGPLv3+",
-                "repo_url": "https://github.com/gandalf/gondorapi"
-            }
-        )
-    ]
+                "repo_url": "https://github.com/gandalf/gondorapi",
+            },
+        ),
+    ],
 )
 @mock.patch("fastapi_mvc.cli.new.RunGenerator")
 @mock.patch("fastapi_mvc.cli.new.Borg")
-def test_new_with_options(borg_mock, run_mock, cli_runner, mock_project_gen, args, expected):
+def test_new_with_options(
+    borg_mock, run_mock, cli_runner, mock_project_gen, args, expected
+):
     with mock.patch("fastapi_mvc.cli.new.ProjectGenerator", new=mock_project_gen):
         result = cli_runner.invoke(get_new_cmd(), args)
         assert result.exit_code == 0
@@ -121,7 +121,5 @@ def test_new_with_options(borg_mock, run_mock, cli_runner, mock_project_gen, arg
         options=expected,
     )
 
-    borg_mock.return_value.enqueue.assert_called_once_with(
-        run_mock.return_value
-    )
+    borg_mock.return_value.enqueue.assert_called_once_with(run_mock.return_value)
     borg_mock.return_value.execute.assert_called_once()

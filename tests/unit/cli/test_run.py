@@ -67,13 +67,11 @@ def test_run_default_values(borg_mock, shell_mock, cli_runner):
                     "test_app.app.asgi:application",
                 ],
                 cwd="/path/to/project",
-            )
+            ),
         ]
     )
 
-    borg_mock.return_value.enqueue.assert_has_calls(
-        shell_mock.return_value
-    )
+    borg_mock.return_value.enqueue.assert_has_calls(shell_mock.return_value)
     borg_mock.return_value.execute.assert_called_once()
 
 
@@ -95,7 +93,7 @@ def test_run_default_values(borg_mock, shell_mock, cli_runner):
                     "test_app.app.asgi:application",
                 ],
                 "cwd": "/path/to/project",
-            }
+            },
         ),
         (
             ["--host", "192.168.0.10", "-p", "9001"],
@@ -112,7 +110,7 @@ def test_run_default_values(borg_mock, shell_mock, cli_runner):
                     "test_app.app.asgi:application",
                 ],
                 "cwd": "/path/to/project",
-            }
+            },
         ),
         (
             ["--host", "192.168.0.10", "-p", "9001", "--skip-install"],
@@ -129,9 +127,9 @@ def test_run_default_values(borg_mock, shell_mock, cli_runner):
                     "test_app.app.asgi:application",
                 ],
                 "cwd": "/path/to/project",
-            }
-        )
-    ]
+            },
+        ),
+    ],
 )
 @mock.patch("fastapi_mvc.cli.run.RunShell")
 @mock.patch("fastapi_mvc.cli.run.Borg")
@@ -163,7 +161,5 @@ def test_run_with_options(borg_mock, shell_mock, cli_runner, args, expected):
     calls.append(mock.call(**expected))
 
     shell_mock.assert_has_calls(calls)
-    borg_mock.return_value.enqueue.assert_has_calls(
-        shell_mock.return_value
-    )
+    borg_mock.return_value.enqueue.assert_has_calls(shell_mock.return_value)
     borg_mock.return_value.execute.assert_called_once()

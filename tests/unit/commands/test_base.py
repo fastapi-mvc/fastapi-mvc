@@ -4,10 +4,7 @@ import mock
 from fastapi_mvc.commands import Command
 
 
-@mock.patch.multiple(
-    "fastapi_mvc.commands.base.Command",
-    __abstractmethods__=set()
-)
+@mock.patch.multiple("fastapi_mvc.commands.base.Command", __abstractmethods__=set())
 def test_base_command():
     command = Command()
     command.execute()

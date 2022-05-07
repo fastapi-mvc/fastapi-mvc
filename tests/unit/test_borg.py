@@ -31,7 +31,9 @@ def test_borg(parser_mock, invoker_mock, getcwd_mock, getenv_mock, isdir_mock):
 
     first = Borg()
 
-    assert str(first) == "We are the Borg. You will be assimilated. Resistance is futile."
+    assert (
+        str(first) == "We are the Borg. You will be assimilated. Resistance is futile."
+    )
     assert not first.parser
     assert sorted(first.generators.keys()) == ["controller", "generator"]
     assert issubclass(first.generators["controller"], Generator)
@@ -54,7 +56,9 @@ def test_borg(parser_mock, invoker_mock, getcwd_mock, getenv_mock, isdir_mock):
     assert issubclass(second.generators["generator"], Generator)
     assert second.generators["generator"].__name__ == "GeneratorGenerator"
     assert issubclass(second.generators["MyControllerGenerator"], Generator)
-    assert second.generators["MyControllerGenerator"].__name__ == "MyControllerGenerator"
+    assert (
+        second.generators["MyControllerGenerator"].__name__ == "MyControllerGenerator"
+    )
     assert issubclass(second.generators["foobar"], Generator)
     assert second.generators["foobar"].__name__ == "FoobarGenerator"
     assert len(second._imported_paths) == 2
@@ -79,9 +83,9 @@ def test_borg(parser_mock, invoker_mock, getcwd_mock, getenv_mock, isdir_mock):
     getenv_mock.assert_has_calls(
         [
             mock.call("HOME"),
-            mock.call("POETRY_HOME", '/custom/poetry/.poetry'),
+            mock.call("POETRY_HOME", "/custom/poetry/.poetry"),
             mock.call("HOME"),
-            mock.call("POETRY_HOME", '/custom/poetry/.poetry'),
+            mock.call("POETRY_HOME", "/custom/poetry/.poetry"),
         ]
     )
     isdir_mock.assert_any_call("/path/to/project/test_app")

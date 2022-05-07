@@ -20,9 +20,9 @@ from fastapi_mvc.commands import RunGenerator
             "skip_codecov": True,
             "skip_install": False,
             "license": "ISC",
-            "repo_url": "https://scm.test/repo"
-        }
-    ]
+            "repo_url": "https://scm.test/repo",
+        },
+    ],
 )
 def test_execute(options):
     generator = mock.Mock()

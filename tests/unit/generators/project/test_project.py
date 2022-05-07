@@ -10,12 +10,7 @@ from fastapi_mvc.generators import ProjectGenerator
 from fastapi_mvc.version import __version__
 
 
-CONTROLLER_DIR = os.path.abspath(
-    os.path.join(
-        inspect.getfile(ProjectGenerator),
-        "../"
-    )
-)
+CONTROLLER_DIR = os.path.abspath(os.path.join(inspect.getfile(ProjectGenerator), "../"))
 
 
 @pytest.fixture
@@ -25,10 +20,7 @@ def gen_obj():
 
 def test_class_variables():
     assert ProjectGenerator.name == "new"
-    assert ProjectGenerator.template == os.path.join(
-        CONTROLLER_DIR,
-        "template"
-    )
+    assert ProjectGenerator.template == os.path.join(CONTROLLER_DIR, "template")
     assert not ProjectGenerator.usage
     assert ProjectGenerator.category == "Project"
 
@@ -96,10 +88,13 @@ def test_class_variables():
     assert ProjectGenerator.cli_options[8].envvar == "REPO_URL"
 
     assert ProjectGenerator.cli_short_help == "Create a new FastAPI application."
-    assert ProjectGenerator.cli_help == """\
+    assert (
+        ProjectGenerator.cli_help
+        == """\
     The 'fastapi-mvc new' command creates a new FastAPI application with a
     default directory structure and configuration at the path you specify.
     """
+    )
 
 
 @pytest.mark.parametrize(
@@ -116,7 +111,7 @@ def test_class_variables():
                 "skip_codecov": False,
                 "skip_install": False,
                 "license": "MIT",
-                "repo_url": "https://your.repo.url.here"
+                "repo_url": "https://your.repo.url.here",
             },
             {
                 "project_name": "test-project",
@@ -146,7 +141,7 @@ def test_class_variables():
                 "skip_codecov": True,
                 "skip_install": True,
                 "license": "Apache2.0",
-                "repo_url": "https://scm.test/repo"
+                "repo_url": "https://scm.test/repo",
             },
             {
                 "project_name": "test-project",
@@ -214,7 +209,7 @@ def test_new_dir_exists(cookie_mock, utils_mock, gen_obj):
             skip_codecov=False,
             skip_install=False,
             license="MIT",
-            repo_url="https://your.repo.url.here"
+            repo_url="https://your.repo.url.here",
         )
 
     utils_mock.get_git_user_info.assert_called_once()
