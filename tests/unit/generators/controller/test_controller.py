@@ -26,7 +26,7 @@ def gen_obj():
     yield ControllerGenerator(parser=parser)
 
 
-def test_class_attrs():
+def test_class_variables():
     assert ControllerGenerator.name == "controller"
     assert ControllerGenerator.template == os.path.join(
         CONTROLLER_DIR,
