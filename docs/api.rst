@@ -29,6 +29,10 @@ Generators
    :members:
    :show-inheritance:
 
+.. autoclass:: fastapi_mvc.generators.ProjectGenerator
+   :members:
+   :show-inheritance:
+
 .. autoclass:: fastapi_mvc.generators.ControllerGenerator
    :members:
    :show-inheritance:
@@ -67,7 +71,9 @@ CLI
 
 .. autofunction:: fastapi_mvc.cli.run.run
 
-.. autofunction:: fastapi_mvc.cli.new.new
+.. autofunction:: fastapi_mvc.cli.new.get_new_cmd
+
+.. autofunction:: fastapi_mvc.cli.new.invoke_generator
 
 .. autofunction:: fastapi_mvc.cli.generate.get_generate_cmd
 
