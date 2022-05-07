@@ -43,7 +43,7 @@ class ProjectGenerator(Generator):
         )
     )
     usage = None
-    category = None
+    category = "Project"
     cli_arguments = [
         click.Argument(
             param_decls=["APP_PATH"],
@@ -85,7 +85,7 @@ class ProjectGenerator(Generator):
         ),
         click.Option(
             param_decls=["-I", "--skip-install"],
-            help="Dont run make install",
+            help="Do not run make install.",
             is_flag=True,
         ),
         click.Option(
@@ -143,12 +143,12 @@ class ProjectGenerator(Generator):
 
         context = {
             "project_name": app_name,
-            "redis": skip_redis,
-            "aiohttp": skip_aiohttp,
-            "github_actions": skip_actions,
-            "vagrantfile": skip_vagrantfile,
-            "helm": skip_helm,
-            "codecov": skip_codecov,
+            "redis": self._get_value(skip_redis),
+            "aiohttp": self._get_value(skip_aiohttp),
+            "github_actions": self._get_value(skip_actions),
+            "vagrantfile": self._get_value(skip_vagrantfile),
+            "helm": self._get_value(skip_helm),
+            "codecov": self._get_value(skip_codecov),
             "author": author,
             "email": email,
             "license": license,
