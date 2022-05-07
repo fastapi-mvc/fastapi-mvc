@@ -115,7 +115,7 @@ class ProjectGenerator(Generator):
             type=click.STRING,
             envvar="REPO_URL",
             default="https://your.repo.url.here",
-        )
+        ),
     ]
     cli_short_help = "Create a new FastAPI application."
     cli_help = """\
@@ -125,14 +125,49 @@ class ProjectGenerator(Generator):
 
     @staticmethod
     def _get_value(value):
+        """Parse boolean value to yes/no string for cookiecutter context.
+
+        Args:
+            value (bool): Given value.
+
+        Returns:
+            str: Parsed value.
+
+        """
         if value:
             return "no"
         else:
             return "yes"
 
-    def new(self, app_path, skip_redis, skip_aiohttp, skip_actions,
-            skip_vagrantfile, skip_helm, skip_install, skip_codecov, license,
-            repo_url):
+    def new(
+        self,
+        app_path,
+        skip_redis,
+        skip_aiohttp,
+        skip_actions,
+        skip_vagrantfile,
+        skip_helm,
+        skip_install,
+        skip_codecov,
+        license,
+        repo_url,
+    ):
+        """Generate a new fastapi-mvc project.
+
+        Args:
+            app_path (str): Given new project path.
+            skip_redis (bool): If true skip Redis files.
+            skip_aiohttp (bool): If true skip aiohttp utility files.
+            skip_actions (bool): If true skip GitHub actions files.
+            skip_vagrantfile (bool): If true skip Vagrantfile.
+            skip_helm (bool): If true skip Helm chart files.
+            skip_install (bool): If true skip ``make install`` once project is
+                generated.
+            skip_codecov (bool): If true skip codecov in GitHub actions.
+            license (str): Project license.
+            repo_url (str): Project repository url.
+
+        """
         app_name = os.path.basename(app_path)
         output_dir = os.path.dirname(app_path)
 

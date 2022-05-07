@@ -8,7 +8,7 @@ from fastapi_mvc.generators import ProjectGenerator
 
 @click.pass_context
 def invoke_generator(ctx, **params):
-    """Invoke generator associated with invoked generate subcommand.
+    """Invoke project generator.
 
     Args:
         ctx (click.Context): Click Context class object instance.
@@ -25,6 +25,12 @@ def invoke_generator(ctx, **params):
 
 
 def get_new_cmd():
+    """Return command-line interface new command.
+
+    Returns:
+        GeneratorCommand: Class object instance.
+
+    """
     return GeneratorCommand(
         generator_cls=ProjectGenerator,
         callback=invoke_generator,
