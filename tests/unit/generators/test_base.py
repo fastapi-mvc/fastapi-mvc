@@ -15,10 +15,7 @@ DATA_DIR = os.path.abspath(
 )
 
 
-@mock.patch.multiple(
-    "fastapi_mvc.generators.base.Generator",
-    __abstractmethods__=set()
-)
+@mock.patch.multiple("fastapi_mvc.generators.base.Generator", __abstractmethods__=set())
 def test_base_generator():
     assert Generator.name == NotImplemented
     assert Generator.template == NotImplemented
@@ -55,16 +52,13 @@ def test_base_generator():
 
 def test_init_subclass():
     with pytest.raises(NotImplementedError):
-        type('SubClass', (Generator,), {})
+        type("SubClass", (Generator,), {})
 
-    obj = type('SubClass', (Generator,), {"template": "/some/path"})
+    obj = type("SubClass", (Generator,), {"template": "/some/path"})
     obj.name = "SubClass"
 
 
-@mock.patch.multiple(
-    "fastapi_mvc.generators.base.Generator",
-    __abstractmethods__=set()
-)
+@mock.patch.multiple("fastapi_mvc.generators.base.Generator", __abstractmethods__=set())
 def test_read_usage():
     assert not Generator.read_usage()
 

@@ -7,10 +7,7 @@ from fastapi_mvc.commands import RunShell
 @pytest.mark.parametrize(
     "options",
     [
-        {
-            "cmd": ["make", "install"],
-            "cwd": ["/some/path/to/dir"]
-        },
+        {"cmd": ["make", "install"], "cwd": ["/some/path/to/dir"]},
         {
             "cmd": ["echo"],
         },
@@ -20,8 +17,8 @@ from fastapi_mvc.commands import RunShell
             "check": True,
             "stdout": "/tmp/stdout",
             "stderr": "/tmp/stderr",
-        }
-    ]
+        },
+    ],
 )
 @mock.patch("fastapi_mvc.commands.run_shell.ShellUtils")
 def test_execute(utils_mock, options):

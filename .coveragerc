@@ -2,5 +2,5 @@
 omit =
     fastapi_mvc/generators/controller/template/*
     fastapi_mvc/generators/generator/template/*
-    fastapi_mvc/template/*
+    fastapi_mvc/generators/project/template/*
     fastapi_mvc/__main__.py

@@ -4,6 +4,7 @@ import pytest
 import mock
 from click.testing import CliRunner
 from fastapi_mvc import Borg
+from fastapi_mvc.generators import ProjectGenerator
 
 
 DATA_DIR = os.path.abspath(
@@ -14,13 +15,7 @@ DATA_DIR = os.path.abspath(
 )
 
 
-@pytest.fixture
-def cli_runner():
-    yield CliRunner()
-
-
-@pytest.fixture
-def mock_generators():
+def create_mock_generators(generators):
     """Create mocks based on builtins and test generators.
 
     Programmatically creating generators mocks to unit test programmatically
@@ -36,16 +31,13 @@ def mock_generators():
     magic tool/function to inherit data from mock object created out of mock
     object which kinda imitates class.
 
+    Args:
+        generators (typing.List[Generator]): List of generators to mock.
+
+    Returns:
+        typing.Dict[str, mock.Mock]: Mocks generators.
+
     """
-    # Reset shared state for clean consistent test environment.
-    Borg._Borg__shared_state = dict()
-
-    borg = Borg()
-    borg.import_paths.clear()
-    borg.import_paths.add(os.path.join(DATA_DIR, "lib/generators"))
-    borg.load_generators()
-    generators = borg.generators.values()
-
     mock_gens = dict()
     class_variables = [
         "name",
@@ -74,4 +66,27 @@ def mock_generators():
         cls_mock.return_value = obj_mock
         mock_gens[cls_mock.name] = cls_mock
 
-    yield mock_gens
+    return mock_gens
+
+
+@pytest.fixture
+def cli_runner():
+    yield CliRunner()
+
+
+@pytest.fixture
+def mock_generators():
+    # Reset shared state for clean consistent test environment.
+    Borg._Borg__shared_state = dict()
+
+    borg = Borg()
+    borg.import_paths.clear()
+    borg.import_paths.add(os.path.join(DATA_DIR, "lib/generators"))
+    borg.load_generators()
+
+    yield create_mock_generators(borg.generators.values())
+
+
+@pytest.fixture
+def mock_project_gen():
+    yield create_mock_generators([ProjectGenerator])[ProjectGenerator.name]

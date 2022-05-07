@@ -8,10 +8,7 @@ from fastapi_mvc.generators import ControllerGenerator
 
 
 CONTROLLER_DIR = os.path.abspath(
-    os.path.join(
-        inspect.getfile(ControllerGenerator),
-        "../"
-    )
+    os.path.join(inspect.getfile(ControllerGenerator), "../")
 )
 
 
@@ -26,16 +23,10 @@ def gen_obj():
     yield ControllerGenerator(parser=parser)
 
 
-def test_class_attrs():
+def test_class_variables():
     assert ControllerGenerator.name == "controller"
-    assert ControllerGenerator.template == os.path.join(
-        CONTROLLER_DIR,
-        "template"
-    )
-    assert ControllerGenerator.usage == os.path.join(
-        CONTROLLER_DIR,
-        "template/USAGE"
-    )
+    assert ControllerGenerator.template == os.path.join(CONTROLLER_DIR, "template")
+    assert ControllerGenerator.usage == os.path.join(CONTROLLER_DIR, "template/USAGE")
     assert ControllerGenerator.category == "Builtins"
 
     assert len(ControllerGenerator.cli_arguments) == 2
@@ -63,46 +54,49 @@ def test_object_attrs(gen_obj):
     assert gen_obj._parser == parser
 
 
-@pytest.mark.parametrize("kwargs, expected_ctx", [
-    (
-        {
-            "name": "test-controller",
-            "skip": False,
-            "skip_routes": False,
-            "endpoints": (),
-        },
-        {
-            "package_name": "test_app",
-            "folder_name": "test-app",
-            "controller_name": "test_controller",
-            "controller_endpoints": {},
-            "skip_routes": False
-        },
-    ),
-    (
-        {
-            "name": "stock_market",
-            "skip": True,
-            "skip_routes": True,
-            "endpoints": (
-                "ticker",
-                "buy:post",
-                "sell:delete",
-            )
-        },
-        {
-            "package_name": "test_app",
-            "folder_name": "test-app",
-            "controller_name": "stock_market",
-            "controller_endpoints": {
-                "ticker": "get",
-                "buy": "post",
-                "sell": "delete",
+@pytest.mark.parametrize(
+    "kwargs, expected_ctx",
+    [
+        (
+            {
+                "name": "test-controller",
+                "skip": False,
+                "skip_routes": False,
+                "endpoints": (),
             },
-            "skip_routes": True
-        },
-    )
-])
+            {
+                "package_name": "test_app",
+                "folder_name": "test-app",
+                "controller_name": "test_controller",
+                "controller_endpoints": {},
+                "skip_routes": False,
+            },
+        ),
+        (
+            {
+                "name": "stock_market",
+                "skip": True,
+                "skip_routes": True,
+                "endpoints": (
+                    "ticker",
+                    "buy:post",
+                    "sell:delete",
+                ),
+            },
+            {
+                "package_name": "test_app",
+                "folder_name": "test-app",
+                "controller_name": "stock_market",
+                "controller_endpoints": {
+                    "ticker": "get",
+                    "buy": "post",
+                    "sell": "delete",
+                },
+                "skip_routes": True,
+            },
+        ),
+    ],
+)
 @mock.patch("fastapi_mvc.generators.controller.controller.cookiecutter")
 def test_new(cookie_mock, kwargs, expected_ctx, gen_obj):
     gen_obj.new(**kwargs)

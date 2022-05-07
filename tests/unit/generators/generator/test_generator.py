@@ -7,10 +7,7 @@ from fastapi_mvc.generators import GeneratorGenerator, Generator
 
 
 CONTROLLER_DIR = os.path.abspath(
-    os.path.join(
-        inspect.getfile(GeneratorGenerator),
-        "../"
-    )
+    os.path.join(inspect.getfile(GeneratorGenerator), "../")
 )
 
 
@@ -27,14 +24,8 @@ def gen_obj():
 
 def test_class_variables():
     assert GeneratorGenerator.name == "generator"
-    assert GeneratorGenerator.template == os.path.join(
-        CONTROLLER_DIR,
-        "template"
-    )
-    assert GeneratorGenerator.usage == os.path.join(
-        CONTROLLER_DIR,
-        "template/USAGE"
-    )
+    assert GeneratorGenerator.template == os.path.join(CONTROLLER_DIR, "template")
+    assert GeneratorGenerator.usage == os.path.join(CONTROLLER_DIR, "template/USAGE")
     assert GeneratorGenerator.category == "Builtins"
     assert GeneratorGenerator.cli_arguments == Generator.cli_arguments
     assert GeneratorGenerator.cli_options == Generator.cli_options
@@ -45,32 +36,35 @@ def test_object_attrs(gen_obj):
     assert gen_obj._builtins == ["controller", "generator"]
 
 
-@pytest.mark.parametrize("kwargs, expected_ctx", [
-    (
-        {
-            "name": "test-generator",
-            "skip": False,
-        },
-        {
-            "package_name": "test_app",
-            "folder_name": "test-app",
-            "generator_name": "test_generator",
-            "class_name": "TestGeneratorGenerator",
-        },
-    ),
-    (
-        {
-            "name": "scaffold",
-            "skip": True,
-        },
-        {
-            "package_name": "test_app",
-            "folder_name": "test-app",
-            "generator_name": "scaffold",
-            "class_name": "ScaffoldGenerator",
-        },
-    )
-])
+@pytest.mark.parametrize(
+    "kwargs, expected_ctx",
+    [
+        (
+            {
+                "name": "test-generator",
+                "skip": False,
+            },
+            {
+                "package_name": "test_app",
+                "folder_name": "test-app",
+                "generator_name": "test_generator",
+                "class_name": "TestGeneratorGenerator",
+            },
+        ),
+        (
+            {
+                "name": "scaffold",
+                "skip": True,
+            },
+            {
+                "package_name": "test_app",
+                "folder_name": "test-app",
+                "generator_name": "scaffold",
+                "class_name": "ScaffoldGenerator",
+            },
+        ),
+    ],
+)
 @mock.patch("fastapi_mvc.generators.generator.generator.cookiecutter")
 def test_new(cookie_mock, kwargs, expected_ctx, gen_obj):
     gen_obj.new(**kwargs)
@@ -90,16 +84,19 @@ def test_new(cookie_mock, kwargs, expected_ctx, gen_obj):
     )
 
 
-@pytest.mark.parametrize("kwargs", [
-    {
-        "name": "controller",
-        "skip": False,
-    },
-    {
-        "name": "generator",
-        "skip": False,
-    }
-])
+@pytest.mark.parametrize(
+    "kwargs",
+    [
+        {
+            "name": "controller",
+            "skip": False,
+        },
+        {
+            "name": "generator",
+            "skip": False,
+        },
+    ],
+)
 @mock.patch("fastapi_mvc.generators.generator.generator.cookiecutter")
 def test_new_invalid(cookie_mock, kwargs, gen_obj):
     with pytest.raises(SystemExit) as ex:

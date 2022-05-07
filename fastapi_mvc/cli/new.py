@@ -1,109 +1,37 @@
 """Command-line interface - new command."""
 import click
 from fastapi_mvc import Borg
-from fastapi_mvc.commands import GenerateNewProject, RunShell
+from fastapi_mvc.cli.click_custom import GeneratorCommand
+from fastapi_mvc.commands import RunGenerator
+from fastapi_mvc.generators import ProjectGenerator
 
 
-cmd_short_help = "Create a new FastAPI application."
-cmd_help = """\
-The 'fastapi-mvc new' command creates a new FastAPI application with a
-default directory structure and configuration at the path you specify.
-"""
-
-
-@click.command(
-    help=cmd_help,
-    short_help=cmd_short_help,
-)
-@click.argument(
-    "APP_PATH",
-    nargs=1,
-    type=click.Path(exists=False),
-    required=True,
-)
-@click.option(
-    "-R",
-    "--skip-redis",
-    help="Skip Redis utility files.",
-    is_flag=True,
-)
-@click.option(
-    "-A",
-    "--skip-aiohttp",
-    help="Skip aiohttp utility files.",
-    is_flag=True,
-)
-@click.option(
-    "-V",
-    "--skip-vagrantfile",
-    help="Skip Vagrantfile.",
-    is_flag=True,
-)
-@click.option(
-    "-H",
-    "--skip-helm",
-    help="Skip Helm chart files.",
-    is_flag=True,
-)
-@click.option(
-    "-G",
-    "--skip-actions",
-    help="Skip GitHub actions files.",
-    is_flag=True,
-)
-@click.option(
-    "-C",
-    "--skip-codecov",
-    help="Skip codecov in GitHub actions.",
-    is_flag=True,
-)
-@click.option(
-    "-I",
-    "--skip-install",
-    help="Dont run make install",
-    is_flag=True,
-)
-@click.option(
-    "--license",
-    help="Choose license.",
-    type=click.Choice(
-        [
-            "MIT",
-            "BSD2",
-            "BSD3",
-            "ISC",
-            "Apache2.0",
-            "LGPLv3+",
-            "LGPLv3",
-            "LGPLv2+",
-            "LGPLv2",
-            "no",
-        ]
-    ),
-    default="MIT",
-    show_default=True,
-    envvar="LICENSE",
-)
-@click.option(
-    "--repo-url",
-    help="Repository url.",
-    type=click.STRING,
-    envvar="REPO_URL",
-    default="https://your.repo.url.here",
-)
-def new(app_path, **options):
-    """Define command-line interface new command.
+@click.pass_context
+def invoke_generator(ctx, **params):
+    """Invoke project generator.
 
     Args:
-        app_path (str): Command argument - new application path.
-        options (typing.Dict[str, typing.Any]): Map of command option names to
-            their parsed values.
+        ctx (click.Context): Click Context class object instance.
+        params (typing.Dict[str, typing.Any]): Map of command option and
+            argument names to their parsed values.
 
     """
     borg = Borg()
-    borg.enqueue(GenerateNewProject(app_path=app_path, options=options))
 
-    if not options["skip_install"]:
-        borg.enqueue(RunShell(cmd=["make", "install"], cwd=app_path))
+    generator = ctx.command.generator_cls()
 
+    borg.enqueue(RunGenerator(generator=generator, options=params))
     borg.execute()
+
+
+def get_new_cmd():
+    """Return command-line interface new command.
+
+    Returns:
+        GeneratorCommand: Class object instance.
+
+    """
+    return GeneratorCommand(
+        generator_cls=ProjectGenerator,
+        callback=invoke_generator,
+    )
