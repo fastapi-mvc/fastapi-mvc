@@ -1,17 +1,11 @@
 import os
 
-
-template_dir = os.path.abspath(
-    os.path.join(
-        os.path.abspath(__file__),
-        "../../../fastapi_mvc/template",
-    )
-)
+from fastapi_mvc.generators import ProjectGenerator
 
 
 def test_cookiecutter_template(cookies):
     result = cookies.bake(
-        template=template_dir,
+        template=ProjectGenerator.template,
         extra_context={
             "project_name": "test-project",
             "redis": "yes",
@@ -37,7 +31,7 @@ def test_cookiecutter_template(cookies):
 
 def test_cookiecutter_template_minimal(cookies):
     result = cookies.bake(
-        template=template_dir,
+        template=ProjectGenerator.template,
         extra_context={
             "project_name": "test-project",
             "redis": "no",
