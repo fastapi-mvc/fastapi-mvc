@@ -1,11 +1,13 @@
-"""{{cookiecutter.project_name}} CLI root."""
+"""Command-line interface - root."""
 import logging
 
 import click
-from {{cookiecutter.package_name}}.cli.commands.serve import serve
+from {{cookiecutter.package_name}}.cli.serve import serve
 
 
-@click.group()
+@click.group(
+    help="""{{cookiecutter.project_name}} CLI root."""
+)
 @click.option(
     "-v",
     "--verbose",
@@ -14,7 +16,13 @@ from {{cookiecutter.package_name}}.cli.commands.serve import serve
     default=False,
 )
 def cli(**options):
-    """{{cookiecutter.project_name}} CLI root."""
+    """Define command-line interface root.
+
+    Args:
+        options (typing.Dict[str, typing.Any]): Map of command option names to
+            their parsed values.
+
+    """
     if options["verbose"]:
         level = logging.DEBUG
     else:

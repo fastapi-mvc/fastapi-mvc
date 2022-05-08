@@ -1,45 +1,21 @@
-"""{{cookiecutter.project_name}} CLI serve command."""
-import os
+"""Command-line interface - serve command."""
 from multiprocessing import cpu_count
 
 import click
+from {{cookiecutter.package_name}}.cli.utils import validate_directory
 from {{cookiecutter.package_name}}.wsgi import run_wsgi
 
 
-def validate_directory(ctx, param, value):
-    """Verify that the value is a path which directory exists and is writable.
-
-    Args:
-        ctx(click.Context): Click Context object instance.
-        param(click.Option): Click Option object instance.
-        value(str): Click Option value.
-
-    Returns:
-        Original option value.
-
-    Raises:
-        click.BadParameter: If provided path value directory does not exist or
-            is not writable.
-
-    """
-    if not param.required and not value:
-        return value
-
-    dirname = os.path.dirname(value)
-
-    if not os.path.exists(dirname):
-        raise click.BadParameter(
-            "Directory '{dir}' does not exist.".format(dir=dirname)
-        )
-    elif not os.access(dirname, os.W_OK):
-        raise click.BadParameter(
-            "Directory '{dir}' is not writable.".format(dir=dirname)
-        )
-
-    return value
+cmd_short_help = "Run production server."
+cmd_help = """\
+Run production gunicorn (WSGI) server with uvicorn (ASGI) workers.
+"""
 
 
-@click.command()
+@click.command(
+    help=cmd_help,
+    short_help=cmd_short_help,
+)
 @click.option(
     "--host",
     help="Host to bind.",
@@ -96,7 +72,13 @@ def validate_directory(ctx, param, value):
     required=False,
 )
 def serve(**options):
-    """{{cookiecutter.project_name}} CLI serve command."""
+    """Define command-line interface serve command.
+
+    Args:
+         options (typing.Dict[str, typing.Any]): Map of command option names to
+            their parsed values.
+
+    """
     run_wsgi(
         host=options["host"],
         port=str(options["port"]),

@@ -2,11 +2,7 @@ import os
 
 import mock
 import pytest
-from click import BadParameter
-from {{cookiecutter.package_name}}.cli.commands.serve import (
-    serve,
-    validate_directory,
-)
+from {{cookiecutter.package_name}}.cli.serve import serve
 
 
 current_dir = os.path.dirname(__file__)
@@ -14,29 +10,9 @@ pid_file = os.path.join(current_dir, "test.pid")
 conf_file = os.path.abspath(
     os.path.join(
         current_dir,
-        "../../../../{{cookiecutter.package_name}}/config/gunicorn.conf.py"
+        "../../../{{cookiecutter.package_name}}/config/gunicorn.conf.py"
     )
 )
-
-
-def test_validate_directory():
-    result = validate_directory(mock.MagicMock(), mock.MagicMock(), current_dir)
-    assert result == current_dir
-
-    with pytest.raises(BadParameter):
-        validate_directory(
-            mock.MagicMock(), mock.MagicMock(), "/path/does/not/exist"
-        )
-
-    with mock.patch("{{cookiecutter.package_name}}.cli.commands.serve.os.access") as mck:
-        mck.return_value = False
-
-        with pytest.raises(BadParameter):
-            validate_directory(
-                mock.MagicMock(), mock.MagicMock(), os.path.abspath(__file__)
-            )
-
-        mck.assert_called_once_with(current_dir, os.W_OK)
 
 
 def test_serve_help(cli_runner):
