@@ -206,7 +206,7 @@ class ProjectGenerator(Generator):
             )
         except OutputDirExistsException as ex:
             self._log.error(ex)
-            raise ex
+            raise SystemExit(1)
 
         if not skip_install:
             ShellUtils.run_shell(cmd=["make", "install"], cwd=app_path)

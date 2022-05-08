@@ -198,7 +198,7 @@ def test_new_dir_exists(cookie_mock, utils_mock, gen_obj):
         "John Doe",
         "example@email.com",
     )
-    with pytest.raises(OutputDirExistsException):
+    with pytest.raises(SystemExit):
         gen_obj.new(
             app_path="/test/path/test-project",
             skip_redis=False,
