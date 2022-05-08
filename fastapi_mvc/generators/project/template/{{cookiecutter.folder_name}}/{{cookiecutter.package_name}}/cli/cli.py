@@ -5,9 +5,10 @@ import click
 from {{cookiecutter.package_name}}.cli.serve import serve
 
 
-@click.group(
-    help="""{{cookiecutter.project_name}} CLI root."""
-)
+cmd_help = "{{cookiecutter.project_name.capitalize()}} CLI root."
+
+
+@click.group(help=cmd_help)
 @click.option(
     "-v",
     "--verbose",

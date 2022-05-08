@@ -19,7 +19,7 @@ log = logging.getLogger(__name__)
 
 
 async def on_startup():
-    """FastAPI startup event handler.
+    """Define FastAPI startup event handler.
 
     Resources:
         1. https://fastapi.tiangolo.com/advanced/events/#startup-event
@@ -42,7 +42,7 @@ async def on_startup():
 
 
 async def on_shutdown():
-    """FastAPI shutdown event handler.
+    """Define FastAPI shutdown event handler.
 
     Resources:
         1. https://fastapi.tiangolo.com/advanced/events/#shutdown-event

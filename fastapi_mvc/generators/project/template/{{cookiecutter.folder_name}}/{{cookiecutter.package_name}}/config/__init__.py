@@ -19,4 +19,3 @@ from {{cookiecutter.package_name}}.config.application import settings
 from {{cookiecutter.package_name}}.config.redis import redis
 {%- endif %}
 from {{cookiecutter.package_name}}.config.router import router
-
