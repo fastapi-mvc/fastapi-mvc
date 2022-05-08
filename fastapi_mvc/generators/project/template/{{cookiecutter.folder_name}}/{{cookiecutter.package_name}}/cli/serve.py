@@ -75,7 +75,7 @@ def serve(**options):
     """Define command-line interface serve command.
 
     Args:
-         options (typing.Dict[str, typing.Any]): Map of command option names to
+        options (typing.Dict[str, typing.Any]): Map of command option names to
             their parsed values.
 
     """

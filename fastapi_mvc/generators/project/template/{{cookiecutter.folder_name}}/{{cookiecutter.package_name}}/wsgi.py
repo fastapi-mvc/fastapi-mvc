@@ -11,7 +11,7 @@ log = logging.getLogger(__name__)
 
 
 class ApplicationLoader(Application):
-    """Bypasses the class `WSGIApplication."""
+    """Bypasses the class WSGIApplication."""
 
     def init(self, parser, opts, args):
         """Class ApplicationLoader object constructor."""
@@ -28,7 +28,7 @@ def run_wsgi(host, port, workers, daemon=False, env=(), config=None, pid=None):
 
     if not config:
         config = os.path.join(
-            os.path.dirname(__file__), "config/gunicorn.conf.py"
+            os.path.dirname(__file__), "config/gunicorn.py"
         )
 
     sys.argv = [

@@ -10,7 +10,7 @@ pid_file = os.path.join(current_dir, "test.pid")
 conf_file = os.path.abspath(
     os.path.join(
         current_dir,
-        "../../../{{cookiecutter.package_name}}/config/gunicorn.conf.py"
+        "../../../{{cookiecutter.package_name}}/config/gunicorn.py"
     )
 )
 

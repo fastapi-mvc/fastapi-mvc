@@ -11,11 +11,11 @@ class Application(BaseSettings):
     still be used if the matching environment variable is not set.
 
     Environment variables:
-        FASTAPI_DEBUG
-        FASTAPI_PROJECT_NAME
-        FASTAPI_VERSION
-        FASTAPI_DOCS_URL
-        FASTAPI_USE_REDIS
+        * FASTAPI_DEBUG
+        * FASTAPI_PROJECT_NAME
+        * FASTAPI_VERSION
+        * FASTAPI_DOCS_URL
+        * FASTAPI_USE_REDIS
 
     Attributes:
         DEBUG (bool): FastAPI logging level. You should disable this for

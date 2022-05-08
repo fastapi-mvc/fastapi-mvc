@@ -9,7 +9,7 @@ from {{cookiecutter.package_name}}.wsgi import run_wsgi
 default_config = os.path.abspath(
     os.path.join(
         os.path.dirname(__file__),
-        "../../{{cookiecutter.package_name}}/config/gunicorn.conf.py"
+        "../../{{cookiecutter.package_name}}/config/gunicorn.py"
     )
 )
 
