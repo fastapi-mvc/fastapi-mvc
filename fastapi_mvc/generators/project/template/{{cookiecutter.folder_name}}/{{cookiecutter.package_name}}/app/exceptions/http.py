@@ -1,4 +1,4 @@
-"""HTTP exception and handler for FastAPI."""
+"""Application implementation - custom FastAPI HTTP exception with handler."""
 from typing import Any, Optional, Dict
 
 from fastapi import Request
@@ -6,7 +6,7 @@ from fastapi.responses import JSONResponse
 
 
 class HTTPException(Exception):
-    """Custom HTTPException class definition.
+    """Define custom HTTPException class definition.
 
     This exception combined with exception_handler method allows you to use it
     the same manner as you'd use FastAPI.HTTPException with one difference. You
@@ -27,9 +27,9 @@ class HTTPException(Exception):
         """Initialize HTTPException class object instance.
 
         Args:
-            status_code(int): HTTP error status code.
-            content(Any): Response body.
-            headers(Optional[Dict[str, Any]]): Additional response headers.
+            status_code (int): HTTP error status code.
+            content (Any): Response body.
+            headers (Optional[Dict[str, Any]]): Additional response headers.
 
         """
         self.status_code = status_code
@@ -57,7 +57,7 @@ class HTTPException(Exception):
 
 
 async def http_exception_handler(request: Request, exception: HTTPException):
-    """Handle HTTPException globally.
+    """Define custom HTTPException handler.
 
     In this application custom handler is added in asgi.py while initializing
     FastAPI application. This is needed in order to handle custom HTTException
@@ -67,9 +67,9 @@ async def http_exception_handler(request: Request, exception: HTTPException):
     https://fastapi.tiangolo.com/tutorial/handling-errors/#install-custom-exception-handlers
 
     Args:
-        request(starlette.requests.Request): Request class object instance.
+        request (starlette.requests.Request): Request class object instance.
             More details: https://www.starlette.io/requests/
-        exception(HTTPException): Custom HTTPException class object instance.
+        exception (HTTPException): Custom HTTPException class object instance.
 
     Returns:
         FastAPI.response.JSONResponse class object instance initialized with

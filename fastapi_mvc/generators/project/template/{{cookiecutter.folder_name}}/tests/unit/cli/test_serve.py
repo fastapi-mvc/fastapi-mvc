@@ -20,7 +20,7 @@ def test_serve_help(cli_runner):
     assert result.exit_code == 0
 
 
-@mock.patch("{{cookiecutter.package_name}}.cli.commands.serve.run_wsgi")
+@mock.patch("{{cookiecutter.package_name}}.cli.serve.run_wsgi")
 @pytest.mark.parametrize(
     "opts, expected",
     [

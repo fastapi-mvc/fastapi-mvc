@@ -4,7 +4,7 @@ import sys
 import logging
 
 from gunicorn.app.base import Application
-from {{cookiecutter.package_name}}.app.asgi import get_app
+from {{cookiecutter.package_name}}.app import get_application
 
 
 log = logging.getLogger(__name__)
@@ -19,7 +19,7 @@ class ApplicationLoader(Application):
 
     def load(self):
         """Load application."""
-        return get_app()
+        return get_application()
 
 
 def run_wsgi(host, port, workers, daemon=False, env=(), config=None, pid=None):

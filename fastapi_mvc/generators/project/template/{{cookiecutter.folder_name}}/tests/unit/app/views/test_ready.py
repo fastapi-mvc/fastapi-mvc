@@ -1,6 +1,6 @@
 import pytest
-from {{cookiecutter.package_name}}.app.models.ready import ReadyResponse
 from pydantic.error_wrappers import ValidationError
+from {{cookiecutter.package_name}}.app.views import ReadyResponse
 
 
 @pytest.mark.parametrize(

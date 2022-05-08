@@ -1,4 +1,4 @@
-"""Response models."""
+"""Application implementation - error response."""
 from typing import Dict, Any, Optional, List
 from http import HTTPStatus
 
@@ -6,12 +6,12 @@ from pydantic import BaseModel, root_validator
 
 
 class ErrorModel(BaseModel):
-    """Error model definition.
+    """Define base error model for the response.
 
     Attributes:
-        code(int): HTTP error status code.
-        message(str): Detail on HTTP error.
-        status(str): HTTP error reason-phrase as per in RFC7235. NOTE! Set
+        code (int): HTTP error status code.
+        message (str): Detail on HTTP error.
+        status (str): HTTP error reason-phrase as per in RFC7235. NOTE! Set
             automatically based on HTTP error status code.
 
     Raises:
@@ -56,7 +56,7 @@ class ErrorModel(BaseModel):
             in-place; the return value is not used.
 
             Args:
-                schema(Dict[str, Any]): The schema dictionary.
+                schema (typing.Dict[str, typing.Any]): The schema dictionary.
 
             """
             # Override schema description, by default is taken from docstring.
@@ -69,10 +69,10 @@ class ErrorModel(BaseModel):
 
 
 class ErrorResponse(BaseModel):
-    """Error response model definition.
+    """Define error response model.
 
     Attributes:
-        error(ErrorModel): ErrorModel class object instance.
+        error (ErrorModel): ErrorModel class object instance.
 
     Raises:
         pydantic.error_wrappers.ValidationError: If any of provided attribute
@@ -99,13 +99,13 @@ class ErrorResponse(BaseModel):
         def schema_extra(schema: Dict[str, Any]) -> None:
             """Post-process the generated schema.
 
-            Mathod can have one or two positional arguments. The first will be
+            Method can have one or two positional arguments. The first will be
             the schema dictionary. The second, if accepted, will be the model
             class. The callable is expected to mutate the schema dictionary
             in-place; the return value is not used.
 
             Args:
-                schema(Dict[str, Any]): The schema dictionary.
+                schema (typing.Dict[str, typing.Any]): The schema dictionary.
 
             """
             # Override schema description, by default is taken from docstring.

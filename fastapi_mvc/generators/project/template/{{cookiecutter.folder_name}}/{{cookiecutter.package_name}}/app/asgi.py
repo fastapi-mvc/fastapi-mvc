@@ -1,4 +1,4 @@
-"""Application Asynchronous Server Gateway Interface."""
+"""Application implementation - ASGI."""
 import logging
 
 from fastapi import FastAPI
@@ -19,14 +19,13 @@ log = logging.getLogger(__name__)
 
 
 async def on_startup():
-    """Fastapi startup event handler.
+    """FastAPI startup event handler.
 
-    Creates RedisClient and AiohttpClient session.
+    Resources:
+        1. https://fastapi.tiangolo.com/advanced/events/#startup-event
 
     """
     log.debug("Execute FastAPI startup event handler.")
-    # Initialize utilities for whole FastAPI application without passing object
-    # instances within the logic.
     {%- if cookiecutter.redis == "yes" and cookiecutter.aiohttp == "yes" %}
     if settings.USE_REDIS:
         await RedisClient.open_redis_client()
@@ -43,9 +42,10 @@ async def on_startup():
 
 
 async def on_shutdown():
-    """Fastapi shutdown event handler.
+    """FastAPI shutdown event handler.
 
-    Destroys RedisClient and AiohttpClient session.
+    Resources:
+        1. https://fastapi.tiangolo.com/advanced/events/#shutdown-event
 
     """
     log.debug("Execute FastAPI shutdown event handler.")
@@ -65,11 +65,11 @@ async def on_shutdown():
     {%- endif %}
 
 
-def get_app():
+def get_application():
     """Initialize FastAPI application.
 
     Returns:
-        app (FastAPI): Application object instance.
+       FastAPI: Application object instance.
 
     """
     log.debug("Initialize FastAPI application node.")
@@ -83,10 +83,7 @@ def get_app():
     )
     log.debug("Add application routes.")
     app.include_router(router)
-    # Register global exception handler for custom HTTPException.
+    log.debug("Register global exception handler for custom HTTPException.")
     app.add_exception_handler(HTTPException, http_exception_handler)
 
     return app
-
-
-application = get_app()

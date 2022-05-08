@@ -1,9 +1,13 @@
-"""Application routes configuration.
+"""Application configuration - root APIRouter.
 
-In this file all application endpoints are being defined.
+Defines all FastAPI application endpoints.
+
+Resources:
+    1. https://fastapi.tiangolo.com/tutorial/bigger-applications
+
 """
 from fastapi import APIRouter
-from {{cookiecutter.package_name}}.app.controllers.api.v1 import ready
+from {{cookiecutter.package_name}}.app.controllers import ready
 
 router = APIRouter(prefix="/api")
 

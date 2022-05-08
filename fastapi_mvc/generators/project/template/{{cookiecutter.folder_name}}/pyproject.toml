@@ -44,7 +44,7 @@ flake8-todo = "^0.7"
 black = "^21.12b0"
 
 [tool.poetry.scripts]
-{{cookiecutter.script_name}} = '{{cookiecutter.package_name}}.cli.cli:cli'
+{{cookiecutter.script_name}} = '{{cookiecutter.package_name}}.cli:cli'
 
 [tool.poetry.urls]
 "Issues" = "{{cookiecutter.repo_url}}/issues"

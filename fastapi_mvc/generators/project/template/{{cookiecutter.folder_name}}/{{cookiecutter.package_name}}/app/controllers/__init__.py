@@ -1,1 +1,1 @@
-"""{{cookiecutter.project_description}}"""
+"""Application implementation - controllers."""

@@ -1,6 +1,10 @@
 import mock
 from {{cookiecutter.package_name}}.config import settings, router
-from {{cookiecutter.package_name}}.app.asgi import get_app, on_startup, on_shutdown
+from {{cookiecutter.package_name}}.app.asgi import (
+    get_application,
+    on_startup,
+    on_shutdown,
+)
 from {{cookiecutter.package_name}}.app.exceptions import (
     HTTPException,
     http_exception_handler,
@@ -9,7 +13,7 @@ from {{cookiecutter.package_name}}.app.exceptions import (
 
 @mock.patch("{{cookiecutter.package_name}}.app.asgi.FastAPI")
 def test_get_app(mock_fastapi):
-    mock_app = get_app()
+    mock_app = get_application()
     # check init kwargs
     mock_fastapi.assert_called_once_with(
         title=settings.PROJECT_NAME,
