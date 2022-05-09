@@ -6,7 +6,7 @@ def edit_router():
     """Add import and router entry to config/router.rb if not skipped."""
     if not {{cookiecutter.skip_routes}}:
         router = os.path.join(
-            os.getcwd(), "{{cookiecutter.package_name}}/config/router.py"
+            os.getcwd(), "{{cookiecutter.package_name}}/app/router.py"
         )
         import_str = "from {0:s}.app.controllers import {1:s}\n".format(
             "{{cookiecutter.package_name}}",
@@ -28,7 +28,7 @@ def edit_router():
 
         lines.insert(index, import_str)
         lines.append(
-            "router.include_router({{cookiecutter.controller_name}}.router)\n"
+            "root_api_router.include_router({{cookiecutter.controller_name}}.router)\n"
         )
 
         with open(router, "w") as f:
