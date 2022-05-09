@@ -64,4 +64,6 @@ EXPOSE 8000/tcp
 
 STOPSIGNAL SIGINT
 
-ENTRYPOINT ["{{cookiecutter.script_name}}", "serve", "--host", "0.0.0.0"]
+ENTRYPOINT ["{{cookiecutter.script_name}}"]
+
+CMD ["serve", "--bind", "0.0.0.0:8000"]

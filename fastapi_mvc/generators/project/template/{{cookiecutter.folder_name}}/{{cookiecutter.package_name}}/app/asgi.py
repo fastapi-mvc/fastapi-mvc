@@ -2,7 +2,8 @@
 import logging
 
 from fastapi import FastAPI
-from {{cookiecutter.package_name}}.config import router, settings
+from {{cookiecutter.package_name}}.config import settings
+from {{cookiecutter.package_name}}.app.router import root_api_router
 {%- if cookiecutter.redis == "yes" and cookiecutter.aiohttp == "yes" %}
 from {{cookiecutter.package_name}}.app.utils import RedisClient, AiohttpClient
 {%- elif cookiecutter.redis == "yes" %}
@@ -14,6 +15,7 @@ from {{cookiecutter.package_name}}.app.exceptions import (
     HTTPException,
     http_exception_handler,
 )
+
 
 log = logging.getLogger(__name__)
 
@@ -82,7 +84,7 @@ def get_application():
         on_shutdown=[on_shutdown],
     )
     log.debug("Add application routes.")
-    app.include_router(router)
+    app.include_router(root_api_router)
     log.debug("Register global exception handler for custom HTTPException.")
     app.add_exception_handler(HTTPException, http_exception_handler)
 

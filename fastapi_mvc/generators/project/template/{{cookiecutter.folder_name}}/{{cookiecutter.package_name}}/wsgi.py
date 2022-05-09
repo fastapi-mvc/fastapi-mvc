@@ -1,67 +1,45 @@
 """Application Web Server Gateway Interface - gunicorn."""
-import os
-import sys
 import logging
 
-from gunicorn.app.base import Application
-from {{cookiecutter.package_name}}.app import get_application
+from gunicorn.app.base import BaseApplication
+from {{cookiecutter.package_name}}.config import gunicorn
 
 
-log = logging.getLogger(__name__)
+class ApplicationLoader(BaseApplication):
 
+    def __init__(self, application, overrides=None):
+        if not overrides:
+            overrides = dict()
 
-class ApplicationLoader(Application):
-    """Bypasses the class WSGIApplication."""
+        self._overrides = overrides
+        self._application = application
+        super().__init__()
 
-    def init(self, parser, opts, args):
-        """Class ApplicationLoader object constructor."""
-        self.cfg.set("default_proc_name", args[0])
+    def _set_cfg(self, cfg):
+        for k, v in cfg.items():
+            # Ignore unknown names
+            if k not in self.cfg.settings:
+                continue
+
+            try:
+                self.cfg.set(k.lower(), v)
+            except Exception as ex:
+                self.logger.error(
+                    "Invalid value for {key}: {val}".format(key=k, val=v)
+                )
+                raise ex
+
+    def load_config(self):
+        self.logger = logging.getLogger(self.__class__.__name__)
+        cfg = vars(gunicorn)
+
+        self._set_cfg(cfg)
+        self.init()
+
+    def init(self, parser=None, opts=None, args=None):
+        self.cfg.set("default_proc_name", "test-project")
+        self._set_cfg(self._overrides)
 
     def load(self):
         """Load application."""
-        return get_application()
-
-
-def run_wsgi(host, port, workers, daemon=False, env=(), config=None, pid=None):
-    """Run gunicorn WSGI with ASGI workers."""
-    log.info("Start gunicorn WSGI with ASGI workers.")
-
-    if not config:
-        config = os.path.join(
-            os.path.dirname(__file__), "config/gunicorn.py"
-        )
-
-    sys.argv = [
-        "--gunicorn",
-        "-c",
-        config,
-        "-w",
-        workers,
-        "-b {host}:{port}".format(
-            host=host,
-            port=port,
-        ),
-    ]
-
-    if daemon:
-        sys.argv.append("--daemon")
-
-    for var in env:
-        sys.argv.append("--env")
-        sys.argv.append(var)
-
-    if pid:
-        sys.argv.append("--pid")
-        sys.argv.append(pid)
-
-    sys.argv.append("{{cookiecutter.package_name}}.app.asgi:application")
-
-    ApplicationLoader().run()
-
-
-if __name__ == "__main__":
-    run_wsgi(
-        host=os.getenv("FASTAPI_HOST", "127.0.0.1"),
-        port=os.getenv("FASTAPI_PORT", "8000"),
-        workers=int(os.getenv("FASTAPI_WORKERS", 2)),
-    )
+        return self._application

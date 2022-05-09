@@ -5,8 +5,8 @@ Resources:
 
 """
 {%- if cookiecutter.aiohttp == "yes" %}
-from .aiohttp_client import AiohttpClient
+from {{cookiecutter.package_name}}.app.utils.aiohttp_client import AiohttpClient
 {%- endif %}
 {%- if cookiecutter.redis == "yes" %}
-from .redis import RedisClient
+from {{cookiecutter.package_name}}.app.utils.redis import RedisClient
 {%- endif %}

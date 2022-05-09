@@ -17,5 +17,4 @@ Resources:
 from {{cookiecutter.package_name}}.config.application import settings
 {%- if cookiecutter.redis == "yes" %}
 from {{cookiecutter.package_name}}.config.redis import redis
-{%- endif %}
-from {{cookiecutter.package_name}}.config.router import router
+{% endif %}

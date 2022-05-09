@@ -2,8 +2,9 @@
 from multiprocessing import cpu_count
 
 import click
+from {{cookiecutter.package_name}} import ApplicationLoader
+from {{cookiecutter.package_name}}.app import get_application
 from {{cookiecutter.package_name}}.cli.utils import validate_directory
-from {{cookiecutter.package_name}}.wsgi import run_wsgi
 
 
 cmd_short_help = "Run production server."
@@ -17,30 +18,17 @@ Run production gunicorn (WSGI) server with uvicorn (ASGI) workers.
     short_help=cmd_short_help,
 )
 @click.option(
-    "--host",
+    "--bind",
     help="Host to bind.",
     type=click.STRING,
-    default="127.0.0.1",
     required=False,
-    show_default=True,
-)
-@click.option(
-    "-p",
-    "--port",
-    help="Port to bind.",
-    type=click.INT,
-    default=8000,
-    required=False,
-    show_default=True,
 )
 @click.option(
     "-w",
     "--workers",
     help="The number of worker processes for handling requests.",
     type=click.IntRange(min=1, max=cpu_count()),
-    default=2,
     required=False,
-    show_default=True,
 )
 @click.option(
     "-D",
@@ -52,39 +40,37 @@ Run production gunicorn (WSGI) server with uvicorn (ASGI) workers.
 @click.option(
     "-e",
     "--env",
+    "raw_env",
     help="Set environment variables in the execution environment.",
     type=click.STRING,
     multiple=True,
     required=False,
 )
 @click.option(
-    "-c",
-    "--config",
-    help="Uses a custom gunicorn.conf.py configuration",
-    type=click.Path(exists=True, file_okay=True, readable=True),
-    required=False,
-)
-@click.option(
     "--pid",
+    "pidfile",
     help="Specifies the PID file.",
     type=click.Path(),
     callback=validate_directory,
     required=False,
 )
-def serve(**options):
+@click.pass_context
+def serve(ctx, **options):
     """Define command-line interface serve command.
 
     Args:
+        ctx (click.Context): Click Context class object instance.
         options (typing.Dict[str, typing.Any]): Map of command option names to
             their parsed values.
 
     """
-    run_wsgi(
-        host=options["host"],
-        port=str(options["port"]),
-        workers=str(options["workers"]),
-        daemon=options["daemon"],
-        env=options["env"],
-        config=options["config"],
-        pid=options["pid"],
-    )
+    overrides = dict()
+
+    for key, value in options.items():
+        if ctx.get_parameter_source(key).name == "COMMANDLINE":
+            overrides[key] = value
+
+    ApplicationLoader(
+        application=get_application(),
+        overrides=overrides,
+    ).run()

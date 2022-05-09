@@ -1,65 +1,62 @@
-import sys
-import os
-
 import mock
 import pytest
-from {{cookiecutter.package_name}}.wsgi import run_wsgi
+from gunicorn.app.base import BaseApplication
+from {{cookiecutter.package_name}} import ApplicationLoader
 
 
-default_config = os.path.abspath(
-    os.path.join(
-        os.path.dirname(__file__),
-        "../../{{cookiecutter.package_name}}/config/gunicorn.py"
+@mock.patch.object(BaseApplication, "run")
+def test_wsgi_conf_defaults(run_mock):
+    app = mock.Mock()
+    wsgi = ApplicationLoader(app)
+    assert wsgi.load() == app
+    assert wsgi.cfg.worker_class_str == "uvicorn.workers.UvicornWorker"
+
+    assert wsgi.cfg.address == [("127.0.0.1", 8000)]
+    assert wsgi.cfg.env == {}
+
+    assert wsgi.cfg.settings["bind"].value == ["127.0.0.1:8000"]
+    assert wsgi.cfg.settings["raw_env"].value == []
+    assert wsgi.cfg.settings["workers"].value == 2
+    assert not wsgi.cfg.settings["daemon"].value
+    assert not wsgi.cfg.settings["pidfile"].value
+
+    wsgi.run()
+    run_mock.assert_called_once()
+
+
+@mock.patch.object(BaseApplication, "run")
+def test_wsgi_cli_overrides(run_mock):
+    app = mock.Mock()
+    wsgi = ApplicationLoader(
+        application=app,
+        overrides={
+            "raw_env": ("FOOBAR=123",),
+            "bind": "0.0.0.0:3000",
+            "workers": 3,
+            "daemon": True,
+            "pidfile": "/tmp/api.pid"
+        }
     )
-)
+    assert wsgi.cfg.address == [("0.0.0.0", 3000)]
+    assert wsgi.cfg.env == {"FOOBAR": "123"}
+
+    assert wsgi.cfg.settings["bind"].value == ["0.0.0.0:3000"]
+    assert wsgi.cfg.settings["raw_env"].value == ["FOOBAR=123"]
+    assert wsgi.cfg.settings["workers"].value == 3
+    assert wsgi.cfg.settings["daemon"].value
+    assert wsgi.cfg.settings["pidfile"].value == "/tmp/api.pid"
+
+    wsgi.run()
+    run_mock.assert_called_once()
 
 
-@mock.patch("{{cookiecutter.package_name}}.wsgi.ApplicationLoader")
-@pytest.mark.parametrize(
-    "kwargs, expected",
-    [
-        (
-            {"host": "localhost", "port": "5555", "workers": "2"},
-            [
-                "--gunicorn",
-                "-c",
-                default_config,
-                "-w",
-                "2",
-                "-b localhost:5555",
-                "{{cookiecutter.package_name}}.app.asgi:application",
-            ],
-        ),
-        (
-            {
-                "host": "0.0.0.0",
-                "port": "80",
-                "workers": "2",
-                "daemon": True,
-                "config": "/custom/gunicorn.conf.py",
-                "env": ("FOO=BAR", "USE_FORCE=True"),
-                "pid": "/path/to/file.pid",
-            },
-            [
-                "--gunicorn",
-                "-c",
-                "/custom/gunicorn.conf.py",
-                "-w",
-                "2",
-                "-b 0.0.0.0:80",
-                "--daemon",
-                "--env",
-                "FOO=BAR",
-                "--env",
-                "USE_FORCE=True",
-                "--pid",
-                "/path/to/file.pid",
-                "{{cookiecutter.package_name}}.app.asgi:application",
-            ],
-        ),
-    ],
-)
-def test_run_wsgi(loader_mock, kwargs, expected):
-    run_wsgi(**kwargs)
-    loader_mock.assert_called_once()
-    assert sys.argv == expected
+def test_wsgi_bad_config():
+    app = mock.Mock()
+    with pytest.raises(SystemExit):
+        ApplicationLoader(
+            application=app,
+            overrides={
+                "unknown": True,
+                "workers": None,
+            }
+        )

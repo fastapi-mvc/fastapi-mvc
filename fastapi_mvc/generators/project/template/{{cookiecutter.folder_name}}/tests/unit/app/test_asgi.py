@@ -1,5 +1,6 @@
 import mock
-from {{cookiecutter.package_name}}.config import settings, router
+from {{cookiecutter.package_name}}.config import settings
+from {{cookiecutter.package_name}}.app.router import root_api_router
 from {{cookiecutter.package_name}}.app.asgi import (
     get_application,
     on_startup,
@@ -24,7 +25,7 @@ def test_get_app(mock_fastapi):
         on_shutdown=[on_shutdown],
     )
 
-    mock_app.include_router.assert_called_once_with(router)
+    mock_app.include_router.assert_called_once_with(root_api_router)
     mock_app.add_exception_handler.assert_called_once_with(
         HTTPException, http_exception_handler
     )

@@ -1,6 +1,7 @@
 """This project was generated with fastapi-mvc."""
 import logging
 
+from {{cookiecutter.package_name}}.wsgi import ApplicationLoader
 from {{cookiecutter.package_name}}.version import __version__  # noqa: F401
 
 # initialize logging

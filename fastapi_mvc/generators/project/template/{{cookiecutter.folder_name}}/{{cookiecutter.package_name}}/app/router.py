@@ -9,6 +9,6 @@ Resources:
 from fastapi import APIRouter
 from {{cookiecutter.package_name}}.app.controllers import ready
 
-router = APIRouter(prefix="/api")
+root_api_router = APIRouter(prefix="/api")
 
-router.include_router(ready.router, tags=["ready"])
+root_api_router.include_router(ready.router, tags=["ready"])

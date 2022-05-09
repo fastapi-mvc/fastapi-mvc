@@ -1,0 +1,4 @@
+[run]
+omit =
+    {{cookiecutter.package_name}}/config/gunicorn.py
+    {{cookiecutter.package_name}}/__main__.py

@@ -7,12 +7,6 @@ from {{cookiecutter.package_name}}.cli.serve import serve
 
 current_dir = os.path.dirname(__file__)
 pid_file = os.path.join(current_dir, "test.pid")
-conf_file = os.path.abspath(
-    os.path.join(
-        current_dir,
-        "../../../{{cookiecutter.package_name}}/config/gunicorn.py"
-    )
-)
 
 
 def test_serve_help(cli_runner):
@@ -20,28 +14,24 @@ def test_serve_help(cli_runner):
     assert result.exit_code == 0
 
 
-@mock.patch("{{cookiecutter.package_name}}.cli.serve.run_wsgi")
 @pytest.mark.parametrize(
     "opts, expected",
     [
         (
-            ["--host", "localhost", "-p", 5000, "-w", 2],
+            [],
+            {},
+        ),
+        (
+            ["--bind", "localhost:5000", "-w", 2],
             {
-                "host": "localhost",
-                "port": "5000",
-                "workers": "2",
-                "daemon": False,
-                "env": (),
-                "pid": None,
-                "config": None,
+                "bind": "localhost:5000",
+                "workers": 2,
             },
         ),
         (
             [
-                "--host",
-                "localhost",
-                "-p",
-                5000,
+                "--bind",
+                "localhost:5000",
                 "-w",
                 2,
                 "--daemon",
@@ -51,25 +41,19 @@ def test_serve_help(cli_runner):
                 "USE_FORCE=True",
                 "--pid",
                 pid_file,
-                "--config",
-                conf_file,
             ],
             {
-                "host": "localhost",
-                "port": "5000",
-                "workers": "2",
+                "bind": "localhost:5000",
+                "workers": 2,
                 "daemon": True,
-                "env": ("FOO=BAR", "USE_FORCE=True"),
-                "pid": pid_file,
-                "config": conf_file,
+                "raw_env": ("FOO=BAR", "USE_FORCE=True"),
+                "pidfile": pid_file,
             },
         ),
         (
             [
-                "--host",
-                "localhost",
-                "-p",
-                5000,
+                "--bind",
+                "localhost:5000",
                 "-w",
                 2,
                 "-D",
@@ -79,33 +63,33 @@ def test_serve_help(cli_runner):
                 "USE_FORCE=True",
                 "--pid",
                 pid_file,
-                "-c",
-                conf_file,
             ],
             {
-                "host": "localhost",
-                "port": "5000",
-                "workers": "2",
+                "bind": "localhost:5000",
+                "workers": 2,
                 "daemon": True,
-                "env": ("FOO=BAR", "USE_FORCE=True"),
-                "pid": pid_file,
-                "config": conf_file,
+                "raw_env": ("FOO=BAR", "USE_FORCE=True"),
+                "pidfile": pid_file,
             },
         ),
     ],
 )
-def test_serve_options(run_mock, cli_runner, opts, expected):
+@mock.patch("test_project.cli.serve.get_application")
+@mock.patch("test_project.cli.serve.ApplicationLoader")
+def test_serve_options(wsgi_mock, asgi_mock, cli_runner, opts, expected):
     result = cli_runner.invoke(serve, opts)
     assert result.exit_code == 0
-    run_mock.assert_called_once_with(**expected)
+
+    wsgi_mock.assert_called_once_with(
+        application=asgi_mock.return_value,
+        overrides=expected,
+    )
 
 
 @pytest.mark.parametrize(
     "opts",
     [
         (["--not_exists"]),
-        (["-p", "not number"]),
-        (["-c", "/path/does/not/exist"]),
         (["--pid", "/path/does/not/exist"]),
     ],
 )

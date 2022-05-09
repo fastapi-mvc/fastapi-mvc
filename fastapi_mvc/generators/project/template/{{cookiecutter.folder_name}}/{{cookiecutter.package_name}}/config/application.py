@@ -1,6 +1,6 @@
 """Application configuration - FastAPI."""
 from pydantic import BaseSettings
-from {{cookiecutter.package_name}} import __version__
+from {{cookiecutter.package_name}}.version import __version__
 
 
 class Application(BaseSettings):
