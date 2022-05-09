@@ -285,7 +285,7 @@ jobs:
       - name: Run template coverage
         run: |
           cd ~/.poetry/store/test-project
-          poetry run pytest --cov=test_project --cov-fail-under=90 --cov-report=xml --cov-report=term-missing tests
+          poetry run pytest --cov-config=.coveragerc --cov=test_project --cov-fail-under=90 --cov-report=xml --cov-report=term-missing tests
           mv coverage.xml $GITHUB_WORKSPACE/coverage-template.xml
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v2
