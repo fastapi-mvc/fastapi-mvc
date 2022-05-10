@@ -6,8 +6,24 @@ from {{cookiecutter.package_name}}.config import gunicorn
 
 
 class ApplicationLoader(BaseApplication):
+    """Define gunicorn interface for any given web framework.
+
+    Args:
+        application (typing.Any): Any given web framework application object
+            instance.
+        overrides (typing.Optional[typing.Dict[str, typing.Any]]): Map of
+            gunicorn settings to override.
+
+    Attributes:
+        _application (typing.Any): Any given web framework application object
+            instance.
+        _overrides (typing.Optional[typing.Dict[str, typing.Any]]): Map of
+            gunicorn settings to override.
+
+    """
 
     def __init__(self, application, overrides=None):
+        """Initialize ApplicationLoader class object instance."""
         if not overrides:
             overrides = dict()
 
@@ -16,6 +32,16 @@ class ApplicationLoader(BaseApplication):
         super().__init__()
 
     def _set_cfg(self, cfg):
+        """Set gunicorn config given map of setting names to their values.
+
+        Args:
+            cfg (typing.Dict[str, typing.Any]): Map of gunicorn setting names to
+                their values.
+
+        Raises:
+            Exception: Raised on config error.
+
+        """
         for k, v in cfg.items():
             # Ignore unknown names
             if k not in self.cfg.settings:
@@ -30,16 +56,19 @@ class ApplicationLoader(BaseApplication):
                 raise ex
 
     def load_config(self):
+        """Load gunicorn configuration."""
         self.logger = logging.getLogger(self.__class__.__name__)
+        self.cfg.set("default_proc_name", "{{cookiecutter.folder_name}}")
+
         cfg = vars(gunicorn)
+        cfg.update(self._overrides)
 
         self._set_cfg(cfg)
-        self.init()
 
-    def init(self, parser=None, opts=None, args=None):
-        self.cfg.set("default_proc_name", "test-project")
-        self._set_cfg(self._overrides)
+    def init(self, parser, opts, args):
+        """Patch required but not needed base class method."""
+        pass
 
     def load(self):
-        """Load application."""
+        """Load WSGI application."""
         return self._application

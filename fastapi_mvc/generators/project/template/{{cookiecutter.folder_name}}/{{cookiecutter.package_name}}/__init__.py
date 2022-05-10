@@ -1,4 +1,4 @@
-"""This project was generated with fastapi-mvc."""
+"""{{cookiecutter.project_description}}"""
 import logging
 
 from {{cookiecutter.package_name}}.wsgi import ApplicationLoader

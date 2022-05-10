@@ -10,8 +10,6 @@ WSGI
    :members:
    :show-inheritance:
 
-.. autofunction:: {{cookiecutter.package_name}}.wsgi.run_wsgi
-
 Config
 ------
 
@@ -24,8 +22,6 @@ Config
 .. autoclass:: {{cookiecutter.package_name}}.config.redis.Redis
    :members:
    :show-inheritance:
-
-.. automodule:: {{cookiecutter.package_name}}.config.router
 
 .. automodule:: {{cookiecutter.package_name}}.config.gunicorn
 
@@ -50,6 +46,8 @@ App
 .. autofunction:: {{cookiecutter.package_name}}.app.asgi.on_shutdown
 
 .. autofunction:: {{cookiecutter.package_name}}.app.asgi.get_application
+
+.. automodule:: {{cookiecutter.package_name}}.app.router
 
 Controllers
 ~~~~~~~~~~~

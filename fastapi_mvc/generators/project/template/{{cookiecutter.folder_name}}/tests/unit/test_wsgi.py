@@ -1,6 +1,7 @@
 import mock
 import pytest
 from gunicorn.app.base import BaseApplication
+from gunicorn.errors import ConfigError
 from {{cookiecutter.package_name}} import ApplicationLoader
 
 

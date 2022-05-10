@@ -1,4 +1,4 @@
-"""This project was generated with fastapi-mvc."""
+"""{{cookiecutter.project_description}}"""
 from {{cookiecutter.package_name}}.cli import cli
 
 
