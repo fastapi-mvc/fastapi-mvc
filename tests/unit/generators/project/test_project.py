@@ -32,7 +32,7 @@ def test_class_variables():
     assert not ProjectGenerator.cli_arguments[0].type.exists
     assert ProjectGenerator.cli_arguments[0].nargs == 1
 
-    assert len(ProjectGenerator.cli_options) == 9
+    assert len(ProjectGenerator.cli_options) == 7
     assert isinstance(ProjectGenerator.cli_options[0], click.Option)
     assert ProjectGenerator.cli_options[0].opts == ["-R", "--skip-redis"]
     assert ProjectGenerator.cli_options[0].help == "Skip Redis utility files."
@@ -42,33 +42,25 @@ def test_class_variables():
     assert ProjectGenerator.cli_options[1].help == "Skip aiohttp utility files."
     assert ProjectGenerator.cli_options[1].is_flag
     assert isinstance(ProjectGenerator.cli_options[2], click.Option)
-    assert ProjectGenerator.cli_options[2].opts == ["-V", "--skip-vagrantfile"]
-    assert ProjectGenerator.cli_options[2].help == "Skip Vagrantfile."
+    assert ProjectGenerator.cli_options[2].opts == ["-H", "--skip-helm"]
+    assert ProjectGenerator.cli_options[2].help == "Skip Helm chart files."
     assert ProjectGenerator.cli_options[2].is_flag
     assert isinstance(ProjectGenerator.cli_options[3], click.Option)
-    assert ProjectGenerator.cli_options[3].opts == ["-H", "--skip-helm"]
-    assert ProjectGenerator.cli_options[3].help == "Skip Helm chart files."
+    assert ProjectGenerator.cli_options[3].opts == ["-G", "--skip-actions"]
+    assert ProjectGenerator.cli_options[3].help == "Skip GitHub actions files."
     assert ProjectGenerator.cli_options[3].is_flag
     assert isinstance(ProjectGenerator.cli_options[4], click.Option)
-    assert ProjectGenerator.cli_options[4].opts == ["-G", "--skip-actions"]
-    assert ProjectGenerator.cli_options[4].help == "Skip GitHub actions files."
+    assert ProjectGenerator.cli_options[4].opts == ["-I", "--skip-install"]
+    assert ProjectGenerator.cli_options[4].help == "Do not run make install."
     assert ProjectGenerator.cli_options[4].is_flag
     assert isinstance(ProjectGenerator.cli_options[5], click.Option)
-    assert ProjectGenerator.cli_options[5].opts == ["-C", "--skip-codecov"]
-    assert ProjectGenerator.cli_options[5].help == "Skip codecov in GitHub actions."
-    assert ProjectGenerator.cli_options[5].is_flag
-    assert isinstance(ProjectGenerator.cli_options[6], click.Option)
-    assert ProjectGenerator.cli_options[6].opts == ["-I", "--skip-install"]
-    assert ProjectGenerator.cli_options[6].help == "Do not run make install."
-    assert ProjectGenerator.cli_options[6].is_flag
-    assert isinstance(ProjectGenerator.cli_options[7], click.Option)
-    assert ProjectGenerator.cli_options[7].opts == ["--license"]
-    assert ProjectGenerator.cli_options[7].help == "Choose license."
-    assert ProjectGenerator.cli_options[7].default == "MIT"
-    assert ProjectGenerator.cli_options[7].show_default
-    assert ProjectGenerator.cli_options[7].envvar == "LICENSE"
-    assert isinstance(ProjectGenerator.cli_options[7].type, click.Choice)
-    assert ProjectGenerator.cli_options[7].type.choices == [
+    assert ProjectGenerator.cli_options[5].opts == ["--license"]
+    assert ProjectGenerator.cli_options[5].help == "Choose license."
+    assert ProjectGenerator.cli_options[5].default == "MIT"
+    assert ProjectGenerator.cli_options[5].show_default
+    assert ProjectGenerator.cli_options[5].envvar == "LICENSE"
+    assert isinstance(ProjectGenerator.cli_options[5].type, click.Choice)
+    assert ProjectGenerator.cli_options[5].type.choices == [
         "MIT",
         "BSD2",
         "BSD3",
@@ -80,12 +72,12 @@ def test_class_variables():
         "LGPLv2",
         "no",
     ]
-    assert isinstance(ProjectGenerator.cli_options[8], click.Option)
-    assert ProjectGenerator.cli_options[8].opts == ["--repo-url"]
-    assert ProjectGenerator.cli_options[8].help == "Repository url."
-    assert ProjectGenerator.cli_options[8].type == click.STRING
-    assert ProjectGenerator.cli_options[8].default == "https://your.repo.url.here"
-    assert ProjectGenerator.cli_options[8].envvar == "REPO_URL"
+    assert isinstance(ProjectGenerator.cli_options[6], click.Option)
+    assert ProjectGenerator.cli_options[6].opts == ["--repo-url"]
+    assert ProjectGenerator.cli_options[6].help == "Repository url."
+    assert ProjectGenerator.cli_options[6].type == click.STRING
+    assert ProjectGenerator.cli_options[6].default == "https://your.repo.url.here"
+    assert ProjectGenerator.cli_options[6].envvar == "REPO_URL"
 
     assert ProjectGenerator.cli_short_help == "Create a new FastAPI application."
     assert (
@@ -105,10 +97,8 @@ def test_class_variables():
                 "app_path": "/test/path/test-project",
                 "skip_redis": False,
                 "skip_aiohttp": False,
-                "skip_vagrantfile": False,
                 "skip_helm": False,
                 "skip_actions": False,
-                "skip_codecov": False,
                 "skip_install": False,
                 "license": "MIT",
                 "repo_url": "https://your.repo.url.here",
@@ -118,9 +108,7 @@ def test_class_variables():
                 "redis": "yes",
                 "aiohttp": "yes",
                 "github_actions": "yes",
-                "vagrantfile": "yes",
                 "helm": "yes",
-                "codecov": "yes",
                 "author": "John Doe",
                 "email": "example@email.com",
                 "license": "MIT",
@@ -135,10 +123,8 @@ def test_class_variables():
                 "app_path": "test-project",
                 "skip_redis": True,
                 "skip_aiohttp": True,
-                "skip_vagrantfile": True,
                 "skip_helm": True,
                 "skip_actions": True,
-                "skip_codecov": True,
                 "skip_install": True,
                 "license": "Apache2.0",
                 "repo_url": "https://scm.test/repo",
@@ -148,9 +134,7 @@ def test_class_variables():
                 "redis": "no",
                 "aiohttp": "no",
                 "github_actions": "no",
-                "vagrantfile": "no",
                 "helm": "no",
-                "codecov": "no",
                 "author": "John Doe",
                 "email": "example@email.com",
                 "license": "Apache2.0",
@@ -203,10 +187,8 @@ def test_new_dir_exists(cookie_mock, utils_mock, gen_obj):
             app_path="/test/path/test-project",
             skip_redis=False,
             skip_aiohttp=False,
-            skip_vagrantfile=False,
             skip_helm=False,
             skip_actions=False,
-            skip_codecov=False,
             skip_install=False,
             license="MIT",
             repo_url="https://your.repo.url.here",
@@ -220,9 +202,7 @@ def test_new_dir_exists(cookie_mock, utils_mock, gen_obj):
             "redis": "yes",
             "aiohttp": "yes",
             "github_actions": "yes",
-            "vagrantfile": "yes",
             "helm": "yes",
-            "codecov": "yes",
             "author": "John Doe",
             "email": "example@email.com",
             "license": "MIT",
