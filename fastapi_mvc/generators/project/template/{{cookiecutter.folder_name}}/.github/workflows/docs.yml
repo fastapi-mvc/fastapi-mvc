@@ -1,3 +1,4 @@
+{%- raw %}
 name: Build Docs
 
 on:
@@ -47,3 +48,4 @@ jobs:
           jekyll: false
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+{%- endraw %}
