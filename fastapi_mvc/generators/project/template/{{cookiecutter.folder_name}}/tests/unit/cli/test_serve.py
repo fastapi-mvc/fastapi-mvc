@@ -74,8 +74,8 @@ def test_serve_help(cli_runner):
         ),
     ],
 )
-@mock.patch("test_project.cli.serve.get_application")
-@mock.patch("test_project.cli.serve.ApplicationLoader")
+@mock.patch("{{cookiecutter.package_name}}.cli.serve.get_application")
+@mock.patch("{{cookiecutter.package_name}}.cli.serve.ApplicationLoader")
 def test_serve_options(wsgi_mock, asgi_mock, cli_runner, opts, expected):
     result = cli_runner.invoke(serve, opts)
     assert result.exit_code == 0
