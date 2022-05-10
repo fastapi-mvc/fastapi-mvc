@@ -193,6 +193,7 @@ class ProjectGenerator(Generator):
             raise SystemExit(1)
 
         if not skip_install:
+            self._log.info("Executing shell command:  ['make', 'install']")
             ShellUtils.run_shell(cmd=["make", "install"], cwd=app_path)
 
     def destroy(self, **kwargs):
