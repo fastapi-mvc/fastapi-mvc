@@ -154,6 +154,9 @@ class ProjectGenerator(Generator):
             repo_url (str): Project repository url.
 
         """
+        self._log.info(
+            "Creating a new fastapi-mvc project:: {0:s}".format(app_path)
+        )
         app_name = os.path.basename(app_path)
         output_dir = os.path.dirname(app_path)
 
@@ -176,9 +179,6 @@ class ProjectGenerator(Generator):
             "fastapi_mvc_version": __version__,
         }
 
-        self._log.info(
-            "Begin generating a new project at path: {0:s}".format(output_dir)
-        )
         self._log.debug("Cookiecutter context: {0}".format(context))
 
         try:
