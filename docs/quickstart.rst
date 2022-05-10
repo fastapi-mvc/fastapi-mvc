@@ -69,12 +69,13 @@ To use this generator, open a terminal and run:
 .. code-block:: bash
 
     $ fastapi-mvc new /tmp/galactic-empire
+    [INFO] Running generator: new
     [INFO] Creating a new fastapi-mvc project: /tmp/galactic-empire
-    [INFO] Executing shell command: ['make', 'install'].
+    [INFO] Executing shell command: ['make', 'install']
     [install] Begin installing project.
     Creating virtualenv galactic-empire in /tmp/galactic-empire/.venv
     Updating dependencies
-    Resolving dependencies... (112.5s)
+    Resolving dependencies... (15.5s)
 
     Writing lock file
 
@@ -167,19 +168,19 @@ Here's a basic rundown on the function of each of the files and folders that fas
     ├── build                        Makefile scripts
     ├── charts                       Helm chart for application
     │   └── galactic-empire
-    ├── galactic_empire                 Python project root
+    ├── galactic_empire              Python project root
     │   ├── app                      FastAPI core implementation
     │   │   ├── controllers          Application controllers
     │   │   ├── exceptions           Application custom exceptions
     │   │   ├── models               Application models
     │   │   ├── utils                Application utilities
+    │   │   ├── router.py            Application root APIRouter
     │   │   └── asgi.py              Application ASGI node implementation
     │   ├── cli                      Application CLI implementation
     │   ├── config                   Configuration submodule
     │   │   ├── application.py       Application configuration
     │   │   ├── gunicorn.conf.py     Gunicorn configuration
-    │   │   ├── redis.py             Redis configuration
-    │   │   └── router.py            FastAPI router configuration
+    │   │   └── redis.py             Redis configuration
     │   ├── version.py               Application version
     │   └── wsgi.py                  Application WSGI master node implementation
     ├── manifests                    Manifests for spotathome/redis-operator
@@ -189,6 +190,7 @@ Here's a basic rundown on the function of each of the files and folders that fas
     ├── CHANGELOG.md
     ├── Dockerfile                   Dockerfile definition
     ├── .dockerignore
+    ├── .coveragerc
     ├── .gitignore
     ├── fastapi-mvc.ini              Fastapi-mvc application configuration.
     ├── shell.nix                    Nix shell configuration file.
@@ -214,13 +216,13 @@ You can do this by running the following command in the galactic-empire director
 .. code-block:: bash
 
     $ fastapi-mvc run
-    [INFO] Executing shell command: ['/home/demo/.poetry/bin/poetry', 'install', '--no-interaction'].
+    [INFO] Executing shell command: ['/home/demo/.poetry/bin/poetry', 'install', '--no-interaction']
     Installing dependencies from lock file
 
     No dependencies to install or update
 
     Installing the current project: galactic-empire (0.1.0)
-    [INFO] Executing shell command: ['/home/demo/.poetry/bin/poetry', 'run', 'uvicorn', '--host', '127.0.0.1', '--port', '8000', '--reload', 'galactic_empire.app.asgi:application'].
+    [INFO] Executing shell command: ['/home/demo/.poetry/bin/poetry', 'run', 'uvicorn', '--host', '127.0.0.1', '--port', '8000', '--reload', 'galactic_empire.app.asgi:application']
     INFO:     Will watch for changes in these directories: ['/tmp/galactic-empire']
     INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
     INFO:     Started reloader process [4694] using watchgod

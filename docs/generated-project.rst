@@ -161,16 +161,13 @@ Generated ``demo-project`` application exposes simple CLI for easier interaction
       demo-project CLI serve command.
 
     Options:
-      --host TEXT                  Host to bind.  [default: 127.0.0.1]
-      -p, --port INTEGER           Port to bind.  [default: 8000]
+      --bind TEXT                  Host to bind.
       -w, --workers INTEGER RANGE  The number of worker processes for handling
-                                   requests.  [default: 2]
+                                   requests.
 
       -D, --daemon                 Daemonize the Gunicorn process.
       -e, --env TEXT               Set environment variables in the execution
                                    environment.
-
-      -c, --config PATH            Uses a custom gunicorn.conf.py configuration
       --pid PATH                   Specifies the PID file.
       --help                       Show this message and exit.
 
@@ -239,6 +236,7 @@ Provided Makefile is a starting point for application and infrastructure develop
       metrics          Run demo-project metrics checks
       unit-test        Run demo-project unit tests
       integration-test  Run demo-project integration tests
+      docs             Build demo-project documentation
       dev-env          Start a local Kubernetes cluster using minikube and deploy application
       clean            Remove .cache directory and cached minikube
 
@@ -329,7 +327,7 @@ Priority of overriding configuration:
 
 1. cli
 2. environment variables
-3. gunicorn.conf.py
+3. gunicorn.py
 
 All application configuration is available in ``demo_project.config`` submodule.
 
@@ -389,15 +387,15 @@ Gunicorn
 Routes
 ~~~~~~
 
-Endpoints are defined in ``.config.router``. Just simply import your controller and include it to FastAPI router:
+Endpoints are defined in ``.app.router``. Just simply import your controller and include it to FastAPI router:
 
 .. code-block:: python
 
     from fastapi import APIRouter
     from demo_project.app.controllers.api.v1 import ready
 
-    router = APIRouter(
+    root_api_router = APIRouter(
         prefix="/api"
     )
 
-    router.include_router(ready.router, tags=["ready"])
+    root_api_router.include_router(ready.router, tags=["ready"])

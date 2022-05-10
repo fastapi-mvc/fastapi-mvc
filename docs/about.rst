@@ -85,12 +85,12 @@ when uvicorn (or other ASGI for that matter) will catch up to this benchmark.
 
 Last but not least, gunicorn gives a ton of `settings to configure <https://docs.gunicorn.org/en/stable/settings.html>`__, which can come in handy.
 
-Generated project comes with docstrings and 99% unit tests coverage
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Generated project comes with Sphinx documentation and 100% unit tests coverage
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Unit test coverage is at 99% regardless of chosen configuration. There is also a placeholder for integration tests with an example dummy test.
+Unit test coverage is at 100% regardless of chosen configuration. There is also a placeholder for integration tests with an example dummy test.
 The metrics stage in CI workflow ensures important PEP rules are enforced. For additional readability and formatting checks - black is used.
-Every piece of generated code is documented with docstrings. Last but not least there is also extended README with how to.
+Every piece of generated code is documented with docstrings. Last but not least Sphinx documentation with API reference is included.
 
 Dockerfile with K8s and cloud in mind
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
