@@ -164,7 +164,7 @@ This package exposes simple CLI for easier interaction:
 $ {{cookiecutter.script_name}} --help
 Usage: {{cookiecutter.script_name}} [OPTIONS] COMMAND [ARGS]...
 
-  {{cookiecutter.project_name.capitlize()}} CLI root.
+  {{cookiecutter.project_name.capitalize()}} CLI root.
 
 Options:
   -v, --verbose  Enable verbose logging.
