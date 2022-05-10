@@ -38,6 +38,9 @@ def test_wsgi_cli_overrides(run_mock):
             "pidfile": "/tmp/api.pid"
         }
     )
+    # Test unused patched method for coverage sake.
+    wsgi.init(None, None, None)
+
     assert wsgi.cfg.address == [("0.0.0.0", 3000)]
     assert wsgi.cfg.env == {"FOOBAR": "123"}
 
