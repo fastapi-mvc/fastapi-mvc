@@ -13,9 +13,7 @@
   "redis": ["yes", "no"],
   "github_actions": ["yes", "no"],
   "aiohttp": ["yes", "no"],
-  "vagrantfile": ["yes", "no"],
   "helm": ["yes", "no"],
-  "codecov": ["yes", "no"],
   "license": [
         "MIT",
         "BSD2",

@@ -3,7 +3,7 @@
 {%- if cookiecutter.github_actions == "yes" %}
 [![CI]({{cookiecutter.repo_url}}/actions/workflows/main.yml/badge.svg?branch=master)]({{cookiecutter.repo_url}}/actions/workflows/main.yml)
 {%- endif %}
-{%- if cookiecutter.github_actions == "yes" and cookiecutter.vagrantfile == "yes" and cookiecutter.helm == "yes" %}
+{%- if cookiecutter.github_actions == "yes" and cookiecutter.helm == "yes" %}
 [![K8s integration]({{cookiecutter.repo_url}}/actions/workflows/integration.yml/badge.svg)]({{cookiecutter.repo_url}}/actions/workflows/integration.yml)
 {%- endif %}
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)

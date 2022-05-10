@@ -165,10 +165,3 @@ jobs:
           $HOME/.poetry/bin/poetry config cache-dir $HOME/.poetry/store
       - name: Run coverage{% endraw %}
         run: poetry run pytest --cov={{cookiecutter.package_name}} --cov-fail-under=70 --cov-report=xml --cov-report=term-missing tests
-{%- if cookiecutter.codecov == "yes" %}
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v2
-        with:
-          fail_ci_if_error: true
-          files: ./coverage.xml
-{%- endif %}

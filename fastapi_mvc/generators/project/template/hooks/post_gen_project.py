@@ -28,12 +28,6 @@ def set_gh_actions():
         remove([".github"])
 
 
-def set_vagrantfile():
-    """Remove Vagrantfile if not enabled."""
-    if "{{ cookiecutter.vagrantfile }}" != "yes":
-        remove(["Vagrantfile", ".github/workflows/integration.yml"])
-
-
 def set_aiohttp():
     """Remove aiohttp utility implementation and tests if not enabled."""
     if "{{ cookiecutter.aiohttp }}" != "yes":
@@ -72,7 +66,6 @@ def set_redis():
 
 if __name__ == "__main__":
     set_gh_actions()
-    set_vagrantfile()
     set_aiohttp()
     set_helm()
     set_redis()
