@@ -1,9 +1,9 @@
 from fastapi.testclient import TestClient
-from {{cookiecutter.package_name}}.app.asgi import get_app
+from {{cookiecutter.package_name}}.app import get_application
 from {{cookiecutter.package_name}}.config import settings
 
 
-app = get_app()
+app = get_application()
 
 
 def test_ready():

@@ -30,7 +30,7 @@ It allows you to write less code while accomplishing more. Core features:
 
 * Generated project Based on MVC architectural pattern
 * WSGI + ASGI production server
-* Generated project comes with docstrings and 99% unit tests coverage
+* Generated project comes with Sphinx documentation and 100% unit tests coverage
 * Kubernetes deployment with Redis HA cluster
 * Makefile, GitHub actions and utilities
 * Helm chart for Kubernetes deployment
@@ -56,13 +56,13 @@ Once project is generated and installed lets run development uvicorn server (ASG
 ```shell
 $ cd /tmp/galactic-empire
 $ fastapi-mvc run
-[INFO] Executing shell command: ['/home/demo/.poetry/bin/poetry', 'install', '--no-interaction'].
+[INFO] Executing shell command: ['/home/demo/.poetry/bin/poetry', 'install', '--no-interaction']
     Installing dependencies from lock file
     
     No dependencies to install or update
     
     Installing the current project: galactic-empire (0.1.0)
-[INFO] Executing shell command: ['/home/demo/.poetry/bin/poetry', 'run', 'uvicorn', '--host', '127.0.0.1', '--port', '8000', '--reload', 'galactic_empire.app.asgi:application'].
+[INFO] Executing shell command: ['/home/demo/.poetry/bin/poetry', 'run', 'uvicorn', '--host', '127.0.0.1', '--port', '8000', '--reload', 'galactic_empire.app.asgi:application']
 INFO:     Will watch for changes in these directories: ['/tmp/galactic-empire']
 INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
 INFO:     Started reloader process [4713] using watchgod

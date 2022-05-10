@@ -29,5 +29,5 @@ class RunGenerator(Command):
 
     def execute(self):
         """Execute generator new method."""
-        self._log.info("Running {0:s} generator".format(self._generator.name))
+        self._log.info("Running generator: {0:s}".format(self._generator.name))
         self._generator.new(**self._options)

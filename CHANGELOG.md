@@ -4,12 +4,21 @@ This file documents changes to [fastapi-mvc](https://github.com/rszamszur/fastap
 
 ## Unreleased
 
+### Features
+
+* Add Sphinx autodoc documentation for project template [#89](https://github.com/rszamszur/fastapi-mvc/issues/89). PR [#99](https://github.com/rszamszur/fastapi-mvc/pull/99)
+
 ### Internal
 
 * Extend and improve k8s integration workflow [#93](https://github.com/rszamszur/fastapi-mvc/issues/93). PR [#94](https://github.com/rszamszur/fastapi-mvc/pull/94)
 * Improve generators implementation [#96](https://github.com/rszamszur/fastapi-mvc/issues/96). PR [#97](https://github.com/rszamszur/fastapi-mvc/pull/97)
 * Refactor fastapi-mvc project template into generators submodule [#77](https://github.com/rszamszur/fastapi-mvc/issues/77). PR [#98](https://github.com/rszamszur/fastapi-mvc/pull/98)
+* Refactor and improve project template structure [#90](https://github.com/rszamszur/fastapi-mvc/issues/90). PR [#99](https://github.com/rszamszur/fastapi-mvc/pull/99)
+* Increase project template unit tests coverage to 100%. PR [#99](https://github.com/rszamszur/fastapi-mvc/pull/99)
 * Update package dependencies:
+  * click (7.1.2 -> 8.1.3)
+  * black (21.12b0 -> 22.3.0)
+* Update project template dependencies:
   * click (7.1.2 -> 8.1.3)
   * black (21.12b0 -> 22.3.0)
 

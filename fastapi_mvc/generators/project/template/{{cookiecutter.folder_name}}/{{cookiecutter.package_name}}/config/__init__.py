@@ -1,15 +1,20 @@
-"""{{cookiecutter.project_description}}"""
-from .application import settings
+"""Application configuration.
+
+The ``config`` submodule defines configuration for your application, router,
+gunicorn, and more.
+
+Resources:
+    1. `Pydantic documentation`_
+    2. `Gunicorn documentation`_
+
+.. _Pydantic documentation:
+    https://pydantic-docs.helpmanual.io/
+
+.. _Gunicorn documentation:
+    https://docs.gunicorn.org/en/20.1.0/
+
+"""
+from {{cookiecutter.package_name}}.config.application import settings
 {%- if cookiecutter.redis == "yes" %}
-from .redis import redis
-{%- endif %}
-from .router import router
-
-
-__all__ = (
-    settings,
-    {%- if cookiecutter.redis == "yes" %}
-    redis,
-    {%- endif %}
-    router,
-)
+from {{cookiecutter.package_name}}.config.redis import redis
+{% endif %}

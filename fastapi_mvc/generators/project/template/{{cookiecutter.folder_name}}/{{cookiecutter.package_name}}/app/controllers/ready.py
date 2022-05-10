@@ -1,14 +1,14 @@
-"""Ready controller."""
+"""Application implementation - Ready controller."""
 import logging
 
 from fastapi import APIRouter
 from {{cookiecutter.package_name}}.config import settings
 {%- if cookiecutter.redis == "yes" %}
 from {{cookiecutter.package_name}}.app.utils import RedisClient
-from {{cookiecutter.package_name}}.app.models import ReadyResponse, ErrorResponse
+from {{cookiecutter.package_name}}.app.views import ReadyResponse, ErrorResponse
 from {{cookiecutter.package_name}}.app.exceptions import HTTPException
 {%- else %}
-from {{cookiecutter.package_name}}.app.models import ReadyResponse
+from {{cookiecutter.package_name}}.app.views import ReadyResponse
 {%- endif %}
 
 router = APIRouter()

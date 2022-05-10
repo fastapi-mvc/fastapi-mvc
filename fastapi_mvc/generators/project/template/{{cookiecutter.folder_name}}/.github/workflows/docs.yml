@@ -1,0 +1,51 @@
+{%- raw %}
+name: Build Docs
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build-docs:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.9
+      - name: Load Poetry cache
+        id: poetry-cache
+        uses: actions/cache@v2
+        with:
+          path: ~/.poetry
+          key: poetry-3.9-${{ hashFiles('**/pyproject.toml') }}-${{ hashFiles('**/poetry.lock') }}
+      - name: Config path and poetry
+        if: steps.poetry-cache.outputs.cache-hit == 'true'
+        run: |
+          echo "$HOME/.poetry/bin" >> $GITHUB_PATH
+          $HOME/.poetry/bin/poetry config cache-dir $HOME/.poetry/store
+      - name: Build documentation
+        run: |
+          export POETRY_HOME=$HOME/.poetry
+          export POETRY_CACHE_DIR=$HOME/.poetry/store
+          make docs
+          echo "docs_build_name=docs-$(cat TAG)-$GITHUB_SHA" >> $GITHUB_ENV
+      - name: Archive build artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{ env.docs_build_name }}
+          path: site
+          retention-days: 60
+      - name: Deploy to GitHub Pages
+        uses: crazy-max/ghaction-github-pages@v2.5.0
+        with:
+          target_branch: gh-pages
+          build_dir: site
+          commit_message: "Deploy to GitHubPages"
+          jekyll: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+{%- endraw %}

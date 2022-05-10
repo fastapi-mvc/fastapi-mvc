@@ -37,6 +37,10 @@ unit-test: install ## Run {{cookiecutter.project_name}} unit tests
 .PHONY: integration-test
 integration-test: install ## Run {{cookiecutter.project_name}} integration tests
 	@build/integration-test.sh
+
+.PHONY: docs
+docs: install ## Build {{cookiecutter.project_name}} documentation
+	@build/docs.sh
 {% if cookiecutter.helm == "yes" %}
 .PHONY: dev-env
 dev-env: image ## Start a local Kubernetes cluster using minikube and deploy application

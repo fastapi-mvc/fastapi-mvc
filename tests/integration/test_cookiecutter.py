@@ -11,9 +11,7 @@ def test_cookiecutter_template(cookies):
             "redis": "yes",
             "aiohttp": "yes",
             "github_actions": "yes",
-            "vagrantfile": "yes",
             "helm": "yes",
-            "codecov": "yes",
             "author": "John Doe",
             "email": "jdoe@example.com",
             "license": "MIT",
@@ -37,9 +35,7 @@ def test_cookiecutter_template_minimal(cookies):
             "redis": "no",
             "aiohttp": "no",
             "github_actions": "no",
-            "vagrantfile": "no",
             "helm": "no",
-            "codecov": "no",
             "author": "John Doe",
             "email": "jdoe@example.com",
             "license": "ISC",
@@ -61,7 +57,6 @@ def test_cookiecutter_template_minimal(cookies):
         "manifests",
         "tests/unit/app/utils/test_aiohttp_client.py",
         "test_project/app/utils/aiohttp_client.py",
-        "Vagrantfile",
     ]
 
     for path in paths:

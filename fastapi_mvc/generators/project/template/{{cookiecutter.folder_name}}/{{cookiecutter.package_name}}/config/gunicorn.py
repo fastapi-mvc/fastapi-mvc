@@ -1,7 +1,7 @@
 """Gunicorn configuration file.
 
-List of all available settings:
-https://docs.gunicorn.org/en/latest/settings.html
+Resources:
+    1. https://docs.gunicorn.org/en/20.1.0/settings.html
 
 """
 import os

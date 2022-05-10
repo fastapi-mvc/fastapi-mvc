@@ -8,7 +8,7 @@ from {{cookiecutter.package_name}}.config import redis as redis_conf
 
 
 class RedisClient(object):
-    """Redis client utility.
+    """Define Redis utility.
 
     Utility class for handling Redis database connection and operations.
 

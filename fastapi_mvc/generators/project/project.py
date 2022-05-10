@@ -64,11 +64,6 @@ class ProjectGenerator(Generator):
             is_flag=True,
         ),
         click.Option(
-            param_decls=["-V", "--skip-vagrantfile"],
-            help="Skip Vagrantfile.",
-            is_flag=True,
-        ),
-        click.Option(
             param_decls=["-H", "--skip-helm"],
             help="Skip Helm chart files.",
             is_flag=True,
@@ -76,11 +71,6 @@ class ProjectGenerator(Generator):
         click.Option(
             param_decls=["-G", "--skip-actions"],
             help="Skip GitHub actions files.",
-            is_flag=True,
-        ),
-        click.Option(
-            param_decls=["-C", "--skip-codecov"],
-            help="Skip codecov in GitHub actions.",
             is_flag=True,
         ),
         click.Option(
@@ -145,10 +135,8 @@ class ProjectGenerator(Generator):
         skip_redis,
         skip_aiohttp,
         skip_actions,
-        skip_vagrantfile,
         skip_helm,
         skip_install,
-        skip_codecov,
         license,
         repo_url,
     ):
@@ -159,15 +147,16 @@ class ProjectGenerator(Generator):
             skip_redis (bool): If true skip Redis files.
             skip_aiohttp (bool): If true skip aiohttp utility files.
             skip_actions (bool): If true skip GitHub actions files.
-            skip_vagrantfile (bool): If true skip Vagrantfile.
             skip_helm (bool): If true skip Helm chart files.
             skip_install (bool): If true skip ``make install`` once project is
                 generated.
-            skip_codecov (bool): If true skip codecov in GitHub actions.
             license (str): Project license.
             repo_url (str): Project repository url.
 
         """
+        self._log.info(
+            "Creating a new fastapi-mvc project:: {0:s}".format(app_path)
+        )
         app_name = os.path.basename(app_path)
         output_dir = os.path.dirname(app_path)
 
@@ -181,9 +170,7 @@ class ProjectGenerator(Generator):
             "redis": self._get_value(skip_redis),
             "aiohttp": self._get_value(skip_aiohttp),
             "github_actions": self._get_value(skip_actions),
-            "vagrantfile": self._get_value(skip_vagrantfile),
             "helm": self._get_value(skip_helm),
-            "codecov": self._get_value(skip_codecov),
             "author": author,
             "email": email,
             "license": license,
@@ -192,9 +179,6 @@ class ProjectGenerator(Generator):
             "fastapi_mvc_version": __version__,
         }
 
-        self._log.info(
-            "Begin generating a new project at path: {0:s}".format(output_dir)
-        )
         self._log.debug("Cookiecutter context: {0}".format(context))
 
         try:
@@ -206,9 +190,10 @@ class ProjectGenerator(Generator):
             )
         except OutputDirExistsException as ex:
             self._log.error(ex)
-            raise ex
+            raise SystemExit(1)
 
         if not skip_install:
+            self._log.info("Executing shell command:  ['make', 'install']")
             ShellUtils.run_shell(cmd=["make", "install"], cwd=app_path)
 
     def destroy(self, **kwargs):

@@ -50,7 +50,7 @@ class RunShell(Command):
 
     def execute(self):
         """Execute RunShell command."""
-        self._log.info("Executing shell command: {cmd}.".format(cmd=self._cmd))
+        self._log.info("Executing shell command: {cmd}".format(cmd=self._cmd))
         ShellUtils.run_shell(
             cmd=self._cmd,
             cwd=self._cwd,

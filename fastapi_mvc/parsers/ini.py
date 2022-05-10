@@ -125,26 +125,6 @@ class IniParser(object):
         return self._config["project"]["github_actions"]
 
     @property
-    def aiohttp(self):
-        """Get Aiohttp value.
-
-        Returns:
-            str: Aiohttp value read from a ``fastapi-mvc.ini`` file.
-
-        """
-        return self._config["project"]["aiohttp"]
-
-    @property
-    def vagrantfile(self):
-        """Get Vagrantfile value.
-
-        Returns:
-            str: Vagrantfile value read from a ``fastapi-mvc.ini`` file.
-
-        """
-        return self._config["project"]["vagrantfile"]
-
-    @property
     def helm(self):
         """Get Helm value.
 
@@ -153,6 +133,16 @@ class IniParser(object):
 
         """
         return self._config["project"]["helm"]
+
+    @property
+    def chart_name(self):
+        """Get Helm chart name.
+
+        Returns:
+            str: Chart name value read from a ``fastapi-mvc.ini`` file.
+
+        """
+        return self._config["project"]["chart_name"]
 
     @property
     def version(self):
