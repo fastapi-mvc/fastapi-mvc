@@ -319,14 +319,14 @@ Let's take a look at it:
         # Implement endpoint logic here.
         return {"hello": "world"}
 
-Endpoint are just methods with ``FastAPI path decorator`` aggregated in one file that makes a controller.
-For more information please refer toFastAPI documentation, some useful links:
+Endpoints are just methods with ``FastAPI path decorator`` aggregated in one file that makes a controller.
+For more information please refer to FastAPI documentation, some useful links:
 
 * `create-a-path-operation <https://fastapi.tiangolo.com/tutorial/first-steps/#step-3-create-a-path-operation>`__
 * `path params <https://fastapi.tiangolo.com/tutorial/path-params/>`__
 * `path-operation-configuration <https://fastapi.tiangolo.com/tutorial/path-operation-configuration/>`__
 
-Now lets look at router configuration:
+Now let's look at router configuration:
 
 .. code-block:: python
     :emphasize-lines: 6, 12
@@ -345,9 +345,9 @@ Now lets look at router configuration:
     router.include_router(death_star.router)
 
 As you can see controller generator automatically added FastAPI router entries for you.
-You can always disable this behaviour by running with the ``--skip-routes option``.
+You can always disable this behaviour by running with the ``--skip-routes`` option.
 
-Lastly lets try if our new endpoints actually work:
+Lastly let's try if our new endpoints actually work:
 
 .. code-block:: bash
 
