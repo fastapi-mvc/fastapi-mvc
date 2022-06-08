@@ -20,8 +20,8 @@ class GeneratorGenerator(Generator):
         usage (typing.Optional[str]): **(class variable)** Path to generator
             usage file, that will be printed at the end of its CLI command help
             page.
-        category (str): (class variable) Name under which generator should be
-            printed in ``fastapi-mvc generate`` CLI command help page.
+        category (str): **(class variable)** Name under which generator should
+            be printed in ``fastapi-mvc generate`` CLI command help page.
         _parser (IniParser): IniParser object instance for current fastapi-mvc
             project.
         _builtins (typing.List[str]): List of builtins generator names.
