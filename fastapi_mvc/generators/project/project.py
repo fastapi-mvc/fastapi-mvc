@@ -21,8 +21,8 @@ class ProjectGenerator(Generator):
         usage (typing.Optional[str]): **(class variable)** Path to generator
             usage file, that will be printed at the end of its CLI command help
             page.
-        category (str): (class variable) Name under which generator should be
-            printed in ``fastapi-mvc generate`` CLI command help page.
+        category (str): **(class variable)** Name under which generator should
+            be printed in ``fastapi-mvc generate`` CLI command help page.
         cli_arguments (typing.List[click.Argument]): **(class variable)** Click
             arguments to register with this generator CLI command.
         cli_options (typing.List[click.Option]): **(class variable)** Click

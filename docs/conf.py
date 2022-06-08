@@ -19,6 +19,7 @@ extensions = [
     "sphinx.ext.napoleon",
     "sphinx.ext.autodoc",
     "sphinx.ext.intersphinx",
+    "sphinx.ext.autosectionlabel",
     "pallets_sphinx_themes",
     "myst_parser",
 ]
@@ -28,6 +29,7 @@ intersphinx_mapping = {
     "python": ("https://docs.python.org/3/", None),
     "click": ("https://click.palletsprojects.com/en/8.1.x/", None),
 }
+autosectionlabel_prefix_document = True
 napoleon_google_docstring = True
 napoleon_numpy_docstring = False
 napoleon_include_init_with_doc = False

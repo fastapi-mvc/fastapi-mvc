@@ -2,6 +2,12 @@
 
 This file documents changes to [fastapi-mvc](https://github.com/rszamszur/fastapi-mvc). The release numbering uses [semantic versioning](http://semver.org).
 
+## Unreleased
+
+### Internal
+
+* Add generators feature documentation [#75](https://github.com/rszamszur/fastapi-mvc/issues/75). PR [#101](https://github.com/rszamszur/fastapi-mvc/pull/101)
+
 ## 0.12.0 (10.05.2022)
 
 ### Features

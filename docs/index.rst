@@ -41,7 +41,7 @@ It allows you to write less code while accomplishing more. Core features:
 
 * Generated project Based on MVC architectural pattern
 * WSGI + ASGI production server
-* Generated project comes with docstrings and 99% unit tests coverage
+* Generated project comes with docstrings and 100% unit tests coverage
 * Kubernetes deployment with Redis HA cluster
 * Makefile, GitHub actions and utilities
 * Helm chart for Kubernetes deployment
