@@ -19,8 +19,8 @@ class {{cookiecutter.class_name}}(Generator):
         usage (typing.Optional[str]): **(class variable)** Path to generator
             usage file, that will be printed at the end of its CLI command help
             page.
-        category (str): (class variable) Name under which generator should be
-            printed in ``fastapi-mvc generate`` CLI command help page.
+        category (str): **(class variable)** Name under which generator should
+            be printed in ``fastapi-mvc generate`` CLI command help page.
         _log (logging.Logger): Logger class object instance.
         _parser (IniParser): IniParser object instance for current fastapi-mvc
             project.
@@ -41,23 +41,6 @@ class {{cookiecutter.class_name}}(Generator):
 
     """
 
-    # In this case, slots apart from standard behavior, also ensure that class
-    # variables available in object instances as object attributes are
-    # read-only. They define generator CLI and cookie-cutter template and thus
-    # by principle should be immutable at RunTime.
-    # However, if the need arises you can still edit them should you choose.
-    # To do so either remove `__slots__` or access via `__class__` magic method.
-    # Removing __slots__ will make class variables default values for object
-    # attributes. Editing one from the object instance will not change the value
-    # of the class variable or the value in another object. Is, the other way
-    # round when accessing via `__class__` magic method ex. self.__class__.name.
-    # Not only it will change a class variable value, but also a object
-    # attribute value for all objects created from this class. Provided, class
-    # is one entry in memory. For instance, if you would deep clone it, the
-    # above would only apply for the class in which the change was made. Not
-    # that this is super important, because I do not see a use case where there
-    # would be ever two generator class object instances. But I want you to
-    # understand the difference. Who knows maybe it will be useful.
     __slots__ = ("_parser",)
 
     name = "{{cookiecutter.generator_name}}"
@@ -82,11 +65,9 @@ class {{cookiecutter.class_name}}(Generator):
             Kwargs passed to this method are from generator CLI options and
             arguments. Since this generator does not override base class
             cli_options and cli_arguments class variables, defaults are used.
-            Documentation for generators feature will be added soon; issue:
-            https://github.com/rszamszur/fastapi-mvc/issues/75
 
         Args:
-            name (str): Given generator name.
+            name (str): Given CLI argument - name.
             skip (bool): If True skip the files in the corresponding directories
                 if they already exist.
 
