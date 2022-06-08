@@ -73,6 +73,7 @@ The first step is to create a bare minimum generator class at ``lib/generators/f
                     )
                 ),
                 no_input=True,
+                overwrite_if_exists=True,
                 skip_if_file_exists=skip,
             )
 
@@ -167,6 +168,19 @@ As said previously the ``new`` method is executed with ``kwagrs`` provided from 
                 overwrite_if_exists=True,
                 skip_if_file_exists=skip,
             )
+
+.. note::
+    To get the kwarg name, the chosen name is converted to lower case, up to two dashes are removed as the prefix, and other dashes are converted to underscores:
+
+    * ``-f``, ``--foo-bar``, the name is ``foo_bar``
+    * ``-x``, the name is ``x``
+    * ``-f``, ``--filename``, ``dest``, the name is ``dest``
+    * ``--CamelCase``, the name is ``camelcase``
+    * ``-f``, ``-fb``, the name is ``f``
+    * ``--f``, ``--foo-bar``, the name is ``f``
+    * ``---f``, the name is ``_f``
+
+    In this particular example, kwarg for generator ``--skip`` CLI option is ``skip`` and kwarg for ``NAME`` CLI argument is ``name``.
 
 Since ``FoobarGenerator`` class does not define its own class variables for CLI options and arguments, the defaults are being used:
 
