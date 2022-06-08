@@ -90,6 +90,7 @@ class {{cookiecutter.class_name}}(Generator):
                 )
             ),
             no_input=True,
+            overwrite_if_exists=True,
             skip_if_file_exists=skip,
         )
 

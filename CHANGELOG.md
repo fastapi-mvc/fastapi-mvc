@@ -4,6 +4,10 @@ This file documents changes to [fastapi-mvc](https://github.com/rszamszur/fastap
 
 ## Unreleased
 
+### Fixed
+
+* Missing cookiecutter kwarg in generator template [#102](https://github.com/rszamszur/fastapi-mvc/issues/102). PR [#103](https://github.com/rszamszur/fastapi-mvc/pull/103)
+
 ### Internal
 
 * Add generators feature documentation [#75](https://github.com/rszamszur/fastapi-mvc/issues/75). PR [#101](https://github.com/rszamszur/fastapi-mvc/pull/101)
