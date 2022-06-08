@@ -136,7 +136,7 @@ understand the difference.
 Constructor
 ***********
 
-Each generator __init__ will receive a parser object instance. It contains necessary project context data like project folder and package name. For all available parser attributes please see the parser API reference.
+Each generator ``__init__`` will receive a parser object instance. It contains necessary project context data like project folder and package name. For all available parser attributes please see the :ref:`parser API reference <api:Parsers>`.
 
 New method
 **********
@@ -195,7 +195,8 @@ You must have:
 
 Beyond that, you can have whatever files/directories you want.
 
-Note that ``{{cookiecutter.package_name}}`` is only needed if you want to generate files inside the project package.
+.. note::
+    Directory ``{{cookiecutter.package_name}}`` is only needed if you want to generate files inside the project package as well.
 
 The ``cookiecutter.json`` contains all the template parameters, in our case, it is the following content:
 
@@ -251,7 +252,9 @@ Since Python modules can have many files, classes, and methods we need to tell f
 
     __all__ = FoobarGenerator
 
-Note! At the time being generators are loaded only from ``lib/generators`` directory.
+.. note::
+    At the time being fastapi-mvc will try import generators only from ``lib/generators`` located in the project root directory.
+    In the future releases I'm planing to add a global path, or parametrize search paths by env variable. You are allways welcome to create an `issue <https://github.com/rszamszur/fastapi-mvc/issues/new/choose>`__.
 
 Invoking generator
 ~~~~~~~~~~~~~~~~~~
@@ -435,7 +438,9 @@ This is the generator just created:
             """
             raise NotImplementedError
 
-NOTE! Destroy method is a feature not yet implemented. However, it will be used to un-generate/undo.
+.. warning::
+    Destroy method is a feature not yet implemented. However, it will be used to un-generate/undo.
+    For now, you can leave it as is, since base class requires this method to be defined.
 
 Let's see our brand new generator description:
 
@@ -556,29 +561,31 @@ Now let's try it out:
 
 The same applies to ``click.Arguments``.
 
-NOTE! The order of ``click.Arguments`` is important since arguments are positional:
+.. warning::
+    The order of ``click.Arguments`` is important since CLI arguments are positional:
 
-.. code-block:: python
+    .. code-block:: python
 
-    cli_arguments = [
-        Argument(
-            param_decls=["SECOND"],
-            required=True,
-            nargs=1,
-        ),
-        Argument(
-            param_decls=["FIRST"],
-            required=True,
-            nargs=1,
-        ),
-    ]
+        cli_arguments = [
+            Argument(
+                param_decls=["SECOND"],
+                required=True,
+                nargs=1,
+            ),
+            Argument(
+                param_decls=["FIRST"],
+                required=True,
+                nargs=1,
+            ),
+        ]
 
-Will result in having wrong order:
+    Will result in having wrong order:
 
-.. code-block:: bash
+    .. code-block:: bash
 
-    $ fastapi-mvc generate foobar --help
-    Usage: fastapi-mvc generate foobar [OPTIONS] SECOND FIRST
+        $ fastapi-mvc generate foobar --help
+        Usage: fastapi-mvc generate foobar [OPTIONS] SECOND FIRST
+        ...
 
 Lastly you can customize generator command CLI help message via class variables:
 
