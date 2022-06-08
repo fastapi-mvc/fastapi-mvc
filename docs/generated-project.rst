@@ -42,7 +42,7 @@ To start a shell with development environment run:
 Quick start
 -----------
 
-First run ``vagrant up`` in project root directory and enter virtualized environment using ``vagrant ssh`` Then run following commands to bootstrap local development cluster exposing ``fastapi-mvc`` application.
+First run ``vagrant up`` in project root directory and enter virtualized environment using ``vagrant ssh``. Then run following commands to bootstrap local development cluster exposing ``fastapi-mvc`` application.
 
 .. code-block:: bash
 

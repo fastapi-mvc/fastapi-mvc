@@ -27,7 +27,7 @@ class Borg(object):
 
     Note:
         I am aware that singleton and monostate do not have a good reputation
-        and are often considered an anty pattern. However, a little experiment
+        and are often considered an anti pattern. However, a little experiment
         never killed nobody :); I'm genuinely curious how this plays out.
 
         Besides, it has a cool name.
