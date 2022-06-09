@@ -3,7 +3,7 @@ import os
 from fastapi_mvc.generators import ProjectGenerator
 
 
-def test_cookiecutter_template(cookies):
+def test_project_cookiecutter(cookies):
     result = cookies.bake(
         template=ProjectGenerator.template,
         extra_context={
@@ -27,7 +27,7 @@ def test_cookiecutter_template(cookies):
     assert result.project_path.is_dir()
 
 
-def test_cookiecutter_template_minimal(cookies):
+def test_project_cookiecutter_minimal(cookies):
     result = cookies.bake(
         template=ProjectGenerator.template,
         extra_context={
