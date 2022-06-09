@@ -24,10 +24,7 @@ import os
 #       range.
 #
 
-bind = "{host}:{port}".format(
-    host=os.getenv("FASTAPI_HOST", "127.0.0.1"),
-    port=os.getenv("FASTAPI_PORT", "8000"),
-)
+bind = os.getenv("FASTAPI_BIND", "127.0.0.1:8000")
 backlog = 2048
 
 #
