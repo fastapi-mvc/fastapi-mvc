@@ -237,10 +237,9 @@ All application configuration is available in `{{cookiecutter.package_name}}.con
 
 #### Application configuration
 
-| Key                  | Default                                                         | Description                                                    |
-|----------------------|-----------------------------------------------------------------|----------------------------------------------------------------|
-| FASTAPI_HOST         | `"127.0.0.1"`                                                   | FastAPI host to bind.                                          |
-| FASTAPI_PORT         | `"8000"`                                                        | FastAPI port to bind.                                          |
+| Key                  | Default                                                         | Description                                                                                         |
+|----------------------|-----------------------------------------------------------------|-----------------------------------------------------------------------------------------------------|
+| FASTAPI_BIND         | `"127.0.0.1:8000"`                                              | The socket to bind. A string of the form: 'HOST', 'HOST:PORT', 'unix:PATH'. An IP is a valid HOST.  |
 | FASTAPI_WORKERS      | `"2"`                                                           | Number of gunicorn workers (uvicorn.workers.UvicornWorker)     |
 | FASTAPI_DEBUG        | `"True"`                                                        | FastAPI logging level. You should disable this for production. |
 | FASTAPI_PROJECT_NAME | `"{{cookiecutter.project_name}}"`                               | FastAPI project name.                                          |

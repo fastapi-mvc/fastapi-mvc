@@ -19,7 +19,11 @@ Run production gunicorn (WSGI) server with uvicorn (ASGI) workers.
 )
 @click.option(
     "--bind",
-    help="Host to bind.",
+    help="""\
+    The socket to bind.
+    A string of the form: 'HOST', 'HOST:PORT', 'unix:PATH'.
+    An IP is a valid HOST.
+    """,
     type=click.STRING,
     required=False,
 )
