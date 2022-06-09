@@ -4,6 +4,10 @@ This file documents changes to [fastapi-mvc](https://github.com/rszamszur/fastap
 
 ## Unreleased
 
+### Features
+
+* Add support for binding gunicorn server to a UNIX socket [#25](https://github.com/rszamszur/fastapi-mvc/issues/25).
+
 ### Fixed
 
 * Missing cookiecutter kwarg in generator template [#102](https://github.com/rszamszur/fastapi-mvc/issues/102). PR [#103](https://github.com/rszamszur/fastapi-mvc/pull/103)
