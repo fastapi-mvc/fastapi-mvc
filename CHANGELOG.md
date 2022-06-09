@@ -11,6 +11,7 @@ This file documents changes to [fastapi-mvc](https://github.com/rszamszur/fastap
 ### Internal
 
 * Add generators feature documentation [#75](https://github.com/rszamszur/fastapi-mvc/issues/75). PR [#101](https://github.com/rszamszur/fastapi-mvc/pull/101)
+* Add integration tests for generators [#76](https://github.com/rszamszur/fastapi-mvc/issues/76). PR [#104](https://github.com/rszamszur/fastapi-mvc/pull/104)
 
 ## 0.12.0 (10.05.2022)
 

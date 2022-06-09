@@ -12,6 +12,7 @@ def add_root_dirs():
     package_dir = os.path.join(
         root_dir, "{% raw %}{{cookiecutter.package_name}}{% endraw %}"
     )
+    hooks_dir = os.path.join(template_dir, "hooks")
 
     try:
         os.mkdir(root_dir)
@@ -20,6 +21,11 @@ def add_root_dirs():
 
     try:
         os.mkdir(package_dir)
+    except OSError:
+        pass
+
+    try:
+        os.mkdir(hooks_dir)
     except OSError:
         pass
 
