@@ -2,11 +2,11 @@
 
 This file documents changes to [fastapi-mvc](https://github.com/rszamszur/fastapi-mvc). The release numbering uses [semantic versioning](http://semver.org).
 
-## Unreleased
+## 0.13.0 (09.06.2022)
 
 ### Features
 
-* Add support for binding gunicorn server to a UNIX socket [#25](https://github.com/rszamszur/fastapi-mvc/issues/25).
+* Add support for binding gunicorn server to a UNIX socket [#25](https://github.com/rszamszur/fastapi-mvc/issues/25). PR [#105](https://github.com/rszamszur/fastapi-mvc/pull/105)
 
 ### Fixed
 
