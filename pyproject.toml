@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "fastapi-mvc"
-version = "0.13.0"
+version = "0.13.1"
 description = "Developer productivity tool for making high-quality FastAPI production-ready APIs."
 authors = ["Radosław Szamszur <radoslawszamszur@gmail.com>"]
 license = "MIT"
