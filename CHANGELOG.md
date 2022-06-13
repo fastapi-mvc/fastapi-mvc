@@ -2,6 +2,13 @@
 
 This file documents changes to [fastapi-mvc](https://github.com/rszamszur/fastapi-mvc). The release numbering uses [semantic versioning](http://semver.org).
 
+## 0.13.1 (13.06.2022)
+
+### Security
+
+* [CVE-2022-24065](http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2022-24065) OS Command Injection in cookiecutter. Update vulnerable dependency:
+  * cookiecutter (1.7.3 -> 2.1.1)
+
 ## 0.13.0 (09.06.2022)
 
 ### Features
