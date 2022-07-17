@@ -33,7 +33,7 @@ if [[ ${KUBE_CLIENT_VERSION} -lt 16 ]]; then
 fi
 
 echo "[dev-env] starting minikube"
-MINIKUBE_IN_STYLE=0 minikube start --driver=docker 2>/dev/null
+MINIKUBE_IN_STYLE=0 minikube start --driver=docker
 
 echo "[dev-env] enabling ingress addon"
 minikube addons enable ingress
