@@ -2,6 +2,12 @@
 
 This file documents changes to [fastapi-mvc](https://github.com/rszamszur/fastapi-mvc). The release numbering uses [semantic versioning](http://semver.org).
 
+## Unreleased
+
+### Internal
+
+* Improve Vagrantfile in project template [#121](https://github.com/rszamszur/fastapi-mvc/issues/121). PR [#122](https://github.com/rszamszur/fastapi-mvc/pull/122)
+
 ## 0.13.1 (13.06.2022)
 
 ### Security
