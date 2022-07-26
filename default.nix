@@ -1,28 +1,15 @@
 { lib
-, buildPythonPackage
-, fetchPypi
-, setuptools
-, cookiecutter
-, click
+, python
+, poetry2nix
 }:
 
-buildPythonPackage rec {
-  pname = "fastapi-mvc";
-  version = "0.13.1";
+poetry2nix.mkPoetryApplication rec {
+  inherit python;
 
-  src = fetchPypi {
-    inherit pname version;
-    sha256 = "1f67vvxv59zdzwfh6bbldljh4xzlh3xcivj44ffrqly2259d1drq";
-  };
-
-  buildInputs = [
-    setuptools
-  ];
-
-  propagatedBuildInputs = [
-    cookiecutter
-    click
-  ];
+  projectDir = ./.;
+  src = ./.;
+  pyproject = ./pyproject.toml;
+  poetrylock = ./poetry.lock;
 
   pythonImportsCheck = [ "fastapi_mvc" ];
 

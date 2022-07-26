@@ -1,4 +1,4 @@
-{ pkgs ? import <nixpkgs> {} }:
+{ pkgs ? import <nixpkgs> { } }:
 
 let
   nonRootShadowSetup = { user, uid, gid ? uid }: with pkgs; [
@@ -28,17 +28,12 @@ let
     )
   ];
 
-  fastapi_mvc = pkgs.callPackage ./default.nix {
-    buildPythonPackage = pkgs.python39Packages.buildPythonPackage;
-    fetchPypi = pkgs.python39Packages.fetchPypi;
-    setuptools = pkgs.python39.pkgs.setuptools;
-    cookiecutter = pkgs.python39.pkgs.cookiecutter;
-    click = pkgs.python39.pkgs.click;
+  fastapi-mvc = pkgs.callPackage ./default.nix {
+    python = pkgs.python39;
+    poetry2nix = pkgs.poetry2nix;
   };
 
-  pyEnv = pkgs.python39.withPackages (ps: with ps; [
-    fastapi_mvc
-  ]);
+  pyEnv = fastapi-mvc.dependencyEnv;
 in
 
 pkgs.dockerTools.buildImage {
@@ -51,6 +46,6 @@ pkgs.dockerTools.buildImage {
 
   config = {
     User = "nonroot";
-    Entrypoint = [ "${pyEnv}/bin/python3" "-m" "fastapi_mvc" ];
+    Entrypoint = [ "${pyEnv}/bin/fastapi-mvc" ];
   };
 }
