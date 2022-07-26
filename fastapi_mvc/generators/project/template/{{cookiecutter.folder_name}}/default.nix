@@ -1,41 +1,15 @@
 { lib
-, buildPythonPackage
-, fetchPypi
-, setuptools
-, fastapi
-, uvicorn
-, gunicorn
-, click
-{%- if cookiecutter.redis == "yes" %}
-, aioredis
-{%- endif %}
-{%- if cookiecutter.aiohttp == "yes" %}
-, aiohttp
-{%- endif %}
+, python
+, poetry2nix
 }:
 
-buildPythonPackage rec {
-  pname = "{{cookiecutter.folder_name}}";
-  version = "0.1.0";
+poetry2nix.mkPoetryApplication rec {
+  inherit python;
 
+  projectDir = ./.;
   src = ./.;
-
-  buildInputs = [
-    setuptools
-  ];
-
-  propagatedBuildInputs = [
-    fastapi
-    uvicorn
-    gunicorn
-    click
-{%- if cookiecutter.redis == "yes" %}
-    aioredis
-{%- endif %}
-{%- if cookiecutter.aiohttp == "yes" %}
-    aiohttp
-{%- endif %}
-  ];
+  pyproject = ./pyproject.toml;
+  poetrylock = ./poetry.lock;
 
   pythonImportsCheck = [ "{{cookiecutter.package_name}}" ];
 
