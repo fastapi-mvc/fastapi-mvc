@@ -4,6 +4,12 @@ This file documents changes to [fastapi-mvc](https://github.com/rszamszur/fastap
 
 ## Unreleased
 
+### Features
+
+* Add nix expression for `fastapi-mvc` package [#114](https://github.com/rszamszur/fastapi-mvc/issues/114). PR [#116](https://github.com/rszamszur/fastapi-mvc/pull/116)
+* Add nix expression for package generated from `fastapi-mvc` project template. [#115](https://github.com/rszamszur/fastapi-mvc/issues/115). PR [#116](https://github.com/rszamszur/fastapi-mvc/pull/116)
+* Add container image nix expression for `fastapi-mvc` and project template [#56](https://github.com/rszamszur/fastapi-mvc/issues/56). PR [#116](https://github.com/rszamszur/fastapi-mvc/pull/116)
+
 ### Internal
 
 * Improve Vagrantfile in project template [#121](https://github.com/rszamszur/fastapi-mvc/issues/121). PR [#122](https://github.com/rszamszur/fastapi-mvc/pull/122)
