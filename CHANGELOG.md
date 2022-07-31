@@ -6,6 +6,7 @@ This file documents changes to [fastapi-mvc](https://github.com/rszamszur/fastap
 
 ### Features
 
+* Add `-N, --skip-nix` flag for `fastapi-mvc new` command [#123](https://github.com/rszamszur/fastapi-mvc/issues/123). PR [#124](https://github.com/rszamszur/fastapi-mvc/pull/124)
 * Add nix expression for `fastapi-mvc` package [#114](https://github.com/rszamszur/fastapi-mvc/issues/114). PR [#116](https://github.com/rszamszur/fastapi-mvc/pull/116)
 * Add nix expression for package generated from `fastapi-mvc` project template. [#115](https://github.com/rszamszur/fastapi-mvc/issues/115). PR [#116](https://github.com/rszamszur/fastapi-mvc/pull/116)
 * Add container image nix expression for `fastapi-mvc` and project template [#56](https://github.com/rszamszur/fastapi-mvc/issues/56). PR [#116](https://github.com/rszamszur/fastapi-mvc/pull/116)

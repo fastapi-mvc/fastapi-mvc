@@ -14,6 +14,7 @@
   "github_actions": ["yes", "no"],
   "aiohttp": ["yes", "no"],
   "helm": ["yes", "no"],
+  "nix": ["yes", "no"],
   "license": [
         "MIT",
         "BSD2",

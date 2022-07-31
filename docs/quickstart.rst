@@ -193,7 +193,9 @@ Here's a basic rundown on the function of each of the files and folders that fas
     ├── .coveragerc
     ├── .gitignore
     ├── fastapi-mvc.ini              Fastapi-mvc application configuration.
-    ├── shell.nix                    Nix shell configuration file.
+    ├── shell.nix                    Nix shell expression file.
+    ├── default.nix                  Python project Nix expression file.
+    ├── image.nix                    Container image Nix expression file.
     ├── LICENSE
     ├── Makefile                     Makefile definition
     ├── poetry.lock                  Poetry dependency management lock file
