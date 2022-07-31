@@ -12,6 +12,7 @@ def test_project_cookiecutter(cookies):
             "aiohttp": "yes",
             "github_actions": "yes",
             "helm": "yes",
+            "nix": "yes",
             "author": "John Doe",
             "email": "jdoe@example.com",
             "license": "MIT",
@@ -36,6 +37,7 @@ def test_project_cookiecutter_minimal(cookies):
             "aiohttp": "no",
             "github_actions": "no",
             "helm": "no",
+            "nix": "no",
             "author": "John Doe",
             "email": "jdoe@example.com",
             "license": "ISC",
@@ -57,6 +59,9 @@ def test_project_cookiecutter_minimal(cookies):
         "manifests",
         "tests/unit/app/utils/test_aiohttp_client.py",
         "test_project/app/utils/aiohttp_client.py",
+        "shell.nix",
+        "image.nix",
+        "default.nix",
     ]
 
     for path in paths:
