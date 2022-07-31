@@ -32,7 +32,7 @@ def test_class_variables():
     assert not ProjectGenerator.cli_arguments[0].type.exists
     assert ProjectGenerator.cli_arguments[0].nargs == 1
 
-    assert len(ProjectGenerator.cli_options) == 7
+    assert len(ProjectGenerator.cli_options) == 8
     assert isinstance(ProjectGenerator.cli_options[0], click.Option)
     assert ProjectGenerator.cli_options[0].opts == ["-R", "--skip-redis"]
     assert ProjectGenerator.cli_options[0].help == "Skip Redis utility files."
@@ -54,13 +54,17 @@ def test_class_variables():
     assert ProjectGenerator.cli_options[4].help == "Do not run make install."
     assert ProjectGenerator.cli_options[4].is_flag
     assert isinstance(ProjectGenerator.cli_options[5], click.Option)
-    assert ProjectGenerator.cli_options[5].opts == ["--license"]
-    assert ProjectGenerator.cli_options[5].help == "Choose license."
-    assert ProjectGenerator.cli_options[5].default == "MIT"
-    assert ProjectGenerator.cli_options[5].show_default
-    assert ProjectGenerator.cli_options[5].envvar == "LICENSE"
-    assert isinstance(ProjectGenerator.cli_options[5].type, click.Choice)
-    assert ProjectGenerator.cli_options[5].type.choices == [
+    assert ProjectGenerator.cli_options[5].opts == ["-N", "--skip-nix"]
+    assert ProjectGenerator.cli_options[5].help == "Skip nix expression files."
+    assert ProjectGenerator.cli_options[5].is_flag
+    assert isinstance(ProjectGenerator.cli_options[6], click.Option)
+    assert ProjectGenerator.cli_options[6].opts == ["--license"]
+    assert ProjectGenerator.cli_options[6].help == "Choose license."
+    assert ProjectGenerator.cli_options[6].default == "MIT"
+    assert ProjectGenerator.cli_options[6].show_default
+    assert ProjectGenerator.cli_options[6].envvar == "LICENSE"
+    assert isinstance(ProjectGenerator.cli_options[6].type, click.Choice)
+    assert ProjectGenerator.cli_options[6].type.choices == [
         "MIT",
         "BSD2",
         "BSD3",
@@ -72,12 +76,12 @@ def test_class_variables():
         "LGPLv2",
         "no",
     ]
-    assert isinstance(ProjectGenerator.cli_options[6], click.Option)
-    assert ProjectGenerator.cli_options[6].opts == ["--repo-url"]
-    assert ProjectGenerator.cli_options[6].help == "Repository url."
-    assert ProjectGenerator.cli_options[6].type == click.STRING
-    assert ProjectGenerator.cli_options[6].default == "https://your.repo.url.here"
-    assert ProjectGenerator.cli_options[6].envvar == "REPO_URL"
+    assert isinstance(ProjectGenerator.cli_options[7], click.Option)
+    assert ProjectGenerator.cli_options[7].opts == ["--repo-url"]
+    assert ProjectGenerator.cli_options[7].help == "Repository url."
+    assert ProjectGenerator.cli_options[7].type == click.STRING
+    assert ProjectGenerator.cli_options[7].default == "https://your.repo.url.here"
+    assert ProjectGenerator.cli_options[7].envvar == "REPO_URL"
 
     assert ProjectGenerator.cli_short_help == "Create a new FastAPI application."
     assert (
@@ -98,6 +102,7 @@ def test_class_variables():
                 "skip_redis": False,
                 "skip_aiohttp": False,
                 "skip_helm": False,
+                "skip_nix": False,
                 "skip_actions": False,
                 "skip_install": False,
                 "license": "MIT",
@@ -109,6 +114,7 @@ def test_class_variables():
                 "aiohttp": "yes",
                 "github_actions": "yes",
                 "helm": "yes",
+                "nix": "yes",
                 "author": "John Doe",
                 "email": "example@email.com",
                 "license": "MIT",
@@ -124,6 +130,7 @@ def test_class_variables():
                 "skip_redis": True,
                 "skip_aiohttp": True,
                 "skip_helm": True,
+                "skip_nix": True,
                 "skip_actions": True,
                 "skip_install": True,
                 "license": "Apache2.0",
@@ -135,6 +142,7 @@ def test_class_variables():
                 "aiohttp": "no",
                 "github_actions": "no",
                 "helm": "no",
+                "nix": "no",
                 "author": "John Doe",
                 "email": "example@email.com",
                 "license": "Apache2.0",
@@ -188,6 +196,7 @@ def test_new_dir_exists(cookie_mock, utils_mock, gen_obj):
             skip_redis=False,
             skip_aiohttp=False,
             skip_helm=False,
+            skip_nix=False,
             skip_actions=False,
             skip_install=False,
             license="MIT",
@@ -203,6 +212,7 @@ def test_new_dir_exists(cookie_mock, utils_mock, gen_obj):
             "aiohttp": "yes",
             "github_actions": "yes",
             "helm": "yes",
+            "nix": "yes",
             "author": "John Doe",
             "email": "example@email.com",
             "license": "MIT",
