@@ -64,8 +64,21 @@ def set_redis():
         )
 
 
+def set_nix():
+    """Remove Nix expression files if not enabled."""
+    if "{{ cookiecutter.nix }}" != "yes":
+        remove(
+            [
+                "shell.nix",
+                "image.nix",
+                "default.nix",
+            ]
+        )
+
+
 if __name__ == "__main__":
     set_gh_actions()
     set_aiohttp()
     set_helm()
     set_redis()
+    set_nix()

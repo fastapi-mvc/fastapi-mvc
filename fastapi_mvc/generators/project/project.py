@@ -79,6 +79,11 @@ class ProjectGenerator(Generator):
             is_flag=True,
         ),
         click.Option(
+            param_decls=["-N", "--skip-nix"],
+            help="Skip nix expression files.",
+            is_flag=True,
+        ),
+        click.Option(
             param_decls=["--license"],
             help="Choose license.",
             type=click.Choice(
@@ -137,6 +142,7 @@ class ProjectGenerator(Generator):
         skip_actions,
         skip_helm,
         skip_install,
+        skip_nix,
         license,
         repo_url,
     ):
@@ -150,6 +156,7 @@ class ProjectGenerator(Generator):
             skip_helm (bool): If true skip Helm chart files.
             skip_install (bool): If true skip ``make install`` once project is
                 generated.
+            skip_nix (bool): If true skip nix expression files.
             license (str): Project license.
             repo_url (str): Project repository url.
 
@@ -171,6 +178,7 @@ class ProjectGenerator(Generator):
             "aiohttp": self._get_value(skip_aiohttp),
             "github_actions": self._get_value(skip_actions),
             "helm": self._get_value(skip_helm),
+            "nix": self._get_value(skip_nix),
             "author": author,
             "email": email,
             "license": license,
