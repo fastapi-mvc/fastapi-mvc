@@ -10,6 +10,8 @@ __pycache__/
 # Unit test / coverage reports
 htmlcov/
 .tox/
+.pytest_cache/
+.mypy_cache/
 .coverage
 .coverage.*
 .cache
@@ -17,18 +19,20 @@ nosetests.xml
 coverage.xml
 *,cover
 .hypothesis/
-flake8_code_errors.txt
-pep257_violations.txt
-pep8_violations.txt
-code_complexity.txt
 xunit-*.xml
 
 # PyCharm
-.idea
+.idea/
 
 # virtual
-venv
-.venv
+venv/
+.venv/
 
 # vagrant
-.vagrant
+.vagrant/
+
+# direnv
+.direnv/
+
+# Sphinx build dir
+site/
