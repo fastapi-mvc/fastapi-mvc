@@ -1,4 +1,4 @@
-import mock
+from unittest import mock
 from {{cookiecutter.package_name}}.config import settings
 from {{cookiecutter.package_name}}.app.router import root_api_router
 from {{cookiecutter.package_name}}.app.asgi import (

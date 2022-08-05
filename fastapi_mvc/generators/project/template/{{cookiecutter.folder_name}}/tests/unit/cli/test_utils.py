@@ -1,6 +1,6 @@
 import os
 
-import mock
+from unittest import mock
 import pytest
 from click import BadParameter
 from {{cookiecutter.package_name}}.cli.utils import validate_directory

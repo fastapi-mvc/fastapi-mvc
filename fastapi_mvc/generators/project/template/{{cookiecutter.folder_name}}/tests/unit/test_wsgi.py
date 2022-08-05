@@ -1,4 +1,4 @@
-import mock
+from unittest import mock
 import pytest
 from gunicorn.app.base import BaseApplication
 from gunicorn.errors import ConfigError
