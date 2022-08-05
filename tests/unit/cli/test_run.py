@@ -1,6 +1,6 @@
 import os
 
-import mock
+from unittest import mock
 import pytest
 from fastapi_mvc.cli.run import run
 

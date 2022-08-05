@@ -1,7 +1,7 @@
 import os
 
 import pytest
-import mock
+from unittest import mock
 from click.testing import CliRunner
 from fastapi_mvc import Borg
 from fastapi_mvc.generators import ProjectGenerator

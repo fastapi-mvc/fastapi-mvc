@@ -2,7 +2,7 @@ import os
 import inspect
 
 import pytest
-import mock
+from unittest import mock
 from fastapi_mvc.generators import GeneratorGenerator, Generator
 
 

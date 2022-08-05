@@ -3,7 +3,7 @@ import inspect
 from datetime import datetime
 
 import pytest
-import mock
+from unittest import mock
 import click
 from cookiecutter.exceptions import OutputDirExistsException
 from fastapi_mvc.generators import ProjectGenerator

@@ -2,7 +2,7 @@ import os
 import inspect
 
 import pytest
-import mock
+from unittest import mock
 from click import Argument, Option
 from fastapi_mvc.generators import ControllerGenerator
 

@@ -1,4 +1,4 @@
-import mock
+from unittest import mock
 import pytest
 from fastapi_mvc.cli.generate import get_generate_cmd
 from ..data.cli_outputs import (

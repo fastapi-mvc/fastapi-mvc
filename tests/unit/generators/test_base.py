@@ -1,7 +1,7 @@
 import os
 from logging import Logger
 
-import mock
+from unittest import mock
 import pytest
 from click import Argument, Option
 from fastapi_mvc.generators import Generator

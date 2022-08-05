@@ -3,7 +3,7 @@ import subprocess
 from subprocess import CalledProcessError
 
 import pytest
-import mock
+from unittest import mock
 from fastapi_mvc.utils import ShellUtils
 
 

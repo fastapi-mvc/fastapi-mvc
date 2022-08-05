@@ -1,5 +1,5 @@
 import pytest
-import mock
+from unittest import mock
 
 from fastapi_mvc.commands import RunShell
 

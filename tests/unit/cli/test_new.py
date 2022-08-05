@@ -1,4 +1,4 @@
-import mock
+from unittest import mock
 import pytest
 from fastapi_mvc.cli.new import get_new_cmd
 
