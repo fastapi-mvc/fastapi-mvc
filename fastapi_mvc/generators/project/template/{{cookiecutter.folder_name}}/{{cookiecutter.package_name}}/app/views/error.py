@@ -50,7 +50,7 @@ class ErrorModel(BaseModel):
         def schema_extra(schema: Dict[str, Any]) -> None:
             """Post-process the generated schema.
 
-            Mathod can have one or two positional arguments. The first will be
+            Method can have one or two positional arguments. The first will be
             the schema dictionary. The second, if accepted, will be the model
             class. The callable is expected to mutate the schema dictionary
             in-place; the return value is not used.
