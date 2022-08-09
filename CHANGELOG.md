@@ -4,6 +4,14 @@ This file documents changes to [fastapi-mvc](https://github.com/rszamszur/fastap
 
 ## Unreleased
 
+## Features
+
+* Allow `pkgs.python` to be configurable in `shell.nix`. PR [#132](https://github.com/rszamszur/fastapi-mvc/pull/132)
+
+## Fixed
+
+* Fix `POETRY_HOME` environment variable in shell.nix nix expression [#131](https://github.com/rszamszur/fastapi-mvc/issues/131). PR [#132](https://github.com/rszamszur/fastapi-mvc/pull/132)
+
 ### Internal
 
 * Update macos runner in integration workflows [#125](https://github.com/rszamszur/fastapi-mvc/issues/125). PR [#126](https://github.com/rszamszur/fastapi-mvc/pull/126)
