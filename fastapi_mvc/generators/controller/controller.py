@@ -92,7 +92,7 @@ class ControllerGenerator(Generator):
 
             context["controller_endpoints"][endpoint] = method
 
-        self._log.debugf(f"Cookiecutter context: {context}")
+        self._log.debug(f"Cookiecutter context: {context}")
 
         cookiecutter(
             self.template,
