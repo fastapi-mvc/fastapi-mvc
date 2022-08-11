@@ -2,7 +2,7 @@
 
 This file documents changes to [fastapi-mvc](https://github.com/rszamszur/fastapi-mvc). The release numbering uses [semantic versioning](http://semver.org).
 
-## Unreleased
+## 0.14.1 (11.08.2022)
 
 ## Features
 
@@ -14,6 +14,7 @@ This file documents changes to [fastapi-mvc](https://github.com/rszamszur/fastap
 
 ### Internal
 
+* Refactor string formatting with f-Strings [#133](https://github.com/rszamszur/fastapi-mvc/issues/133). PR [#134](https://github.com/rszamszur/fastapi-mvc/pull/134)
 * Update macos runner in integration workflows [#125](https://github.com/rszamszur/fastapi-mvc/issues/125). PR [#126](https://github.com/rszamszur/fastapi-mvc/pull/126)
 * Add minor improvements. PR [#127](https://github.com/rszamszur/fastapi-mvc/pull/127)
 
