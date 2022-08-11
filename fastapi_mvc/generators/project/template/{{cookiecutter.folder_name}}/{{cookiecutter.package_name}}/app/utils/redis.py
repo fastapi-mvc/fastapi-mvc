@@ -85,7 +85,7 @@ class RedisClient(object):
         # Note: Not sure if this shouldn't be deep copy instead?
         redis_client = cls.redis_client
 
-        cls.log.debug("Preform Redis PING command")
+        cls.log.debug("Execute Redis PING command")
         try:
             return await redis_client.ping()
         except RedisError as ex:
@@ -116,7 +116,7 @@ class RedisClient(object):
         """
         redis_client = cls.redis_client
 
-        cls.log.debug(f"Preform Redis SET command, key: {key}, value: {value}")
+        cls.log.debug(f"Execute Redis SET command, key: {key}, value: {value}")
         try:
             await redis_client.set(key, value)
         except RedisError as ex:
@@ -148,7 +148,9 @@ class RedisClient(object):
         """
         redis_client = cls.redis_client
 
-        cls.log.debug(f"Preform Redis RPUSH command, key: {key}, value: {value}")
+        cls.log.debug(
+            f"Execute Redis RPUSH command, key: {key}, value: {value}"
+        )
         try:
             await redis_client.rpush(key, value)
         except RedisError as ex:
@@ -176,7 +178,7 @@ class RedisClient(object):
         """
         redis_client = cls.redis_client
 
-        cls.log.debug(f"Preform Redis EXISTS command, key: {key}")
+        cls.log.debug(f"Execute Redis EXISTS command, key: {key}")
         try:
             return await redis_client.exists(key)
         except RedisError as ex:
@@ -206,7 +208,7 @@ class RedisClient(object):
         """
         redis_client = cls.redis_client
 
-        cls.log.debug(f"Preform Redis GET command, key: {key}")
+        cls.log.debug(f"Execute Redis GET command, key: {key}")
         try:
             return await redis_client.get(key)
         except RedisError as ex:
@@ -240,9 +242,9 @@ class RedisClient(object):
 
         """
         redis_client = cls.redis_client
-
         cls.log.debug(
-            f"Preform Redis LRANGE command, key: {key}, start: {start}, end: {end}"
+            f"Execute Redis LRANGE command, "
+            f"key: {key}, start: {start}, end: {end}"
         )
         try:
             return await redis_client.lrange(key, start, end)
