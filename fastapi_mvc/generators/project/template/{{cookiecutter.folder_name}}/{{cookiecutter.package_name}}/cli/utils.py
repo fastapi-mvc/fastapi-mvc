@@ -26,12 +26,8 @@ def validate_directory(ctx, param, value):
     dirname = os.path.dirname(value)
 
     if not os.path.exists(dirname):
-        raise click.BadParameter(
-            "Directory '{dir}' does not exist.".format(dir=dirname)
-        )
+        raise click.BadParameter(f"Directory '{dirname}' does not exist.")
     elif not os.access(dirname, os.W_OK):
-        raise click.BadParameter(
-            "Directory '{dir}' is not writable.".format(dir=dirname)
-        )
+        raise click.BadParameter(f"Directory '{dirname}' is not writable.")
 
     return value

@@ -78,7 +78,7 @@ class FoobarGenerator(Generator):
             "foobar_name": name,
         }
 
-        self._log.debug("Cookiecutter context: {0}".format(context))
+        self._log.debug(f"Cookiecutter context: {context}")
 
         cookiecutter(
             self.template,

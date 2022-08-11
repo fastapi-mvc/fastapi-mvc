@@ -111,9 +111,8 @@ class Borg(object):
             str: Poetry binary abspath.
 
         """
-        return "{0:s}/bin/poetry".format(
-            os.getenv("POETRY_HOME", "{0:s}/.poetry".format(os.getenv("HOME")))
-        )
+        poetry_home = os.getenv("POETRY_HOME", f"{os.getenv('HOME')}/.poetry")
+        return f"{poetry_home}/bin/poetry"
 
     @property
     def version(self):
@@ -142,7 +141,7 @@ class Borg(object):
         pkg_path = os.path.join(parser.project_root, parser.package_name)
 
         if not os.path.isdir(pkg_path):
-            self._log.debug("{0:s} is not a directory.".format(pkg_path))
+            self._log.debug(f"{pkg_path} is not a directory.")
             self._log.error(
                 "Could not find required project files. Most likely project or "
                 "fastapi-mvc.ini is corrupted."
@@ -192,9 +191,7 @@ class Borg(object):
             try:
                 spec.loader.exec_module(module)
             except (ModuleNotFoundError, ImportError) as err:
-                self._log.error(
-                    "Could not load custom generator: {}".format(m_path)
-                )
+                self._log.error(f"Could not load custom generator: {m_path}")
                 self._log.error(err)
                 continue
 

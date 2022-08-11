@@ -74,7 +74,7 @@ def run(**options):
                 "--port",
                 options["port"],
                 "--reload",
-                "{0:s}.app:get_application".format(borg.parser.package_name),
+                f"{borg.parser.package_name}.app:get_application",
             ],
             cwd=borg.parser.project_root,
         )

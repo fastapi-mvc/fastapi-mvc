@@ -47,13 +47,9 @@ class HTTPException(Exception):
 
         for key, value in self.__dict__.items():
             if not key.startswith("_"):
-                kwargs.append(
-                    "{key}={value}".format(key=key, value=repr(value))
-                )
+                kwargs.append(f"{key}={value!r}")
 
-        return "{name}({kwargs})".format(
-            name=self.__class__.__name__, kwargs=", ".join(kwargs)
-        )
+        return f"{self.__class__.__name__}({', '.join(kwargs)})"
 
 
 async def http_exception_handler(request: Request, exception: HTTPException):

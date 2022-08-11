@@ -153,7 +153,7 @@ class GeneratorsMultiCommand(click.MultiCommand):
 
         """
         if name not in self.generators:
-            ctx.fail("No such generator '{gen}'.".format(gen=name))
+            ctx.fail(f"No such generator '{name}'.")
 
         return GeneratorCommand(
             generator_cls=self.generators[name],

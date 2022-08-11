@@ -40,24 +40,18 @@ class IniParser(object):
             self._project_root = project_root
 
         ini_file = os.path.join(self._project_root, "fastapi-mvc.ini")
-        self._log.debug("Begin parsing: {0:s}".format(ini_file))
+        self._log.debug(f"Begin parsing: {ini_file}")
 
         if not os.path.exists(ini_file):
-            msg = "{0:s}/fastapi-mvc.ini does not exist.".format(
-                self._project_root
-            )
+            msg = f"{self._project_root}/fastapi-mvc.ini does not exist."
             self._log.debug(msg)
             raise FileNotFoundError(msg)
         elif not os.path.isfile(ini_file):
-            msg = "{0:s}/fastapi-mvc.ini is not a file.".format(
-                self._project_root
-            )
+            msg = f"{self._project_root}/fastapi-mvc.ini is not a file."
             self._log.debug(msg)
             raise IsADirectoryError(msg)
         elif not os.access(ini_file, os.R_OK):
-            msg = "{0:s}/fastapi-mvc.ini is not readable.".format(
-                self._project_root
-            )
+            msg = f"{self._project_root}/fastapi-mvc.ini is not readable."
             self._log.debug(msg)
             raise PermissionError(msg)
 
