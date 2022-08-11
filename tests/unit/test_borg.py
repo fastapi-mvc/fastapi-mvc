@@ -63,7 +63,7 @@ def test_borg(parser_mock, invoker_mock, getcwd_mock, getenv_mock, isdir_mock):
     assert second.generators["foobar"].__name__ == "FoobarGenerator"
     assert len(second._imported_paths) == 2
     assert "/path/to/project/lib/generators" in second._imported_paths
-    assert "{0:s}/lib/generators".format(DATA_DIR) in second._imported_paths
+    assert f"{DATA_DIR}/lib/generators" in second._imported_paths
     assert second.poetry_path == "/custom/poetry/bin/poetry"
     assert first.__dict__ == second.__dict__
 
@@ -140,7 +140,7 @@ def test_load_generators(getcwd_mock):
 
     borg = Borg()
     assert len(borg._import_paths) == 1
-    assert "{0:s}/lib/generators".format(DATA_DIR) in borg._import_paths
+    assert f"{DATA_DIR}/lib/generators" in borg._import_paths
     assert not borg._imported_paths
     assert "MyControllerGenerator" not in borg.generators
     assert "foobar" not in borg.generators
@@ -156,7 +156,7 @@ def test_load_generators(getcwd_mock):
     assert issubclass(borg.generators["foobar"], Generator)
     assert borg.generators["foobar"].__name__ == "FoobarGenerator"
     assert len(borg._imported_paths) == 1
-    assert "{0:s}/lib/generators".format(DATA_DIR) in borg._imported_paths
+    assert f"{DATA_DIR}/lib/generators" in borg._imported_paths
 
 
 @mock.patch("fastapi_mvc.borg.importlib.util")
@@ -172,7 +172,7 @@ def test_load_generators_error(getcwd_mock, importlib_mock):
     borg = Borg()
 
     assert len(borg._import_paths) == 1
-    assert "{0:s}/lib/generators".format(DATA_DIR) in borg._import_paths
+    assert f"{DATA_DIR}/lib/generators" in borg._import_paths
     assert not borg._imported_paths
     assert "MyControllerGenerator" not in borg.generators
     assert "foobar" not in borg.generators
@@ -183,4 +183,4 @@ def test_load_generators_error(getcwd_mock, importlib_mock):
     assert "MyControllerGenerator" not in borg.generators
     assert "foobar" not in borg.generators
     assert len(borg._imported_paths) == 1
-    assert "{0:s}/lib/generators".format(DATA_DIR) in borg._imported_paths
+    assert f"{DATA_DIR}/lib/generators" in borg._imported_paths

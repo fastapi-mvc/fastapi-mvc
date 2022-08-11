@@ -59,7 +59,7 @@ class GeneratorGenerator(Generator):
 
         """
         if name in self._builtins:
-            self._log.error("Shadows built-in generator: {0:s}".format(name))
+            self._log.error(f"Shadows built-in generator: {name}")
             raise SystemExit(1)
 
         words = name.replace("-", " ").replace("_", " ").split()
@@ -69,10 +69,10 @@ class GeneratorGenerator(Generator):
             "package_name": self._parser.package_name,
             "folder_name": self._parser.folder_name,
             "generator_name": name.lower().replace("-", "_"),
-            "class_name": "{0:s}Generator".format(class_name),
+            "class_name": f"{class_name}Generator",
         }
 
-        self._log.debug("Cookiecutter context: {0}".format(context))
+        self._log.debug(f"Cookiecutter context: {context}")
 
         cookiecutter(
             self.template,

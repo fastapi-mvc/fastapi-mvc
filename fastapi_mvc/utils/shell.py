@@ -72,17 +72,13 @@ class ShellUtils(object):
         if not cwd:
             cwd = os.getcwd()
 
-        cls._log.debug(
-            "Run shell command: {cmd} under path: {cwd}".format(
-                cmd=cmd, cwd=cwd
-            )
-        )
+        cls._log.debug(f"Run shell command: {cmd} under path: {cwd}")
         env = os.environ.copy()
 
         if "VIRTUAL_ENV" in env:
             cls._log.warning("Activated virtual env detected.")
 
-            venv_path = "{venv}/bin".format(venv=env["VIRTUAL_ENV"])
+            venv_path = f"{env['VIRTUAL_ENV']}/bin"
             del env["VIRTUAL_ENV"]
 
             env["PATH"] = env["PATH"].replace(venv_path, "").strip(":")

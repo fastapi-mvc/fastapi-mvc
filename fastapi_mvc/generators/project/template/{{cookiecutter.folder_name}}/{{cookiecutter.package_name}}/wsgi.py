@@ -50,9 +50,7 @@ class ApplicationLoader(BaseApplication):
             try:
                 self.cfg.set(k.lower(), v)
             except Exception as ex:
-                self.logger.error(
-                    "Invalid value for {key}: {val}".format(key=k, val=v)
-                )
+                self.logger.error(f"Invalid value for {k}: {v}")
                 raise ex
 
     def load_config(self):

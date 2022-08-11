@@ -8,10 +8,7 @@ def edit_router():
         router = os.path.join(
             os.getcwd(), "{{cookiecutter.package_name}}/app/router.py"
         )
-        import_str = "from {0:s}.app.controllers import {1:s}\n".format(
-            "{{cookiecutter.package_name}}",
-            "{{cookiecutter.controller_name}}",
-        )
+        import_str = "from {{cookiecutter.package_name}}.app.controllers import {{cookiecutter.controller_name}}\n"
 
         with open(router, "r") as f:
             lines = f.readlines()

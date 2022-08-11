@@ -74,7 +74,7 @@ class AiohttpClient(object):
         """
         client = cls.get_aiohttp_client()
 
-        cls.log.debug("Started GET {}".format(url))
+        cls.log.debug(f"Started GET {url}")
         response = await client.get(
             url,
             headers=headers,
@@ -103,7 +103,7 @@ class AiohttpClient(object):
         """
         client = cls.get_aiohttp_client()
 
-        cls.log.debug("Started POST {}".format(url))
+        cls.log.debug(f"Started POST: {url}")
         response = await client.post(
             url,
             data=data,
@@ -133,7 +133,7 @@ class AiohttpClient(object):
         """
         client = cls.get_aiohttp_client()
 
-        cls.log.debug("Started PUT {}".format(url))
+        cls.log.debug(f"Started PUT: {url}")
         response = await client.put(
             url,
             data=data,
@@ -160,7 +160,7 @@ class AiohttpClient(object):
         """
         client = cls.get_aiohttp_client()
 
-        cls.log.debug("Started DELETE {}".format(url))
+        cls.log.debug(f"Started DELETE: {url}")
         response = await client.delete(
             url,
             headers=headers,
@@ -189,7 +189,7 @@ class AiohttpClient(object):
         """
         client = cls.get_aiohttp_client()
 
-        cls.log.debug("Started PATCH {}".format(url))
+        cls.log.debug(f"Started PATCH: {url}")
         response = await client.patch(
             url,
             data=data,
