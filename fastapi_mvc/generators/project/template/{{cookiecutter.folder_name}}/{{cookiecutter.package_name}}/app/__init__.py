@@ -15,3 +15,6 @@ Resources:
 
 """
 from {{cookiecutter.package_name}}.app.asgi import get_application
+
+
+__all__ = ("get_application",)
