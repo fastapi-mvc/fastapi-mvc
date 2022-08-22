@@ -195,7 +195,7 @@ class Borg(object):
                 self._log.error(err)
                 continue
 
-            generator = getattr(module, "__all__", None)
+            generator = getattr(module, "generator_class", None)
 
             if generator and issubclass(generator, Generator):
                 if generator.name in self._generators:
