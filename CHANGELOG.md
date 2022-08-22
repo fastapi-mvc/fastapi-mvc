@@ -2,6 +2,12 @@
 
 This file documents changes to [fastapi-mvc](https://github.com/rszamszur/fastapi-mvc). The release numbering uses [semantic versioning](http://semver.org).
 
+## Unreleased
+
+### Internal
+
+* Add `flake8` pyflakes checks to `make metrics` target [#135](https://github.com/rszamszur/fastapi-mvc/issues/135). PR [#136](https://github.com/rszamszur/fastapi-mvc/pull/136)
+
 ## 0.14.1 (11.08.2022)
 
 ## Features
