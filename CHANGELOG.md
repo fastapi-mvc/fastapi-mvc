@@ -4,6 +4,11 @@ This file documents changes to [fastapi-mvc](https://github.com/rszamszur/fastap
 
 ## Unreleased
 
+### Breaking Changes
+
+* Improve custom generator class discovery in `load_generators` method [#137](https://github.com/rszamszur/fastapi-mvc/issues/137). PR [#138](https://github.com/rszamszur/fastapi-mvc/pull/138)
+  - This changes the module attribute from which the custom generator class is being discovered. For older custom generators, just replace `__all__ = ...` with `generator_class = ...` in custom generator `__init__.py`.
+
 ### Internal
 
 * Add `flake8` pyflakes checks to `make metrics` target [#135](https://github.com/rszamszur/fastapi-mvc/issues/135). PR [#136](https://github.com/rszamszur/fastapi-mvc/pull/136)
