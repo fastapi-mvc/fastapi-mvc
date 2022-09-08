@@ -13,19 +13,20 @@ classifiers = [
     'Programming Language :: Python :: 3.7',
     'Programming Language :: Python :: 3.8',
     'Programming Language :: Python :: 3.9',
+    'Programming Language :: Python :: 3.10',
 ]
 
 [tool.poetry.dependencies]
 python = "^3.7"
-fastapi = "~0.75.0"
-uvicorn = {extras = ["standard"], version = "~0.17.0"}
+fastapi = "~0.82.0"
+uvicorn = {extras = ["standard"], version = "~0.18.3"}
 gunicorn = "~20.1.0"
 click = "~8.1.3"
 {%- if cookiecutter.redis == "yes" %}
-aioredis = "~2.0.0"
+aioredis = "~2.0.1"
 {%- endif %}
 {%- if cookiecutter.aiohttp == "yes" %}
-aiohttp = "~3.8.0"
+aiohttp = "~3.8.1"
 {%- endif %}
 
 [tool.poetry.dev-dependencies]
