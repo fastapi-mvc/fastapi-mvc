@@ -12,6 +12,11 @@ This file documents changes to [fastapi-mvc](https://github.com/rszamszur/fastap
 ### Internal
 
 * Add `flake8` pyflakes checks to `make metrics` target [#135](https://github.com/rszamszur/fastapi-mvc/issues/135). PR [#136](https://github.com/rszamszur/fastapi-mvc/pull/136)
+* Update project template dependencies:
+  * fastapi (0.75.0 -> 0.82.0)
+  * uvicorn (0.17.0 -> 0.18.3)
+  * aioredis (2.0.0 -> 2.0.1)
+  * aiohttp (3.8.0 -> 3.8.1)
 
 ## 0.14.1 (11.08.2022)
 
