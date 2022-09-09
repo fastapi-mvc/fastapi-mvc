@@ -2,6 +2,7 @@
 import os
 import logging
 import subprocess
+import shutil
 
 
 class ShellUtils(object):
@@ -26,6 +27,10 @@ class ShellUtils(object):
 
         """
         cls._log.debug("Try read git user information.")
+        defaults = ("John Doe", "example@email.com")
+
+        if not shutil.which("git"):
+            return defaults
 
         try:
             author = subprocess.check_output(
@@ -33,7 +38,7 @@ class ShellUtils(object):
             )
             author = author.decode("utf-8").strip()
         except subprocess.CalledProcessError:
-            author = "John Doe"
+            author = defaults[0]
 
         try:
             email = subprocess.check_output(
@@ -41,7 +46,7 @@ class ShellUtils(object):
             )
             email = email.decode("utf-8").strip()
         except subprocess.CalledProcessError:
-            email = "example@email.com"
+            email = defaults[1]
 
         return author, email
 
