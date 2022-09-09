@@ -42,6 +42,20 @@ def test_get_git_user_info_defaults(check_mock):
     check_mock.assert_has_calls(calls)
 
 
+@mock.patch(
+    "fastapi_mvc.utils.shell.shutil.which",
+    return_value=False,
+)
+@mock.patch("fastapi_mvc.utils.shell.subprocess.check_output")
+def test_get_git_user_info_no_git(check_mock, which_mock):
+    author, email = ShellUtils.get_git_user_info()
+    assert author == "John Doe"
+    assert email == "example@email.com"
+
+    which_mock.assert_called_once_with("git")
+    check_mock.assert_not_called()
+
+
 @pytest.mark.parametrize(
     "cmd, cwd, check, stdout, stderr, env, expected",
     [
