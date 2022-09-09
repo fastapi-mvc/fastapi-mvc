@@ -2,12 +2,16 @@
 
 This file documents changes to [fastapi-mvc](https://github.com/rszamszur/fastapi-mvc). The release numbering uses [semantic versioning](http://semver.org).
 
-## Unreleased
+## 0.15.0 (09.09.2022)
 
 ### Breaking Changes
 
 * Improve custom generator class discovery in `load_generators` method [#137](https://github.com/rszamszur/fastapi-mvc/issues/137). PR [#138](https://github.com/rszamszur/fastapi-mvc/pull/138)
   - This changes the module attribute from which the custom generator class is being discovered. For older custom generators, just replace `__all__ = ...` with `generator_class = ...` in custom generator `__init__.py`.
+
+### Fixed
+
+* Method `get_git_user_info()` raises `FileNotFoundError` exception if `git` command does not exists [#85](https://github.com/rszamszur/fastapi-mvc/issues/85). PR [#140](https://github.com/rszamszur/fastapi-mvc/pull/140)
 
 ### Internal
 
