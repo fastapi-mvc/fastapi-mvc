@@ -14,8 +14,8 @@ ENV PYTHONUNBUFFERED=1 \
     POETRY_HOME="/opt/poetry" \
     POETRY_VIRTUALENVS_IN_PROJECT=true \
     POETRY_NO_INTERACTION=1 \
-    POETRY_VERSION=1.1.12 \
-    POETRY_INSTALL_OPTS="--no-interaction --no-dev --no-root" \
+    POETRY_VERSION=1.2.0 \
+    POETRY_INSTALL_OPTS="--no-interaction --without dev --no-root" \
     PYSETUP_PATH="/pysetup" \
     VENV_PATH="/pysetup/.venv"
 

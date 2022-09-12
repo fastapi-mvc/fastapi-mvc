@@ -20,12 +20,12 @@ parser.script_name = "test-app"
 parser.project_root = "/path/to/project"
 
 
+@mock.patch.dict(os.environ, {"POETRY_BINARY": "/path/to/poetry"}, clear=True)
 @mock.patch("fastapi_mvc.borg.os.path.isdir", return_value=True)
-@mock.patch("fastapi_mvc.borg.os.getenv", return_value="/custom/poetry")
 @mock.patch("fastapi_mvc.borg.os.getcwd", return_value=DATA_DIR)
 @mock.patch("fastapi_mvc.borg.Invoker")
 @mock.patch("fastapi_mvc.borg.IniParser", return_value=parser)
-def test_borg(parser_mock, invoker_mock, getcwd_mock, getenv_mock, isdir_mock):
+def test_borg(parser_mock, invoker_mock, getcwd_mock, isdir_mock):
     # Reset shared state for clean consistent test environment.
     Borg._Borg__shared_state = dict()
 
@@ -41,7 +41,7 @@ def test_borg(parser_mock, invoker_mock, getcwd_mock, getenv_mock, isdir_mock):
     assert issubclass(first.generators["generator"], Generator)
     assert first.generators["generator"].__name__ == "GeneratorGenerator"
     assert first.version == __version__
-    assert first.poetry_path == "/custom/poetry/bin/poetry"
+    assert first.poetry_path == "/path/to/poetry"
 
     first.require_project()
     first.load_generators()
@@ -64,7 +64,7 @@ def test_borg(parser_mock, invoker_mock, getcwd_mock, getenv_mock, isdir_mock):
     assert len(second._imported_paths) == 2
     assert "/path/to/project/lib/generators" in second._imported_paths
     assert f"{DATA_DIR}/lib/generators" in second._imported_paths
-    assert second.poetry_path == "/custom/poetry/bin/poetry"
+    assert second.poetry_path == "/path/to/poetry"
     assert first.__dict__ == second.__dict__
 
     second.require_project()
@@ -80,14 +80,7 @@ def test_borg(parser_mock, invoker_mock, getcwd_mock, getenv_mock, isdir_mock):
 
     parser_mock.assert_called_once()
     getcwd_mock.assert_called_once()
-    getenv_mock.assert_has_calls(
-        [
-            mock.call("HOME"),
-            mock.call("POETRY_HOME", "/custom/poetry/.poetry"),
-            mock.call("HOME"),
-            mock.call("POETRY_HOME", "/custom/poetry/.poetry"),
-        ]
-    )
+
     isdir_mock.assert_any_call("/path/to/project/test_app")
     invoker_mock.assert_called_once()
     invoker_mock.return_value.enqueue.assert_has_calls(
@@ -98,6 +91,22 @@ def test_borg(parser_mock, invoker_mock, getcwd_mock, getenv_mock, isdir_mock):
         ]
     )
     invoker_mock.return_value.execute.assert_called_once()
+
+
+def test_poetry_path_property():
+    # Reset shared state for clean consistent test environment
+    Borg._Borg__shared_state = dict()
+
+    borg = Borg()
+
+    with mock.patch.dict(os.environ, {"POETRY_BINARY": "/path/to/poetry"}, clear=True):
+        assert borg.poetry_path == "/path/to/poetry"
+
+    with mock.patch.dict(os.environ, {"HOME": "/home/foobar"}, clear=True):
+        assert borg.poetry_path == "/home/foobar/.local/share/pypoetry/venv/bin/poetry"
+
+    with mock.patch.dict(os.environ, {"POETRY_HOME": "/opt/poetry"}, clear=True):
+        assert borg.poetry_path == "/opt/poetry/venv/bin/poetry"
 
 
 @mock.patch("fastapi_mvc.borg.IniParser", side_effect=FileNotFoundError("Ups"))

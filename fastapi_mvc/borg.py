@@ -111,8 +111,14 @@ class Borg(object):
             str: Poetry binary abspath.
 
         """
-        poetry_home = os.getenv("POETRY_HOME", f"{os.getenv('HOME')}/.poetry")
-        return f"{poetry_home}/bin/poetry"
+        if os.getenv("POETRY_BINARY"):
+            return os.getenv("POETRY_BINARY")
+
+        poetry_home = os.getenv(
+            "POETRY_HOME",
+            f"{os.getenv('HOME')}/.local/share/pypoetry"
+        )
+        return f"{poetry_home}/venv/bin/poetry"
 
     @property
     def version(self):

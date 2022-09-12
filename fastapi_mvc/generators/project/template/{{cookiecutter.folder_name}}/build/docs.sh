@@ -8,7 +8,7 @@ set -o errexit
 set -o nounset
 set -o pipefail
 
-POETRY_HOME="${POETRY_HOME:=${HOME}/.poetry}"
-SPHINX_BUILD_OPTS="${SPHINX_BUILD_OPTS:=""}"
+POETRY_HOME="${POETRY_HOME:=${HOME}/.local/share/pypoetry}"
+POETRY_BINARY="${POETRY_BINARY:=${POETRY_HOME}/venv/bin/poetry}"
 echo "[docs] Build {{cookiecutter.project_name}} documentation."
-"$POETRY_HOME"/bin/poetry run sphinx-build docs site $SPHINX_BUILD_OPTS
+"$POETRY_BINARY" run sphinx-build docs site $SPHINX_BUILD_OPTS

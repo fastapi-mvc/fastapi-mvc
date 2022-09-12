@@ -12,9 +12,10 @@ if [ -e /tmp/test-project ]; then
     rm -r /tmp/test-project
 fi
 
-POETRY_HOME="${POETRY_HOME:=${HOME}/.poetry}"
+POETRY_HOME="${POETRY_HOME:=${HOME}/.local/share/pypoetry}"
+POETRY_BINARY="${POETRY_BINARY:=${POETRY_HOME}/venv/bin/poetry}"
 echo "[template-checks] Generate test-project."
-"$POETRY_HOME"/bin/poetry run fastapi-mvc new -I /tmp/test-project
+"$POETRY_BINARY" run fastapi-mvc new -I /tmp/test-project
 
 cd /tmp/test-project
 echo "[template-checks] Run style guide checks."
