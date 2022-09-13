@@ -115,8 +115,7 @@ class Borg(object):
             return os.getenv("POETRY_BINARY")
 
         poetry_home = os.getenv(
-            "POETRY_HOME",
-            f"{os.getenv('HOME')}/.local/share/pypoetry"
+            "POETRY_HOME", f"{os.getenv('HOME')}/.local/share/pypoetry"
         )
         return f"{poetry_home}/venv/bin/poetry"
 
