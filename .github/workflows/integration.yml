@@ -8,6 +8,11 @@ on:
     branches:
       - master
 
+env:
+  POETRY_HOME: /tmp/poetry
+  POETRY_CONFIG_DIR: /tmp/poetry
+  POETRY_VIRTUALENVS_PATH: /tmp/poetry/store
+
 jobs:
   # This job checks if an identical workflow is being triggered by different
   # event and skips it. For instance there is no need to run the same pipeline
@@ -36,15 +41,12 @@ jobs:
           python-version: 3.9
       - name: Init Poetry cache
         id: cached-poetry
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
-          path: ~/.poetry
-          key: ${{ runner.os }}-poetry-3.9-${{ hashFiles('**/pyproject.toml') }}-${{ hashFiles('**/poetry.lock') }}
+          path: ${{ env.POETRY_HOME }}
+          key: ${{ runner.os }}-3.9-${{ hashFiles('**/pyproject.toml') }}-${{ hashFiles('**/poetry.lock') }}
       - name: Install package
-        run: |
-          export POETRY_HOME=$HOME/.poetry
-          export POETRY_CACHE_DIR=$HOME/.poetry/store
-          make install
+        run: make install
         if: steps.cached-poetry.outputs.cache-hit != 'true'
   test-redis-ha:
     needs: install
@@ -57,35 +59,36 @@ jobs:
         with:
           python-version: 3.9
       - name: Load Poetry cache
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
-          path: ~/.poetry
-          key: ${{ runner.os }}-poetry-3.9-${{ hashFiles('**/pyproject.toml') }}-${{ hashFiles('**/poetry.lock') }}
-      - name: Config path and poetry
-        run: |
-          echo "$HOME/.poetry/bin" >> $GITHUB_PATH
-          $HOME/.poetry/bin/poetry config cache-dir $HOME/.poetry/store
+          path: ${{ env.POETRY_HOME }}
+          key: ${{ runner.os }}-3.9-${{ hashFiles('**/pyproject.toml') }}-${{ hashFiles('**/poetry.lock') }}
+      - name: Set fastapi-mvc path
+        run: echo "FASTAPI_MVC_BIN=$($POETRY_HOME/bin/poetry env info -p)/bin/fastapi-mvc" >> $GITHUB_ENV
       - name: Generate test-project
-        run: poetry run fastapi-mvc new --skip-install test-project
-      - name: Load/Init Vagrant cache
-        uses: actions/cache@v2
-        with:
-          path: ~/.vagrant.d/boxes
-          key: vagrant-${{ hashFiles('test-project/Vagrantfile') }}
+        run: $FASTAPI_MVC_BIN new --skip-install test-project
+      - name: Generate test controller
+        working-directory: ./test-project
+        run: $FASTAPI_MVC_BIN generate controller foobar index create:post update:put delete:delete
       - name: Run vagrant up
-        run: |
-          cd test-project
-          vagrant up
+        working-directory: ./test-project
+        run: vagrant up
       - name: Bootstrap minukube cluster and Redis operator
-        run: |
-          cd test-project
-          vagrant ssh -c "cd /syncd && make dev-env"
+        working-directory: ./test-project
+        run: vagrant ssh -c "cd /syncd && make dev-env"
       - name: Test exposed fastapi_mvc application
+        working-directory: ./test-project
+        run: vagrant ssh -c 'curl "http://test-project.$(minikube ip).nip.io/api/ready"'
+      - name: Test generated foobar controller
+        working-directory: ./test-project
         run: |
-          cd test-project
-          vagrant ssh -c 'curl "http://test-project.$(minikube ip).nip.io/api/ready"'
+          vagrant ssh -c 'curl "http://test-project.$(minikube ip).nip.io/api/foobar/index"'
+          vagrant ssh -c 'curl -X POST "http://test-project.$(minikube ip).nip.io/api/foobar/create"'
+          vagrant ssh -c 'curl -X PUT "http://test-project.$(minikube ip).nip.io/api/foobar/update"'
+          vagrant ssh -c 'curl -X DELETE "http://test-project.$(minikube ip).nip.io/api/foobar/delete"'
   test-minimal:
     needs: install
+    if: ${{ needs.pre_job.outputs.should_skip != 'true' }}
     runs-on: macos-12
 
     steps:
@@ -95,79 +98,29 @@ jobs:
         with:
           python-version: 3.9
       - name: Load Poetry cache
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
-          path: ~/.poetry
-          key: ${{ runner.os }}-poetry-3.9-${{ hashFiles('**/pyproject.toml') }}-${{ hashFiles('**/poetry.lock') }}
-      - name: Config path and poetry
-        run: |
-          echo "$HOME/.poetry/bin" >> $GITHUB_PATH
-          $HOME/.poetry/bin/poetry config cache-dir $HOME/.poetry/store
+          path: ${{ env.POETRY_HOME }}
+          key: ${{ runner.os }}-3.9-${{ hashFiles('**/pyproject.toml') }}-${{ hashFiles('**/poetry.lock') }}
+      - name: Set fastapi-mvc path
+        run: echo "FASTAPI_MVC_BIN=$($POETRY_HOME/bin/poetry env info -p)/bin/fastapi-mvc" >> $GITHUB_ENV
       - name: Generate test-project
-        run: poetry run fastapi-mvc new --skip-redis --skip-aiohttp --skip-actions --skip-install test-project
-      - name: Load/Init Vagrant cache
-        uses: actions/cache@v2
-        with:
-          path: ~/.vagrant.d/boxes
-          key: vagrant-${{ hashFiles('test-project/Vagrantfile') }}
-      - name: Run vagrant up
-        run: |
-          cd test-project
-          vagrant up
-      - name: Bootstrap minukube cluster
-        run: |
-          cd test-project
-          vagrant ssh -c "cd /syncd && make dev-env"
-      - name: Test exposed fastapi_mvc application
-        run: |
-          cd test-project
-          vagrant ssh -c 'curl "http://test-project.$(minikube ip).nip.io/api/ready"'
-  test-generators:
-    needs: install
-    runs-on: macos-12
-
-    steps:
-      - uses: actions/checkout@v2
-      - name: Set up Python 3.9
-        uses: actions/setup-python@v2
-        with:
-          python-version: 3.9
-      - name: Load Poetry cache
-        uses: actions/cache@v2
-        with:
-          path: ~/.poetry
-          key: ${{ runner.os }}-poetry-3.9-${{ hashFiles('**/pyproject.toml') }}-${{ hashFiles('**/poetry.lock') }}
-      - name: Config path and poetry
-        run: |
-          echo "$HOME/.poetry/bin" >> $GITHUB_PATH
-          $HOME/.poetry/bin/poetry config cache-dir $HOME/.poetry/store
-      - name: Generate test-project
-        run: poetry run fastapi-mvc new --skip-redis --skip-aiohttp --skip-actions --skip-install test-project
-      - name: Load/Init Vagrant cache
-        uses: actions/cache@v2
-        with:
-          path: ~/.vagrant.d/boxes
-          key: vagrant-${{ hashFiles('test-project/Vagrantfile') }}
+        run: $FASTAPI_MVC_BIN new --skip-redis --skip-aiohttp --skip-actions --skip-install test-project
       - name: Generate test controller
-        run: |
-          venv_path=$(poetry env info -p)
-          cd test-project
-          $venv_path/bin/fastapi-mvc generate controller foobar index create:post update:put delete:delete
+        working-directory: ./test-project
+        run: $FASTAPI_MVC_BIN generate controller foobar index create:post update:put delete:delete
       - name: Run vagrant up
-        run: |
-          cd test-project
-          vagrant up
-      - name: Bootstrap minukube cluster
-        run: |
-          cd test-project
-          vagrant ssh -c "cd /syncd && make dev-env"
+        working-directory: ./test-project
+        run: vagrant up
+      - name: Bootstrap minukube cluster and Redis operator
+        working-directory: ./test-project
+        run: vagrant ssh -c "cd /syncd && make dev-env"
       - name: Test exposed fastapi_mvc application
-        run: |
-          cd test-project
-          vagrant ssh -c 'curl "http://test-project.$(minikube ip).nip.io/api/ready"'
+        working-directory: ./test-project
+        run: vagrant ssh -c 'curl "http://test-project.$(minikube ip).nip.io/api/ready"'
       - name: Test generated foobar controller
+        working-directory: ./test-project
         run: |
-          cd test-project
           vagrant ssh -c 'curl "http://test-project.$(minikube ip).nip.io/api/foobar/index"'
           vagrant ssh -c 'curl -X POST "http://test-project.$(minikube ip).nip.io/api/foobar/create"'
           vagrant ssh -c 'curl -X PUT "http://test-project.$(minikube ip).nip.io/api/foobar/update"'

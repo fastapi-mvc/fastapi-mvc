@@ -1,6 +1,23 @@
 {% raw %}name: CI
 
-on: [push, pull_request]
+on:
+  push:
+  pull_request:
+# This trigger is required by fastapi-mvc automation to dispatch this concrete workflow
+# from fastapi-mvc 'CI workflow' (https://github.com/rszamszur/fastapi-mvc/actions/workflows/main.yml),
+# and await its result. By no means should this be included in the template this file was generated from.
+# It's just a temporary monkey patch to fulfill the GH automation use case.
+# Feel free to remove it.
+  workflow_dispatch:
+    inputs:
+      distinct_id:
+        required: true
+        description: "Input required by codex-/return-dispatch@v1"
+
+env:
+  POETRY_HOME: /opt/poetry
+  POETRY_CONFIG_DIR: /opt/poetry
+  POETRY_VIRTUALENVS_PATH: /opt/poetry/store
 
 jobs:
   # This job checks if an identical workflow is being triggered by different
@@ -11,6 +28,12 @@ jobs:
     outputs:
       should_skip: ${{ steps.skip_check.outputs.should_skip }}
     steps:
+      # This echo is required by codex-/return-dispatch@v1 in order to identify dispatched workflow.
+      # By no means should this be included in the template this file was generated from.
+      # It's just a temporary monkey patch to fulfill the GH automation use case.
+      # Feel free to remove it.
+      - name: echo distinct ID ${{ github.event.inputs.distinct_id }}
+        run: echo ${{ github.event.inputs.distinct_id }}
       - id: skip_check
         uses: fkirc/skip-duplicate-actions@v3.4.1
         with:
@@ -33,15 +56,12 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - name: Init Poetry cache
         id: cached-poetry
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
-          path: ~/.poetry
-          key: poetry-${{ matrix.python-version }}-${{ hashFiles('**/pyproject.toml') }}-${{ hashFiles('**/poetry.lock') }}
-      - name: Install project
-        run: |
-          export POETRY_HOME=$HOME/.poetry
-          export POETRY_CACHE_DIR=$HOME/.poetry/store
-          make install
+          path: ${{ env.POETRY_HOME }}
+          key: ${{ runner.os }}-${{ matrix.python-version }}-${{ hashFiles('./pyproject.toml') }}-${{ hashFiles('./poetry.lock') }}
+      - name: Install package
+        run: make install
         if: steps.cached-poetry.outputs.cache-hit != 'true'
   build:
     needs: install
@@ -54,21 +74,18 @@ jobs:
         with:
           python-version: 3.9
       - name: Load Poetry cache
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
-          path: ~/.poetry
-          key: poetry-3.9-${{ hashFiles('**/pyproject.toml') }}-${{ hashFiles('**/poetry.lock') }}
-      - name: Build wheel{% endraw %}
-        run: |
-          $HOME/.poetry/bin/poetry config cache-dir $HOME/.poetry/store
-          $HOME/.poetry/bin/poetry build
-          echo "whl_name={{cookiecutter.package_name}}-$(cat TAG)-$GITHUB_SHA" >> $GITHUB_ENV{% raw %}
+          path: ${{ env.POETRY_HOME }}
+          key: ${{ runner.os }}-3.9-${{ hashFiles('./pyproject.toml') }}-${{ hashFiles('./poetry.lock') }}
+      - name: Build wheel
+        run: $POETRY_HOME/bin/poetry build
       - name: Archive build artifacts
         uses: actions/upload-artifact@v2
         with:
-          name: ${{ env.whl_name }}
+          name: ${{ format('fastapi_mvc-{0}', github.sha) }}
           path: dist
-          retention-days: 7
+          retention-days: 60
   metrics:
     needs: install
     runs-on: ubuntu-latest
@@ -83,14 +100,10 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
       - name: Load Poetry cache
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
-          path: ~/.poetry
-          key: poetry-${{ matrix.python-version }}-${{ hashFiles('**/pyproject.toml') }}-${{ hashFiles('**/poetry.lock') }}
-      - name: Config path and poetry
-        run: |
-          echo "$HOME/.poetry/bin" >> $GITHUB_PATH
-          $HOME/.poetry/bin/poetry config cache-dir $HOME/.poetry/store
+          path: ${{ env.POETRY_HOME }}
+          key: ${{ runner.os }}-${{ matrix.python-version }}-${{ hashFiles('./pyproject.toml') }}-${{ hashFiles('./poetry.lock') }}
       - name: Run metrics checks
         run: make metrics
   unit-tests:
@@ -107,14 +120,10 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
       - name: Load Poetry cache
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
-          path: ~/.poetry
-          key: poetry-${{ matrix.python-version }}-${{ hashFiles('**/pyproject.toml') }}-${{ hashFiles('**/poetry.lock') }}
-      - name: Config path and poetry
-        run: |
-          echo "$HOME/.poetry/bin" >> $GITHUB_PATH
-          $HOME/.poetry/bin/poetry config cache-dir $HOME/.poetry/store
+          path: ${{ env.POETRY_HOME }}
+          key: ${{ runner.os }}-${{ matrix.python-version }}-${{ hashFiles('./pyproject.toml') }}-${{ hashFiles('./poetry.lock') }}
       - name: Run unit tests
         run: make unit-test
   integration-tests:
@@ -131,22 +140,15 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
       - name: Load Poetry cache
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
-          path: ~/.poetry
-          key: poetry-${{ matrix.python-version }}-${{ hashFiles('**/pyproject.toml') }}-${{ hashFiles('**/poetry.lock') }}
-      - name: Config path and poetry
-        run: |
-          echo "$HOME/.poetry/bin" >> $GITHUB_PATH
-          $HOME/.poetry/bin/poetry config cache-dir $HOME/.poetry/store
+          path: ${{ env.POETRY_HOME }}
+          key: ${{ runner.os }}-${{ matrix.python-version }}-${{ hashFiles('./pyproject.toml') }}-${{ hashFiles('./poetry.lock') }}
       - name: Run integration tests
         run: make integration-test
   coverage:
     needs: install
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        python-version: [ '3.7', '3.8', '3.9', '3.10' ]
 
     steps:
       - uses: actions/checkout@v2
@@ -155,13 +157,15 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
       - name: Load Poetry cache
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
-          path: ~/.poetry
-          key: poetry-${{ matrix.python-version }}-${{ hashFiles('**/pyproject.toml') }}-${{ hashFiles('**/poetry.lock') }}
-      - name: Config path and poetry
-        run: |
-          echo "$HOME/.poetry/bin" >> $GITHUB_PATH
-          $HOME/.poetry/bin/poetry config cache-dir $HOME/.poetry/store
+          path: ${{ env.POETRY_HOME }}
+          key: ${{ runner.os }}-3.9-${{ hashFiles('./pyproject.toml') }}-${{ hashFiles('./poetry.lock') }}
       - name: Run coverage{% endraw %}
-        run: poetry run pytest --cov={{cookiecutter.package_name}} --cov-fail-under=70 --cov-report=xml --cov-report=term-missing tests
+        run: $POETRY_HOME/bin/poetry run pytest --cov={{cookiecutter.package_name}} --cov-fail-under=70 --cov-report=xml --cov-report=term-missing tests
+      - name: Archive coverage artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: coverage
+          path: ./coverage.xml
+          retention-days: 60

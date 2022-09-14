@@ -27,16 +27,17 @@ if [[ "$PYTHON_MAJOR_VERSION" -lt 3 ]] || [[ "$PYTHON_MINOR_VERSION" -lt 7 ]]; t
   exit 1
 fi
 
-POETRY_HOME="${POETRY_HOME:=${HOME}/.poetry}"
-POETRY_VERSION="${POETRY_VERSION:=1.1.13}"
-if ! command -v "$POETRY_HOME"/bin/poetry &> /dev/null; then
+POETRY_HOME="${POETRY_HOME:=${HOME}/.local/share/pypoetry}"
+POETRY_BINARY="${POETRY_BINARY:=${POETRY_HOME}/venv/bin/poetry}"
+POETRY_VERSION="${POETRY_VERSION:=1.2.0}"
+if ! command -v "$POETRY_BINARY" &> /dev/null; then
   echo "[install] Poetry is not installed. Begin download and install."
-  curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/1.2.0b1/install-poetry.py | POETRY_HOME=$POETRY_HOME POETRY_VERSION=$POETRY_VERSION $PYTHON -
+  curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/1.2.0/install-poetry.py | POETRY_HOME=$POETRY_HOME POETRY_VERSION=$POETRY_VERSION $PYTHON -
 fi
 
 POETRY_INSTALL_OPTS="${POETRY_INSTALL_OPTS:="--no-interaction"}"
 echo "[install] Begin installing project."
-"$POETRY_HOME"/bin/poetry install $POETRY_INSTALL_OPTS
+"$POETRY_BINARY" install $POETRY_INSTALL_OPTS
 
 cat << 'EOF'
 Project successfully installed.

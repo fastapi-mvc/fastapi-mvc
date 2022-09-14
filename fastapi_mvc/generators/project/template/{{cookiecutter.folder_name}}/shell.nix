@@ -18,6 +18,7 @@ pkgs.mkShell {
   ];
   shellHook = ''
     export POETRY_HOME=${poetry}
+    export POETRY_BINARY=${poetry}/bin/poetry
     export POETRY_VIRTUALENVS_IN_PROJECT=true
     unset SOURCE_DATE_EPOCH
   '';
