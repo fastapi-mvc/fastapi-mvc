@@ -164,8 +164,9 @@ jobs:
           source-directory: ./fastapi-mvc-example
           destination-github-username: 'rszamszur'
           destination-repository-name: 'fastapi-mvc-example'
-          user-email: github@rsd.sh
-          commit-message: ${{ format('[skip ci][bot][{0}] Update generated project', env.SHORT_SHA) }}
+          user-name: "github-actions[bot]"
+          user-email: github-actions[bot]@users.noreply.github.com
+          commit-message: ${{ format('[skip ci][{0}] Update generated project', env.SHORT_SHA) }}
           target-branch: master
       - name: Dispatch fastapi-mvc-example CI workflow
         uses: codex-/return-dispatch@v1
