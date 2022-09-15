@@ -1,0 +1,84 @@
+name: ❄️ Nix CI ❄️
+
+on: [push, pull_request]
+
+jobs:
+  # This job checks if an identical workflow is being triggered by different
+  # event and skips it. For instance there is no need to run the same pipeline
+  # twice for pull_request and push for identical commit sha.
+  pre_job:
+    runs-on: ubuntu-latest
+    outputs:
+      should_skip: ${{ steps.skip_check.outputs.should_skip }}
+    steps:
+      - id: skip_check
+        uses: fkirc/skip-duplicate-actions@v3.4.1
+        with:
+          skip_after_successful_duplicate: 'true'
+          concurrent_skipping: same_content
+          do_not_skip: '["pull_request", "workflow_dispatch", "schedule"]'
+  nix-build:
+    needs: pre_job
+    if: ${{ needs.pre_job.outputs.should_skip != 'true' }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install Nix ❄️
+        uses: cachix/install-nix-action@v17
+        with:
+          nix_path: nixpkgs=channel:nixos-22.05
+      - name: Setup Cachix ❄️
+        uses: cachix/cachix-action@v10
+        with:
+          name: fastapi-mvc
+          authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
+      - name: Build fastapi-mvc
+        run: nix-build -E 'with import <nixpkgs> {}; callPackage ./default.nix {python = pkgs.python39; poetry2nix = pkgs.poetry2nix;}'
+      - name: Build container image
+        run: nix-build image.nix
+  nix-ci:
+    needs: pre_job
+    if: ${{ needs.pre_job.outputs.should_skip != 'true' }}
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [ 'python37', 'python38', 'python39', 'python310' ]
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install Nix
+        uses: cachix/install-nix-action@v17
+        with:
+          nix_path: nixpkgs=channel:nixos-22.05
+      - name: Setup Cachix Nix cache
+        uses: cachix/cachix-action@v10
+        with:
+          name: fastapi-mvc
+          authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
+      - name: Run fastapi-mvc checks
+        run: |
+          cat << 'EOF' > checks.sh
+          #! /usr/bin/env bash
+          
+          echo "[metrics] Run fastapi-mvc PEP 8 checks."
+          flake8 --select=E,W,I --max-line-length 80 --import-order-style pep8 --extend-exclude=fastapi_mvc/generators/**/template --statistics --count fastapi_mvc
+          echo "[metrics] Run fastapi-mvc PEP 257 checks."
+          flake8 --select=D --ignore D301 --extend-exclude=fastapi_mvc/generators/**/template --statistics --count fastapi_mvc
+          echo "[metrics] Run fastapi-mvc pyflakes checks."
+          flake8 --select=F --extend-exclude=fastapi_mvc/generators/**/template --statistics --count fastapi_mvc
+          echo "[metrics] Run fastapi-mvc code complexity checks."
+          flake8 --select=C901 --extend-exclude=fastapi_mvc/generators/**/template --statistics --count fastapi_mvc
+          echo "[metrics] Run fastapi-mvc open TODO checks."
+          flake8 --select=T --extend-exclude=fastapi_mvc/generators/**/template --statistics --count fastapi_mvc tests
+          echo "[metrics] Run fastapi-mvc black checks."
+          black -l 80 --exclude "fastapi_mvc/generators/.*/template" --check fastapi_mvc
+          echo "[unit-test] Run fastapi-mvc unit tests."
+          pytest tests/unit
+          echo "[integration-test] Run fastapi-mvc integration tests."
+          pytest tests/integration
+          echo "[coverage] Run fastapi-mvc coverage."
+          pytest --cov-config=.coveragerc --cov=fastapi_mvc --cov-fail-under=90 --cov-report=xml --cov-report=term-missing tests
+          EOF
+          chmod +x checks.sh
+          nix-shell --argstr python ${{ matrix.python-version }} editable.nix --run "./checks.sh"
