@@ -155,7 +155,7 @@ jobs:
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v2
         with:
-          python-version: ${{ matrix.python-version }}
+          python-version: 3.9
       - name: Load Poetry cache
         uses: actions/cache@v3
         with:
