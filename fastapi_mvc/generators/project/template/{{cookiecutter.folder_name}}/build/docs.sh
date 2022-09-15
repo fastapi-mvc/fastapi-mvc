@@ -11,4 +11,4 @@ set -o pipefail
 POETRY_HOME="${POETRY_HOME:=${HOME}/.local/share/pypoetry}"
 POETRY_BINARY="${POETRY_BINARY:=${POETRY_HOME}/venv/bin/poetry}"
 echo "[docs] Build {{cookiecutter.project_name}} documentation."
-"$POETRY_BINARY" run sphinx-build docs site $SPHINX_BUILD_OPTS
+"$POETRY_BINARY" run sphinx-build docs site
