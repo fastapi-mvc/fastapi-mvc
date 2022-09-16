@@ -4,11 +4,16 @@ This file documents changes to [fastapi-mvc](https://github.com/rszamszur/fastap
 
 ## Unreleased
 
-## Internal
+### Features
+
+* Add Nix CI workflow [#141](https://github.com/rszamszur/fastapi-mvc/issues/141). PR [#145](https://github.com/rszamszur/fastapi-mvc/pull/145)
+
+### Internal
 
 * Migrate to Poetry 1.2.x release [#21](https://github.com/rszamszur/fastapi-mvc/issues/21). PR [#142](https://github.com/rszamszur/fastapi-mvc/pull/142)
 * Improve GH actions automation [#143](https://github.com/rszamszur/fastapi-mvc/issues/143). PR [#142](https://github.com/rszamszur/fastapi-mvc/pull/142)
 * Improve generated project cache in CI workflow [#107](https://github.com/rszamszur/fastapi-mvc/issues/107). PR [#142](https://github.com/rszamszur/fastapi-mvc/pull/142)
+* Refactor Makefile to utilize different set of targets for Nix and Poetry [#144](https://github.com/rszamszur/fastapi-mvc/issues/144). PR [#145](https://github.com/rszamszur/fastapi-mvc/pull/145)
 
 ## 0.15.0 (09.09.2022)
 
