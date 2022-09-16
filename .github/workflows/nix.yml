@@ -34,10 +34,12 @@ jobs:
         with:
           name: fastapi-mvc
           authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
+      - name: Install make
+        run: nix-env -iA gnumake
       - name: Build fastapi-mvc
-        run: nix-build -E 'with import <nixpkgs> {}; callPackage ./default.nix {python = pkgs.python39; poetry2nix = pkgs.poetry2nix;}'
+        run: make build
       - name: Build container image
-        run: nix-build image.nix
+        run: make image
   nix-ci:
     needs: pre_job
     if: ${{ needs.pre_job.outputs.should_skip != 'true' }}
@@ -57,29 +59,11 @@ jobs:
         with:
           name: fastapi-mvc
           authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
-      - name: Run fastapi-mvc checks
-        run: |
-          cat << 'EOF' > checks.sh
-          #! /usr/bin/env bash
-          
-          echo "[metrics] Run fastapi-mvc PEP 8 checks."
-          flake8 --select=E,W,I --max-line-length 80 --import-order-style pep8 --extend-exclude=fastapi_mvc/generators/**/template --statistics --count fastapi_mvc
-          echo "[metrics] Run fastapi-mvc PEP 257 checks."
-          flake8 --select=D --ignore D301 --extend-exclude=fastapi_mvc/generators/**/template --statistics --count fastapi_mvc
-          echo "[metrics] Run fastapi-mvc pyflakes checks."
-          flake8 --select=F --extend-exclude=fastapi_mvc/generators/**/template --statistics --count fastapi_mvc
-          echo "[metrics] Run fastapi-mvc code complexity checks."
-          flake8 --select=C901 --extend-exclude=fastapi_mvc/generators/**/template --statistics --count fastapi_mvc
-          echo "[metrics] Run fastapi-mvc open TODO checks."
-          flake8 --select=T --extend-exclude=fastapi_mvc/generators/**/template --statistics --count fastapi_mvc tests
-          echo "[metrics] Run fastapi-mvc black checks."
-          black -l 80 --exclude "fastapi_mvc/generators/.*/template" --check fastapi_mvc
-          echo "[unit-test] Run fastapi-mvc unit tests."
-          pytest tests/unit
-          echo "[integration-test] Run fastapi-mvc integration tests."
-          pytest tests/integration
-          echo "[coverage] Run fastapi-mvc coverage."
-          pytest --cov-config=.coveragerc --cov=fastapi_mvc --cov-fail-under=90 --cov-report=xml --cov-report=term-missing tests
-          EOF
-          chmod +x checks.sh
-          nix-shell --argstr python ${{ matrix.python-version }} editable.nix --run "./checks.sh"
+      - name: Install make
+        run: nix-env -iA gnumake
+      - name: Run fastapi-mvc metrics checks
+        run: make metrics
+      - name: Run fastapi-mvc unit-tests
+        run: make unit-test
+      - name: Run fastapi-mvc integration-tests
+        run: make integration-test
