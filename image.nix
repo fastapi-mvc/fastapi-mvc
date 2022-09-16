@@ -1,4 +1,7 @@
-{ pkgs ? import <nixpkgs> { } }:
+{ pkgs ? import <nixpkgs> { }
+, name ? "fastapi-mvc"
+, tag ? "latest"
+}:
 
 let
   app = pkgs.callPackage ./default.nix {
@@ -8,8 +11,7 @@ let
 in
 
 pkgs.dockerTools.buildImage {
-  name = "fastapi-mvc";
-  tag = "latest";
+  inherit name tag;
 
   contents = [
     app

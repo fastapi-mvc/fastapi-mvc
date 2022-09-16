@@ -3,11 +3,10 @@
 , poetry2nix
 }:
 
-poetry2nix.mkPoetryApplication rec {
+poetry2nix.mkPoetryApplication {
   inherit python;
 
   projectDir = ./.;
-  src = ./.;
   pyproject = ./pyproject.toml;
   poetrylock = ./poetry.lock;
 

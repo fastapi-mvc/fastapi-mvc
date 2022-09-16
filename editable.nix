@@ -1,18 +1,15 @@
-{ pkgs ? import <nixpkgs> { }
-, python ? "python3"
+{ python
+, poetry2nix
 }:
 
-let
-  fastapi-mvc = pkgs.poetry2nix.mkPoetryEnv {
-    python = builtins.getAttr (python) pkgs;
-    projectDir = ./.;
-    pyproject = ./pyproject.toml;
-    poetrylock = ./poetry.lock;
-    editablePackageSources = {
-      src = ./fastapi_mvc;
-    };
+poetry2nix.mkPoetryEnv {
+  inherit python;
+
+  projectDir = ./.;
+  pyproject = ./pyproject.toml;
+  poetrylock = ./poetry.lock;
+
+  editablePackageSources = {
+    fastapi-mvc = ./.;
   };
-in
-fastapi-mvc.env.overrideAttrs (oldAttrs: {
-  buildInputs = [ pkgs.gnumake ];
-})
+}
