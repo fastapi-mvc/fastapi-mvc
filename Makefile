@@ -14,44 +14,12 @@ TAG ?= $(shell cat TAG)
 help:  ## Display this help
 	@awk 'BEGIN {FS = ":.*##"; printf "\nUsage:\n  make \033[36m<target>\033[0m\n"} /^[a-zA-Z0-9_-]+:.*?##/ { printf "  \033[36m%-15s\033[0m %s\n", $$1, $$2 } /^##@/ { printf "\n\033[1m%s\033[0m\n", substr($$0, 5) } ' $(MAKEFILE_LIST)
 
-.PHONY: image
-image:  ## Build fastapi-mvc image
-	@build/image.sh
-
-.PHONY: clean-image
-clean-image:  ## Clean fastapi-mvc image
-	@build/clean-image.sh
-
-.PHONY: install
-install:  ## Install fastapi-mvc with poetry
-	@build/install.sh
-
-.PHONY: metrics
-metrics: install ## Run fastapi-mvc metrics checks
-	@build/metrics.sh
-
-.PHONY: unit-test
-unit-test: install ## Run fastapi-mvc unit tests
-	@build/unit-test.sh
-
-.PHONY: integration-test
-integration-test: install ## Run fastapi-mvc integration tests
-	@build/integration-test.sh
-
-.PHONY: test
-test: unit-test integration-test  ## Run fastapi-mvc tests
-
-.PHONY: template-checks
-template-checks: install ## Run fastapi-mvc template metrics and tests
-	@build/template-checks.sh
-
-.PHONY: docs
-docs: install ## Build fastapi-mvc documentation
-	@build/docs.sh
-
-.PHONY: pre-commit
-pre-commit: metrics test template-checks ## Run fastapi-mvc pre-commit checks
-
 .PHONY: show-version
-show-version:
-	echo -n $(TAG)
+show-version:  ## Display version
+	echo -n "${TAG}"
+
+ifeq ($(shell command -v nix || echo "Poetry"), "Poetry")
+include Poetry.mk
+else
+include Nix.mk
+endif
