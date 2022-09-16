@@ -27,6 +27,7 @@ jobs:
       - name: Install Nix ❄️
         uses: cachix/install-nix-action@v17
         with:
+          extra_nix_config: "system-features = nixos-test benchmark big-parallel kvm"
           nix_path: nixpkgs=channel:nixos-22.05
       - name: Setup Cachix ❄️
         uses: cachix/cachix-action@v10
