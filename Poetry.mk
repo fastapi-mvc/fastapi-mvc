@@ -1,6 +1,6 @@
-POETRY_HOME ?= "${HOME}/.local/share/pypoetry}"
-POETRY_BINARY ?= "${POETRY_HOME}/venv/bin/poetry"
-POETRY_VERSION ?= "1.2.0"
+POETRY_HOME ?= ${HOME}/.local/share/pypoetry}
+POETRY_BINARY ?= ${POETRY_HOME}/venv/bin/poetry
+POETRY_VERSION ?= 1.2.0
 
 .PHONY: build
 build: ## Build fastapi-mvc package

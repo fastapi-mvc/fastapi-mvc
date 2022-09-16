@@ -1,4 +1,4 @@
-PYTHON_NIXPKG ?= "python39"
+PYTHON_NIXPKG ?= python39
 
 .PHONY: build
 build:  ## Build fastapi-mvc Nix package
