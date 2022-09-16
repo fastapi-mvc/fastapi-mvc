@@ -47,6 +47,8 @@ jobs:
     strategy:
       matrix:
         python-version: [ 'python37', 'python38', 'python39', 'python310' ]
+    env:
+      PYTHON_NIXPKG: ${{ matrix.python-version }}
 
     steps:
       - uses: actions/checkout@v2
