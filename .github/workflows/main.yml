@@ -61,7 +61,7 @@ jobs:
           path: ${{ env.POETRY_HOME }}
           key: ${{ runner.os }}-3.9-${{ hashFiles('./pyproject.toml') }}-${{ hashFiles('./poetry.lock') }}
       - name: Build wheel
-        run: $POETRY_HOME/bin/poetry build
+        run: make build
       - name: Archive build artifacts
         uses: actions/upload-artifact@v2
         with:
