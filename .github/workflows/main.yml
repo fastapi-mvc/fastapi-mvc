@@ -214,7 +214,7 @@ jobs:
           name: coverage
           path: /tmp
           branch: master
-          repo: rszamszur/example
+          repo: fastapi-mvc/example
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v2
         with:

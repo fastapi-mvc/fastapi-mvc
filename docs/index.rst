@@ -13,8 +13,8 @@ Welcome to fastapi-mvc
 .. image:: https://github.com/fastapi-mvc/fastapi-mvc/actions/workflows/integration.yml/badge.svg?branch=master
    :target: https://github.com/fastapi-mvc/fastapi-mvc/actions/workflows/integration.yml
 
-.. image:: https://codecov.io/gh/rszamszur/fastapi-mvc/branch/master/graph/badge.svg?token=7ESV30TYZS
-    :target: https://codecov.io/gh/rszamszur/fastapi-mvc
+.. image:: https://codecov.io/gh/fastapi-mvc/fastapi-mvc/branch/master/graph/badge.svg?token=7ESV30TYZS
+    :target: https://codecov.io/gh/fastapi-mvc/fastapi-mvc
 
 .. image:: https://img.shields.io/pypi/v/fastapi-mvc
     :alt: PyPI
@@ -28,7 +28,7 @@ Welcome to fastapi-mvc
 .. image:: https://img.shields.io/badge/code%20style-black-000000.svg
     :target: https://github.com/psf/black
 
-.. image:: https://img.shields.io/github/stars/rszamszur/fastapi-mvc?style=social
+.. image:: https://img.shields.io/github/stars/fastapi-mvc/fastapi-mvc?style=social
    :target: https://github.com/fastapi-mvc/fastapi-mvc/stargazers/
 
 **Example generated project:** `https://github.com/fastapi-mvc/example <https://github.com/fastapi-mvc/example>`__
