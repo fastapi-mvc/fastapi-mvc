@@ -68,7 +68,7 @@ jobs:
           name: ${{ format('fastapi_mvc-{0}', github.sha) }}
           path: dist
           retention-days: 60
-coverage:
+  coverage:
     needs: install
     runs-on: ubuntu-latest
 
