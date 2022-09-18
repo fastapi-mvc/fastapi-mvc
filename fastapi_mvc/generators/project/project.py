@@ -16,8 +16,8 @@ class ProjectGenerator(Generator):
     Attributes:
         name (str): **(class variable)** A distinguishable generator name, that
             will be used as subcommand for ``fastapi-mvc generate`` CLI command.
-        template (str): **(class variable)**  Path to generator cookiecutter
-            template root directory.
+        template (str): **(class variable)** A URL to a git repository
+            containing fastapi-mvc project template.
         usage (typing.Optional[str]): **(class variable)** Path to generator
             usage file, that will be printed at the end of its CLI command help
             page.
@@ -36,12 +36,7 @@ class ProjectGenerator(Generator):
     """
 
     name = "new"
-    template = os.path.abspath(
-        os.path.join(
-            os.path.abspath(__file__),
-            "../template",
-        )
-    )
+    template = "https://github.com/fastapi-mvc/cookiecutter.git"
     usage = None
     category = "Project"
     cli_arguments = [
@@ -106,16 +101,31 @@ class ProjectGenerator(Generator):
         ),
         click.Option(
             param_decls=["--repo-url"],
-            help="Repository url.",
+            help="New project repository url.",
             type=click.STRING,
             envvar="REPO_URL",
             default="https://your.repo.url.here",
+        ),
+        click.Option(
+            param_decls=["--template-version"],
+            help="The branch, tag or commit ID to checkout after clone.",
+            type=click.STRING,
+            default="master",
+            show_default=True,
+        ),
+        click.Option(
+            param_decls=["--override-template"],
+            help="Overrides fastapi-mvc cookiecutter template repository.",
+            type=click.STRING,
         ),
     ]
     cli_short_help = "Create a new FastAPI application."
     cli_help = """\
     The 'fastapi-mvc new' command creates a new FastAPI application with a
     default directory structure and configuration at the path you specify.
+
+    Default Project template used: https://github.com/fastapi-mvc/cookiecutter
+
     """
 
     @staticmethod
@@ -145,6 +155,8 @@ class ProjectGenerator(Generator):
         skip_nix,
         license,
         repo_url,
+        template_version,
+        override_template,
     ):
         """Generate a new fastapi-mvc project.
 
@@ -159,8 +171,20 @@ class ProjectGenerator(Generator):
             skip_nix (bool): If true skip nix expression files.
             license (str): Project license.
             repo_url (str): Project repository url.
+            template_version (str): Project template version - the branch, tag
+                or commit ID to checkout after clone.
+            override_template (str): Overrides fastapi-mvc cookiecutter template
+                repository.
 
         """
+        if override_template:
+            self._log.info(
+                f"Using custom project template repository: {override_template}"
+            )
+            template = override_template
+        else:
+            template = self.template
+
         self._log.info(f"Creating a new fastapi-mvc project: {app_path}")
         app_name = os.path.basename(app_path)
         output_dir = os.path.dirname(app_path)
@@ -189,7 +213,8 @@ class ProjectGenerator(Generator):
 
         try:
             cookiecutter(
-                self.template,
+                template,
+                checkout=template_version,
                 extra_context=context,
                 no_input=True,
                 output_dir=output_dir,
