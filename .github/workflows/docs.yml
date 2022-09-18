@@ -32,7 +32,7 @@ jobs:
       - name: Build documentation
         run: make docs
       - name: Archive build artifacts
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: ${{ format('docs-{0}', github.sha) }}
           path: site
