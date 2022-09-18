@@ -20,7 +20,7 @@ def gen_obj():
 
 def test_class_variables():
     assert ProjectGenerator.name == "new"
-    assert ProjectGenerator.template == os.path.join(CONTROLLER_DIR, "template")
+    assert ProjectGenerator.template == "https://github.com/fastapi-mvc/cookiecutter.git"
     assert not ProjectGenerator.usage
     assert ProjectGenerator.category == "Project"
 
@@ -32,7 +32,7 @@ def test_class_variables():
     assert not ProjectGenerator.cli_arguments[0].type.exists
     assert ProjectGenerator.cli_arguments[0].nargs == 1
 
-    assert len(ProjectGenerator.cli_options) == 8
+    assert len(ProjectGenerator.cli_options) == 10
     assert isinstance(ProjectGenerator.cli_options[0], click.Option)
     assert ProjectGenerator.cli_options[0].opts == ["-R", "--skip-redis"]
     assert ProjectGenerator.cli_options[0].help == "Skip Redis utility files."
@@ -78,10 +78,20 @@ def test_class_variables():
     ]
     assert isinstance(ProjectGenerator.cli_options[7], click.Option)
     assert ProjectGenerator.cli_options[7].opts == ["--repo-url"]
-    assert ProjectGenerator.cli_options[7].help == "Repository url."
+    assert ProjectGenerator.cli_options[7].help == "New project repository url."
     assert ProjectGenerator.cli_options[7].type == click.STRING
     assert ProjectGenerator.cli_options[7].default == "https://your.repo.url.here"
     assert ProjectGenerator.cli_options[7].envvar == "REPO_URL"
+    assert isinstance(ProjectGenerator.cli_options[8], click.Option)
+    assert ProjectGenerator.cli_options[8].opts == ["--template-version"]
+    assert ProjectGenerator.cli_options[8].help == "The branch, tag or commit ID to checkout after clone."
+    assert ProjectGenerator.cli_options[8].type == click.STRING
+    assert ProjectGenerator.cli_options[8].default == "master"
+    assert ProjectGenerator.cli_options[8].show_default
+    assert isinstance(ProjectGenerator.cli_options[9], click.Option)
+    assert ProjectGenerator.cli_options[9].opts == ["--override-template"]
+    assert ProjectGenerator.cli_options[9].help == "Overrides fastapi-mvc cookiecutter template repository."
+    assert ProjectGenerator.cli_options[9].type == click.STRING
 
     assert ProjectGenerator.cli_short_help == "Create a new FastAPI application."
     assert (
@@ -89,6 +99,9 @@ def test_class_variables():
         == """\
     The 'fastapi-mvc new' command creates a new FastAPI application with a
     default directory structure and configuration at the path you specify.
+
+    Default Project template used: https://github.com/fastapi-mvc/cookiecutter
+
     """
     )
 
@@ -107,6 +120,8 @@ def test_class_variables():
                 "skip_install": False,
                 "license": "MIT",
                 "repo_url": "https://your.repo.url.here",
+                "template_version": "master",
+                "override_template": None,
             },
             {
                 "project_name": "test-project",
@@ -135,6 +150,8 @@ def test_class_variables():
                 "skip_install": True,
                 "license": "Apache2.0",
                 "repo_url": "https://scm.test/repo",
+                "template_version": "0.1.0",
+                "override_template": "https://my.template.git"
             },
             {
                 "project_name": "test-project",
@@ -166,7 +183,8 @@ def test_new(cookie_mock, utils_mock, kwargs, expected_ctx, out_dir, gen_obj):
 
     utils_mock.get_git_user_info.assert_called_once()
     cookie_mock.assert_called_once_with(
-        gen_obj.template,
+        gen_obj.template if not kwargs["override_template"] else kwargs["override_template"],
+        checkout=kwargs["template_version"],
         extra_context=expected_ctx,
         no_input=True,
         output_dir=out_dir,
@@ -201,11 +219,14 @@ def test_new_dir_exists(cookie_mock, utils_mock, gen_obj):
             skip_install=False,
             license="MIT",
             repo_url="https://your.repo.url.here",
+            template_version="master",
+            override_template=None,
         )
 
     utils_mock.get_git_user_info.assert_called_once()
     cookie_mock.assert_called_once_with(
         gen_obj.template,
+        checkout="master",
         extra_context={
             "project_name": "test-project",
             "redis": "yes",

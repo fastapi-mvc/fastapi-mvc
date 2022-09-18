@@ -51,10 +51,3 @@ test: unit-test integration-test ## Run fastapi-mvc tests
 docs: install ## Build fastapi-mvc documentation
 	echo "[docs] Build fastapi-mvc documentation."
 	${POETRY_BINARY} run sphinx-build docs site
-
-.PHONY: template-checks
-template-checks: install ## Run fastapi-mvc template metrics and tests
-	@build/template-checks.sh
-
-.PHONY: pre-commit
-pre-commit: metrics test template-checks ## Run fastapi-mvc pre-commit checks

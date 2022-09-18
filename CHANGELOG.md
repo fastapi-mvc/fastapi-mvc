@@ -7,6 +7,7 @@ This file documents changes to [fastapi-mvc](https://github.com/fastapi-mvc/fast
 ### Features
 
 * Add Nix CI workflow [#141](https://github.com/fastapi-mvc/fastapi-mvc/issues/141). PR [#145](https://github.com/fastapi-mvc/fastapi-mvc/pull/145)
+* Move project template to a separate repository [#146](https://github.com/fastapi-mvc/fastapi-mvc/issues/146). PR [#149](https://github.com/fastapi-mvc/fastapi-mvc/pull/149)
 
 ### Internal
 

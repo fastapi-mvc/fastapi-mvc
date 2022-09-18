@@ -37,6 +37,8 @@ def test_new_default_values(borg_mock, run_mock, cli_runner, mock_project_gen):
             "skip_install": False,
             "license": "MIT",
             "repo_url": "https://your.repo.url.here",
+            "template_version": "master",
+            "override_template": None,
         },
     )
 
@@ -71,6 +73,8 @@ def test_new_default_values(borg_mock, run_mock, cli_runner, mock_project_gen):
                 "skip_nix": True,
                 "license": "LGPLv3+",
                 "repo_url": "https://github.com/gandalf/gondorapi",
+                "template_version": "master",
+                "override_template": None,
             },
         ),
         (
@@ -86,6 +90,10 @@ def test_new_default_values(borg_mock, run_mock, cli_runner, mock_project_gen):
                 "--repo-url",
                 "https://github.com/gandalf/gondorapi",
                 "/home/gandalf/repos/you-shall-not-pass",
+                "--template-version",
+                "0.1.0",
+                "--override-template",
+                "https://github.com/gandalf/gondortemplate",
             ],
             {
                 "app_path": "/home/gandalf/repos/you-shall-not-pass",
@@ -97,6 +105,8 @@ def test_new_default_values(borg_mock, run_mock, cli_runner, mock_project_gen):
                 "skip_nix": True,
                 "license": "LGPLv3+",
                 "repo_url": "https://github.com/gandalf/gondorapi",
+                "template_version": "0.1.0",
+                "override_template": "https://github.com/gandalf/gondortemplate",
             },
         ),
     ],

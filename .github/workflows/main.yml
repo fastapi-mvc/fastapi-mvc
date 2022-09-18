@@ -68,6 +68,23 @@ jobs:
           name: ${{ format('fastapi_mvc-{0}', github.sha) }}
           path: dist
           retention-days: 60
+  coverage:
+    needs: install
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.9
+      - name: Load Poetry cache
+        uses: actions/cache@v3
+        with:
+          path: ${{ env.POETRY_HOME }}
+          key: ${{ runner.os }}-3.9-${{ hashFiles('./pyproject.toml') }}-${{ hashFiles('./poetry.lock') }}
+      - name: Run fastapi-mvc coverage
+        run: $POETRY_HOME/bin/poetry run pytest --cov-config=.coveragerc --cov=fastapi_mvc --cov-fail-under=90 --cov-report=xml --cov-report=term-missing tests
   metrics:
     needs: install
     runs-on: ubuntu-latest
@@ -128,95 +145,3 @@ jobs:
           key: ${{ runner.os }}-${{ matrix.python-version }}-${{ hashFiles('./pyproject.toml') }}-${{ hashFiles('./poetry.lock') }}
       - name: Run integration tests
         run: make integration-test
-  project-template-ci:
-    needs: install
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v2
-      - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v2
-        with:
-          python-version: ${{ matrix.python-version }}
-      - name: Load Poetry cache
-        uses: actions/cache@v3
-        with:
-          path: ${{ env.POETRY_HOME }}
-          key: ${{ runner.os }}-3.9-${{ hashFiles('./pyproject.toml') }}-${{ hashFiles('./poetry.lock') }}
-      - name: Load example cache
-        id: cached-example
-        uses: actions/cache@v3
-        with:
-          path: ./example
-          key: example-${{ hashFiles('**/project/template/*') }}
-      - name: Generate test-project
-        run: |
-          $POETRY_HOME/bin/poetry run fastapi-mvc new --skip-install --repo-url https://github.com/fastapi-mvc/example example
-          $POETRY_HOME/bin/poetry lock --no-update
-          echo "SHORT_SHA=${GITHUB_SHA::7}" >> $GITHUB_ENV
-        if: steps.cached-example.outputs.cache-hit != 'true'
-      - name: Push example
-        uses: cpina/github-action-push-to-another-repository@main
-        if: steps.cached-example.outputs.cache-hit != 'true'
-        env:
-          API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
-        with:
-          source-directory: ./example
-          destination-github-username: 'fastapi-mvc'
-          destination-repository-name: 'example'
-          user-name: "github-actions[bot]"
-          user-email: github-actions[bot]@users.noreply.github.com
-          commit-message: ${{ format('[skip ci][{0}] Update generated project', env.SHORT_SHA) }}
-          target-branch: master
-      - name: Dispatch example CI workflow
-        uses: codex-/return-dispatch@v1
-        if: steps.cached-example.outputs.cache-hit != 'true'
-        id: return_dispatch
-        with:
-          token: ${{ secrets.API_TOKEN_GITHUB }}
-          repo: example
-          owner: fastapi-mvc
-          ref: master
-          workflow: main.yml
-      - name: Await dispatched workflow
-        uses: Codex-/await-remote-run@v1
-        if: steps.cached-example.outputs.cache-hit != 'true'
-        with:
-          token: ${{ secrets.API_TOKEN_GITHUB }}
-          repo: example
-          owner: fastapi-mvc
-          run_id: ${{ steps.return_dispatch.outputs.run_id }}
-          run_timeout_seconds: 600
-          poll_interval_ms: 5000
-  combine-coverage:
-    needs: [project-template-ci, unit-tests, integration-tests]
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v2
-      - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v2
-        with:
-          python-version: 3.9
-      - name: Load Poetry cache
-        uses: actions/cache@v3
-        with:
-          path: ${{ env.POETRY_HOME }}
-          key: ${{ runner.os }}-3.9-${{ hashFiles('./pyproject.toml') }}-${{ hashFiles('./poetry.lock') }}
-      - name: Run fastapi-mvc coverage
-        run: $POETRY_HOME/bin/poetry run pytest --cov-config=.coveragerc --cov=fastapi_mvc --cov-fail-under=90 --cov-report=xml --cov-report=term-missing tests
-      - name: Download fastapi-mvc-coverage
-        uses: dawidd6/action-download-artifact@v2
-        with:
-          github_token: ${{ secrets.API_TOKEN_GITHUB }}
-          workflow: main.yml
-          workflow_conclusion: success
-          name: coverage
-          path: /tmp
-          branch: master
-          repo: fastapi-mvc/example
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v2
-        with:
-          fail_ci_if_error: true
-          files: ./coverage.xml,/tmp/coverage.xml
