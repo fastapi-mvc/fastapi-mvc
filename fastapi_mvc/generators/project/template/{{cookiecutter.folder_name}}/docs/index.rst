@@ -2,7 +2,7 @@ Documentation
 =============
 
 .. _fastapi-mvc:
-    https://github.com/rszamszur/fastapi-mvc
+    https://github.com/fastapi-mvc/fastapi-mvc
 
 --------------
 

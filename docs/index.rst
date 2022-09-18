@@ -7,11 +7,11 @@ Welcome to fastapi-mvc
 
 --------------
 
-.. image:: https://github.com/rszamszur/fastapi-mvc/actions/workflows/main.yml/badge.svg?branch=master
-   :target: https://github.com/rszamszur/fastapi-mvc/actions/workflows/main.yml
+.. image:: https://github.com/fastapi-mvc/fastapi-mvc/actions/workflows/main.yml/badge.svg?branch=master
+   :target: https://github.com/fastapi-mvc/fastapi-mvc/actions/workflows/main.yml
 
-.. image:: https://github.com/rszamszur/fastapi-mvc/actions/workflows/integration.yml/badge.svg?branch=master
-   :target: https://github.com/rszamszur/fastapi-mvc/actions/workflows/integration.yml
+.. image:: https://github.com/fastapi-mvc/fastapi-mvc/actions/workflows/integration.yml/badge.svg?branch=master
+   :target: https://github.com/fastapi-mvc/fastapi-mvc/actions/workflows/integration.yml
 
 .. image:: https://codecov.io/gh/rszamszur/fastapi-mvc/branch/master/graph/badge.svg?token=7ESV30TYZS
     :target: https://codecov.io/gh/rszamszur/fastapi-mvc
@@ -29,9 +29,9 @@ Welcome to fastapi-mvc
     :target: https://github.com/psf/black
 
 .. image:: https://img.shields.io/github/stars/rszamszur/fastapi-mvc?style=social
-   :target: https://GitHub.com/rszamszur/fastapi-mvc/stargazers/
+   :target: https://github.com/fastapi-mvc/fastapi-mvc/stargazers/
 
-**Example generated project:** `https://github.com/rszamszur/fastapi-mvc-example <https://github.com/rszamszur/fastapi-mvc-example>`__
+**Example generated project:** `https://github.com/fastapi-mvc/example <https://github.com/fastapi-mvc/example>`__
 
 --------------
 

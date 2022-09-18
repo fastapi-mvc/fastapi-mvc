@@ -268,7 +268,7 @@ Since Python modules can have many files, classes, and methods we need to tell f
 
 .. note::
     At the time being fastapi-mvc will try import generators only from ``lib/generators`` located in the project root directory.
-    In the future releases I'm planing to add a global path, or parametrize search paths by env variable. You are allways welcome to create an `issue <https://github.com/rszamszur/fastapi-mvc/issues/new/choose>`__.
+    In the future releases I'm planing to add a global path, or parametrize search paths by env variable. You are allways welcome to create an `issue <https://github.com/fastapi-mvc/fastapi-mvc/issues/new/choose>`__.
 
 Invoking generator
 ~~~~~~~~~~~~~~~~~~
@@ -309,8 +309,8 @@ This tutorial explains the basic concept and implementations behind fastapi-mvc 
 The same use case can be templated in various ways. The full possibilities of cookiecutter are beyond the scope of this tutorial.
 
 For more information please see `cookiecutter documentation <https://cookiecutter.readthedocs.io/en/1.7.3/>`__.
-Builtin generators can be found in `fastapi_mvc.generators submodule <https://github.com/rszamszur/fastapi-mvc/tree/master/fastapi_mvc/generators>`__
-In case of any questions or problems, feel free to create an `issue <https://github.com/rszamszur/fastapi-mvc/issues/new/choose>`__.
+Builtin generators can be found in `fastapi_mvc.generators submodule <https://github.com/fastapi-mvc/fastapi-mvc/tree/master/fastapi_mvc/generators>`__
+In case of any questions or problems, feel free to create an `issue <https://github.com/fastapi-mvc/fastapi-mvc/issues/new/choose>`__.
 
 Creating generators with generators
 -----------------------------------

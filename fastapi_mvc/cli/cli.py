@@ -16,7 +16,7 @@ APIs.
 
 Documentation: https://fastapi-mvc.netlify.app
 
-Source: https://github.com/rszamszur/fastapi-mvc
+Source: https://github.com/fastapi-mvc/fastapi-mvc
 """
 
 

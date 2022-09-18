@@ -78,7 +78,7 @@ def global_except_hook(exctype, value, traceback):
     if log.isEnabledFor(logging.DEBUG):
         log.info(
             template.format(
-                issues="https://github.com/rszamszur/fastapi-mvc/issues/new",
+                issues="https://github.com/fastapi-mvc/fastapi-mvc/issues/new",
                 details="".join(format_exception(exctype, value, traceback)),
                 argv=" ".join(sys.argv[1:]),
                 py_ver=platform.python_version(),
@@ -89,7 +89,7 @@ def global_except_hook(exctype, value, traceback):
     else:
         log.info(
             hint.format(
-                issues="https://github.com/rszamszur/fastapi-mvc/issues/new",
+                issues="https://github.com/fastapi-mvc/fastapi-mvc/issues/new",
                 argv=" ".join(sys.argv[1:]),
             )
         )

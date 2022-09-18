@@ -46,8 +46,8 @@ html_theme = "click"
 html_context = {
     "project_links": [
         ProjectLink("PyPI Releases", "https://pypi.org/project/fastapi-mvc/"),
-        ProjectLink("Source Code", "https://github.com/rszamszur/fastapi-mvc/"),
-        ProjectLink("Issue Tracker", "https://github.com/rszamszur/fastapi-mvc/issues/"),
+        ProjectLink("Source Code", "https://github.com/fastapi-mvc/fastapi-mvc/"),
+        ProjectLink("Issue Tracker", "https://github.com/fastapi-mvc/fastapi-mvc/issues/"),
     ]
 }
 html_sidebars = {

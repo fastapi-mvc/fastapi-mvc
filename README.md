@@ -1,16 +1,16 @@
 <div align="center">
 
-![fastapi-mvc](https://github.com/rszamszur/fastapi-mvc-template/blob/master/docs/_static/logo.png?raw=true)
+![fastapi-mvc](https://github.com/fastapi-mvc/fastapi-mvc-template/blob/master/docs/_static/logo.png?raw=true)
 
-![fastapi-mvc](https://github.com/rszamszur/fastapi-mvc-template/blob/master/docs/_static/readme.gif?raw=true)
-[![CI](https://github.com/rszamszur/fastapi-mvc/actions/workflows/main.yml/badge.svg?branch=master)](https://github.com/rszamszur/fastapi-mvc/actions/workflows/main.yml)
-[![codecov](https://codecov.io/gh/rszamszur/fastapi-mvc/branch/master/graph/badge.svg?token=7ESV30TYZS)](https://codecov.io/gh/rszamszur/fastapi-mvc)
-[![K8s integration](https://github.com/rszamszur/fastapi-mvc/actions/workflows/integration.yml/badge.svg)](https://github.com/rszamszur/fastapi-mvc/actions/workflows/integration.yml)
+![fastapi-mvc](https://github.com/fastapi-mvc/fastapi-mvc-template/blob/master/docs/_static/readme.gif?raw=true)
+[![CI](https://github.com/fastapi-mvc/fastapi-mvc/actions/workflows/main.yml/badge.svg?branch=master)](https://github.com/fastapi-mvc/fastapi-mvc/actions/workflows/main.yml)
+[![codecov](https://codecov.io/gh/fastapi-mvc/fastapi-mvc/branch/master/graph/badge.svg?token=7ESV30TYZS)](https://codecov.io/gh/fastapi-mvc/fastapi-mvc)
+[![K8s integration](https://github.com/fastapi-mvc/fastapi-mvc/actions/workflows/integration.yml/badge.svg)](https://github.com/fastapi-mvc/fastapi-mvc/actions/workflows/integration.yml)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 ![PyPI](https://img.shields.io/pypi/v/fastapi-mvc)
 ![PyPI - Downloads](https://img.shields.io/pypi/dm/fastapi-mvc)
 ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/fastapi-mvc)
-![GitHub](https://img.shields.io/github/license/rszamszur/fastapi-mvc?color=blue)
+![GitHub](https://img.shields.io/github/license/fastapi-mvc/fastapi-mvc?color=blue)
 
 </div>
 
@@ -18,9 +18,9 @@
 
 **Documentation**: [https://fastapi-mvc.netlify.app](https://fastapi-mvc.netlify.app)
 
-**Source Code**: [https://github.com/rszamszur/fastapi-mvc](https://github.com/rszamszur/fastapi-mvc)
+**Source Code**: [https://github.com/fastapi-mvc/fastapi-mvc](https://github.com/fastapi-mvc/fastapi-mvc)
 
-**Example generated project**: [https://github.com/rszamszur/fastapi-mvc-example](https://github.com/rszamszur/fastapi-mvc-example)
+**Example generated project**: [https://github.com/fastapi-mvc/example](https://github.com/fastapi-mvc/example)
 
 ---
 
@@ -115,12 +115,12 @@ pip install fastapi-mvc
 If you have created a project with fastapi-mvc, feel free to open PR and add yourself to the list. Share your story and project. Your success is my success :)
 
 Projects:
-* [fastapi-mvc-example](https://github.com/rszamszur/fastapi-mvc-example) - Default generated project by `fastapi-mvc new ...`
+* [fastapi-mvc/example](https://github.com/fastapi-mvc/example) - Default generated project by `fastapi-mvc new ...`
 
 ## Contributing
 
-[CONTRIBUTING](https://github.com/rszamszur/fastapi-mvc/blob/master/CONTRIBUTING.md)
+[CONTRIBUTING](https://github.com/fastapi-mvc/fastapi-mvc/blob/master/CONTRIBUTING.md)
 
 ## License
 
-[MIT](https://github.com/rszamszur/fastapi-mvc/blob/master/LICENSE)
+[MIT](https://github.com/fastapi-mvc/fastapi-mvc/blob/master/LICENSE)
