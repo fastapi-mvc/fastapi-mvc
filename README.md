@@ -1,8 +1,8 @@
 <div align="center">
 
-![fastapi-mvc](https://github.com/fastapi-mvc/fastapi-mvc-template/blob/master/docs/_static/logo.png?raw=true)
+![fastapi-mvc](https://github.com/fastapi-mvc/fastapi-mvc/blob/master/docs/_static/logo.png?raw=true)
 
-![fastapi-mvc](https://github.com/fastapi-mvc/fastapi-mvc-template/blob/master/docs/_static/readme.gif?raw=true)
+![fastapi-mvc](https://github.com/fastapi-mvc/fastapi-mvc/blob/master/docs/_static/readme.gif?raw=true)
 [![CI](https://github.com/fastapi-mvc/fastapi-mvc/actions/workflows/main.yml/badge.svg?branch=master)](https://github.com/fastapi-mvc/fastapi-mvc/actions/workflows/main.yml)
 [![codecov](https://codecov.io/gh/fastapi-mvc/fastapi-mvc/branch/master/graph/badge.svg?token=7ESV30TYZS)](https://codecov.io/gh/fastapi-mvc/fastapi-mvc)
 [![K8s integration](https://github.com/fastapi-mvc/fastapi-mvc/actions/workflows/integration.yml/badge.svg)](https://github.com/fastapi-mvc/fastapi-mvc/actions/workflows/integration.yml)

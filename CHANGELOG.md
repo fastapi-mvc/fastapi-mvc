@@ -38,11 +38,11 @@ This file documents changes to [fastapi-mvc](https://github.com/fastapi-mvc/fast
 
 ## 0.14.1 (11.08.2022)
 
-## Features
+### Features
 
 * Allow `pkgs.python` to be configurable in `shell.nix`. PR [#132](https://github.com/fastapi-mvc/fastapi-mvc/pull/132)
 
-## Fixed
+### Fixed
 
 * Fix `POETRY_HOME` environment variable in shell.nix nix expression [#131](https://github.com/fastapi-mvc/fastapi-mvc/issues/131). PR [#132](https://github.com/fastapi-mvc/fastapi-mvc/pull/132)
 
