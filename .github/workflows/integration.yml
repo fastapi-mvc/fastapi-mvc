@@ -1,12 +1,7 @@
 name: K8s integration
 
 on:
-  push:
-    branches:
-      - master
-  pull_request:
-    branches:
-      - master
+  workflow_dispatch:
 
 env:
   POETRY_HOME: /tmp/poetry
