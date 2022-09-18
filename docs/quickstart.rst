@@ -45,7 +45,7 @@ To install fastapi-mvc from source first clone the repository and use ``make ins
 
 .. code-block:: bash
 
-    git clone git@github.com:rszamszur/fastapi-mvc.git
+    git clone https://github.com/fastapi-mvc/fastapi-mvc.git
     cd fastapi-mvc
     make install
 

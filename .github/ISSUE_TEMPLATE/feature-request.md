@@ -8,7 +8,7 @@ assignees: ''
 ---
 
 <!-- Checked checkbox should look like this: [x] -->
-- [ ] I have searched the [issues](https://github.com/rszamszur/fastapi-mvc/issues) of this repo and believe that this is not a duplicate.
+- [ ] I have searched the [issues](https://github.com/fastapi-mvc/fastapi-mvc/issues) of this repo and believe that this is not a duplicate.
 
 ## Feature Request
 <!-- Now feel free to write your idea for improvement. Thanks again 🙌 ❤️ -->

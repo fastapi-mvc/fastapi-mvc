@@ -143,48 +143,48 @@ jobs:
         with:
           path: ${{ env.POETRY_HOME }}
           key: ${{ runner.os }}-3.9-${{ hashFiles('./pyproject.toml') }}-${{ hashFiles('./poetry.lock') }}
-      - name: Load fastapi-mvc-example cache
-        id: cached-fastapi-mvc-example
+      - name: Load example cache
+        id: cached-example
         uses: actions/cache@v3
         with:
-          path: ./fastapi-mvc-example
-          key: fastapi-mvc-example-${{ hashFiles('**/project/template/*') }}
+          path: ./example
+          key: example-${{ hashFiles('**/project/template/*') }}
       - name: Generate test-project
         run: |
-          $POETRY_HOME/bin/poetry run fastapi-mvc new --skip-install --repo-url https://github.com/rszamszur/fastapi-mvc-example fastapi-mvc-example
+          $POETRY_HOME/bin/poetry run fastapi-mvc new --skip-install --repo-url https://github.com/fastapi-mvc/example example
           $POETRY_HOME/bin/poetry lock --no-update
           echo "SHORT_SHA=${GITHUB_SHA::7}" >> $GITHUB_ENV
-        if: steps.cached-fastapi-mvc-example.outputs.cache-hit != 'true'
-      - name: Push fastapi-mvc-example
+        if: steps.cached-example.outputs.cache-hit != 'true'
+      - name: Push example
         uses: cpina/github-action-push-to-another-repository@main
-        if: steps.cached-fastapi-mvc-example.outputs.cache-hit != 'true'
+        if: steps.cached-example.outputs.cache-hit != 'true'
         env:
           API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
         with:
-          source-directory: ./fastapi-mvc-example
-          destination-github-username: 'rszamszur'
-          destination-repository-name: 'fastapi-mvc-example'
+          source-directory: ./example
+          destination-github-username: 'fastapi-mvc'
+          destination-repository-name: 'example'
           user-name: "github-actions[bot]"
           user-email: github-actions[bot]@users.noreply.github.com
           commit-message: ${{ format('[skip ci][{0}] Update generated project', env.SHORT_SHA) }}
           target-branch: master
-      - name: Dispatch fastapi-mvc-example CI workflow
+      - name: Dispatch example CI workflow
         uses: codex-/return-dispatch@v1
-        if: steps.cached-fastapi-mvc-example.outputs.cache-hit != 'true'
+        if: steps.cached-example.outputs.cache-hit != 'true'
         id: return_dispatch
         with:
           token: ${{ secrets.API_TOKEN_GITHUB }}
-          repo: fastapi-mvc-example
-          owner: rszamszur
+          repo: example
+          owner: fastapi-mvc
           ref: master
           workflow: main.yml
       - name: Await dispatched workflow
         uses: Codex-/await-remote-run@v1
-        if: steps.cached-fastapi-mvc-example.outputs.cache-hit != 'true'
+        if: steps.cached-example.outputs.cache-hit != 'true'
         with:
           token: ${{ secrets.API_TOKEN_GITHUB }}
-          repo: fastapi-mvc-example
-          owner: rszamszur
+          repo: example
+          owner: fastapi-mvc
           run_id: ${{ steps.return_dispatch.outputs.run_id }}
           run_timeout_seconds: 600
           poll_interval_ms: 5000
@@ -214,7 +214,7 @@ jobs:
           name: coverage
           path: /tmp
           branch: master
-          repo: rszamszur/fastapi-mvc-example
+          repo: fastapi-mvc/example
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v2
         with:

@@ -5,7 +5,7 @@ description = "Developer productivity tool for making high-quality FastAPI produ
 authors = ["Radosław Szamszur <radoslawszamszur@gmail.com>"]
 license = "MIT"
 readme = "README.md"
-repository = "https://github.com/rszamszur/fastapi-mvc"
+repository = "https://github.com/fastapi-mvc/fastapi-mvc"
 documentation = "https://fastapi-mvc.netlify.app"
 classifiers = [
     "Development Status :: 3 - Alpha",
@@ -49,7 +49,7 @@ myst-parser = "^0.17.2"
 fastapi-mvc = "fastapi_mvc.cli.cli:cli"
 
 [tool.poetry.urls]
-"Issues" = "https://github.com/rszamszur/fastapi-mvc/issues"
+"Issues" = "https://github.com/fastapi-mvc/fastapi-mvc/issues"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

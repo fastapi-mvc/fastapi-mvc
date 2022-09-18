@@ -156,4 +156,4 @@ Generated application provides flexibility of configuration. All significant set
 Roadmap
 -------
 
-Feature roadmap can be found `here <https://github.com/rszamszur/fastapi-mvc/issues/53>`__.
+Feature roadmap can be found `here <https://github.com/fastapi-mvc/fastapi-mvc/issues/53>`__.
