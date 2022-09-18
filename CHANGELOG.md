@@ -2,7 +2,13 @@
 
 This file documents changes to [fastapi-mvc](https://github.com/fastapi-mvc/fastapi-mvc). The release numbering uses [semantic versioning](http://semver.org).
 
-## Unreleased
+## 0.16.0 (18.09.2022)
+
+### NOTE!
+
+During this release, not only was the project transferred under fastapi-mvc organization. But also project template (`fastapi_mvc/generators/project/template/**`) was moved to a separate repository. 
+This means a lot of refactoring, cleanup, and changes in configuration, CI, URLs, etc. Even though CI checks are pretty thorough, there is a chance I could miss something that will cause a bug somewhere. 
+If so, feel free to raise an issue, and I'll handle it as soon as possible.
 
 ### Features
 
