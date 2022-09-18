@@ -85,6 +85,11 @@ jobs:
           key: ${{ runner.os }}-3.9-${{ hashFiles('./pyproject.toml') }}-${{ hashFiles('./poetry.lock') }}
       - name: Run fastapi-mvc coverage
         run: $POETRY_HOME/bin/poetry run pytest --cov-config=.coveragerc --cov=fastapi_mvc --cov-fail-under=90 --cov-report=xml --cov-report=term-missing tests
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          fail_ci_if_error: true
+          files: ./coverage.xml
   metrics:
     needs: install
     runs-on: ubuntu-latest
