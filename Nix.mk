@@ -44,3 +44,6 @@ unit-test: install  ## Run fastapi-mvc unit tests
 integration-test: install  ## Run fastapi-mvc integration tests
 	echo "[nix][integration-test] Run fastapi-mvc unit tests."
 	result/bin/pytest tests/integration
+
+.PHONY: test
+test: unit-test integration-test ## Run fastapi-mvc tests
