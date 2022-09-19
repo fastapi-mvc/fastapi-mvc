@@ -6,7 +6,7 @@
 
 **Before submitting**
 
-* **Check that your issue does not already exist in the [issue tracker](https://github.com/fastapi-mvc/fastapi-mvc/issues)**
+* **Check that your issue does not already exist in the [issue tracker](https://github.com/fastapi-mvc/fastapi-mvc/issues) or [project template issue tracker](https://github.com/fastapi-mvc/cookiecutter/issues)**
 
 ### Questions
 
@@ -26,10 +26,10 @@ If you encountered an unexpected behavior using [fastapi-mvc](https://github.com
 
 This project is made of two things:
 
-* Template: [cookiecutter template (`fastapi_mvc/template/*`)](https://github.com/fastapi-mvc/fastapi-mvc/tree/master/fastapi_mvc/template) from which projects are generated.
-* Package: fastapi-mvc - implementation, tests, etc. Everything except `fastapi_mvc/template` directory.
+* Package: fastapi-mvc - implementation, tests, etc.
+* Project Template: [fastapi-mvc/cookiecutter](https://github.com/fastapi-mvc/cookiecutter) from which new projects are generated.
 
-Both package and template have their own tests and checks. However, since template isn't a valid Python code until its generated, all checks are done on the default (full) generated project.
+Both package and template have their own tests and checks. However, since template isn't a valid Python code until its generated, all checks are done on the default (full) generated project in [fastapi-mvc/cookiecutter CI workflow](https://github.com/fastapi-mvc/cookiecutter/actions/workflows/main.yml).
 
 ### Style guide
 
@@ -39,17 +39,9 @@ Both package and template have their own tests and checks. However, since templa
 * Use the imperative mood ("Move cursor to..." not "Moves cursor to...")
 * Reference issues and pull requests liberally after the first line
 
-#### Package - fastapi-mvc
+#### Metrics
 
 Metrics stage ensure following rules are followed:
-
-* [PEP 8](https://www.python.org/dev/peps/pep-0008/)
-* [PEP 257](https://www.python.org/dev/peps/pep-0257/) for docstrings
-* [black](https://github.com/psf/black) for unified formatting
-
-#### Template - `fastapi_mvc/template/*`
-
-Template metrics stage ensure following rules are followed:
 
 * [PEP 8](https://www.python.org/dev/peps/pep-0008/)
 * [PEP 257](https://www.python.org/dev/peps/pep-0257/) for docstrings
@@ -58,6 +50,7 @@ Template metrics stage ensure following rules are followed:
 ### Local development
 
 You will first need to fork [fastapi-mvc](https://github.com/fastapi-mvc/fastapi-mvc) and clone repository:
+
 ```shell
 git clone git@github.com:your_username/fastapi-mvc.git
 cd fastapi-mvc
@@ -70,22 +63,14 @@ Make sure that the current tests are passing on your machine:
 ```shell
 make test
 ```
+
 To maintain high code quality and readability this project has strict [style guide](#style-guide) rules enforced by PEP and black.
 You must ensure that your code follows it. If not, the CI will fail and your Pull Request will not be merged.
 
 To make sure that you don't accidentally commit code that does pass CI, you can run all checks:
 ```shell
-make pre-commit
-```
-or separately for package:
-```shell
 make metrics
-make unit-test
-make integration-test
-```
-and for template:
-```shell
-make template-checks
+make test
 ```
 
 Your code must be accompanied by corresponding tests, if tests are not present your code will not be merged.
