@@ -51,6 +51,7 @@ jobs:
     if: ${{ needs.pre_job.outputs.should_skip != 'true' }}
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
         python-version: [ 'python37', 'python38', 'python39', 'python310' ]
     env:
@@ -58,11 +59,11 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      - name: Install Nix
+      - name: Install Nix ❄️
         uses: cachix/install-nix-action@v17
         with:
           nix_path: nixpkgs=channel:nixos-22.05
-      - name: Setup Cachix Nix cache
+      - name: Setup Cachix ❄️
         uses: cachix/cachix-action@v10
         with:
           name: fastapi-mvc
