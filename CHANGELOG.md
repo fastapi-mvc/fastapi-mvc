@@ -2,6 +2,12 @@
 
 This file documents changes to [fastapi-mvc](https://github.com/fastapi-mvc/fastapi-mvc). The release numbering uses [semantic versioning](http://semver.org).
 
+## Unreleased
+
+### Internal
+
+* Override canceling matrix job if only one of them fail [#64](https://github.com/fastapi-mvc/fastapi-mvc/issues/64). PR [#160](https://github.com/fastapi-mvc/fastapi-mvc/pull/160)
+
 ## 0.16.0 (18.09.2022)
 
 ### NOTE!
@@ -13,7 +19,7 @@ If so, feel free to raise an issue, and I'll handle it as soon as possible.
 ### Features
 
 * Add Nix CI workflow [#141](https://github.com/fastapi-mvc/fastapi-mvc/issues/141). PR [#145](https://github.com/fastapi-mvc/fastapi-mvc/pull/145)
-* Move project template to a separate repository [#146](https://github.com/fastapi-mvc/fastapi-mvc/issues/146). PR [#149](https://github.com/fastapi-mvc/fastapi-mvc/pull/149)
+* Move project template to a separate repository [#146](https://github.com/fastapi-mvc/fastapi-mvc/issues/146). PR [#157](https://github.com/fastapi-mvc/fastapi-mvc/pull/149)
 
 ### Internal
 
