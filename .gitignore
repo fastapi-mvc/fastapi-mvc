@@ -36,3 +36,6 @@ venv/
 
 # Sphinx build dir
 site/
+
+# Nix build result
+result
