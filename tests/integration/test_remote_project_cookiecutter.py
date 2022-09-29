@@ -52,6 +52,8 @@ def test_project_cookiecutter_minimal(cli_runner, tmp_path):
         "shell.nix",
         "image.nix",
         "default.nix",
+        "overlay.nix",
+        "Nix.mk",
     ]
 
     for path in paths:
