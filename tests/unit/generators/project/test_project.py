@@ -86,7 +86,7 @@ def test_class_variables():
     assert ProjectGenerator.cli_options[8].opts == ["--template-version"]
     assert ProjectGenerator.cli_options[8].help == "The branch, tag or commit ID to checkout after clone."
     assert ProjectGenerator.cli_options[8].type == click.STRING
-    assert ProjectGenerator.cli_options[8].default == "master"
+    assert ProjectGenerator.cli_options[8].default == ProjectGenerator.template_version
     assert ProjectGenerator.cli_options[8].show_default
     assert isinstance(ProjectGenerator.cli_options[9], click.Option)
     assert ProjectGenerator.cli_options[9].opts == ["--override-template"]

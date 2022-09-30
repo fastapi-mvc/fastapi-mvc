@@ -1,6 +1,7 @@
 import mock
 import pytest
 from fastapi_mvc.cli.new import get_new_cmd
+from fastapi_mvc.generators import ProjectGenerator
 
 
 @mock.patch("fastapi_mvc.cli.new.Borg")
@@ -37,7 +38,7 @@ def test_new_default_values(borg_mock, run_mock, cli_runner, mock_project_gen):
             "skip_install": False,
             "license": "MIT",
             "repo_url": "https://your.repo.url.here",
-            "template_version": "master",
+            "template_version": ProjectGenerator.template_version,
             "override_template": None,
         },
     )
@@ -73,7 +74,7 @@ def test_new_default_values(borg_mock, run_mock, cli_runner, mock_project_gen):
                 "skip_nix": True,
                 "license": "LGPLv3+",
                 "repo_url": "https://github.com/gandalf/gondorapi",
-                "template_version": "master",
+                "template_version": ProjectGenerator.template_version,
                 "override_template": None,
             },
         ),

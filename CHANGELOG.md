@@ -6,6 +6,7 @@ This file documents changes to [fastapi-mvc](https://github.com/fastapi-mvc/fast
 
 ### Internal
 
+* Pin default `fastapi-mvc/cookiecutter` version to a tag rather than `master` branch [#159](https://github.com/fastapi-mvc/fastapi-mvc/issues/159).
 * Override canceling matrix job if only one of them fail [#64](https://github.com/fastapi-mvc/fastapi-mvc/issues/64). PR [#160](https://github.com/fastapi-mvc/fastapi-mvc/pull/160)
 
 ## 0.16.0 (18.09.2022)

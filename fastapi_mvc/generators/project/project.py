@@ -37,6 +37,7 @@ class ProjectGenerator(Generator):
 
     name = "new"
     template = "https://github.com/fastapi-mvc/cookiecutter.git"
+    template_version = "0.2.0"
     usage = None
     category = "Project"
     cli_arguments = [
@@ -110,7 +111,7 @@ class ProjectGenerator(Generator):
             param_decls=["--template-version"],
             help="The branch, tag or commit ID to checkout after clone.",
             type=click.STRING,
-            default="master",
+            default=template_version,
             show_default=True,
         ),
         click.Option(
