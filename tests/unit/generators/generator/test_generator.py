@@ -6,7 +6,7 @@ import mock
 from fastapi_mvc.generators import GeneratorGenerator, Generator
 
 
-CONTROLLER_DIR = os.path.abspath(
+MODULE_DIR = os.path.abspath(
     os.path.join(inspect.getfile(GeneratorGenerator), "../")
 )
 
@@ -24,8 +24,8 @@ def gen_obj():
 
 def test_class_variables():
     assert GeneratorGenerator.name == "generator"
-    assert GeneratorGenerator.template == os.path.join(CONTROLLER_DIR, "template")
-    assert GeneratorGenerator.usage == os.path.join(CONTROLLER_DIR, "template/USAGE")
+    assert GeneratorGenerator.template == os.path.join(MODULE_DIR, "template")
+    assert GeneratorGenerator.usage == os.path.join(MODULE_DIR, "template/USAGE")
     assert GeneratorGenerator.category == "Builtins"
     assert GeneratorGenerator.cli_arguments == Generator.cli_arguments
     assert GeneratorGenerator.cli_options == Generator.cli_options
