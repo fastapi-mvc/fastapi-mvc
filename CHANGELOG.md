@@ -2,6 +2,23 @@
 
 This file documents changes to [fastapi-mvc](https://github.com/fastapi-mvc/fastapi-mvc). The release numbering uses [semantic versioning](http://semver.org).
 
+## Unreleased
+
+### Breaking Changes
+
+* Drop Python 3.7 support. PR [#166](https://github.com/fastapi-mvc/fastapi-mvc/pull/166)
+
+### Internal
+
+* Add poetry2nix overlay. PR [#168](https://github.com/fastapi-mvc/fastapi-mvc/pull/168)
+* Update dependencies. PR [#167](https://github.com/fastapi-mvc/fastapi-mvc/pull/167)
+  * pytest (6.2.5 -> 0.82.0)
+  * pytest-cov (2.12.0 -> 4.0.0)
+  * flake8 (3.9.2 -> 5.0.4)
+  * black (22.3.0 -> 22.8.0)
+  * Sphinx (4.5.0 -> 5.2.3)
+  * myst-parser (0.17.2 -> 0.18.1)
+
 ## 0.16.1 (04.10.2022)
 
 ### Internal
