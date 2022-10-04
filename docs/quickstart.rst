@@ -4,25 +4,6 @@ Quickstart
 Installation
 ------------
 
-Prerequisites
-~~~~~~~~~~~~~
-
-Before you install fastapi-mvc, you should check to make sure that your system has the proper prerequisites installed. These include:
-
-* Python 3.7 or later `(How to install python) <https://docs.python-guide.org/starting/installation/>`__
-* pip
-* curl
-* make
-
-Environment with `Nix <https://nixos.org/>`__
-*********************************************
-
-You can always spawn shell with all requirements using Nix:
-
-.. code-block:: bash
-
-    nix-shell shell.nix
-
 From PyPi:
 ~~~~~~~~~~
 
@@ -41,6 +22,13 @@ To verify that you have everything installed correctly, you should be able to ru
 From source with Poetry:
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
+Prerequisites:
+
+* Python 3.7 or later `(How to install python) <https://docs.python-guide.org/starting/installation/>`__
+* make
+* (optional) curl
+* (optional) Poetry `(How to install poetry) <https://python-poetry.org/docs/#installation>`__
+
 To install fastapi-mvc from source first clone the repository and use ``make install`` target:
 
 .. code-block:: bash
@@ -49,7 +37,16 @@ To install fastapi-mvc from source first clone the repository and use ``make ins
     cd fastapi-mvc
     make install
 
-You can always customize poetry installation with `environment variables <https://python-poetry.org/docs/configuration/#using-environment-variables>`__:
+By default ``make install`` target will search first for ``python3`` then ``python`` executable in your ``PATH``.
+If needed this can be overridden by ``PYTHON`` environment variable.
+
+.. code-block:: bash
+
+    export PYTHON=/path/to/my/python
+    make install
+
+Lastly if Poetry is not found in its default installation directory (${HOME}/.local/share/pypoetry) this target will install it for you.
+However, one can always point to existing/customize Poetry installation with `environment variables <https://python-poetry.org/docs/configuration/#using-environment-variables>`__:
 
 .. code-block:: bash
 
@@ -57,6 +54,50 @@ You can always customize poetry installation with `environment variables <https:
     export POETRY_CACHE_DIR=/custom/poetry/path/cache
     export POETRY_VIRTUALENVS_IN_PROJECT=true
     make install
+
+Or using Poetry directly, should you choose:
+
+.. code-block:: bash
+
+    poetry install
+
+From source with `Nix <https://nixos.org/>`__
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Prerequisites:
+
+* Nix 2.8.x or later installed `(How to install Nix) <https://nixos.org/download.html>`__
+
+First configure Nix channel if needed:
+
+.. code-block:: bash
+
+    nix-channel --add https://nixos.org/channels/nixos-22.05
+    nix-channel --update
+
+Next install make via Nix:
+
+.. code-block:: bash
+
+    nix-env --install gnumake
+    # If you do not want to install make to your profile, one can always use it ad-hoc via nix-shell
+    nix-shell -p gnumake
+
+Lastly, use ``make install`` target:
+
+.. code-block:: bash
+
+    git clone https://github.com/fastapi-mvc/fastapi-mvc.git
+    cd fastapi-mvc
+    make install
+    # Or
+    nix-shell -p gnumake --run "make install"
+
+Or using Nix directly, should you choose:
+
+.. code-block:: bash
+
+    nix-build -E 'with import <nixpkgs> {}; callPackage ./editable.nix {python = pkgs.python310; poetry2nix = pkgs.poetry2nix;}'
 
 Creating a new project
 ----------------------
@@ -179,7 +220,7 @@ Here's a basic rundown on the function of each of the files and folders that fas
     │   ├── cli                      Application CLI implementation
     │   ├── config                   Configuration submodule
     │   │   ├── application.py       Application configuration
-    │   │   ├── gunicorn.conf.py     Gunicorn configuration
+    │   │   ├── gunicorn.py          Gunicorn configuration
     │   │   └── redis.py             Redis configuration
     │   ├── version.py               Application version
     │   └── wsgi.py                  Application WSGI master node implementation
@@ -193,16 +234,40 @@ Here's a basic rundown on the function of each of the files and folders that fas
     ├── .coveragerc
     ├── .gitignore
     ├── fastapi-mvc.ini              Fastapi-mvc application configuration.
-    ├── shell.nix                    Nix shell expression file.
+    ├── shell.nix                    Development environment Nix expression file.
+    ├── overlay.nix                  Set of Nix overlays to extend and change nixpkgs.
     ├── default.nix                  Python project Nix expression file.
+    ├── editable.nix                 Editable Python project Nix expression file.
     ├── image.nix                    Container image Nix expression file.
     ├── LICENSE
     ├── Makefile                     Makefile definition
+    ├── Poetry.mk                    Sub Makefile containing targets for Poetry
+    ├── Nix.mk                       Sub Makefile containing targets for Nix
     ├── poetry.lock                  Poetry dependency management lock file
     ├── pyproject.toml               PEP 518 - The build system dependencies
     ├── README.md
     ├── TAG                          Application version for build systems
-    └── Vagrantfile                  Virtualized environment definiton
+    └── Vagrantfile                  Virtualized environment definition
+
+Overriding default template
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If needed one can always override `default fastapi-mvc new project template <https://github.com/fastapi-mvc/cookiecutter>`__. For that use case ``fastapi-mvc new`` command comes with the following CLI options:
+
+* ``--template-version`` - The branch, tag or commit ID to checkout
+* ``--override-template`` - Overrides fastapi-mvc cookiecutter template repository
+
+Examples:
+
+.. code-block:: bash
+
+    # Use default template from specific version (tag)
+    fastapi-mvc new --template-version 0.1.0 /tmp/galactic-empire
+    # Use default template from specific commit
+    fastapi-mvc new --template-version 355c0cf026373ac7dcfa7a981188f51e9acf064b /tmp/galactic-empire
+
+    # Completely overrides template remote
+    fastapi-mvc new --override-template https://github.com/johndoe/my-cookiecutter.git /tmp/galactic-empire
 
 Hello, World!
 -------------
@@ -361,4 +426,4 @@ Lastly let's try if our new endpoints actually work:
     {"hello":"world"}
 
 As you can see fastapi-mvc is just a tool designed to make your FastAPI development life easier, by creating everything that's necessary to start working on a particular task.
-However, generated project by fastapi-mvc is fully independent and does not require it in order to work. You can learn more about it in the next chapter.
+However, generated project by fastapi-mvc is fully independent and does not require it in order to work. You can learn more about it from included documentation in it.

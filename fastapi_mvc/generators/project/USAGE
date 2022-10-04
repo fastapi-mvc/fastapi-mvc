@@ -1,0 +1,14 @@
+Example:
+    fastapi-mvc new /tmp/galactic-empire
+
+    This generates a skeletal Rails installation in /tmp/galactic-empire.
+
+Overriding:
+    Use default template from specific version (tag):
+    fastapi-mvc new --template-version 0.1.0 /tmp/galactic-empire
+
+    Use default template from specific commit:
+    fastapi-mvc new --template-version 355c0cf026373ac7dcfa7a981188f51e9acf064b /tmp/galactic-empire
+
+    Completely overrides template remote:
+    fastapi-mvc new --override-template https://github.com/johndoe/my-cookiecutter.git /tmp/galactic-empire

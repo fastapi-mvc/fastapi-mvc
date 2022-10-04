@@ -124,13 +124,31 @@ Application stack in Kubernetes:
 
 .. image:: _static/k8s_arch.png
 
+Generate pieces of code or even your own generators
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Fastapi-mvc comes with a number of scripts called generators that are designed to make your development life easier by creating everything that's necessary to start working on a particular task.
+Generators are built on top of `cookiecutter <https://github.com/cookiecutter/cookiecutter>`__. It provides powerful options for manipulating and creating files based on given input and template.
+Moreover, it is agnostic to the programming language one is templating.
+
 Uses `Poetry <https://github.com/python-poetry/poetry>`__ dependency management
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Poetry comes with all the tools you might need to manage your project in a deterministic way. Moreover, it's based on new unified Python project settings file - `PEP 518 <https://www.python.org/dev/peps/pep-0518/>`__ that replaces setup.py.
 
-Reproducible virtualized development environment
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Includes set of Nix expressions
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Generated project comes with set of Nix expressions for building:
+
+* Python package
+* Development environment
+* Container image
+
+To make things easier, provided ``Makefile`` targets are the same regardless if one choose to use Nix or the default way (OS + Poetry). Lastly, there is ``Nix CI`` workflow included as well.
+
+Virtualized reproducible development environment using Vagrant
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Easily boot virtual machine with Vagrant. Code and test straight away.
 

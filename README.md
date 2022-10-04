@@ -4,6 +4,7 @@
 
 ![fastapi-mvc](https://github.com/fastapi-mvc/fastapi-mvc/blob/master/docs/_static/readme.gif?raw=true)
 [![CI](https://github.com/fastapi-mvc/fastapi-mvc/actions/workflows/main.yml/badge.svg?branch=master)](https://github.com/fastapi-mvc/fastapi-mvc/actions/workflows/main.yml)
+[![❄️ Nix CI ❄️](https://github.com/fastapi-mvc/fastapi-mvc/actions/workflows/nix.yml/badge.svg)](https://github.com/fastapi-mvc/fastapi-mvc/actions/workflows/nix.yml)
 [![codecov](https://codecov.io/gh/fastapi-mvc/fastapi-mvc/branch/master/graph/badge.svg?token=7ESV30TYZS)](https://codecov.io/gh/fastapi-mvc/fastapi-mvc)
 [![K8s integration](https://github.com/fastapi-mvc/fastapi-mvc/actions/workflows/integration.yml/badge.svg)](https://github.com/fastapi-mvc/fastapi-mvc/actions/workflows/integration.yml)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
@@ -30,7 +31,7 @@ Fastapi-mvc is a developer productivity tool for FastAPI web framework.
 It is designed to make programming FastAPI applications easier by making assumptions about what every developer needs to get started. 
 It allows you to write less code while accomplishing more. Core features:
 
-* Generated project Based on MVC architectural pattern
+* Generated project based on MVC architectural pattern
 * WSGI + ASGI production server
 * Generated project comes with Sphinx documentation and 100% unit tests coverage
 * Kubernetes deployment with Redis HA cluster
@@ -39,7 +40,8 @@ It allows you to write less code while accomplishing more. Core features:
 * Dockerfile with K8s and cloud in mind
 * Generate pieces of code or even your own generators
 * Uses Poetry dependency management
-* Reproducible development environment using Vagrant or Nix
+* Includes set of Nix expressions
+* Virtualized reproducible development environment using Vagrant
 
 Fastapi-mvc comes with a number of scripts called generators that are designed to make your development life easier by 
 creating everything that’s necessary to start working on a particular task. One of these is the new application generator, 

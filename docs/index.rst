@@ -10,6 +10,9 @@ Welcome to fastapi-mvc
 .. image:: https://github.com/fastapi-mvc/fastapi-mvc/actions/workflows/main.yml/badge.svg?branch=master
    :target: https://github.com/fastapi-mvc/fastapi-mvc/actions/workflows/main.yml
 
+.. image:: https://github.com/fastapi-mvc/fastapi-mvc/actions/workflows/nix.yml/badge.svg?branch=master
+   :target: https://github.com/fastapi-mvc/fastapi-mvc/actions/workflows/nix.yml
+
 .. image:: https://github.com/fastapi-mvc/fastapi-mvc/actions/workflows/integration.yml/badge.svg?branch=master
    :target: https://github.com/fastapi-mvc/fastapi-mvc/actions/workflows/integration.yml
 
@@ -31,6 +34,8 @@ Welcome to fastapi-mvc
 .. image:: https://img.shields.io/github/stars/fastapi-mvc/fastapi-mvc?style=social
    :target: https://github.com/fastapi-mvc/fastapi-mvc/stargazers/
 
+**Project template:** `https://github.com/fastapi-mvc/cookiecutter <https://github.com/fastapi-mvc/cookiecutter>`__
+
 **Example generated project:** `https://github.com/fastapi-mvc/example <https://github.com/fastapi-mvc/example>`__
 
 --------------
@@ -39,7 +44,7 @@ Fastapi-mvc is a developer productivity tool for `FastAPI <https://fastapi.tiang
 It is designed to make programming `FastAPI <https://fastapi.tiangolo.com/>`__ applications easier by making assumptions about what every developer needs to get started.
 It allows you to write less code while accomplishing more. Core features:
 
-* Generated project Based on MVC architectural pattern
+* Generated project based on MVC architectural pattern
 * WSGI + ASGI production server
 * Generated project comes with docstrings and 100% unit tests coverage
 * Kubernetes deployment with Redis HA cluster
@@ -48,7 +53,8 @@ It allows you to write less code while accomplishing more. Core features:
 * Dockerfile with K8s and cloud in mind
 * Generate pieces of code or even your own generators
 * Uses `Poetry <https://github.com/python-poetry/poetry>`__ dependency management
-* Reproducible development environment using Vagrant or Nix
+* Includes set of Nix expressions
+* Virtualized reproducible development environment using Vagrant
 
 Fastapi-mvc comes with a number of scripts called generators that are designed to make your development life easier by creating everything that's necessary to start working on a particular task.
 One of these is the new application generator, which will provide you with the foundation of a fresh `FastAPI <https://fastapi.tiangolo.com/>`__ application so that you don't have to write it yourself.
@@ -132,7 +138,6 @@ This part of the documentation guides you through all of the features and usage.
    quickstart
    generated-project
    generators
-   deployment
 
 API Reference
 -------------

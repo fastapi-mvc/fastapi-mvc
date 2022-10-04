@@ -7,7 +7,7 @@ from click import Argument, Option
 from fastapi_mvc.generators import ControllerGenerator
 
 
-CONTROLLER_DIR = os.path.abspath(
+MODULE_DIR = os.path.abspath(
     os.path.join(inspect.getfile(ControllerGenerator), "../")
 )
 
@@ -25,8 +25,8 @@ def gen_obj():
 
 def test_class_variables():
     assert ControllerGenerator.name == "controller"
-    assert ControllerGenerator.template == os.path.join(CONTROLLER_DIR, "template")
-    assert ControllerGenerator.usage == os.path.join(CONTROLLER_DIR, "template/USAGE")
+    assert ControllerGenerator.template == os.path.join(MODULE_DIR, "template")
+    assert ControllerGenerator.usage == os.path.join(MODULE_DIR, "template/USAGE")
     assert ControllerGenerator.category == "Builtins"
 
     assert len(ControllerGenerator.cli_arguments) == 2

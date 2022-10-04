@@ -86,7 +86,7 @@ Class variables
 They define generator CLI and cookiecutter template:
 
 * name (required) - A distinguishable generator name, that will be used as subcommand for ``fastapi-mvc generate`` CLI command.
-* template (required) - Path to generator cookiecutter template root directory.
+* template (required) - Path to generator cookiecutter template root directory or remote repository URL.
 * usage - Path to generator usage file. This will be printed at the end of generator CLI command help page.
 * category - Name under which generator should be printed in ``fastapi-mvc generate`` CLI command help page.
 * cli_arguments - Click arguments to register with this generator CLI command.
@@ -264,11 +264,12 @@ Since Python modules can have many files, classes, and methods we need to tell f
 
     from .foobar import FoobarGenerator
 
-    __all__ = FoobarGenerator
+    # NOTE! Method for programmatically loading user generators depends on having only one class in module `generator_class` attribute.
+    generator_class = FoobarGenerator
 
 .. note::
     At the time being fastapi-mvc will try import generators only from ``lib/generators`` located in the project root directory.
-    In the future releases I'm planing to add a global path, or parametrize search paths by env variable. You are allways welcome to create an `issue <https://github.com/fastapi-mvc/fastapi-mvc/issues/new/choose>`__.
+    In the future releases I'm planing to add a global path, or parametrize search paths by env variable. You are always welcome to create an `issue <https://github.com/fastapi-mvc/fastapi-mvc/issues/new/choose>`__.
 
 Invoking generator
 ~~~~~~~~~~~~~~~~~~
