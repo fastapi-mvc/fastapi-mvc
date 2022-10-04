@@ -97,7 +97,7 @@ Or using Nix directly, should you choose:
 
 .. code-block:: bash
 
-    nix-build -E 'with import <nixpkgs> {}; callPackage ./editable.nix {python = pkgs.python310; poetry2nix = pkgs.poetry2nix;}'
+    nix-build -E 'with import <nixpkgs> { overlays = [ (import ./overlay.nix) ]; }; callPackage ./editable.nix {python = pkgs.python310; poetry2nix = pkgs.poetry2nix;}'
 
 Creating a new project
 ----------------------
