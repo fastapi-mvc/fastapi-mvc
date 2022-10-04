@@ -10,7 +10,7 @@ from fastapi_mvc.generators import ProjectGenerator
 from fastapi_mvc.version import __version__
 
 
-CONTROLLER_DIR = os.path.abspath(os.path.join(inspect.getfile(ProjectGenerator), "../"))
+MODULE_DIR = os.path.abspath(os.path.join(inspect.getfile(ProjectGenerator), "../"))
 
 
 @pytest.fixture
@@ -21,7 +21,7 @@ def gen_obj():
 def test_class_variables():
     assert ProjectGenerator.name == "new"
     assert ProjectGenerator.template == "https://github.com/fastapi-mvc/cookiecutter.git"
-    assert not ProjectGenerator.usage
+    assert ProjectGenerator.usage == os.path.join(MODULE_DIR, "USAGE")
     assert ProjectGenerator.category == "Project"
 
     assert len(ProjectGenerator.cli_arguments) == 1
