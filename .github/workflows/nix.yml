@@ -53,7 +53,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: [ 'python37', 'python38', 'python39', 'python310' ]
+        python-version: [ 'python38', 'python39', 'python310' ]
     env:
       PYTHON_NIXPKG: ${{ matrix.python-version }}
 

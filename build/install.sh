@@ -22,8 +22,8 @@ fi
 
 PYTHON_MAJOR_VERSION=$($PYTHON -c 'import sys; print(sys.version_info[0])')
 PYTHON_MINOR_VERSION=$($PYTHON -c 'import sys; print(sys.version_info[1])')
-if [[ "$PYTHON_MAJOR_VERSION" -lt 3 ]] || [[ "$PYTHON_MINOR_VERSION" -lt 7 ]]; then
-  echo "[install] Python version 3.7.0 or higher is required."
+if [[ "$PYTHON_MAJOR_VERSION" -lt 3 ]] || [[ "$PYTHON_MINOR_VERSION" -lt 8 ]]; then
+  echo "[install] Python version 3.8.0 or higher is required."
   exit 1
 fi
 
