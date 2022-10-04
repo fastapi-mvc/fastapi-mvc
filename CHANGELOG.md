@@ -10,6 +10,7 @@ This file documents changes to [fastapi-mvc](https://github.com/fastapi-mvc/fast
 
 ### Internal
 
+* Drop mock dev-dependency [#128](https://github.com/fastapi-mvc/fastapi-mvc/issues/128). PR [#169](https://github.com/fastapi-mvc/fastapi-mvc/pull/169)
 * Add poetry2nix overlay. PR [#168](https://github.com/fastapi-mvc/fastapi-mvc/pull/168)
 * Update dependencies. PR [#167](https://github.com/fastapi-mvc/fastapi-mvc/pull/167)
   * pytest (6.2.5 -> 0.82.0)
