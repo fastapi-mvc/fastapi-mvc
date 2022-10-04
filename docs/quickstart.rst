@@ -24,7 +24,7 @@ From source with Poetry:
 
 Prerequisites:
 
-* Python 3.7 or later `(How to install python) <https://docs.python-guide.org/starting/installation/>`__
+* Python 3.8 or later `(How to install python) <https://docs.python-guide.org/starting/installation/>`__
 * make
 * (optional) curl
 * (optional) Poetry `(How to install poetry) <https://python-poetry.org/docs/#installation>`__
