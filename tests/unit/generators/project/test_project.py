@@ -1,9 +1,9 @@
 import os
 import inspect
 from datetime import datetime
+from unittest import mock
 
 import pytest
-import mock
 import click
 from cookiecutter.exceptions import OutputDirExistsException
 from fastapi_mvc.generators import ProjectGenerator
