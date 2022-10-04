@@ -1,6 +1,6 @@
 from logging import Logger
+from unittest import mock
 
-import mock
 from fastapi_mvc.commands import Command
 
 

@@ -1,8 +1,8 @@
 import os
 import inspect
+from unittest import mock
 
 import pytest
-import mock
 from click import Argument, Option
 from fastapi_mvc.generators import ControllerGenerator
 

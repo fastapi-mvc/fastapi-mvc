@@ -1,4 +1,5 @@
-import mock
+from unittest import mock
+
 from fastapi_mvc.utils import global_except_hook
 
 

@@ -1,6 +1,6 @@
 import os
+from unittest import mock
 
-import mock
 import pytest
 from fastapi_mvc import Borg, __version__
 from fastapi_mvc.generators import Generator
