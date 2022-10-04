@@ -426,4 +426,4 @@ Lastly let's try if our new endpoints actually work:
     {"hello":"world"}
 
 As you can see fastapi-mvc is just a tool designed to make your FastAPI development life easier, by creating everything that's necessary to start working on a particular task.
-However, generated project by fastapi-mvc is fully independent and does not require it in order to work. You can learn more about from documentation included in the generated project.
+However, generated project by fastapi-mvc is fully independent and does not require it in order to work. You can learn more about it from included documentation in it.
