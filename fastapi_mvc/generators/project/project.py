@@ -37,7 +37,7 @@ class ProjectGenerator(Generator):
 
     name = "new"
     template = "https://github.com/fastapi-mvc/cookiecutter.git"
-    template_version = "0.2.0"
+    template_version = "0.3.0"
     usage = os.path.abspath(
         os.path.join(
             os.path.abspath(__file__),
