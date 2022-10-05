@@ -2,7 +2,7 @@
 
 This file documents changes to [fastapi-mvc](https://github.com/fastapi-mvc/fastapi-mvc). The release numbering uses [semantic versioning](http://semver.org).
 
-## Unreleased
+## 0.17.0 (05.10.2022)
 
 ### Breaking Changes
 
@@ -10,6 +10,7 @@ This file documents changes to [fastapi-mvc](https://github.com/fastapi-mvc/fast
 
 ### Internal
 
+* Bump project template version from 0.2.0 to 0.3.0 [8da80e2](https://github.com/fastapi-mvc/fastapi-mvc/commit/8da80e26faaa3519cb20f8be61a41ddbfa9fde7a).
 * Drop mock dev-dependency [#128](https://github.com/fastapi-mvc/fastapi-mvc/issues/128). PR [#169](https://github.com/fastapi-mvc/fastapi-mvc/pull/169)
 * Add poetry2nix overlay. PR [#168](https://github.com/fastapi-mvc/fastapi-mvc/pull/168)
 * Update dependencies. PR [#167](https://github.com/fastapi-mvc/fastapi-mvc/pull/167)
