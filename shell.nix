@@ -9,5 +9,9 @@ let
   };
 in
 fastapi-mvc.env.overrideAttrs (oldAttrs: {
-  buildInputs = [ pkgs.gnumake ];
+  buildInputs = [
+    pkgs.gnumake
+    pkgs.git
+    pkgs.poetry
+  ];
 })
