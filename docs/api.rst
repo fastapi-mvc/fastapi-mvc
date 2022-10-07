@@ -11,15 +11,6 @@ Borg
    :special-members: __init__
    :show-inheritance:
 
-Parsers
--------
-
-.. automodule:: fastapi_mvc.parsers
-
-.. autoclass:: IniParser
-   :members:
-   :show-inheritance:
-
 Generators
 ----------
 
