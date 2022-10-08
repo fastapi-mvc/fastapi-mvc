@@ -10,7 +10,7 @@ import sys
 import platform
 from traceback import format_exception
 
-from fastapi_mvc import __version__
+from fastapi_mvc import VERSION
 
 
 log = logging.getLogger("GlobalExceptHook")
@@ -83,7 +83,7 @@ def global_except_hook(exctype, value, traceback):
                 argv=" ".join(sys.argv[1:]),
                 py_ver=platform.python_version(),
                 os_info=platform.platform(),
-                version=__version__,
+                version=VERSION,
             )
         )
     else:
