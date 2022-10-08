@@ -49,10 +49,11 @@ Example:
 @click.pass_context
 def controller(ctx, name, endpoints, **options):
     ctx.command.ensure_project_data()
+    name = name.lower().replace("-", "_")
     data = {
         "project_name": ctx.command.project_data["project_name"],
-        "controller_name": name.lower().replace("-", "_"),
-        "controller_endpoints": {},
+        "controller": name,
+        "endpoints": {},
     }
 
     for entry in endpoints:
@@ -61,7 +62,7 @@ def controller(ctx, name, endpoints, **options):
         except ValueError:
             endpoint, method = entry, "get"
 
-        data["controller_endpoints"][endpoint] = method
+        data["endpoints"][endpoint] = method
 
     ctx.command.run_copy(data=data)
 
