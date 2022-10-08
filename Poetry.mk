@@ -44,8 +44,13 @@ integration-test: install ## Run fastapi-mvc integration tests
 	echo "[unit-test] Run fastapi-mvc integration tests."
 	${POETRY_BINARY} run pytest tests/integration
 
+.PHONY: coverage
+coverage: install ## Run fastapi-mvc tests coverage
+	echo "[coverage] Run fastapi-mvc tests coverage."
+	${POETRY_BINARY} run pytest --cov-config=.coveragerc --cov=fastapi_mvc --cov-fail-under=90 --cov-report=xml --cov-report=term-missing tests
+
 .PHONY: test
-test: unit-test integration-test ## Run fastapi-mvc tests
+test: unit-test integration-test coverage ## Run fastapi-mvc tests
 
 .PHONY: docs
 docs: install ## Build fastapi-mvc documentation

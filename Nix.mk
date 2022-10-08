@@ -45,5 +45,10 @@ integration-test: install  ## Run fastapi-mvc integration tests
 	echo "[nix][integration-test] Run fastapi-mvc unit tests."
 	result/bin/pytest tests/integration
 
+.PHONY: coverage
+coverage: install ## Run fastapi-mvc tests coverage
+	echo "[nix][coverage] Run fastapi-mvc tests coverage."
+	result/bin/pytest --cov-config=.coveragerc --cov=fastapi_mvc --cov-fail-under=90 --cov-report=xml --cov-report=term-missing tests
+
 .PHONY: test
-test: unit-test integration-test ## Run fastapi-mvc tests
+test: unit-test integration-test coverage ## Run fastapi-mvc tests
