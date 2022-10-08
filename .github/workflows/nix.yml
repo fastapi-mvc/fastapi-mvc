@@ -72,7 +72,5 @@ jobs:
         run: nix-env -i gnumake -f '<nixpkgs>'
       - name: Run fastapi-mvc metrics checks
         run: make metrics
-      - name: Run fastapi-mvc unit-tests
-        run: make unit-test
-      - name: Run fastapi-mvc integration-tests
-        run: make integration-test
+      - name: Run fastapi-mvc tests
+        run: make test
