@@ -138,9 +138,9 @@ def new(ctx, app_path, **options):
     }
 
     if options["no_interaction"]:
-        ctx.command.run_auto(data=data)
+        ctx.command.run_auto(dst_path=app_path, data=data)
     else:
-        ctx.command.run_auto(user_defaults=data)
+        ctx.command.run_auto(dst_path=app_path, user_defaults=data)
 
     if not options["skip_install"]:
         ctx.command.copier_printf(
