@@ -1,7 +1,9 @@
 """Command-line interface - run command."""
+from subprocess import CalledProcessError
+
 import click
-from fastapi_mvc import Borg
-from fastapi_mvc.commands import RunShell
+from fastapi_mvc import Command
+from fastapi_mvc.utils import run_shell
 
 
 cmd_short_help = "Run development uvicorn server."
@@ -12,6 +14,7 @@ fastapi-mvc project at the current working directory.
 
 
 @click.command(
+    cls=Command,
     help=cmd_help,
     short_help=cmd_short_help,
 )
@@ -33,39 +36,38 @@ fastapi-mvc project at the current working directory.
     show_default=True,
 )
 @click.option(
-    "-I",
-    "--skip-install",
-    help="Do not run poetry install.",
+    "-i",
+    "--install",
+    help="Run poetry install.",
     is_flag=True,
 )
-def run(**options):
+@click.pass_context
+def run(ctx, **options):
     """Define command-line interface run command.
 
     Args:
-         options (typing.Dict[str, typing.Any]): Map of command option names to
+        ctx (click.Context): Click Context class object instance.
+        options (typing.Dict[str, typing.Any]): Map of command option names to
             their parsed values.
 
     """
-    borg = Borg()
-    borg.require_project()
+    ctx.command.ensure_project_data()
+    package_name = ctx.command.project_data["package_name"]
 
-    if not options["skip_install"]:
-        borg.enqueue(
-            RunShell(
-                cmd=[
-                    borg.poetry_path,
-                    "install",
-                    "--no-interaction",
-                ],
-                check=True,
-                cwd=borg.parser.project_root,
-            )
+    if options["install"]:
+        run_shell(
+            cmd=[
+                ctx.command.poetry_path,
+                "install",
+                "--no-interaction",
+            ],
+            check=True,
         )
 
-    borg.enqueue(
-        RunShell(
+    try:
+        run_shell(
             cmd=[
-                borg.poetry_path,
+                ctx.command.poetry_path,
                 "run",
                 "uvicorn",
                 "--factory",
@@ -74,9 +76,9 @@ def run(**options):
                 "--port",
                 options["port"],
                 "--reload",
-                f"{borg.parser.package_name}.app:get_application",
+                f"{package_name}.app:get_application",
             ],
-            cwd=borg.parser.project_root,
+            check=True,
         )
-    )
-    borg.execute()
+    except CalledProcessError:
+        click.secho("Run 'make install` to install the project.", fg="yellow")
