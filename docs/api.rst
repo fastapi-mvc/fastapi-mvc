@@ -32,27 +32,6 @@ Generators
    :members:
    :show-inheritance:
 
-Commands
---------
-
-.. automodule:: fastapi_mvc.commands
-
-.. autoclass:: fastapi_mvc.commands.Command
-   :members:
-   :show-inheritance:
-
-.. autoclass:: fastapi_mvc.commands.Invoker
-   :members:
-   :show-inheritance:
-
-.. autoclass:: fastapi_mvc.commands.RunGenerator
-   :members:
-   :show-inheritance:
-
-.. autoclass:: fastapi_mvc.commands.RunShell
-   :members:
-   :show-inheritance:
-
 CLI
 ---
 
