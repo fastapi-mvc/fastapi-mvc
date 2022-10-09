@@ -13,9 +13,8 @@ poetry2nix.mkPoetryApplication {
 
   pythonImportsCheck = [ "fastapi_mvc" ];
 
-  propagatedBuildInputs = [
-    git
-  ];
+  nativeBuildInputs = [ git ];
+  propagatedBuildInputs = [ git ];
 
   meta = with lib; {
     homepage = "https://github.com/fastapi-mvc/fastapi-mvc";
