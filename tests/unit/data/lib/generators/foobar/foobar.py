@@ -1,4 +1,6 @@
 """Custom fastapi-mvc foobar generator implementation."""
+import os
+
 import click
 from fastapi_mvc import Generator
 
@@ -20,7 +22,7 @@ Example:
 @click.command(
     cls=Generator,
     # Or use repository address
-    template="./.",
+    template=os.path.dirname(__file__),
     category="Custom",
     help=cmd_help,
     short_help=cmd_short_help,
