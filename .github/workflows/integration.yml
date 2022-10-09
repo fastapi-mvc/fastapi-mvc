@@ -61,7 +61,7 @@ jobs:
       - name: Set fastapi-mvc path
         run: echo "FASTAPI_MVC_BIN=$($POETRY_HOME/bin/poetry env info -p)/bin/fastapi-mvc" >> $GITHUB_ENV
       - name: Generate test-project
-        run: $FASTAPI_MVC_BIN new --skip-install test-project
+        run: $FASTAPI_MVC_BIN new --skip-install --no-interaction test-project
       - name: Generate test controller
         working-directory: ./test-project
         run: $FASTAPI_MVC_BIN generate controller foobar index create:post update:put delete:delete
@@ -100,7 +100,7 @@ jobs:
       - name: Set fastapi-mvc path
         run: echo "FASTAPI_MVC_BIN=$($POETRY_HOME/bin/poetry env info -p)/bin/fastapi-mvc" >> $GITHUB_ENV
       - name: Generate test-project
-        run: $FASTAPI_MVC_BIN new --skip-redis --skip-aiohttp --skip-actions --skip-install test-project
+        run: $FASTAPI_MVC_BIN new --skip-redis --skip-aiohttp --skip-actions --skip-install --no-interaction test-project
       - name: Generate test controller
         working-directory: ./test-project
         run: $FASTAPI_MVC_BIN generate controller foobar index create:post update:put delete:delete
