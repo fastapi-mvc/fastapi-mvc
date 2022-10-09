@@ -57,6 +57,7 @@ Default Project template used: https://github.com/fastapi-mvc/copier-project
     is_flag=True,
 )
 @click.option(
+    "-I",
     "--skip-install",
     help="Do not run make install after project generation.",
     is_flag=True,
@@ -95,26 +96,27 @@ Default Project template used: https://github.com/fastapi-mvc/copier-project
     default="https://your.repo.url.here",
 )
 @click.option(
+    "-n",
     "--no-interaction",
     help="Do not ask any interactive question.",
     is_flag=True,
 )
 @click.option(
-    "--copier-repo",
+    "--use-repo",
     help="Overrides fastapi-mvc copier-project repository.",
     type=click.STRING,
 )
 @click.option(
-    "--copier-version",
+    "--use-version",
     help="The branch, tag or commit ID to checkout after clone.",
     type=click.STRING,
 )
 @click.pass_context
 def new(ctx, app_path, **options):
-    if options["copier_repo"]:
-        ctx.command.template = options["copier_repo"]
-    if options["copier_version"]:
-        ctx.command.vcs_ref = options["copier_version"]
+    if options["use_repo"]:
+        ctx.command.template = options["use_repo"]
+    if options["use_version"]:
+        ctx.command.vcs_ref = options["use_version"]
 
     author, email = get_git_user_info()
     data = {
