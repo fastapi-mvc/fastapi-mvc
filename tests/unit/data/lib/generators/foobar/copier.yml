@@ -1,0 +1,30 @@
+# TEMPLATE SETTINGS
+_subdirectory: template
+_templates_suffix: .jinja
+_min_copier_version: "6.2.0"
+_envops:
+  block_end_string: "%}"
+  block_start_string: "{%"
+  comment_end_string: "#}"
+  comment_start_string: "{#"
+  keep_trailing_newline: true
+  variable_end_string: "}}"
+  variable_start_string: "{{"
+
+# TEMPLATE QUESTIONS
+project_name:
+  type: str
+  help: >-
+    What's your project name?
+
+    Do not use dots or spaces in the name; just "A-Za-z0-9-_" please.
+
+name:
+  type: str
+  help: What is the name to greet for the generator hello world example?
+
+# TEMPLATE NONE-CONFIGURABLE DEFAULTS
+package_name:
+  type: str
+  default: "{{ project_name|lower|replace(' ','_')|replace('-','_') }}"
+  when: false

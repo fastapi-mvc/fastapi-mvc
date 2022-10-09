@@ -9,7 +9,7 @@ set -o errexit
 set -o nounset
 set -o pipefail
 
-copier -x template/** -x copier.yml -x *.py -x CHANGELOG.md \
+copier -x template/** -x copier.yml.keep -x *.py -x CHANGELOG.md \
   "${@}" \
   -d generator=my_controller \
   -d nix=True \
