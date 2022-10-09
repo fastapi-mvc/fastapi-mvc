@@ -1,51 +1,56 @@
+from datetime import datetime
 from unittest import mock
 
 import pytest
-from fastapi_mvc.cli.new import get_new_cmd
-from fastapi_mvc.generators import ProjectGenerator
+from fastapi_mvc import VERSION
+from fastapi_mvc.cli.new import new
 
 
-@mock.patch("fastapi_mvc.cli.new.Borg")
-def test_new_help(borg_mock, cli_runner):
-    result = cli_runner.invoke(get_new_cmd(), ["--help"])
+def test_new_help(cli_runner):
+    result = cli_runner.invoke(new, ["--help"])
     assert result.exit_code == 0
-    borg_mock.assert_not_called()
 
 
-@mock.patch("fastapi_mvc.cli.new.Borg")
-def test_new_invalid_options(borg_mock, cli_runner):
-    result = cli_runner.invoke(get_new_cmd(), ["--not_exists"])
+def test_new_invalid_options(cli_runner):
+    result = cli_runner.invoke(new, ["--not_exists"])
     assert result.exit_code == 2
-    borg_mock.assert_not_called()
 
 
-@mock.patch("fastapi_mvc.cli.new.RunGenerator")
-@mock.patch("fastapi_mvc.cli.new.Borg")
-def test_new_default_values(borg_mock, run_mock, cli_runner, mock_project_gen):
-    with mock.patch("fastapi_mvc.cli.new.ProjectGenerator", new=mock_project_gen):
-        result = cli_runner.invoke(get_new_cmd(), ["test-project"])
-        assert result.exit_code == 0
+@mock.patch("fastapi_mvc.cli.new.run_shell")
+@mock.patch(
+    "fastapi_mvc.cli.new.get_git_user_info", return_value=("John", "ex@ma.il")
+)
+@mock.patch("fastapi_mvc.cli.new.new.run_auto")
+def test_new_default_values(copier_mock, git_mock, shell_mock, cli_runner):
+    result = cli_runner.invoke(new, ["test-project"])
+    assert result.exit_code == 0
 
-    borg_mock.assert_called_once()
-    run_mock.assert_called_once_with(
-        generator=mock_project_gen.return_value,
-        options={
-            "app_path": "test-project",
-            "skip_redis": False,
-            "skip_aiohttp": False,
-            "skip_helm": False,
-            "skip_nix": False,
-            "skip_actions": False,
-            "skip_install": False,
+    git_mock.assert_called_once()
+    shell_mock.assert_called_once_with(
+        cmd=["make", "install"], cwd="test-project"
+    )
+    copier_mock.assert_called_once_with(
+        dst_path="test-project",
+        user_defaults={
+            "project_name": "test-project",
+            "author": "John",
+            "email": "ex@ma.il",
+            "copyright_date": datetime.today().year,
+            "fastapi_mvc_version": VERSION,
+            "nix": True,
+            "redis": True,
+            "aiohttp": True,
+            "github_actions": True,
+            "helm": True,
             "license": "MIT",
             "repo_url": "https://your.repo.url.here",
-            "template_version": ProjectGenerator.template_version,
-            "override_template": None,
+            "container_image_name": "test-project",
+            "chart_name": "test-project",
+            "script_name": "test-project",
+            "project_description": "This project was generated with fastapi-mvc.",
+            "version": "0.1.0",
         },
     )
-
-    borg_mock.return_value.enqueue.assert_called_once_with(run_mock.return_value)
-    borg_mock.return_value.execute.assert_called_once()
 
 
 @pytest.mark.parametrize(
@@ -66,67 +71,80 @@ def test_new_default_values(borg_mock, run_mock, cli_runner, mock_project_gen):
                 "test-project",
             ],
             {
-                "app_path": "test-project",
-                "skip_redis": True,
-                "skip_aiohttp": True,
-                "skip_helm": True,
-                "skip_actions": True,
-                "skip_install": True,
-                "skip_nix": True,
-                "license": "LGPLv3+",
-                "repo_url": "https://github.com/gandalf/gondorapi",
-                "template_version": ProjectGenerator.template_version,
-                "override_template": None,
+                "dst_path": "test-project",
+                "user_defaults": {
+                    "project_name": "test-project",
+                    "author": "John",
+                    "email": "ex@ma.il",
+                    "copyright_date": datetime.today().year,
+                    "fastapi_mvc_version": VERSION,
+                    "nix": False,
+                    "redis": False,
+                    "aiohttp": False,
+                    "github_actions": False,
+                    "helm": False,
+                    "license": "LGPLv3+",
+                    "repo_url": "https://github.com/gandalf/gondorapi",
+                    "container_image_name": "test-project",
+                    "chart_name": "test-project",
+                    "script_name": "test-project",
+                    "project_description": "This project was generated with fastapi-mvc.",
+                    "version": "0.1.0",
+                },
             },
         ),
         (
             [
-                "--skip-redis",
-                "--skip-aiohttp",
-                "--skip-helm",
-                "--skip-actions",
-                "--skip-install",
-                "--skip-nix",
-                "--license",
-                "LGPLv3+",
+                "--no-interaction",
                 "--repo-url",
-                "https://github.com/gandalf/gondorapi",
-                "/home/gandalf/repos/you-shall-not-pass",
-                "--template-version",
+                "https://thethingyouallbeenwaitingfor.trustme",
+                "--use-repo",
+                "https://howtomambo.git",
+                "--use-version",
                 "0.1.0",
-                "--override-template",
-                "https://github.com/gandalf/gondortemplate",
+                "/my/projects/Mambo_No6",
             ],
             {
-                "app_path": "/home/gandalf/repos/you-shall-not-pass",
-                "skip_redis": True,
-                "skip_aiohttp": True,
-                "skip_helm": True,
-                "skip_actions": True,
-                "skip_install": True,
-                "skip_nix": True,
-                "license": "LGPLv3+",
-                "repo_url": "https://github.com/gandalf/gondorapi",
-                "template_version": "0.1.0",
-                "override_template": "https://github.com/gandalf/gondortemplate",
+                "dst_path": "/my/projects/Mambo_No6",
+                "data": {
+                    "project_name": "Mambo_No6",
+                    "author": "John",
+                    "email": "ex@ma.il",
+                    "copyright_date": datetime.today().year,
+                    "fastapi_mvc_version": VERSION,
+                    "nix": True,
+                    "redis": True,
+                    "aiohttp": True,
+                    "github_actions": True,
+                    "helm": True,
+                    "license": "MIT",
+                    "repo_url": "https://thethingyouallbeenwaitingfor.trustme",
+                    "container_image_name": "Mambo_No6",
+                    "chart_name": "Mambo_No6",
+                    "script_name": "Mambo_No6",
+                    "project_description": "This project was generated with fastapi-mvc.",
+                    "version": "0.1.0",
+                },
             },
         ),
     ],
 )
-@mock.patch("fastapi_mvc.cli.new.RunGenerator")
-@mock.patch("fastapi_mvc.cli.new.Borg")
+@mock.patch("fastapi_mvc.cli.new.run_shell")
+@mock.patch(
+    "fastapi_mvc.cli.new.get_git_user_info", return_value=("John", "ex@ma.il")
+)
+@mock.patch("fastapi_mvc.cli.new.new.run_auto")
 def test_new_with_options(
-    borg_mock, run_mock, cli_runner, mock_project_gen, args, expected
+    copier_mock, git_mock, shell_mock, cli_runner, args, expected
 ):
-    with mock.patch("fastapi_mvc.cli.new.ProjectGenerator", new=mock_project_gen):
-        result = cli_runner.invoke(get_new_cmd(), args)
-        assert result.exit_code == 0
+    result = cli_runner.invoke(new, args)
+    assert result.exit_code == 0
 
-    borg_mock.assert_called_once()
-    run_mock.assert_called_once_with(
-        generator=mock_project_gen.return_value,
-        options=expected,
-    )
-
-    borg_mock.return_value.enqueue.assert_called_once_with(run_mock.return_value)
-    borg_mock.return_value.execute.assert_called_once()
+    git_mock.assert_called_once()
+    copier_mock.assert_called_once_with(**expected)
+    if "--skip-install" in args or "-I" in args:
+        shell_mock.assert_not_called()
+    else:
+        shell_mock.assert_called_once_with(
+            cmd=["make", "install"], cwd=expected["dst_path"]
+        )
