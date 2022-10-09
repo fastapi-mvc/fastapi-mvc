@@ -16,9 +16,11 @@ generators = {
 }
 
 
-def test_generate_help(cli_runner):
+@mock.patch("fastapi_mvc.cli.generate.load_generators", return_value=generators)
+def test_generate_help(load_mock, cli_runner):
     result = cli_runner.invoke(get_generate_cmd(), ["--help"])
     assert result.exit_code == 0
+    load_mock.assert_called_once()
 
 
 def test_generate_invalid_options(cli_runner):
