@@ -3,7 +3,7 @@ PYTHON_NIXPKG ?= python39
 .PHONY: build
 build:  ## Build fastapi-mvc Nix package
 	echo "[nix][build] Build fastapi-mvc Nix package."
-	@nix-build -E 'with import <nixpkgs> { overlays = [ (import ./overlay.nix) ]; }; callPackage ./default.nix {python = pkgs.${PYTHON_NIXPKG}; poetry2nix = pkgs.poetry2nix;}'
+	@nix-build -E 'with import <nixpkgs> { overlays = [ (import ./overlay.nix) ]; }; callPackage ./default.nix {python = pkgs.${PYTHON_NIXPKG}; poetry2nix = pkgs.poetry2nix; git=pkgs.git;}'
 
 .PHONY: install
 install:  ## Install fastapi-mvc env with Nix
