@@ -1,6 +1,7 @@
 import os
 
 from fastapi_mvc.cli.new import new
+from fastapi_mvc.cli.generate import get_generate_cmd
 from fastapi_mvc.generators import generator
 
 
@@ -35,3 +36,6 @@ def test_generator(cli_runner, fake_project, monkeypatch):
     ]
 
     assert_paths(paths, condition=lambda x: os.path.isfile(x))
+    result = cli_runner.invoke(get_generate_cmd(), ["foo-bar", "dummy"])
+    assert result.exit_code == 0
+    assert os.path.isfile("test_project/hello_world.py")
