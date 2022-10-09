@@ -116,4 +116,5 @@ def generator(ctx, name, **options):
     ctx.command.run_copy(
         dst_path=f"./lib/generators/{name}",
         data=data,
+        answers_file=".generator.yml",
     )

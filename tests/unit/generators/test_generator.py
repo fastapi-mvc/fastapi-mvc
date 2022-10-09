@@ -42,6 +42,7 @@ def test_generator_default_values(copier_mock, monkeypatch, cli_runner):
             "license": "MIT",
             "copyright_date": datetime.today().year,
         },
+        answers_file=".generator.yml",
     )
 
 
@@ -66,6 +67,7 @@ def test_generator_default_values(copier_mock, monkeypatch, cli_runner):
                     "license": "ISC",
                     "copyright_date": datetime.today().year,
                 },
+                "answers_file": ".generator.yml",
             },
         )
     ],

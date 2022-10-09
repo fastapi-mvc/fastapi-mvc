@@ -153,55 +153,61 @@ class Generator(Command):
             **kwargs,
         )
 
-    def run_auto(self, dst_path=".", data=None, **kwargs):
+    def run_auto(self, dst_path=".", data=None, answers_file=ANSWERS_FILE, **kwargs):
         """Define wrapper for ``copier.run_auto`` method.
 
         Args:
             dst_path (str | pathlib.Path): Destination path where to render the project.
             data (typing.Optional[typing.Dict[str, typing.Any]): Answers to the
                 questionary defined in the template.
+            answers_file (str): Indicates the path for the answers file. The path must
+                be relative to dst_path.
 
         """
         copier.run_auto(
             src_path=self.template,
             dst_path=dst_path,
             vcs_ref=self.vcs_ref,
-            answers_file=ANSWERS_FILE,
+            answers_file=answers_file,
             data=data,
             **kwargs,
         )
 
-    def run_copy(self, dst_path=".", data=None, **kwargs):
+    def run_copy(self, dst_path=".", data=None, answers_file=ANSWERS_FILE, **kwargs):
         """Define wrapper for ``copier.run_copy`` method.
 
         Args:
             dst_path (str | pathlib.Path): Destination path where to render the project.
             data (typing.Optional[typing.Dict[str, typing.Any]): Answers to the
                 questionary defined in the template.
+            answers_file (str): Indicates the path for the answers file. The path must
+                be relative to dst_path.
 
         """
         copier.run_copy(
             src_path=self.template,
             dst_path=dst_path,
             vcs_ref=self.vcs_ref,
-            answers_file=ANSWERS_FILE,
+            answers_file=answers_file,
             data=data,
             **kwargs,
         )
 
-    def run_update(self, dst_path=".", data=None, **kwargs):
+    def run_update(self, dst_path=".", data=None, answers_file=ANSWERS_FILE, **kwargs):
         """Define wrapper for ``copier.run_update`` method.
 
         Args:
             dst_path (str | pathlib.Path): Destination path where to render the project.
             data (typing.Optional[typing.Dict[str, typing.Any]): Answers to the
                 questionary defined in the template.
+            answers_file (str): Indicates the path for the answers file. The path must
+                be relative to dst_path.
 
         """
         copier.run_update(
             dst_path=dst_path,
             vcs_ref=self.vcs_ref,
-            answers_file=ANSWERS_FILE,
+            answers_file=answers_file,
             data=data,
             **kwargs,
         )
