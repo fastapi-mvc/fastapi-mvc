@@ -32,6 +32,7 @@ Example:
         lib/generators/awesome/awesome.py
 """
 
+
 @click.command(
     cls=Generator,
     template="https://github.com/fastapi-mvc/copier-generator.git",

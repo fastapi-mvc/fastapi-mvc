@@ -27,8 +27,15 @@ def load_generators():
     unique = {controller, generator}
 
     for item in pkgutil.iter_modules(paths):
-        m_path = os.path.join(item.module_finder.path, item.name, "__init__.py", )
-        spec = importlib.util.spec_from_file_location("fastapi_mvc_generators", m_path, )
+        m_path = os.path.join(
+            item.module_finder.path,
+            item.name,
+            "__init__.py",
+        )
+        spec = importlib.util.spec_from_file_location(
+            "fastapi_mvc_generators",
+            m_path,
+        )
         module = importlib.util.module_from_spec(spec)
         # Register module before running `exec_module()` to make all
         # submodules in it able to find their parent package:

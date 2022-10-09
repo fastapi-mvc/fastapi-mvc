@@ -17,18 +17,14 @@ def test_new_invalid_options(cli_runner):
 
 
 @mock.patch("fastapi_mvc.cli.new.run_shell")
-@mock.patch(
-    "fastapi_mvc.cli.new.get_git_user_info", return_value=("John", "ex@ma.il")
-)
+@mock.patch("fastapi_mvc.cli.new.get_git_user_info", return_value=("John", "ex@ma.il"))
 @mock.patch("fastapi_mvc.cli.new.new.run_auto")
 def test_new_default_values(copier_mock, git_mock, shell_mock, cli_runner):
     result = cli_runner.invoke(new, ["test-project"])
     assert result.exit_code == 0
 
     git_mock.assert_called_once()
-    shell_mock.assert_called_once_with(
-        cmd=["make", "install"], cwd="test-project"
-    )
+    shell_mock.assert_called_once_with(cmd=["make", "install"], cwd="test-project")
     copier_mock.assert_called_once_with(
         dst_path="test-project",
         user_defaults={
@@ -130,9 +126,7 @@ def test_new_default_values(copier_mock, git_mock, shell_mock, cli_runner):
     ],
 )
 @mock.patch("fastapi_mvc.cli.new.run_shell")
-@mock.patch(
-    "fastapi_mvc.cli.new.get_git_user_info", return_value=("John", "ex@ma.il")
-)
+@mock.patch("fastapi_mvc.cli.new.get_git_user_info", return_value=("John", "ex@ma.il"))
 @mock.patch("fastapi_mvc.cli.new.new.run_auto")
 def test_new_with_options(
     copier_mock, git_mock, shell_mock, cli_runner, args, expected

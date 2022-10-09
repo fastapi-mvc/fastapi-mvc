@@ -146,7 +146,7 @@ def test_run_not_in_project(cli_runner):
 
 
 @mock.patch("fastapi_mvc.cli.run.run_shell", side_effect=CalledProcessError(1, []))
-def test_run_exception(shell_mock, monkeypatch,cli_runner):
+def test_run_exception(shell_mock, monkeypatch, cli_runner):
     # Change working directory to fake project. It is easier to fake fastapi-mvc project,
     # rather than mocking ctx injected to command via @click.pass_context decorator.
     monkeypatch.chdir(DATA_DIR)

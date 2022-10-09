@@ -63,7 +63,7 @@ def controller(ctx, name, endpoints, **options):
             endpoint, method = entry, "get"
 
         # Sanitize values
-        endpoint = endpoint.lower().replace('-','_')
+        endpoint = endpoint.lower().replace("-", "_")
         method = method.lower()
 
         data["endpoints"][endpoint] = method

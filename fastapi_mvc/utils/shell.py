@@ -30,17 +30,13 @@ def get_git_user_info():
         return defaults
 
     try:
-        author = subprocess.check_output(
-            ["git", "config", "--get", "user.name"]
-        )
+        author = subprocess.check_output(["git", "config", "--get", "user.name"])
         author = author.decode("utf-8").strip()
     except subprocess.CalledProcessError:
         author = defaults[0]
 
     try:
-        email = subprocess.check_output(
-            ["git", "config", "--get", "user.email"]
-        )
+        email = subprocess.check_output(["git", "config", "--get", "user.email"])
         email = email.decode("utf-8").strip()
     except subprocess.CalledProcessError:
         email = defaults[1]

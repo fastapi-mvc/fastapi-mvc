@@ -50,9 +50,7 @@ class Command(click.Command):
 
 
 class Generator(Command):
-    def __init__(
-        self, template, vcs_ref=None, category="Other", *args, **kwargs
-    ):
+    def __init__(self, template, vcs_ref=None, category="Other", *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.template = template
         self.vcs_ref = vcs_ref
@@ -113,9 +111,7 @@ class Generator(Command):
         """Add import and router entry to config/router.rb if not skipped."""
         package_name = self.project_data["package_name"]
         router = os.path.join(os.getcwd(), f"{package_name}/app/router.py")
-        import_str = (
-            f"from {package_name}.app.controllers import {controller_name}\n"
-        )
+        import_str = f"from {package_name}.app.controllers import {controller_name}\n"
 
         with open(router, "r") as f:
             lines = f.readlines()
@@ -131,9 +127,7 @@ class Generator(Command):
             index = 0
 
         lines.insert(index, import_str)
-        lines.append(
-            f"root_api_router.include_router({controller_name}.router)\n"
-        )
+        lines.append(f"root_api_router.include_router({controller_name}.router)\n")
 
         with open(router, "w") as f:
             f.writelines(lines)

@@ -49,7 +49,6 @@ root_api_router.include_router(test.router)
 """
 
 
-
 @pytest.fixture
 def cmd_obj():
     yield Command(name="test")
@@ -114,6 +113,7 @@ def test_generator_run_copy(copier_mock, gen_obj):
         data={"foo": "bar"},
     )
 
+
 @mock.patch("fastapi_mvc.core.copier")
 def test_generator_run_update(copier_mock, gen_obj):
     gen_obj.run_update(dst_path="/tmp/test", data={"foo": "bar"})
@@ -152,6 +152,7 @@ def test_generator_run_copy_overrides(copier_mock, gen_obj):
         data={"foo": "bar"},
     )
 
+
 @mock.patch("fastapi_mvc.core.copier")
 def test_generator_run_update_overrides(copier_mock, gen_obj):
     gen_obj.vcs_ref = None
@@ -165,14 +166,15 @@ def test_generator_run_update_overrides(copier_mock, gen_obj):
 
 
 @pytest.mark.parametrize(
-    "content, expected", [
+    "content, expected",
+    [
         (router_content, router_expected),
         (router2_content, router2_expected),
-    ]
+    ],
 )
 @mock.patch("fastapi_mvc.core.os.getcwd")
 def test_generator_insert_router_import(cwd_mock, tmp_path, gen_obj, content, expected):
-    gen_obj.project_data = {"package_name": "example" }
+    gen_obj.project_data = {"package_name": "example"}
     root = tmp_path / "example"
     root.mkdir()
     app = root / "example" / "app"

@@ -28,12 +28,15 @@ def test_generate_invalid_options(cli_runner):
     assert result.exit_code == 2
 
 
-@pytest.mark.parametrize("name", [
-    "controller",
-    "generator",
-    "foobar",
-    "my-controller",
-])
+@pytest.mark.parametrize(
+    "name",
+    [
+        "controller",
+        "generator",
+        "foobar",
+        "my-controller",
+    ],
+)
 @mock.patch("fastapi_mvc.cli.generate.load_generators", return_value=generators)
 def test_generate_subcommands(load_mock, cli_runner, name):
     result = cli_runner.invoke(get_generate_cmd(), [name, "--help"])
