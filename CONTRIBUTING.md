@@ -27,9 +27,12 @@ If you encountered an unexpected behavior using [fastapi-mvc](https://github.com
 This project is made of two things:
 
 * Package: fastapi-mvc - implementation, tests, etc.
-* Project Template: [fastapi-mvc/cookiecutter](https://github.com/fastapi-mvc/cookiecutter) from which new projects are generated.
+* Builtin copier templates: 
+  * [fastapi-mvc/copier-project](https://github.com/fastapi-mvc/copier-project) for scaffolding new fastapi-mvc project.
+  * [fastapi-mvc/copier-controller](https://github.com/fastapi-mvc/copier-controller) for scaffolding new controller upon fastapi-mvc project.
+  * [fastapi-mvc/copier-generator](https://github.com/fastapi-mvc/copier-generator) for scaffolding new generator for fastapi-mvc.
 
-Both package and template have their own tests and checks. However, since template isn't a valid Python code until its generated, all checks are done on the default (full) generated project in [fastapi-mvc/cookiecutter CI workflow](https://github.com/fastapi-mvc/cookiecutter/actions/workflows/main.yml).
+Both package and project template have their own tests and checks. However, since template isn't a valid Python code until its generated, all checks are done on the default (full) generated project in [fastapi-mvc/copier-project CI workflow](https://github.com/fastapi-mvc/copier-project/actions/workflows/main.yml).
 
 ### Style guide
 
