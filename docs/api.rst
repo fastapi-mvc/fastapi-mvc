@@ -3,12 +3,19 @@ API
 
 This part of the documentation lists the full API reference of all classes and functions.
 
-Borg
+Core
 ----
 
-.. autoclass:: fastapi_mvc.Borg
+.. autoclass:: fastapi_mvc.Command
    :members:
-   :special-members: __init__
+   :show-inheritance:
+
+.. autoclass:: fastapi_mvc.Generator
+   :members:
+   :show-inheritance:
+
+.. autoclass:: fastapi_mvc.GeneratorsMultiCommand
+   :members:
    :show-inheritance:
 
 Generators
@@ -16,21 +23,15 @@ Generators
 
 .. automodule:: fastapi_mvc.generators
 
-.. autoclass:: fastapi_mvc.generators.Generator
+.. autoclass:: fastapi_mvc.generators.controller
    :members:
    :show-inheritance:
 
-.. autoclass:: fastapi_mvc.generators.ProjectGenerator
+.. autoclass:: fastapi_mvc.generators.generator
    :members:
    :show-inheritance:
 
-.. autoclass:: fastapi_mvc.generators.ControllerGenerator
-   :members:
-   :show-inheritance:
-
-.. autoclass:: fastapi_mvc.generators.GeneratorGenerator
-   :members:
-   :show-inheritance:
+.. autofunction:: fastapi_mvc.generator.load_generators
 
 CLI
 ---
@@ -41,21 +42,9 @@ CLI
 
 .. autofunction:: fastapi_mvc.cli.run.run
 
-.. autofunction:: fastapi_mvc.cli.new.get_new_cmd
-
-.. autofunction:: fastapi_mvc.cli.new.invoke_generator
+.. autofunction:: fastapi_mvc.cli.new.new
 
 .. autofunction:: fastapi_mvc.cli.generate.get_generate_cmd
-
-.. autofunction:: fastapi_mvc.cli.generate.invoke_generator
-
-.. autoclass:: fastapi_mvc.cli.click_custom.GeneratorsMultiCommand
-   :members:
-   :show-inheritance:
-
-.. autoclass:: fastapi_mvc.cli.click_custom.GeneratorCommand
-   :members:
-   :show-inheritance:
 
 Utils
 -----
