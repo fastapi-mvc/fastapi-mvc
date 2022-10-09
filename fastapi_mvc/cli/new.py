@@ -1,4 +1,11 @@
-"""Command-line interface - new command."""
+"""Command-line interface - new command.
+
+Attributes:
+    cmd_help (str): The help string to use for this command.
+    cmd_short_help (str): The short help to use for this command. This is shown on the
+        command listing of the parent command.
+
+"""
 import logging
 import os
 from datetime import datetime
@@ -113,6 +120,15 @@ Default Project template used: https://github.com/fastapi-mvc/copier-project
 )
 @click.pass_context
 def new(ctx, app_path, **options):
+    """Define command-line interface new command.
+
+    Args:
+        ctx (click.Context): Click Context class object instance.
+        app_path (str): Destination path where to render the project.
+        options (typing.Dict[str, typing.Any]): Map of command option names to their
+            parsed values.
+
+    """
     if options["use_repo"]:
         ctx.command.template = options["use_repo"]
     if options["use_version"]:

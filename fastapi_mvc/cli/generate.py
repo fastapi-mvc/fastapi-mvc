@@ -1,4 +1,11 @@
-"""Command-line interface - generate command."""
+"""Command-line interface - generate command.
+
+Attributes:
+    cmd_help (str): The help string to use for this command.
+    cmd_short_help (str): The short help to use for this command. This is shown on the
+        command listing of the parent command.
+
+"""
 from fastapi_mvc import GeneratorsMultiCommand
 from fastapi_mvc.generators import load_generators
 
@@ -17,7 +24,6 @@ def get_generate_cmd():
         GeneratorsMultiCommand: Class object instance.
 
     """
-
     return GeneratorsMultiCommand(
         name="generate",
         subcommand_metavar="GENERATOR [ARGS]...",

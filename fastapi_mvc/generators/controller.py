@@ -1,3 +1,13 @@
+"""Fastapi-mvc generators - controller generator.
+
+Attributes:
+    cmd_help (str): The help string to use for this command.
+    cmd_short_help (str): The short help to use for this command. This is shown on the
+        command listing of the parent command.
+    epliog (str): Like the help string but it’s printed at the end of the help page
+        after everything else.
+
+"""
 import click
 from fastapi_mvc import Generator
 
@@ -48,6 +58,16 @@ Example:
 )
 @click.pass_context
 def controller(ctx, name, endpoints, **options):
+    """Define controller generator command-line interface.
+
+    Args:
+        ctx (click.Context): Click Context class object instance.
+        name (str): Given controller name.
+        endpoints (str): Given controller endpoints.
+        options (typing.Dict[str, typing.Any]): Map of command option names to
+            their parsed values.
+
+    """
     ctx.command.ensure_project_data()
     name = name.lower().replace("-", "_")
     data = {

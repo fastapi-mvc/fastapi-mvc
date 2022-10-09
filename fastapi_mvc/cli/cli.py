@@ -1,4 +1,9 @@
-"""Command-line interface - root."""
+"""Command-line interface - root.
+
+Attributes:
+    cmd_help (str): The help string to use for this command.
+
+"""
 import logging
 import sys
 

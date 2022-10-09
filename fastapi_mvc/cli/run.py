@@ -1,4 +1,11 @@
-"""Command-line interface - run command."""
+"""Command-line interface - run command.
+
+Attributes:
+    cmd_help (str): The help string to use for this command.
+    cmd_short_help (str): The short help to use for this command. This is shown on the
+        command listing of the parent command.
+
+"""
 from subprocess import CalledProcessError
 
 import click
@@ -47,8 +54,8 @@ def run(ctx, **options):
 
     Args:
         ctx (click.Context): Click Context class object instance.
-        options (typing.Dict[str, typing.Any]): Map of command option names to
-            their parsed values.
+        options (typing.Dict[str, typing.Any]): Map of command option names to their
+            parsed values.
 
     """
     ctx.command.ensure_project_data()

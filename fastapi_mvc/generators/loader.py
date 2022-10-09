@@ -1,3 +1,9 @@
+"""Fastapi-mvc generators - controller generator.
+
+Attributes:
+    log (logging.Logger): Logger class object instance.
+
+"""
 import importlib
 import logging
 import pkgutil
@@ -7,14 +13,14 @@ import os
 from .controller import controller
 from .generator import generator
 
+
 log = logging.getLogger(__name__)
 
 
 def load_generators():
     """Load user fastapi-mvc generators.
 
-    Programmatically import all available user generators from known paths
-    to search in.
+    Programmatically import all available user generators from known paths to search in.
 
     References:
         1. Importing programmatically

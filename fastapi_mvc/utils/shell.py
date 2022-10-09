@@ -16,8 +16,8 @@ log = logging.getLogger(__name__)
 def get_git_user_info():
     """Get git user information.
 
-    Reads username and email information from git. If not exists, provide
-    defaults values.
+    Reads username and email information from git. If not exists, provide defaults
+    values.
 
     Returns:
         typing.Tuple[str, str]: Tuple containing git username and email.
@@ -47,8 +47,8 @@ def get_git_user_info():
 def run_shell(cmd, cwd=None, check=False, stdout=None, stderr=None):
     """Run shell command without activated virtualenv.
 
-    If virtual env is activated, remove it from PATH in order to ensure
-    command proper execution. For more information, see issue:
+    If virtual env is activated, remove it from PATH in order to ensure command proper
+    execution. For more information, see issue:
     https://github.com/fastapi-mvc/fastapi-mvc/issues/37
 
     Args:
