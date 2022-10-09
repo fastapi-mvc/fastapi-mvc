@@ -23,6 +23,18 @@ jobs:
           skip_after_successful_duplicate: 'true'
           concurrent_skipping: same_content
           do_not_skip: '["pull_request", "workflow_dispatch", "schedule"]'
+  nixpkgs-fmt:
+    needs: pre_job
+    if: ${{ needs.pre_job.outputs.should_skip != 'true' }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: cachix/install-nix-action@v17
+        with:
+          nix_path: ${{ env.NIX_CHANNEL }}
+      - uses: actions/checkout@v3
+      - name: Check format
+        run: nix-shell -p nixpkgs-fmt --run 'nixpkgs-fmt --check .'
   nix-build:
     needs: pre_job
     if: ${{ needs.pre_job.outputs.should_skip != 'true' }}
