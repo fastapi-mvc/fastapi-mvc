@@ -22,7 +22,7 @@ clean-image: ## Clean fastapi-mvc image
 .PHONY: metrics
 metrics: install ## Run fastapi-mvc metrics checks
 	echo "[metrics] Run fastapi-mvc PEP 8 checks."
-	${POETRY_BINARY} run flake8 --select=E,W,I --max-line-length 80 --import-order-style pep8 --statistics --count fastapi_mvc
+	${POETRY_BINARY} run flake8 --select=E,W,I --max-line-length 88 --import-order-style pep8 --statistics --count fastapi_mvc
 	echo "[metrics] Run fastapi-mvc PEP 257 checks."
 	${POETRY_BINARY} run flake8 --select=D --ignore D301 --statistics --count fastapi_mvc
 	echo "[metrics] Run fastapi-mvc pyflakes checks."
@@ -32,7 +32,7 @@ metrics: install ## Run fastapi-mvc metrics checks
 	echo "[metrics] Run fastapi-mvc open TODO checks."
 	${POETRY_BINARY} run flake8 --select=T --statistics --count fastapi_mvc tests
 	echo "[metrics] Run fastapi-mvc black checks."
-	${POETRY_BINARY} run black -l 80 --check fastapi_mvc
+	${POETRY_BINARY} run black --check fastapi_mvc
 
 .PHONY: unit-test
 unit-test: install ## Run fastapi-mvc unit tests
