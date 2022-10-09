@@ -21,7 +21,7 @@
 
 **Source Code**: [https://github.com/fastapi-mvc/fastapi-mvc](https://github.com/fastapi-mvc/fastapi-mvc)
 
-**Project template**: [https://github.com/fastapi-mvc/cookiecutter](https://github.com/fastapi-mvc/cookiecutter)
+**Project scaffold**: [https://github.com/fastapi-mvc/copier-project](https://github.com/fastapi-mvc/copier-project)
 
 **Example generated project**: [https://github.com/fastapi-mvc/example](https://github.com/fastapi-mvc/example)
 
