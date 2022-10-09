@@ -50,6 +50,7 @@ Example:
     category="Builtins",
     help=cmd_help,
     short_help=cmd_short_help,
+    epilog=epilog,
 )
 @click.argument(
     "NAME",
