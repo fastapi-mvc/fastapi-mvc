@@ -74,3 +74,5 @@ jobs:
         run: make metrics
       - name: Run fastapi-mvc tests
         run: make test
+      - name: Run fastapi-mvc coverage
+        run: make coverage
