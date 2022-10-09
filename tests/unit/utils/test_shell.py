@@ -4,7 +4,7 @@ from subprocess import CalledProcessError
 from unittest import mock
 
 import pytest
-from fastapi_mvc.utils import ShellUtils
+from fastapi_mvc.utils import get_git_user_info, run_shell
 
 
 @mock.patch(
@@ -15,7 +15,7 @@ from fastapi_mvc.utils import ShellUtils
     ],
 )
 def test_get_git_user_info(check_mock):
-    author, email = ShellUtils.get_git_user_info()
+    author, email = get_git_user_info()
     assert author == "Darth Vader"
     assert email == "join@galactic.empire"
 
@@ -31,7 +31,7 @@ def test_get_git_user_info(check_mock):
     side_effect=CalledProcessError(1, []),
 )
 def test_get_git_user_info_defaults(check_mock):
-    author, email = ShellUtils.get_git_user_info()
+    author, email = get_git_user_info()
     assert author == "John Doe"
     assert email == "example@email.com"
 
@@ -48,7 +48,7 @@ def test_get_git_user_info_defaults(check_mock):
 )
 @mock.patch("fastapi_mvc.utils.shell.subprocess.check_output")
 def test_get_git_user_info_no_git(check_mock, which_mock):
-    author, email = ShellUtils.get_git_user_info()
+    author, email = get_git_user_info()
     assert author == "John Doe"
     assert email == "example@email.com"
 
@@ -135,7 +135,7 @@ def test_run_shell(run_mock, cmd, cwd, check, stdout, stderr, env, expected):
     with mock.patch("fastapi_mvc.utils.shell.os.environ.copy") as os_mock:
         os_mock.return_value = env
 
-        ShellUtils.run_shell(
+        run_shell(
             cmd=cmd,
             cwd=cwd,
             check=check,
@@ -160,7 +160,7 @@ def test_run_shell_defaults(run_mock):
     with mock.patch("fastapi_mvc.utils.shell.os.environ.copy") as os_mock:
         os_mock.return_value = env
 
-        ShellUtils.run_shell(["test"])
+        run_shell(["test"])
 
         os_mock.assert_called_once()
         run_mock.assert_called_once_with(
@@ -175,14 +175,14 @@ def test_run_shell_defaults(run_mock):
 
 def test_run_shell_exception():
     with pytest.raises(subprocess.CalledProcessError):
-        ShellUtils.run_shell(
+        run_shell(
             cmd=["/usr/bin/env", "false"],
             check=True,
             stdout=subprocess.DEVNULL,
             stderr=subprocess.DEVNULL,
         )
 
-    process = ShellUtils.run_shell(
+    process = run_shell(
         cmd=["/usr/bin/env", "false"],
         check=False,
         stdout=subprocess.DEVNULL,

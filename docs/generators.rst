@@ -674,10 +674,3 @@ Now let's have a look at the CLI command help:
 
         This will create:
             what/will/it/create
-
-Generator base class API reference
-----------------------------------
-
-.. autoclass:: fastapi_mvc.generators.Generator
-   :members:
-   :show-inheritance:

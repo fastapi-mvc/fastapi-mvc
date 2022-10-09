@@ -1,6 +1,6 @@
 """Custom generator for fastapi-mvc."""
-from .foobar import FoobarGenerator
+from .foobar import foobar
 
 # NOTE! Do not edit this! Method for programmatically loading user generators
-# depends on having only one class in module `generator_class` attribute.
-generator_class = FoobarGenerator
+# depends on having only one fastapi_mvc.Generator in module `generator` attribute.
+generator = foobar

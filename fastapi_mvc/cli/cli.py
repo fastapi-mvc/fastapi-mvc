@@ -1,10 +1,15 @@
-"""Command-line interface - root."""
+"""Command-line interface - root.
+
+Attributes:
+    cmd_help (str): The help string to use for this command.
+
+"""
 import logging
 import sys
 
 import click
-from fastapi_mvc.cli.new import get_new_cmd
 from fastapi_mvc.cli.run import run
+from fastapi_mvc.cli.new import new
 from fastapi_mvc.cli.generate import get_generate_cmd
 from fastapi_mvc.utils import global_except_hook
 
@@ -52,6 +57,6 @@ def cli(**options):
     )
 
 
-cli.add_command(get_new_cmd())
+cli.add_command(new)
 cli.add_command(run)
 cli.add_command(get_generate_cmd())

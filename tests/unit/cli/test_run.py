@@ -1,5 +1,6 @@
 import os
 from unittest import mock
+from subprocess import CalledProcessError
 
 import pytest
 from fastapi_mvc.cli.run import run
@@ -11,69 +12,44 @@ DATA_DIR = os.path.abspath(
         "../../data",
     )
 )
-parser = mock.Mock()
-parser.package_name = "test_app"
-parser.folder_name = "test-app"
-parser.project_root = "/path/to/project"
 
 
-@mock.patch("fastapi_mvc.cli.run.Borg")
-def test_run_help(borg_mock, cli_runner):
+def test_run_help(cli_runner):
     result = cli_runner.invoke(run, ["--help"])
     assert result.exit_code == 0
-    borg_mock.assert_not_called()
 
 
-@mock.patch("fastapi_mvc.cli.run.Borg")
-def test_run_invalid_options(borg_mock, cli_runner):
+@mock.patch("fastapi_mvc.cli.run.run_shell")
+def test_run_invalid_options(shell_mock, cli_runner):
     result = cli_runner.invoke(run, ["--not_exists"])
     assert result.exit_code == 2
-    borg_mock.assert_not_called()
+    shell_mock.assert_not_called()
 
 
-@mock.patch("fastapi_mvc.cli.run.RunShell")
-@mock.patch("fastapi_mvc.cli.run.Borg")
-def test_run_default_values(borg_mock, shell_mock, cli_runner):
-    borg_mock.return_value.parser = parser
-    borg_mock.return_value.poetry_path = "/path/to/bin/poetry"
+@mock.patch("fastapi_mvc.cli.run.run_shell")
+def test_run_default_values(shell_mock, monkeypatch, cli_runner):
+    # Change working directory to fake project. It is easier to fake fastapi-mvc project,
+    # rather than mocking ctx injected to command via @click.pass_context decorator.
+    monkeypatch.chdir(DATA_DIR)
 
     result = cli_runner.invoke(run, [])
     assert result.exit_code == 0
 
-    borg_mock.assert_called_once()
-    borg_mock.return_value.require_project.assert_called_once()
-
-    shell_mock.assert_has_calls(
-        [
-            mock.call(
-                cmd=[
-                    "/path/to/bin/poetry",
-                    "install",
-                    "--no-interaction",
-                ],
-                check=True,
-                cwd="/path/to/project",
-            ),
-            mock.call(
-                cmd=[
-                    "/path/to/bin/poetry",
-                    "run",
-                    "uvicorn",
-                    "--factory",
-                    "--host",
-                    "127.0.0.1",
-                    "--port",
-                    "8000",
-                    "--reload",
-                    "test_app.app:get_application",
-                ],
-                cwd="/path/to/project",
-            ),
-        ]
+    shell_mock.assert_called_once_with(
+        cmd=[
+            run.poetry_path,
+            "run",
+            "uvicorn",
+            "--factory",
+            "--host",
+            "127.0.0.1",
+            "--port",
+            "8000",
+            "--reload",
+            "test_app.app:get_application",
+        ],
+        check=True,
     )
-
-    borg_mock.return_value.enqueue.assert_has_calls(shell_mock.return_value)
-    borg_mock.return_value.execute.assert_called_once()
 
 
 @pytest.mark.parametrize(
@@ -83,7 +59,7 @@ def test_run_default_values(borg_mock, shell_mock, cli_runner):
             ["--host", "10.20.30.40", "--port", "1234"],
             {
                 "cmd": [
-                    "/path/to/bin/poetry",
+                    run.poetry_path,
                     "run",
                     "uvicorn",
                     "--factory",
@@ -94,14 +70,14 @@ def test_run_default_values(borg_mock, shell_mock, cli_runner):
                     "--reload",
                     "test_app.app:get_application",
                 ],
-                "cwd": "/path/to/project",
+                "check": True,
             },
         ),
         (
             ["--host", "192.168.0.10", "-p", "9001"],
             {
                 "cmd": [
-                    "/path/to/bin/poetry",
+                    run.poetry_path,
                     "run",
                     "uvicorn",
                     "--factory",
@@ -112,14 +88,14 @@ def test_run_default_values(borg_mock, shell_mock, cli_runner):
                     "--reload",
                     "test_app.app:get_application",
                 ],
-                "cwd": "/path/to/project",
+                "check": True,
             },
         ),
         (
-            ["--host", "192.168.0.10", "-p", "9001", "--skip-install"],
+            ["--host", "192.168.0.10", "-p", "9001", "--install"],
             {
                 "cmd": [
-                    "/path/to/bin/poetry",
+                    run.poetry_path,
                     "run",
                     "uvicorn",
                     "--factory",
@@ -130,40 +106,66 @@ def test_run_default_values(borg_mock, shell_mock, cli_runner):
                     "--reload",
                     "test_app.app:get_application",
                 ],
-                "cwd": "/path/to/project",
+                "check": True,
             },
         ),
     ],
 )
-@mock.patch("fastapi_mvc.cli.run.RunShell")
-@mock.patch("fastapi_mvc.cli.run.Borg")
-def test_run_with_options(borg_mock, shell_mock, cli_runner, args, expected):
-    borg_mock.return_value.parser = parser
-    borg_mock.return_value.poetry_path = "/path/to/bin/poetry"
+@mock.patch("fastapi_mvc.cli.run.run_shell")
+def test_run_with_options(shell_mock, monkeypatch, cli_runner, args, expected):
+    # Change working directory to fake project. It is easier to fake fastapi-mvc project,
+    # rather than mocking ctx injected to command via @click.pass_context decorator.
+    monkeypatch.chdir(DATA_DIR)
 
     result = cli_runner.invoke(run, args)
     assert result.exit_code == 0
 
-    borg_mock.assert_called_once()
-    borg_mock.return_value.require_project.assert_called_once()
+    calls = []
 
-    if "--skip-install" in args or "-I" in args:
-        calls = []
-    else:
-        calls = [
+    if "--install" in args or "-i" in args:
+        calls.append(
             mock.call(
                 cmd=[
-                    "/path/to/bin/poetry",
+                    run.poetry_path,
                     "install",
                     "--no-interaction",
                 ],
                 check=True,
-                cwd="/path/to/project",
             )
-        ]
+        )
 
     calls.append(mock.call(**expected))
-
     shell_mock.assert_has_calls(calls)
-    borg_mock.return_value.enqueue.assert_has_calls(shell_mock.return_value)
-    borg_mock.return_value.execute.assert_called_once()
+
+
+def test_run_not_in_project(cli_runner):
+    result = cli_runner.invoke(run, [])
+    assert result.exit_code == 1
+    msg = "Not a fastapi-mvc project. Try 'fastapi-mvc new --help' for details how to create one."
+    assert msg in result.output
+
+
+@mock.patch("fastapi_mvc.cli.run.run_shell", side_effect=CalledProcessError(1, []))
+def test_run_exception(shell_mock, monkeypatch, cli_runner):
+    # Change working directory to fake project. It is easier to fake fastapi-mvc project,
+    # rather than mocking ctx injected to command via @click.pass_context decorator.
+    monkeypatch.chdir(DATA_DIR)
+
+    result = cli_runner.invoke(run, [])
+    assert result.exit_code == 0
+    assert "Run 'make install` to install the project." in result.output
+    shell_mock.assert_called_once_with(
+        cmd=[
+            run.poetry_path,
+            "run",
+            "uvicorn",
+            "--factory",
+            "--host",
+            "127.0.0.1",
+            "--port",
+            "8000",
+            "--reload",
+            "test_app.app:get_application",
+        ],
+        check=True,
+    )

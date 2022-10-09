@@ -1,0 +1,15 @@
+[tool.poetry]
+name = "copier-env"
+version = "0.1.0"
+description = "Copier environment."
+authors = []
+
+[tool.poetry.dependencies]
+python = "^3.8"
+copier = "6.2.0"
+
+[tool.poetry.dev-dependencies]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
