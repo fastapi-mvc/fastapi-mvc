@@ -98,3 +98,10 @@ def test_controller_with_options(
         instert_mock.assert_not_called()
     else:
         instert_mock.assert_called_once_with(expected["controller"])
+
+
+def test_controller_not_in_project(cli_runner):
+    result = cli_runner.invoke(controller, ["custom-controller"])
+    assert result.exit_code == 1
+    msg = "Not a fastapi-mvc project. Try 'fastapi-mvc new --help' for details how to create one."
+    assert msg in result.output

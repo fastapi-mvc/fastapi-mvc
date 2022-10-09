@@ -80,3 +80,10 @@ def test_generator_with_options(copier_mock, monkeypatch, cli_runner, args, expe
     assert result.exit_code == 0
 
     copier_mock.assert_called_once_with(**expected)
+
+
+def test_generator_not_in_project(cli_runner):
+    result = cli_runner.invoke(generator, ["custom-generator"])
+    assert result.exit_code == 1
+    msg = "Not a fastapi-mvc project. Try 'fastapi-mvc new --help' for details how to create one."
+    assert msg in result.output
