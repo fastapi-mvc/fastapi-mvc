@@ -4,8 +4,8 @@ import pkgutil
 import sys
 import os
 
-from fastapi_mvc.generators.controller import controller
-from fastapi_mvc.generators.generator import generator
+from .controller import controller
+from .generator import generator
 
 log = logging.getLogger(__name__)
 

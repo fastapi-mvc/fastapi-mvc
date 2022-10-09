@@ -24,7 +24,7 @@ def test_generator_invalid_options(cli_runner):
     assert result.exit_code == 2
 
 
-@mock.patch("fastapi_mvc.generators.generator.generator.run_copy")
+@mock.patch("fastapi_mvc.generators.generator.run_copy")
 def test_generator_default_values(copier_mock, monkeypatch, cli_runner):
     # Change working directory to fake project. It is easier to fake fastapi-mvc project,
     # rather than mocking ctx injected to command via @click.pass_context decorator.
@@ -70,7 +70,7 @@ def test_generator_default_values(copier_mock, monkeypatch, cli_runner):
         )
     ],
 )
-@mock.patch("fastapi_mvc.generators.generator.generator.run_copy")
+@mock.patch("fastapi_mvc.generators.generator.run_copy")
 def test_generator_with_options(copier_mock, monkeypatch, cli_runner, args, expected):
     # Change working directory to fake project. It is easier to fake fastapi-mvc project,
     # rather than mocking ctx injected to command via @click.pass_context decorator.
