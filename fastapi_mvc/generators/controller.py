@@ -62,6 +62,10 @@ def controller(ctx, name, endpoints, **options):
         except ValueError:
             endpoint, method = entry, "get"
 
+        # Sanitize values
+        endpoint = endpoint.lower().replace('-','_')
+        method = method.lower()
+
         data["endpoints"][endpoint] = method
 
     ctx.command.run_copy(data=data)
