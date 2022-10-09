@@ -5,6 +5,7 @@ import sys
 import os
 
 from fastapi_mvc.generators.controller import controller
+from fastapi_mvc.generators.generator import generator
 
 log = logging.getLogger(__name__)
 
@@ -23,7 +24,7 @@ def load_generators():
 
     """
     paths = [os.path.join(os.getcwd(), "lib/generators")]
-    unique = {controller}
+    unique = {controller, generator}
 
     for item in pkgutil.iter_modules(paths):
         m_path = os.path.join(item.module_finder.path, item.name, "__init__.py", )
@@ -42,9 +43,9 @@ def load_generators():
             log.error(err)
             continue
 
-        generator = getattr(module, "generator", None)
+        imported = getattr(module, "generator", None)
 
-        if generator:
-            unique.add(generator)
+        if imported:
+            unique.add(imported)
 
     return {item.name: item for item in unique}
