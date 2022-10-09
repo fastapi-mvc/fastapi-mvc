@@ -20,7 +20,7 @@ Resources:
 .. _Click Options:
     https://click.palletsprojects.com/en/8.1.x/options/
 
-.. _Cookiecutter Docs:
+.. _Copier Docs:
     https://copier.readthedocs.io/en/v6.2.0
 
 """
