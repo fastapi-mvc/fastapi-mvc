@@ -56,6 +56,6 @@ html_sidebars = {
 }
 singlehtml_sidebars = {"index": ["project.html", "localtoc.html"]}
 html_logo = "_static/logo.png"
-html_title = f"Fastapi-mvc Documentation ({__version__})"
+html_title = f"Fastapi-mvc Documentation ({VERSION})"
 html_show_sourcelink = False
 html_static_path = ["_static"]

@@ -23,15 +23,11 @@ Generators
 
 .. automodule:: fastapi_mvc.generators
 
-.. autoclass:: fastapi_mvc.generators.controller
-   :members:
-   :show-inheritance:
+.. autofunction:: fastapi_mvc.generators.controller
 
-.. autoclass:: fastapi_mvc.generators.generator
-   :members:
-   :show-inheritance:
+.. autofunction:: fastapi_mvc.generators.generator
 
-.. autofunction:: fastapi_mvc.generator.load_generators
+.. autofunction:: fastapi_mvc.generators.load_generators
 
 CLI
 ---
@@ -51,8 +47,8 @@ Utils
 
 .. automodule:: fastapi_mvc.utils
 
-.. autoclass:: fastapi_mvc.utils.ShellUtils
-   :members:
-   :show-inheritance:
+.. autofunction:: fastapi_mvc.utils.run_shell
+
+.. autofunction:: fastapi_mvc.utils.get_git_user_info
 
 .. autofunction:: fastapi_mvc.utils.excepthook.global_except_hook
