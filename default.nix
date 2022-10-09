@@ -1,6 +1,7 @@
 { lib
 , python
 , poetry2nix
+, git
 }:
 
 poetry2nix.mkPoetryApplication {
@@ -11,6 +12,10 @@ poetry2nix.mkPoetryApplication {
   poetrylock = ./poetry.lock;
 
   pythonImportsCheck = [ "fastapi_mvc" ];
+
+  propagatedBuildInputs = [
+    git
+  ];
 
   meta = with lib; {
     homepage = "https://github.com/fastapi-mvc/fastapi-mvc";
