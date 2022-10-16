@@ -2,9 +2,19 @@
 
 This file documents changes to [fastapi-mvc](https://github.com/fastapi-mvc/fastapi-mvc). The release numbering uses [semantic versioning](http://semver.org).
 
+## Unreleased
+
+### Fixed
+
+* Invalid default project name if destination is `.` [#187](https://github.com/fastapi-mvc/fastapi-mvc/issues/187). PR [#188](https://github.com/fastapi-mvc/fastapi-mvc/pull/188)
+
+### Internal
+
+* Implement ensure_permission method [#185](https://github.com/fastapi-mvc/fastapi-mvc/issues/185). PR [#188](https://github.com/fastapi-mvc/fastapi-mvc/pull/188)
+
 ## 0.18.0 (10.10.2022)
 
-## Breaking Changes
+### Breaking Changes
 
 * Improve generators UX [#171](https://github.com/fastapi-mvc/fastapi-mvc/issues/171). PR [#176](https://github.com/fastapi-mvc/fastapi-mvc/pull/176)
 * Refactor generator generator cookiecutter template to copier [#172](https://github.com/fastapi-mvc/fastapi-mvc/issues/172). PR [#176](https://github.com/fastapi-mvc/fastapi-mvc/pull/176)
