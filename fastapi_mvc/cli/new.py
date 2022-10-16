@@ -129,6 +129,13 @@ def new(ctx, app_path, **options):
             parsed values.
 
     """
+    app_abspath = os.path.abspath(app_path)
+
+    if app_path == "." or os.path.exists(app_abspath):
+        ctx.command.ensure_permissions(app_abspath, w=True)
+    else:
+        ctx.command.ensure_permissions(os.path.dirname(app_abspath), w=True)
+
     if options["use_repo"]:
         ctx.command.template = options["use_repo"]
     if options["use_version"]:
@@ -136,7 +143,7 @@ def new(ctx, app_path, **options):
 
     author, email = get_git_user_info()
     data = {
-        "project_name": os.path.basename(app_path),
+        "project_name": os.path.basename(app_abspath),
         "author": author,
         "email": email,
         "copyright_date": datetime.today().year,
@@ -148,17 +155,17 @@ def new(ctx, app_path, **options):
         "helm": not options["skip_helm"],
         "license": options["license"],
         "repo_url": options["repo_url"],
-        "container_image_name": os.path.basename(app_path),
-        "chart_name": os.path.basename(app_path),
-        "script_name": os.path.basename(app_path),
+        "container_image_name": os.path.basename(app_abspath),
+        "chart_name": os.path.basename(app_abspath),
+        "script_name": os.path.basename(app_abspath),
         "project_description": "This project was generated with fastapi-mvc.",
         "version": "0.1.0",
     }
 
     if options["no_interaction"]:
-        ctx.command.run_auto(dst_path=app_path, data=data)
+        ctx.command.run_auto(dst_path=app_abspath, data=data)
     else:
-        ctx.command.run_auto(dst_path=app_path, user_defaults=data)
+        ctx.command.run_auto(dst_path=app_abspath, user_defaults=data)
 
     if not options["skip_install"]:
         ctx.command.copier_printf(
@@ -166,4 +173,4 @@ def new(ctx, app_path, **options):
             msg="make install",
             style="OK",
         )
-        run_shell(cmd=["make", "install"], cwd=app_path)
+        run_shell(cmd=["make", "install"], cwd=app_abspath)
