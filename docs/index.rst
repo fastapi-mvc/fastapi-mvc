@@ -142,6 +142,6 @@ Miscellaneous Pages
 .. toctree::
    :maxdepth: 2
 
-   CONTRIBUTING.md
+   contributing
    license
-   CHANGELOG.md
+   changelog
