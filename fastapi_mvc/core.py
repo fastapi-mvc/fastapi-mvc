@@ -134,7 +134,38 @@ class Generator(Command):
             formatter.write_paragraph()
             formatter.write(self.epilog)
 
-    def copier_printf(self, action, msg="", style=None, **kwargs):
+    @staticmethod
+    def ensure_permissions(path, r=True, w=False, x=False):
+        """Ensure correct permissions to given path.
+
+        Args:
+            path (str): Given path to check.
+            r (bool): Check read ok.
+            w (bool): Check write ok.
+            x (bool): Check executable ok.
+
+        Raises:
+            SystemExit: If path has insufficient permissions.
+
+        """
+        if not os.path.exists(path):
+            click.secho(f"Path: '{path}' does not exist.")
+            raise SystemExit(1)
+
+        if r and not os.access(path, os.R_OK):
+            click.secho(f"Path: '{path}' is not readable.", fg="red", err=True)
+            raise SystemExit(1)
+
+        if w and not os.access(path, os.W_OK):
+            click.secho(f"Path: '{path}' is not writable.", fg="red", err=True)
+            raise SystemExit(1)
+
+        if x and not os.access(path, os.X_OK):
+            click.secho(f"Path: '{path}' is not executable.", fg="red", err=True)
+            raise SystemExit(1)
+
+    @staticmethod
+    def copier_printf(action, msg="", style=None, **kwargs):
         """Define wrapper for ``copier.printf`` method.
 
         Args:

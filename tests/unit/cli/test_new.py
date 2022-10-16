@@ -1,9 +1,13 @@
+import os
 from datetime import datetime
 from unittest import mock
 
 import pytest
 from fastapi_mvc import VERSION
 from fastapi_mvc.cli.new import new
+
+
+DIR = os.getcwd()
 
 
 def test_new_help(cli_runner):
@@ -24,9 +28,9 @@ def test_new_default_values(copier_mock, git_mock, shell_mock, cli_runner):
     assert result.exit_code == 0
 
     git_mock.assert_called_once()
-    shell_mock.assert_called_once_with(cmd=["make", "install"], cwd="test-project")
+    shell_mock.assert_called_once_with(cmd=["make", "install"], cwd=f"{DIR}/test-project")
     copier_mock.assert_called_once_with(
-        dst_path="test-project",
+        dst_path=f"{DIR}/test-project",
         user_defaults={
             "project_name": "test-project",
             "author": "John",
@@ -67,7 +71,7 @@ def test_new_default_values(copier_mock, git_mock, shell_mock, cli_runner):
                 "test-project",
             ],
             {
-                "dst_path": "test-project",
+                "dst_path": f"{DIR}/test-project",
                 "user_defaults": {
                     "project_name": "test-project",
                     "author": "John",
@@ -98,10 +102,10 @@ def test_new_default_values(copier_mock, git_mock, shell_mock, cli_runner):
                 "https://howtomambo.git",
                 "--use-version",
                 "0.1.0",
-                "/my/projects/Mambo_No6",
+                f"{DIR}/Mambo_No6",
             ],
             {
-                "dst_path": "/my/projects/Mambo_No6",
+                "dst_path": f"{DIR}/Mambo_No6",
                 "data": {
                     "project_name": "Mambo_No6",
                     "author": "John",
@@ -122,6 +126,31 @@ def test_new_default_values(copier_mock, git_mock, shell_mock, cli_runner):
                     "version": "0.1.0",
                 },
             },
+        ),
+        (
+            ["."],
+            {
+                "dst_path": f"{DIR}",
+                "user_defaults": {
+                    "project_name": os.path.basename(DIR),
+                    "author": "John",
+                    "email": "ex@ma.il",
+                    "copyright_date": datetime.today().year,
+                    "fastapi_mvc_version": VERSION,
+                    "nix": True,
+                    "redis": True,
+                    "aiohttp": True,
+                    "github_actions": True,
+                    "helm": True,
+                    "license": "MIT",
+                    "repo_url": "https://your.repo.url.here",
+                    "container_image_name": os.path.basename(DIR),
+                    "chart_name": os.path.basename(DIR),
+                    "script_name": os.path.basename(DIR),
+                    "project_description": "This project was generated with fastapi-mvc.",
+                    "version": "0.1.0",
+                },
+            }
         ),
     ],
 )
