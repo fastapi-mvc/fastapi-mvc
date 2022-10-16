@@ -187,3 +187,32 @@ def test_generator_insert_router_import(cwd_mock, tmp_path, gen_obj, content, ex
     router.read_text() == expected
     gen_obj.insert_router_import("test")
     router.read_text() == expected
+
+
+def test_ensure_permissions(gen_obj):
+    gen_obj.ensure_permissions(DATA_DIR)
+    gen_obj.ensure_permissions(DATA_DIR, w=True)
+    gen_obj.ensure_permissions(f"{DATA_DIR}/dummy_executable", x=True)
+
+
+@mock.patch("fastapi_mvc.core.os.access", return_value=False)
+def test_ensure_permissions_exceptions(os_mock, gen_obj):
+    with pytest.raises(SystemExit):
+        gen_obj.ensure_permissions("/not/exist")
+
+    with pytest.raises(SystemExit):
+        gen_obj.ensure_permissions(DATA_DIR, r=True)
+
+    os_mock.assert_called_once()
+    os_mock.reset_mock()
+
+    with pytest.raises(SystemExit):
+        gen_obj.ensure_permissions(DATA_DIR, r=False, x=True)
+
+    os_mock.assert_called_once()
+    os_mock.reset_mock()
+
+    with pytest.raises(SystemExit):
+        gen_obj.ensure_permissions(DATA_DIR, r=False, w=True)
+
+    os_mock.assert_called_once()
