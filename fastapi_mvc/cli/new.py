@@ -29,7 +29,7 @@ Default Project template used: https://github.com/fastapi-mvc/copier-project
 @click.command(
     cls=Generator,
     template="https://github.com/fastapi-mvc/copier-project.git",
-    vcs_ref="0.1.0",
+    vcs_ref="0.1.1",
     help=cmd_help,
     short_help=cmd_short_help,
 )
