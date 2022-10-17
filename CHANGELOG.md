@@ -2,7 +2,7 @@
 
 This file documents changes to [fastapi-mvc](https://github.com/fastapi-mvc/fastapi-mvc). The release numbering uses [semantic versioning](http://semver.org).
 
-## Unreleased
+## 0.18.1 (17.10.2022)
 
 ### Fixed
 
@@ -11,6 +11,7 @@ This file documents changes to [fastapi-mvc](https://github.com/fastapi-mvc/fast
 ### Internal
 
 * Implement ensure_permission method [#185](https://github.com/fastapi-mvc/fastapi-mvc/issues/185). PR [#188](https://github.com/fastapi-mvc/fastapi-mvc/pull/188)
+* Bump copier-project version from 0.1.0 to 0.1.1 [6afb1fd](https://github.com/fastapi-mvc/fastapi-mvc/commit/6afb1fd0d8d888c10887647dfe789060b2bcc5c4).
 
 ## 0.18.0 (10.10.2022)
 
