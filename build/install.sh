@@ -8,6 +8,11 @@ set -o errexit
 set -o nounset
 set -o pipefail
 
+if ! command -v git &> /dev/null; then
+  echo "[install] Git is not installed."
+  exit 1
+fi
+
 PYTHON="${PYTHON:=NOT_SET}"
 if [[ $PYTHON == "NOT_SET" ]]; then
   if command -v python3 &> /dev/null; then

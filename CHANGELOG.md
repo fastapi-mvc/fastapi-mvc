@@ -2,6 +2,12 @@
 
 This file documents changes to [fastapi-mvc](https://github.com/fastapi-mvc/fastapi-mvc). The release numbering uses [semantic versioning](http://semver.org).
 
+## Unreleased
+
+### Internal
+
+* Ensure git is installed in `make install` target. PR [#190](https://github.com/fastapi-mvc/fastapi-mvc/pull/190)
+
 ## 0.18.1 (17.10.2022)
 
 ### Fixed
