@@ -63,8 +63,6 @@ jobs:
         run: nix-env -i gnumake -f '<nixpkgs>'
       - name: Build fastapi-mvc
         run: make build
-      - name: Build container image
-        run: make image
   nix-ci:
     needs: pre_job
     if: ${{ needs.pre_job.outputs.should_skip != 'true' }}
