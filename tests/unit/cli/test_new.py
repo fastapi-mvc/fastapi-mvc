@@ -20,15 +20,21 @@ def test_new_invalid_options(cli_runner):
     assert result.exit_code == 2
 
 
+@mock.patch("fastapi_mvc.cli.new.shutil.which", return_value=True)
 @mock.patch("fastapi_mvc.cli.new.run_shell")
 @mock.patch("fastapi_mvc.cli.new.get_git_user_info", return_value=("John", "ex@ma.il"))
 @mock.patch("fastapi_mvc.cli.new.new.run_auto")
-def test_new_default_values(copier_mock, git_mock, shell_mock, cli_runner):
+def test_new_default_values(copier_mock, git_mock, shell_mock, which_mock, cli_runner):
     result = cli_runner.invoke(new, ["test-project"])
     assert result.exit_code == 0
 
     git_mock.assert_called_once()
-    shell_mock.assert_called_once_with(cmd=["make", "install"], cwd=f"{DIR}/test-project")
+    shell_mock.assert_has_calls(
+        [
+            mock.call(cmd=["git", "init"], cwd=f"{DIR}/test-project"),
+            mock.call(cmd=["make", "install"], cwd=f"{DIR}/test-project"),
+        ]
+    )
     copier_mock.assert_called_once_with(
         dst_path=f"{DIR}/test-project",
         user_defaults={
@@ -51,6 +57,7 @@ def test_new_default_values(copier_mock, git_mock, shell_mock, cli_runner):
             "version": "0.1.0",
         },
     )
+    which_mock.assert_called_once_with("make")
 
 
 @pytest.mark.parametrize(
@@ -154,20 +161,63 @@ def test_new_default_values(copier_mock, git_mock, shell_mock, cli_runner):
         ),
     ],
 )
+@mock.patch("fastapi_mvc.cli.new.shutil.which", return_value=True)
 @mock.patch("fastapi_mvc.cli.new.run_shell")
 @mock.patch("fastapi_mvc.cli.new.get_git_user_info", return_value=("John", "ex@ma.il"))
 @mock.patch("fastapi_mvc.cli.new.new.run_auto")
 def test_new_with_options(
-    copier_mock, git_mock, shell_mock, cli_runner, args, expected
+    copier_mock, git_mock, shell_mock, which_mock, cli_runner, args, expected
 ):
     result = cli_runner.invoke(new, args)
     assert result.exit_code == 0
 
     git_mock.assert_called_once()
     copier_mock.assert_called_once_with(**expected)
+    calls = [
+        mock.call(cmd=["git", "init"], cwd=expected["dst_path"]),
+        mock.call(cmd=["make", "install"], cwd=expected["dst_path"]),
+    ]
+
     if "--skip-install" in args or "-I" in args:
-        shell_mock.assert_not_called()
+        calls.pop()
     else:
-        shell_mock.assert_called_once_with(
-            cmd=["make", "install"], cwd=expected["dst_path"]
-        )
+        which_mock.assert_called_once_with("make")
+
+    shell_mock.assert_has_calls(calls)
+
+
+@mock.patch("fastapi_mvc.cli.new.shutil.which", return_value=None)
+@mock.patch("fastapi_mvc.cli.new.run_shell")
+@mock.patch("fastapi_mvc.cli.new.get_git_user_info", return_value=("John", "ex@ma.il"))
+@mock.patch("fastapi_mvc.cli.new.new.run_auto")
+def test_new_no_make(copier_mock, git_mock, shell_mock, which_mock, cli_runner):
+    result = cli_runner.invoke(new, ["test-project"])
+    assert result.exit_code == 0
+
+    git_mock.assert_called_once()
+    shell_mock.assert_called_once_with(
+        cmd=["git", "init"], cwd=f"{DIR}/test-project"
+    )
+    copier_mock.assert_called_once_with(
+        dst_path=f"{DIR}/test-project",
+        user_defaults={
+            "project_name": "test-project",
+            "author": "John",
+            "email": "ex@ma.il",
+            "copyright_date": datetime.today().year,
+            "fastapi_mvc_version": VERSION,
+            "nix": True,
+            "redis": True,
+            "aiohttp": True,
+            "github_actions": True,
+            "helm": True,
+            "license": "MIT",
+            "repo_url": "https://your.repo.url.here",
+            "container_image_name": "test-project",
+            "chart_name": "test-project",
+            "script_name": "test-project",
+            "project_description": "This project was generated with fastapi-mvc.",
+            "version": "0.1.0",
+        },
+    )
+    which_mock.assert_called_once_with("make")
