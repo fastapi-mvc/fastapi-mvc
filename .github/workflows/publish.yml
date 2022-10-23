@@ -79,6 +79,5 @@ jobs:
           docker load --input result
           docker tag fastapi-mvc:latest ${{ format('{0}/{1}:latest', env.REGISTRY, env.IMAGE_NAME) }}
           docker push ${{ format('{0}/{1}:latest', env.REGISTRY, env.IMAGE_NAME) }}
-          echo "IMAGE_TAG=$(cat TAG)" >> $GITHUB_ENV
-          docker tag fastapi-mvc:latest ${{ format('{0}/{1}:{2}', env.REGISTRY, env.IMAGE_NAME, env.IMAGE_TAG) }}
+          docker tag fastapi-mvc:latest ${{ format('{0}/{1}', env.REGISTRY, env.IMAGE_NAME) }}:$(cat TAG)
           docker push ${{ format('{0}/{1}:{2}', env.REGISTRY, env.IMAGE_NAME, env.IMAGE_TAG) }}
