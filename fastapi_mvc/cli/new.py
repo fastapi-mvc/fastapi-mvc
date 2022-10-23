@@ -6,6 +6,7 @@ Attributes:
         command listing of the parent command.
 
 """
+import shutil
 import logging
 import os
 from datetime import datetime
@@ -167,10 +168,21 @@ def new(ctx, app_path, **options):
     else:
         ctx.command.run_auto(dst_path=app_abspath, user_defaults=data)
 
+    ctx.command.copier_printf(action="run", msg="git init", style="OK")
+    run_shell(cmd=["git", "init"], cwd=app_abspath)
+
     if not options["skip_install"]:
-        ctx.command.copier_printf(
-            action="run",
-            msg="make install",
-            style="OK",
-        )
-        run_shell(cmd=["make", "install"], cwd=app_abspath)
+        if shutil.which("make"):
+            ctx.command.copier_printf(
+                action="run",
+                msg="make install",
+                style="OK",
+            )
+            run_shell(cmd=["make", "install"], cwd=app_abspath)
+        else:
+            click.secho("make: shell command not found", fg="yellow")
+            ctx.command.copier_printf(
+                action="skipping",
+                msg="make install",
+                style="IGNORE",
+            )
