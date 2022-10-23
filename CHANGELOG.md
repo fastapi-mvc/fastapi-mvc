@@ -7,6 +7,7 @@ This file documents changes to [fastapi-mvc](https://github.com/fastapi-mvc/fast
 ### Internal
 
 * Ensure git is installed in `make install` target. PR [#190](https://github.com/fastapi-mvc/fastapi-mvc/pull/190)
+* Start testing on macOS [#186](https://github.com/fastapi-mvc/fastapi-mvc/issues/186). PR [#191](https://github.com/fastapi-mvc/fastapi-mvc/pull/191)
 
 ## 0.18.1 (17.10.2022)
 
