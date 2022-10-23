@@ -28,7 +28,7 @@ RUN echo "deb [check-valid-until=no] http://snapshot.debian.org/archive/debian/2
 
 # Install build tools and dependencies
 RUN apt-get update && \
-    apt-get install --no-install-recommends -y curl build-essential
+    apt-get install --no-install-recommends -y curl build-essential git
 
 # Install project without root package, then build and install from wheel.
 # This is needed because Poetry doesn't support installing root package without
