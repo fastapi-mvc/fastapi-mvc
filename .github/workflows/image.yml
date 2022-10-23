@@ -1,0 +1,66 @@
+name: Build Image
+
+on:
+  workflow_dispatch:
+
+env:
+  NIX_CHANNEL: nixpkgs=channel:nixos-22.05
+
+jobs:
+  # This job checks if an identical workflow is being triggered by different
+  # event and skips it. For instance there is no need to run the same pipeline
+  # twice for pull_request and push for identical commit sha.
+  pre_job:
+    runs-on: ubuntu-latest
+    outputs:
+      should_skip: ${{ steps.skip_check.outputs.should_skip }}
+    steps:
+      - id: skip_check
+        uses: fkirc/skip-duplicate-actions@v5.2.0
+        with:
+          skip_after_successful_duplicate: 'true'
+          concurrent_skipping: same_content
+          do_not_skip: '["pull_request", "workflow_dispatch", "schedule"]'
+  docker-build:
+    needs: pre_job
+    if: ${{ needs.pre_job.outputs.should_skip != 'true' }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+      - name: Build container image
+        uses: docker/build-push-action@v3
+        with:
+          context: .
+          tags: 'localhost/fastapi-mvc/fastapi-mvc:test'
+  nix-build:
+    needs: pre_job
+    if: ${{ needs.pre_job.outputs.should_skip != 'true' }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install Nix ❄️
+        uses: cachix/install-nix-action@v17
+        with:
+          extra_nix_config: "system-features = nixos-test benchmark big-parallel kvm"
+          nix_path: ${{ env.NIX_CHANNEL }}
+      - name: Setup Cachix ❄️
+        uses: cachix/cachix-action@v10
+        with:
+          name: fastapi-mvc
+          authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
+      - name: Install make
+        run: nix-env -i gnumake -f '<nixpkgs>'
+      - name: Build container image
+        run: make image
+      - name: Archive build artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ format('nix-image-{0}', github.sha) }}
+          path: result
+          retention-days: 60
