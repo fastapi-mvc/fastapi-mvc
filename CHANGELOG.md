@@ -8,6 +8,8 @@ This file documents changes to [fastapi-mvc](https://github.com/fastapi-mvc/fast
 
 * Ensure git is installed in `make install` target. PR [#190](https://github.com/fastapi-mvc/fastapi-mvc/pull/190)
 * Start testing on macOS [#186](https://github.com/fastapi-mvc/fastapi-mvc/issues/186). PR [#191](https://github.com/fastapi-mvc/fastapi-mvc/pull/191)
+* Refactor nix container image build to separate workflow [#193](https://github.com/fastapi-mvc/fastapi-mvc/issues/193). PR [#194](https://github.com/fastapi-mvc/fastapi-mvc/pull/194)
+* Add container image build workflow [#192](https://github.com/fastapi-mvc/fastapi-mvc/issues/192). PR [#194](https://github.com/fastapi-mvc/fastapi-mvc/pull/194)
 
 ## 0.18.1 (17.10.2022)
 
