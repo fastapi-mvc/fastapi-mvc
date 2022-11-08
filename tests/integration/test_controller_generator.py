@@ -1,6 +1,5 @@
 import os
 
-from fastapi_mvc.cli.new import new
 from fastapi_mvc.generators import controller
 
 
