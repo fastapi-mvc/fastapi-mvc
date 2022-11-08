@@ -12,6 +12,7 @@ import os
 
 from .controller import controller
 from .generator import generator
+from .script import script
 
 
 log = logging.getLogger(__name__)
@@ -30,7 +31,7 @@ def load_generators():
 
     """
     paths = [os.path.join(os.getcwd(), "lib/generators")]
-    unique = {controller, generator}
+    unique = {controller, generator, script}
 
     for item in pkgutil.iter_modules(paths):
         m_path = os.path.join(

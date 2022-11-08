@@ -2,6 +2,12 @@
 
 This file documents changes to [fastapi-mvc](https://github.com/fastapi-mvc/fastapi-mvc). The release numbering uses [semantic versioning](http://semver.org).
 
+## Unreleased
+
+### Features
+
+* Implement new generator - shell script [#197](https://github.com/fastapi-mvc/fastapi-mvc/issues/197).
+
 ## 0.18.2 (23.10.2022)
 
 ### Internal
@@ -44,7 +50,7 @@ This file documents changes to [fastapi-mvc](https://github.com/fastapi-mvc/fast
 * Drop mock dev-dependency [#128](https://github.com/fastapi-mvc/fastapi-mvc/issues/128). PR [#169](https://github.com/fastapi-mvc/fastapi-mvc/pull/169)
 * Add poetry2nix overlay. PR [#168](https://github.com/fastapi-mvc/fastapi-mvc/pull/168)
 * Update dependencies. PR [#167](https://github.com/fastapi-mvc/fastapi-mvc/pull/167)
-  * pytest (6.2.5 -> 0.82.0)
+  * pytest (6.2.5 -> 7.1.3)
   * pytest-cov (2.12.0 -> 4.0.0)
   * flake8 (3.9.2 -> 5.0.4)
   * black (22.3.0 -> 22.8.0)

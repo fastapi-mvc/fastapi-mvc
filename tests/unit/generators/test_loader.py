@@ -1,7 +1,6 @@
 import os
 from unittest import mock
 
-import pytest
 from fastapi_mvc.generators import load_generators
 
 
@@ -19,7 +18,7 @@ def test_load_generators(getcwd_mock):
     getcwd_mock.assert_called_once()
 
     assert sorted(generators.keys()) == sorted(
-        ["controller", "foobar", "generator", "my-controller"]
+        ["controller", "foobar", "generator", "my-controller", "script"]
     )
 
 
@@ -32,4 +31,4 @@ def test_load_generators_error(getcwd_mock, importlib_mock):
 
     generators = load_generators()
 
-    assert sorted(generators.keys()) == sorted(["controller", "generator"])
+    assert sorted(generators.keys()) == sorted(["controller", "generator", "script"])

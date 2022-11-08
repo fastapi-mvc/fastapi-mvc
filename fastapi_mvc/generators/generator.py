@@ -4,7 +4,7 @@ Attributes:
     cmd_help (str): The help string to use for this command.
     cmd_short_help (str): The short help to use for this command. This is shown on the
         command listing of the parent command.
-    epliog (str): Like the help string but it’s printed at the end of the help page
+    epilog (str): Like the help string, but it’s printed at the end of the help page
         after everything else.
 
 """
@@ -18,6 +18,9 @@ cmd_short_help = "Run fastapi-mvc generator generator."
 cmd_help = """\
 Creates a new generator at lib/generators. Pass the generator name
 under_scored.
+
+Generator template used: https://github.com/fastapi-mvc/copier-generator
+
 """
 epilog = """\
 Example:
