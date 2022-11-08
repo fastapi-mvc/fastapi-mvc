@@ -70,4 +70,4 @@ def script(ctx, name, **options):
         "script": name,
     }
 
-    ctx.command.run_copy(data=data)
+    ctx.command.run_copy(data=data, answers_file=None)

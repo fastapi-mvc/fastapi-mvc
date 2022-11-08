@@ -37,6 +37,7 @@ def test_script_default_values(copier_mock, monkeypatch, cli_runner):
             "nix": False,
             "script": "custom-script.sh",
         },
+        answers_file=None,
     )
 
 
@@ -53,6 +54,7 @@ def test_script_default_values(copier_mock, monkeypatch, cli_runner):
                     "nix": True,
                     "script": "mambo-no6",
                 },
+                "answers_file": None,
             },
         )
     ],
