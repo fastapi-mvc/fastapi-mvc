@@ -4,7 +4,7 @@ Attributes:
     cmd_help (str): The help string to use for this command.
     cmd_short_help (str): The short help to use for this command. This is shown on the
         command listing of the parent command.
-    epliog (str): Like the help string but it’s printed at the end of the help page
+    epilog (str): Like the help string, but it’s printed at the end of the help page
         after everything else.
 
 """
@@ -20,6 +20,9 @@ under_scored, and a list of endpoints as arguments.
 This generates a controller file in app/controllers with unit test
 file. Finally, edits config/router.py in order to add controller to
 FastAPI router.
+
+Generator template used: https://github.com/fastapi-mvc/copier-controller
+
 """
 epilog = """\
 Example:
