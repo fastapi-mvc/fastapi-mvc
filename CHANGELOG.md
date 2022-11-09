@@ -6,7 +6,15 @@ This file documents changes to [fastapi-mvc](https://github.com/fastapi-mvc/fast
 
 ### Features
 
-* Implement new generator - shell script [#197](https://github.com/fastapi-mvc/fastapi-mvc/issues/197).
+* Implement new generator - shell script [#197](https://github.com/fastapi-mvc/fastapi-mvc/issues/197). PR [#208](https://github.com/fastapi-mvc/fastapi-mvc/pull/208)
+* Implement CLI commands aliases [#80](https://github.com/fastapi-mvc/fastapi-mvc/issues/80). PR [#209](https://github.com/fastapi-mvc/fastapi-mvc/pull/209)
+
+### Internal
+
+* Update GitHub Actions:
+  * Bump nwtgck/actions-netlify from 1.2.3 to 1.2.4. PR [#200](https://github.com/fastapi-mvc/fastapi-mvc/pull/200)
+  * Bump cachix/cachix-action from 10 to 12. PR [#201](https://github.com/fastapi-mvc/fastapi-mvc/pull/201)
+  * Bump cachix/install-nix-action from 17 to 18. PR [#202](https://github.com/fastapi-mvc/fastapi-mvc/pull/202)
 
 ## 0.18.2 (23.10.2022)
 
