@@ -24,6 +24,7 @@ fastapi-mvc project at the current working directory.
     cls=Command,
     help=cmd_help,
     short_help=cmd_short_help,
+    alias="r",
 )
 @click.option(
     "--host",
