@@ -30,4 +30,5 @@ def get_generate_cmd():
         generators=load_generators(),
         short_help=cmd_short_help,
         help=cmd_help,
+        alias="g",
     )

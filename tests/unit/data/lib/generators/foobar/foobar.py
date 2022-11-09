@@ -26,6 +26,7 @@ Example:
     category="Custom",
     help=cmd_help,
     short_help=cmd_short_help,
+    alias="foo",
 )
 @click.argument(
     "NAME",

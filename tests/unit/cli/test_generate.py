@@ -32,9 +32,13 @@ def test_generate_invalid_options(cli_runner):
     "name",
     [
         "controller",
+        "ctl",
         "generator",
+        "gen",
         "foobar",
+        "foo",
         "my-controller",
+        "my-ctl",
     ],
 )
 @mock.patch("fastapi_mvc.cli.generate.load_generators", return_value=generators)

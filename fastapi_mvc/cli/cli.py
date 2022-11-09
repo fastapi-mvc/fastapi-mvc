@@ -8,6 +8,7 @@ import logging
 import sys
 
 import click
+from fastapi_mvc import ClickAliasedGroup
 from fastapi_mvc.cli.run import run
 from fastapi_mvc.cli.new import new
 from fastapi_mvc.cli.generate import get_generate_cmd
@@ -26,6 +27,7 @@ Source: https://github.com/fastapi-mvc/fastapi-mvc
 
 
 @click.group(
+    cls=ClickAliasedGroup,
     help=cmd_help,
 )
 @click.option(

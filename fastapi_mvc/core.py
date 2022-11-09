@@ -29,12 +29,106 @@ VERSION = "0.18.2"
 ANSWERS_FILE = ".fastapi-mvc.yml"
 
 
+class ClickAliasedGroup(click.Group):
+    """Custom click.Group class implementation.
+
+    Attributes:
+        aliases (typing.Dict[str, str]): Map of command aliases to their names.
+
+    Resources:
+        1. `click.Group class documentation`_
+
+    .. _click.Group class documentation:
+        https://click.palletsprojects.com/en/8.1.x/api/#click.Group
+
+    """
+
+    def __init__(self, *args, **kwargs):
+        """Initialize ClickAliasedGroup class object instance."""
+        super().__init__(*args, **kwargs)
+        self.aliases = dict()
+
+    def add_command(self, cmd, name=None):
+        """Register another Command class object instance with this group.
+
+        If the name is not provided, the name of the command is used.
+
+        Args:
+            cmd (Command): Command class object instance to register.
+            name (typing.Optional[str]): Given command name.
+
+        """
+        super().add_command(cmd, name)
+        name = name or cmd.name
+
+        if hasattr(cmd, "alias") and cmd.alias:
+            self.aliases[cmd.alias] = name
+
+    def get_command(self, ctx, cmd_name):
+        """Return Command class object instance.
+
+        Given a context and a command name or alias, this returns a ``Command`` class
+        object instance if it exists.
+
+        Args:
+            ctx (click.Context): Click Context class object instance.
+            cmd_name (str): Chosen command name.
+
+        Returns:
+            Command: Class object instance for given command name.
+
+        """
+        cmd_name = self.aliases.get(cmd_name, cmd_name)
+        return super().get_command(ctx, cmd_name)
+
+    def format_commands(self, ctx, formatter):
+        """Write all the commands into the formatter if they exist.
+
+        Args:
+            ctx (click.Context): Click Context class object instance.
+            formatter (click.HelpFormatter): Click HelpFormatter class object instance.
+
+        """
+        commands = []
+
+        for subcommand in self.list_commands(ctx):
+            cmd = self.get_command(ctx, subcommand)
+
+            if cmd is None:
+                continue
+            if cmd.hidden:
+                continue
+
+            if hasattr(cmd, "alias") and cmd.alias:
+                subcommand = f"{subcommand} ({cmd.alias})"
+
+            commands.append((subcommand, cmd))
+
+        if len(commands):
+            limit = formatter.width - 6 - max(len(cmd[0]) for cmd in commands)
+
+            rows = []
+            for subcommand, cmd in commands:
+                help = cmd.get_short_help_str(limit)
+                rows.append((subcommand, help))
+
+            if rows:
+                with formatter.section("Commands"):
+                    formatter.write_dl(rows)
+
+
 class Command(click.Command):
     """Defines base class for all concrete fastapi-mvc CLI commands.
+
+    Args:
+        alias (typing.Optional[str]): Given command alias.
+        *args (list): Parent class constructor args.
+        **kwargs (dict): Parent class constructor kwargs.
 
     Attributes:
         project_data (typing.Optional[typing.Dict[str, typing.Any]): Map of copier
             answers file questions to their parsed values.
+        alias (typing.Optional[str]): Given command alias.
 
     Resources:
         1. `click.Command class documentation`_
@@ -44,10 +138,11 @@ class Command(click.Command):
 
     """
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, alias=None, *args, **kwargs):
         """Initialize Command class object instance."""
         super().__init__(*args, **kwargs)
         self.project_data = None
+        self.alias = alias
 
     @property
     def poetry_path(self):
@@ -280,12 +375,16 @@ class GeneratorsMultiCommand(click.MultiCommand):
     Args:
         generators (typing.Dict[str, Generator]): Dictionary containing all available
             fastapi-mvc generators.
+        generators_aliases (typing.Dict[str, str]): Map of generator aliases to their
+            names.
         *args (list): Parent class constructor args.
         **kwargs (dict): Parent class constructor kwargs.
 
     Attributes:
         generators (typing.Dict[str, Generator]): Dictionary containing all available
             fastapi-mvc generators.
+        generators_aliases (typing.Dict[str, str]): Map of generator aliases to their
+            names.
 
     Resources:
         1. `click.MultiCommand class documentation`_
@@ -295,10 +394,17 @@ class GeneratorsMultiCommand(click.MultiCommand):
 
     """
 
-    def __init__(self, generators, *args, **kwargs):
+    def __init__(self, generators, alias=None, *args, **kwargs):
         """Initialize GeneratorsMultiCommand class object instance."""
         super().__init__(*args, **kwargs)
         self.generators = generators
+        self.generators_aliases = dict()
+
+        for name, gen in self.generators.items():
+            if hasattr(gen, "alias") and gen.alias:
+                self.generators_aliases[gen.alias] = name
+
+        self.alias = alias
 
     def format_commands(self, ctx, formatter):
         """Write all the generators into the formatter if they exist.
@@ -314,6 +420,13 @@ class GeneratorsMultiCommand(click.MultiCommand):
         commands = []
         for subcommand in self.list_commands(ctx):
             cmd = self.get_command(ctx, subcommand)
+
+            if cmd.hidden:
+                continue
+
+            if hasattr(cmd, "alias") and cmd.alias:
+                subcommand = f"{subcommand} ({cmd.alias})"
+
             commands.append((subcommand, cmd))
 
         if commands:
@@ -353,8 +466,8 @@ class GeneratorsMultiCommand(click.MultiCommand):
     def get_command(self, ctx, name):
         """Return GeneratorCommand class object instance.
 
-        Given a context and a command name, this returns a ``GeneratorCommand`` class
-        object instance if it exists or aborts the execution of the program.
+        Given a context and a command name or alias, this returns a ``GeneratorCommand``
+        class object instance if it exists or aborts the execution of the program.
 
         Args:
             ctx (click.Context): Click Context class object instance.
@@ -364,6 +477,8 @@ class GeneratorsMultiCommand(click.MultiCommand):
             Generator: Class object instance for given command name.
 
         """
+        name = self.generators_aliases.get(name, name)
+
         if name not in self.generators:
             ctx.fail(f"No such generator '{name}'.")
 

@@ -4,6 +4,7 @@ import logging
 from fastapi_mvc.core import (
     ANSWERS_FILE,
     VERSION,
+    ClickAliasedGroup,
     Command,
     Generator,
     GeneratorsMultiCommand,
@@ -17,6 +18,7 @@ log.addHandler(logging.NullHandler())
 __all__ = (
     "ANSWERS_FILE",
     "VERSION",
+    "ClickAliasedGroup",
     "Command",
     "Generator",
     "GeneratorsMultiCommand",
