@@ -44,6 +44,7 @@ myst-parser = "~0.18.1"
 
 [tool.poetry.scripts]
 fastapi-mvc = "fastapi_mvc.cli.cli:cli"
+fm = "fastapi_mvc.cli.cli:cli"
 
 [tool.poetry.urls]
 "Issues" = "https://github.com/fastapi-mvc/fastapi-mvc/issues"
