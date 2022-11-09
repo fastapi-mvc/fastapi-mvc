@@ -4,6 +4,8 @@ Attributes:
     cmd_help (str): The help string to use for this command.
     cmd_short_help (str): The short help to use for this command. This is shown on the
         command listing of the parent command.
+    epilog (str): Like the help string, but it’s printed at the end of the help page
+        after everything else.
 
 """
 import shutil
@@ -23,7 +25,12 @@ The 'fastapi-mvc new' command creates a new FastAPI application with a
 default directory structure and configuration at the path you specify.
 
 Default Project template used: https://github.com/fastapi-mvc/copier-project
+"""
+epilog = """\
+Example:
+    fastapi-mvc new ~/apis/Skynet
 
+    This generates a skeletal fastapi-mvc project in ~/apis/Skynet.
 """
 
 
@@ -33,6 +40,8 @@ Default Project template used: https://github.com/fastapi-mvc/copier-project
     vcs_ref="0.1.1",
     help=cmd_help,
     short_help=cmd_short_help,
+    epilog=epilog,
+    alias="n",
 )
 @click.argument(
     "APP_PATH",

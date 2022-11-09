@@ -22,11 +22,13 @@ file. Finally, edits config/router.py in order to add controller to
 FastAPI router.
 
 Generator template used: https://github.com/fastapi-mvc/copier-controller
-
 """
 epilog = """\
 Example:
     `fastapi-mvc generate controller stock_market ticker buy:post sell:delete`
+
+    Or using short-cut alias:
+    `fm g ctl stock_market ticker buy:post sell:delete`
 
     Creates controller with URLs like /stock_market/ticker.
         Controller: app/controllers/stock_market.py
@@ -42,6 +44,7 @@ Example:
     help=cmd_help,
     short_help=cmd_short_help,
     epilog=epilog,
+    alias="ctl",
 )
 @click.argument(
     "NAME",

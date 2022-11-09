@@ -20,11 +20,13 @@ Creates a new generator at lib/generators. Pass the generator name
 under_scored.
 
 Generator template used: https://github.com/fastapi-mvc/copier-generator
-
 """
 epilog = """\
 Example:
     `fastapi-mvc generate generator awesome`
+
+    Or using short-cut alias:
+    `fm g gen awesome`
 
     creates a standard awesome generator:
         lib/generators/awesome/.envrc
@@ -54,6 +56,7 @@ Example:
     help=cmd_help,
     short_help=cmd_short_help,
     epilog=epilog,
+    alias="gen",
 )
 @click.argument(
     "NAME",

@@ -19,11 +19,13 @@ cmd_help = """\
 Creates an executable shell script scaffold at the current working directory.
 
 Generator template used: https://github.com/fastapi-mvc/copier-script
-
 """
 epilog = """\
 Example:
     `fastapi-mvc generate script example.sh`
+
+    Or using short-cut alias:
+    `fm g ss example.sh`
 
     creates an executable file:
         example.sh
@@ -37,11 +39,13 @@ Example:
     category="Builtins",
     help=cmd_help,
     short_help=cmd_short_help,
+    epilog=epilog,
+    alias="ss",
 )
 @click.option(
     "-n",
     "--use-nix",
-    help="Use nix-sell (shebang header).",
+    help="Use nix-shell (shebang header).",
     is_flag=True,
 )
 @click.argument(
