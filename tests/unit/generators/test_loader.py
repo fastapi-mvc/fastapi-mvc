@@ -32,3 +32,13 @@ def test_load_generators_error(getcwd_mock, importlib_mock):
     generators = load_generators()
 
     assert sorted(generators.keys()) == sorted(["controller", "generator", "script"])
+
+
+def test_load_generators_from_paths():
+    env = {"FMVC_PATH": f"{DATA_DIR}/lib/generators"}
+    with mock.patch.dict(os.environ, env, clear=True):
+        generators = load_generators()
+
+    assert sorted(generators.keys()) == sorted(
+        ["controller", "foobar", "generator", "my-controller", "script"]
+    )
