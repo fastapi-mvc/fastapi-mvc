@@ -1,6 +1,5 @@
 import pytest
 from click.testing import CliRunner
-from fastapi_mvc.cli.new import new
 
 
 content = """\

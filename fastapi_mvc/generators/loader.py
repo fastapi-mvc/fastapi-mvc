@@ -30,8 +30,12 @@ def load_generators():
         https://docs.python.org/3/library/importlib.html#importing-programmatically
 
     """
-    paths = [os.path.join(os.getcwd(), "lib/generators")]
     unique = {controller, generator, script}
+    paths = [os.path.join(os.getcwd(), "lib/generators")]
+
+    for p in os.getenv("FMVC_PATH", "").split(":"):
+        if os.path.exists(p) and os.access(p, os.R_OK):
+            paths.append(p)
 
     for item in pkgutil.iter_modules(paths):
         m_path = os.path.join(

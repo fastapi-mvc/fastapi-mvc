@@ -2,6 +2,12 @@
 
 This file documents changes to [fastapi-mvc](https://github.com/fastapi-mvc/fastapi-mvc). The release numbering uses [semantic versioning](http://semver.org).
 
+## Unreleased
+
+### Features
+
+* Allow generators lookup paths configuration via an environment variable [#211](https://github.com/fastapi-mvc/fastapi-mvc/issues/211). PR [#212](https://github.com/fastapi-mvc/fastapi-mvc/pull/212)
+
 ## 0.19.0 (09.11.2022)
 
 ### Features
