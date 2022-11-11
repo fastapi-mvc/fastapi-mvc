@@ -7,6 +7,10 @@ This part of the documentation lists the full API reference of all classes and f
 Core
 ----
 
+.. autoclass:: fastapi_mvc.ClickAliasedGroup
+   :members:
+   :show-inheritance:
+
 .. autoclass:: fastapi_mvc.Command
    :members:
    :show-inheritance:
@@ -27,6 +31,8 @@ Generators
 .. autofunction:: fastapi_mvc.generators.controller
 
 .. autofunction:: fastapi_mvc.generators.generator
+
+.. autofunction:: fastapi_mvc.generators.script
 
 .. autofunction:: fastapi_mvc.generators.load_generators
 

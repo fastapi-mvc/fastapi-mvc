@@ -8,6 +8,10 @@ This file documents changes to [fastapi-mvc](https://github.com/fastapi-mvc/fast
 
 * Allow generators lookup paths configuration via an environment variable [#211](https://github.com/fastapi-mvc/fastapi-mvc/issues/211). PR [#212](https://github.com/fastapi-mvc/fastapi-mvc/pull/212)
 
+### Documentation
+
+* Update documentation after refactor to copier [#175](https://github.com/fastapi-mvc/fastapi-mvc/issues/175). PR [#213](https://github.com/fastapi-mvc/fastapi-mvc/pull/213)
+
 ## 0.19.0 (09.11.2022)
 
 ### Features
