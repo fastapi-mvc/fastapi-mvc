@@ -128,7 +128,7 @@ Generate pieces of code or even your own generators
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Fastapi-mvc comes with a number of scripts called generators that are designed to make your development life easier by creating everything that's necessary to start working on a particular task.
-Generators are built on top of `cookiecutter <https://github.com/cookiecutter/cookiecutter>`__. It provides powerful options for manipulating and creating files based on given input and template.
+Generators are built on top of `copier <https://github.com/copier-org/copier>`__. It provides powerful options for manipulating and creating files based on given input and template.
 Moreover, it is agnostic to the programming language one is templating.
 
 Uses `Poetry <https://github.com/python-poetry/poetry>`__ dependency management
