@@ -74,10 +74,12 @@ jobs:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Update GitHub env
+        run: echo "IMAGE_TAG=$(cat TAG)" >> $GITHUB_ENV
       - name: Load and push image
         run: |
           docker load --input result
           docker tag fastapi-mvc:latest ${{ format('{0}/{1}:latest', env.REGISTRY, env.IMAGE_NAME) }}
           docker push ${{ format('{0}/{1}:latest', env.REGISTRY, env.IMAGE_NAME) }}
-          docker tag fastapi-mvc:latest ${{ format('{0}/{1}', env.REGISTRY, env.IMAGE_NAME) }}:$(cat TAG)
+          docker tag fastapi-mvc:latest ${{ format('{0}/{1}:{2}', env.REGISTRY, env.IMAGE_NAME, env.IMAGE_TAG) }}
           docker push ${{ format('{0}/{1}:{2}', env.REGISTRY, env.IMAGE_NAME, env.IMAGE_TAG) }}
