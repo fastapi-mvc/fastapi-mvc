@@ -7,6 +7,10 @@ Installation
 From PyPi:
 ~~~~~~~~~~
 
+Prerequisites:
+
+* git 2.27 or later
+
 To install fastapi-mvc from PyPi use ``pip install`` command:
 
 .. code-block:: bash
@@ -476,10 +480,6 @@ You can do this by running the following command in the galactic-empire director
     INFO:     Started server process [4039305]
     INFO:     Waiting for application startup.
     INFO:     Application startup complete.
-    ^CINFO:     Shutting down
-    INFO:     Waiting for application shutdown.
-    INFO:     Application shutdown complete.
-    INFO:     Finished server process [4039305]
 
 This will start up `uvicron <https://github.com/encode/uvicorn>`__ development server (ASGI) distributed with fastapi-mvc by default.
 To see your application in action, open a browser window and navigate to http://127.0.0.1:8000. You should see the FastAPI interactive API documentation page:
@@ -498,6 +498,27 @@ You can also check application health by running GET request to ``/api/ready`` e
 
     $ curl 127.0.0.1:8000/api/ready
     {"status":"ok"}
+
+Lastly, you can always use the project ``serve`` CLI command for starting production unicorn + uvicorn (WSGI + ASGI) server:
+
+.. code-block:: bash
+
+    $ galactic-empire serve
+    [2022-04-23 20:21:49 +0000] [4769] [INFO] Start gunicorn WSGI with ASGI workers.
+    [2022-04-23 20:21:49 +0000] [4769] [INFO] Starting gunicorn 20.1.0
+    [2022-04-23 20:21:49 +0000] [4769] [INFO] Listening at: http://127.0.0.1:8000 (4769)
+    [2022-04-23 20:21:49 +0000] [4769] [INFO] Using worker: uvicorn.workers.UvicornWorker
+    [2022-04-23 20:21:49 +0000] [4769] [INFO] Server is ready. Spawning workers
+    [2022-04-23 20:21:49 +0000] [4771] [INFO] Booting worker with pid: 4771
+    [2022-04-23 20:21:49 +0000] [4771] [INFO] Worker spawned (pid: 4771)
+    [2022-04-23 20:21:49 +0000] [4771] [INFO] Started server process [4771]
+    [2022-04-23 20:21:49 +0000] [4771] [INFO] Waiting for application startup.
+    [2022-04-23 20:21:49 +0000] [4771] [INFO] Application startup complete.
+    [2022-04-23 20:21:49 +0000] [4772] [INFO] Booting worker with pid: 4772
+    [2022-04-23 20:21:49 +0000] [4772] [INFO] Worker spawned (pid: 4772)
+    [2022-04-23 20:21:49 +0000] [4772] [INFO] Started server process [4772]
+    [2022-04-23 20:21:49 +0000] [4772] [INFO] Waiting for application startup.
+    [2022-04-23 20:21:49 +0000] [4772] [INFO] Application startup complete.
 
 Creating new endpoint
 ---------------------
@@ -609,5 +630,23 @@ Lastly let's try if our new endpoints actually work:
     $ curl -X DELETE 127.0.0.1:8000/api/death_star/fire
     {"hello":"world"}
 
+Project documentation
+---------------------
+
 As you can see fastapi-mvc is just a tool designed to make your FastAPI development life easier, by creating everything that's necessary to start working on a particular task.
 However, generated project by fastapi-mvc is fully independent and does not require it in order to work. You can learn more about it from included documentation in it.
+
+If you did not skip GitHub Actions during project generation, the documentation will be deployed to your project GitHub pages via Build Docs workflow.
+
+.. note::
+    You might need to enable GitHub pages for this project first.
+
+To build docs manually:
+
+.. code-block:: bash
+
+    make docs
+
+Then open ``./site/index.html`` with any browser.
+
+Lastly, you can always have a look at the ``fastapi-mvc/example`` `documentation deployment <https://fastapi-mvc.github.io/example/index.html>`__.
