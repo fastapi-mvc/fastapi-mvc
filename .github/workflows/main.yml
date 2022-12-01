@@ -33,7 +33,7 @@ jobs:
     if: ${{ needs.pre_job.outputs.should_skip != 'true' }}
     strategy:
       matrix:
-        python-version: [ '3.8', '3.9', '3.10' ]
+        python-version: [ '3.8', '3.9', '3.10', '3.11' ]
         os: [ubuntu-latest, macos-12]
     runs-on: ${{ matrix.os }}
 
@@ -102,7 +102,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: [ '3.8', '3.9', '3.10' ]
+        python-version: [ '3.8', '3.9', '3.10', '3.11' ]
         os: [ubuntu-latest, macos-12]
     runs-on: ${{ matrix.os }}
 
@@ -124,7 +124,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: [ '3.8', '3.9', '3.10' ]
+        python-version: [ '3.8', '3.9', '3.10', '3.11' ]
         os: [ubuntu-latest, macos-12]
     runs-on: ${{ matrix.os }}
 
@@ -146,7 +146,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: [ '3.8', '3.9', '3.10' ]
+        python-version: [ '3.8', '3.9', '3.10', '3.11' ]
         os: [ubuntu-latest, macos-12]
     runs-on: ${{ matrix.os }}
 
