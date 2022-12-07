@@ -43,6 +43,7 @@
           py39 = pkgs.fastapi-mvc.override { python = pkgs.python39; };
           py310 = pkgs.fastapi-mvc.override { python = pkgs.python310; };
           editable = pkgs.fastapi-mvc-dev;
+        } // pkgs.lib.optionalAttrs pkgs.stdenv.isLinux {
           image = pkgs.callPackage ./image.nix {
             inherit pkgs;
             fastapi-mvc = pkgs.fastapi-mvc;
