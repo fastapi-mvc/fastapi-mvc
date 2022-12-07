@@ -112,6 +112,7 @@
               export PATH="${pkgs.lib.makeBinPath [
                   pkgs.fastapi-mvc-dev
                   pkgs.git
+                  pkgs.coreutils
               ]}"
               echo "[nix][coverage] Run fastapi-mvc tests coverage."
               pytest --cov-config=.coveragerc --cov=fastapi_mvc --cov-fail-under=90 --cov-report=xml --cov-report=term-missing tests
