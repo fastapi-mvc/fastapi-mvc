@@ -24,7 +24,7 @@
             git = final.git;
           };
           fastapi-mvc-dev = prev.callPackage ./editable.nix {
-            python = final.python39;
+            python = final.python3;
             poetry2nix = final.poetry2nix;
           };
         })
@@ -39,10 +39,10 @@
       rec {
         packages = {
           default = pkgs.fastapi-mvc;
-          py38 = pkgs.fastapi-mvc.override { python = pkgs.python38; };
-          py39 = pkgs.fastapi-mvc.override { python = pkgs.python39; };
-          py310 = pkgs.fastapi-mvc.override { python = pkgs.python310; };
-          editable = pkgs.fastapi-mvc-dev;
+          fastapi-mvc-py38 = pkgs.fastapi-mvc.override { python = pkgs.python38; };
+          fastapi-mvc-py39 = pkgs.fastapi-mvc.override { python = pkgs.python39; };
+          fastapi-mvc-py310 = pkgs.fastapi-mvc.override { python = pkgs.python310; };
+          poetryEnv = pkgs.fastapi-mvc-dev;
         } // pkgs.lib.optionalAttrs pkgs.stdenv.isLinux {
           image = pkgs.callPackage ./image.nix {
             inherit pkgs;
