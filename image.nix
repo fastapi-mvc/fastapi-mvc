@@ -1,20 +1,14 @@
-{ pkgs ? import <nixpkgs> { overlays = [ (import ./overlay.nix) ]; }
+{ pkgs ? import <nixpkgs> { }
+, fastapi-mvc
 , name ? "fastapi-mvc"
 , tag ? "latest"
 }:
-
-let
-  app = pkgs.callPackage ./default.nix {
-    python = pkgs.python39;
-    poetry2nix = pkgs.poetry2nix;
-  };
-in
 
 pkgs.dockerTools.buildImage {
   inherit name tag;
 
   contents = [
-    app
+    fastapi-mvc
     pkgs.bash
     pkgs.coreutils
     pkgs.curl
@@ -43,6 +37,6 @@ pkgs.dockerTools.buildImage {
     ];
     User = "nonroot";
     WorkingDir = "/home/nonroot";
-    Entrypoint = [ "${app}/bin/fastapi-mvc" ];
+    Entrypoint = [ "${fastapi-mvc}/bin/fastapi-mvc" ];
   };
 }
