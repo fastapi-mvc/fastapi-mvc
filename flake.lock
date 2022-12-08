@@ -32,16 +32,16 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1670248078,
-        "narHash": "sha256-NljfevA44layMfbGi16VoTak23/195MKazB9984U4L8=",
+        "lastModified": 1670461440,
+        "narHash": "sha256-jy1LB8HOMKGJEGXgzFRLDU1CBGL0/LlkolgnqIsF0D8=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "7e72265b08d4c60f414a0f3ab162e24648e84342",
+        "rev": "04a75b2eecc0acf6239acf9dd04485ff8d14f425",
         "type": "github"
       },
       "original": {
         "owner": "NixOS",
-        "ref": "nixos-22.05",
+        "ref": "nixos-22.11",
         "repo": "nixpkgs",
         "type": "github"
       }
@@ -54,16 +54,16 @@
         ]
       },
       "locked": {
-        "lastModified": 1657362323,
-        "narHash": "sha256-0o856HWRRc5q02+vIhlIW4NpeQUDvCv3CuP1w2rZ+ho=",
+        "lastModified": 1670390991,
+        "narHash": "sha256-+7Ix9k1Mg/argNWOox32P5AiUhMKW+OEJjzHXGKNNjc=",
         "owner": "nix-community",
         "repo": "poetry2nix",
-        "rev": "9deeedd086ee17ef199b67c4d8d5c81d45e6b0a5",
+        "rev": "dbbf4c83e02c3a25d9d87041386a4981fe699661",
         "type": "github"
       },
       "original": {
         "owner": "nix-community",
-        "ref": "1.31.0",
+        "ref": "1.38.0",
         "repo": "poetry2nix",
         "type": "github"
       }

@@ -3,11 +3,11 @@
   nixConfig.bash-prompt = ''\n\[\033[1;32m\][nix-develop:\w]\$\[\033[0m\] '';
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-22.05";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-22.11";
     flake-utils.url = "github:numtide/flake-utils";
     flake-utils.inputs.nixpkgs.follows = "nixpkgs";
     poetry2nix = {
-      url = "github:nix-community/poetry2nix?ref=1.31.0";
+      url = "github:nix-community/poetry2nix?ref=1.38.0";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
