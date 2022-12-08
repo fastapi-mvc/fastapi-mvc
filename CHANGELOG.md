@@ -2,6 +2,12 @@
 
 This file documents changes to [fastapi-mvc](https://github.com/fastapi-mvc/fastapi-mvc). The release numbering uses [semantic versioning](http://semver.org).
 
+## Unreleased
+
+### Features
+
+* Refactor Nix expressions to flakes [#216](https://github.com/fastapi-mvc/fastapi-mvc/issues/216). PR [#218](https://github.com/fastapi-mvc/fastapi-mvc/pull/218)
+
 ## 0.20.0 (11.11.2022)
 
 ### Features
