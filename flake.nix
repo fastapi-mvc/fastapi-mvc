@@ -129,13 +129,13 @@
         };
 
         devShells = {
-          default = import ./shell.nix { inherit pkgs; };
-          editable = pkgs.fastapi-mvc-dev.env.overrideAttrs (oldAttrs: {
+          default = pkgs.fastapi-mvc-dev.env.overrideAttrs (oldAttrs: {
             buildInputs = [
               pkgs.git
               pkgs.poetry
             ];
           });
+          poetry = import ./shell.nix { inherit pkgs; };
         };
       }));
 }
