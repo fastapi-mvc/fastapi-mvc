@@ -1,16 +1,6 @@
-final: prev:
-let
-  src = final.fetchFromGitHub {
-    owner = "nix-community";
-    repo = "poetry2nix";
-    rev = "1.31.0";
-    sha256 = "06psv5mc7xg31bvjpg030mwnk0sv90cj5bvgsdmcwicifpl3k3yj";
-  };
-  p2n = import "${src.out}/default.nix" { pkgs = final; poetry = final.poetry; };
-in
-{
+final: prev: {
   # p2n-final & p2n-prev refers to poetry2nix
-  poetry2nix = p2n.overrideScope' (p2n-final: p2n-prev: {
+  poetry2nix = prev.poetry2nix.overrideScope' (p2n-final: p2n-prev: {
 
     # py-final & py-prev refers to python packages
     defaultPoetryOverrides = p2n-prev.defaultPoetryOverrides.extend (py-final: py-prev: {

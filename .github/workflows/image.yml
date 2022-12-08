@@ -54,10 +54,8 @@ jobs:
         with:
           name: fastapi-mvc
           authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
-      - name: Install make
-        run: nix-env -i gnumake -f '<nixpkgs>'
       - name: Build container image
-        run: make image
+        run: nix build .#image
       - name: Archive build artifacts
         uses: actions/upload-artifact@v3
         with:

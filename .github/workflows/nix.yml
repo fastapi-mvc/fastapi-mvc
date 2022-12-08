@@ -44,6 +44,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
+        python-version: [ '38', '39', '310' ]
         os: [ubuntu-latest, macos-12]
     runs-on: ${{ matrix.os }}
 
@@ -59,21 +60,16 @@ jobs:
         with:
           name: fastapi-mvc
           authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
-      - name: Install make
-        run: nix-env -i gnumake -f '<nixpkgs>'
       - name: Build fastapi-mvc
-        run: make build
+        run: nix build .#fastapi-mvc-py${{ matrix.python-version }}
   nix-ci:
     needs: pre_job
     if: ${{ needs.pre_job.outputs.should_skip != 'true' }}
     strategy:
       fail-fast: false
       matrix:
-        python-version: [ 'python38', 'python39', 'python310' ]
         os: [ubuntu-latest, macos-12]
     runs-on: ${{ matrix.os }}
-    env:
-      PYTHON_NIXPKG: ${{ matrix.python-version }}
 
     steps:
       - uses: actions/checkout@v3
@@ -86,11 +82,9 @@ jobs:
         with:
           name: fastapi-mvc
           authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
-      - name: Install make
-        run: nix-env -i gnumake -f '<nixpkgs>'
+      - name: Run fake check
+        run: nix flake check
       - name: Run fastapi-mvc metrics checks
-        run: make metrics
+        run: nix run .#metrics
       - name: Run fastapi-mvc tests
-        run: make test
-      - name: Run fastapi-mvc coverage
-        run: make coverage
+        run: nix run .#test

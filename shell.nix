@@ -1,17 +1,23 @@
-{ pkgs ? import <nixpkgs> { overlays = [ (import ./overlay.nix) ]; }
+{ pkgs ? import <nixpkgs> { }
 , python ? "python3"
 }:
 
 let
-  fastapi-mvc = pkgs.callPackage ./editable.nix {
-    python = builtins.getAttr (python) pkgs;
-    poetry2nix = pkgs.poetry2nix;
-  };
+  pythonPackage = builtins.getAttr (python) pkgs;
+  poetry = pkgs.poetry.override { python = pythonPackage; };
 in
-fastapi-mvc.env.overrideAttrs (oldAttrs: {
+pkgs.mkShell {
   buildInputs = [
     pkgs.gnumake
+    pkgs.curl
     pkgs.git
-    pkgs.poetry
+    pythonPackage
+    poetry
   ];
-})
+  shellHook = ''
+    export POETRY_HOME=${poetry}
+    export POETRY_BINARY=${poetry}/bin/poetry
+    export POETRY_VIRTUALENVS_IN_PROJECT=true
+    unset SOURCE_DATE_EPOCH
+  '';
+}
