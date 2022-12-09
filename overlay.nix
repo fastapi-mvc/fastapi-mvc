@@ -15,6 +15,10 @@ final: prev: {
         buildInputs = old.buildInputs or [ ] ++ [ py-final.setuptools ];
       });
 
+      pydantic = py-prev.pydantic.overrideAttrs (old: {
+        buildInputs = old.buildInputs or [ ] ++ [ final.libxcrypt ];
+      });
+
       sphinx = py-prev.sphinx.overridePythonAttrs (old: {
         buildInputs = old.buildInputs or [ ] ++ [ py-final.flit-core ];
       });
