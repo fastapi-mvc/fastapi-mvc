@@ -103,7 +103,7 @@ Lastly, to spawn shell for development environment for fastapi-mvc run:
 
 .. code-block:: bash
 
-    nix develop github:fastapi-mvc/fastapi-mvc
+    nix develop github:fastapi-mvc/fastapi-mvc#default
 
 Creating a new project
 ----------------------
