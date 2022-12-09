@@ -42,7 +42,11 @@
           fastapi-mvc-py38 = pkgs.fastapi-mvc.override { python = pkgs.python38; };
           fastapi-mvc-py39 = pkgs.fastapi-mvc.override { python = pkgs.python39; };
           fastapi-mvc-py310 = pkgs.fastapi-mvc.override { python = pkgs.python310; };
-          fastapi-mvc-py311 = pkgs.fastapi-mvc.override { python = pkgs.python311; };
+          fastapi-mvc-py311 = (pkgs.fastapi-mvc.overrideAttrs (oldAttrs: {
+            # Override import check. It will fail for now due to:
+            # https://github.com/cython/cython/issues/4804
+            pythonImportsCheck = [ ];
+          })).override { python = pkgs.python311; };
           poetryEnv = pkgs.fastapi-mvc-dev;
         } // pkgs.lib.optionalAttrs pkgs.stdenv.isLinux {
           image = pkgs.callPackage ./image.nix {
