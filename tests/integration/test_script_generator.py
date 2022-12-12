@@ -1,6 +1,6 @@
 import os
 
-from fastapi_mvc.generators import script
+from fastapi_mvc.generators import ScriptGenerator
 
 
 def assert_paths(paths, condition):
@@ -11,7 +11,7 @@ def assert_paths(paths, condition):
 def test_script(cli_runner, fake_project, monkeypatch):
     monkeypatch.chdir(fake_project)
     result = cli_runner.invoke(
-        script,
+        ScriptGenerator,
         ["--use-nix", "my-script.sh"],
     )
     assert result.exit_code == 0

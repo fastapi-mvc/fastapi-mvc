@@ -25,9 +25,14 @@ Resources:
 
 """
 from fastapi_mvc.generators.loader import load_generators
-from fastapi_mvc.generators.generator import generator
-from fastapi_mvc.generators.controller import controller
-from fastapi_mvc.generators.script import script
+from fastapi_mvc.generators.generator import generator as GeneratorGenerator
+from fastapi_mvc.generators.controller import controller as ControllerGenerator
+from fastapi_mvc.generators.script import script as ScriptGenerator
 
 
-__all__ = ("load_generators", "controller", "generator", "script")
+__all__ = (
+    "load_generators",
+    "ControllerGenerator",
+    "GeneratorGenerator",
+    "ScriptGenerator",
+)

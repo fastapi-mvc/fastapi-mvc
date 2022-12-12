@@ -23,7 +23,7 @@ def test_new_invalid_options(cli_runner):
 @mock.patch("fastapi_mvc.cli.new.shutil.which", return_value=True)
 @mock.patch("fastapi_mvc.cli.new.run_shell")
 @mock.patch("fastapi_mvc.cli.new.get_git_user_info", return_value=("John", "ex@ma.il"))
-@mock.patch("fastapi_mvc.cli.new.new.run_auto")
+@mock.patch("fastapi_mvc.cli.new.Generator.run_auto")
 def test_new_default_values(copier_mock, git_mock, shell_mock, which_mock, cli_runner):
     result = cli_runner.invoke(new, ["test-project"])
     assert result.exit_code == 0
@@ -164,7 +164,7 @@ def test_new_default_values(copier_mock, git_mock, shell_mock, which_mock, cli_r
 @mock.patch("fastapi_mvc.cli.new.shutil.which", return_value=True)
 @mock.patch("fastapi_mvc.cli.new.run_shell")
 @mock.patch("fastapi_mvc.cli.new.get_git_user_info", return_value=("John", "ex@ma.il"))
-@mock.patch("fastapi_mvc.cli.new.new.run_auto")
+@mock.patch("fastapi_mvc.cli.new.Generator.run_auto")
 def test_new_with_options(
     copier_mock, git_mock, shell_mock, which_mock, cli_runner, args, expected
 ):
@@ -189,7 +189,7 @@ def test_new_with_options(
 @mock.patch("fastapi_mvc.cli.new.shutil.which", return_value=None)
 @mock.patch("fastapi_mvc.cli.new.run_shell")
 @mock.patch("fastapi_mvc.cli.new.get_git_user_info", return_value=("John", "ex@ma.il"))
-@mock.patch("fastapi_mvc.cli.new.new.run_auto")
+@mock.patch("fastapi_mvc.cli.new.Generator.run_auto")
 def test_new_no_make(copier_mock, git_mock, shell_mock, which_mock, cli_runner):
     result = cli_runner.invoke(new, ["test-project"])
     assert result.exit_code == 0

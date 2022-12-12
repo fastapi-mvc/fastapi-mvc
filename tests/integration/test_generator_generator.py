@@ -1,7 +1,7 @@
 import os
 
 from fastapi_mvc.cli.generate import get_generate_cmd
-from fastapi_mvc.generators import generator
+from fastapi_mvc.generators import GeneratorGenerator
 
 
 def assert_paths(paths, condition):
@@ -12,7 +12,7 @@ def assert_paths(paths, condition):
 def test_generator(cli_runner, fake_project, monkeypatch):
     monkeypatch.chdir(fake_project)
     result = cli_runner.invoke(
-        generator,
+        GeneratorGenerator,
         ["foo-bar"],
     )
     assert result.exit_code == 0

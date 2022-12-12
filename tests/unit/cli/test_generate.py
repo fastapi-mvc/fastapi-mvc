@@ -1,16 +1,15 @@
-import os
 from unittest import mock
 
 import pytest
 from fastapi_mvc.cli.generate import get_generate_cmd
-from fastapi_mvc.generators import controller, generator
+from fastapi_mvc.generators import ControllerGenerator, GeneratorGenerator
 from ..data.lib.generators.foobar import foobar
 from ..data.lib.generators.my_controller import my_controller
 
 
 generators = {
-    "controller": controller,
-    "generator": generator,
+    "controller": ControllerGenerator,
+    "generator": GeneratorGenerator,
     "foobar": foobar,
     "my-controller": my_controller,
 }
