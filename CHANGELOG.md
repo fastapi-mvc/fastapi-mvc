@@ -2,12 +2,21 @@
 
 This file documents changes to [fastapi-mvc](https://github.com/fastapi-mvc/fastapi-mvc). The release numbering uses [semantic versioning](http://semver.org).
 
-## Unreleased
+## 0.21.0 (13.12.2022)
 
 ### Features
 
 * Refactor Nix expressions to flakes [#216](https://github.com/fastapi-mvc/fastapi-mvc/issues/216). PR [#218](https://github.com/fastapi-mvc/fastapi-mvc/pull/218)
 * Add Python 3.11 support [#198](https://github.com/fastapi-mvc/fastapi-mvc/issues/198). PR [#220](https://github.com/fastapi-mvc/fastapi-mvc/pull/220)
+
+### Internal
+
+* Update dependencies:
+  * pytest (7.1.3 -> 7.2.0) PR [#203](https://github.com/fastapi-mvc/fastapi-mvc/pull/203)
+  * sphinx (5.2.3 -> 5.3.0) PR [#205](https://github.com/fastapi-mvc/fastapi-mvc/pull/205)
+  * flake8-import-order (0.18.1 -> 0.18.2) PR [#215](https://github.com/fastapi-mvc/fastapi-mvc/pull/215)
+  * black (22.8.0 -> 22.12.0) PR [#221](https://github.com/fastapi-mvc/fastapi-mvc/pull/221)
+  * certifi (2022.9.24 -> 2022.12.7) PR [#219](https://github.com/fastapi-mvc/fastapi-mvc/pull/219)
 
 ## 0.20.0 (11.11.2022)
 
