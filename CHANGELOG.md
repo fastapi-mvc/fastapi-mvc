@@ -7,6 +7,7 @@ This file documents changes to [fastapi-mvc](https://github.com/fastapi-mvc/fast
 ### Features
 
 * Refactor Nix expressions to flakes [#216](https://github.com/fastapi-mvc/fastapi-mvc/issues/216). PR [#218](https://github.com/fastapi-mvc/fastapi-mvc/pull/218)
+* Add Python 3.11 support [#198](https://github.com/fastapi-mvc/fastapi-mvc/issues/198). PR [#220](https://github.com/fastapi-mvc/fastapi-mvc/pull/220)
 
 ## 0.20.0 (11.11.2022)
 

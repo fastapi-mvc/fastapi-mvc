@@ -101,6 +101,17 @@ You can get the project directly from PyPI:
 pip install fastapi-mvc
 ```
 
+Or build with Nix from flake:
+
+```shell
+# Optionally setup fastapi-mvc Nix binary cache to speed up the build process
+# https://app.cachix.org/cache/fastapi-mvc#pull
+nix-env -iA cachix -f https://cachix.org/api/v1/install
+cachix use fastapi-mvc
+# Install with Nix from flake:
+nix build github:fastapi-mvc/fastapi-mvc#default --profile $HOME/.nix-profile
+```
+
 ## Projects created with fastapi-mvc
 
 If you have created a project with fastapi-mvc, feel free to open PR and add yourself to the list. Share your story and project. Your success is my success :)

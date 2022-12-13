@@ -1,6 +1,6 @@
 import os
 
-from fastapi_mvc.generators import controller
+from fastapi_mvc.generators import ControllerGenerator
 
 
 def assert_paths(paths, condition):
@@ -11,7 +11,7 @@ def assert_paths(paths, condition):
 def test_controller(cli_runner, fake_project, monkeypatch):
     monkeypatch.chdir(fake_project)
     result = cli_runner.invoke(
-        controller,
+        ControllerGenerator,
         ["--skip-routes", "stock_market", "ticker", "buy:post", "sell:delete"],
     )
     assert result.exit_code == 0

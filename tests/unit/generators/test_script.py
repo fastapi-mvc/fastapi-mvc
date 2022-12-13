@@ -2,7 +2,7 @@ import os
 from unittest import mock
 
 import pytest
-from fastapi_mvc.generators.script import script
+from fastapi_mvc.generators import ScriptGenerator
 
 
 DATA_DIR = os.path.abspath(
@@ -14,22 +14,22 @@ DATA_DIR = os.path.abspath(
 
 
 def test_script_help(cli_runner):
-    result = cli_runner.invoke(script, ["--help"])
+    result = cli_runner.invoke(ScriptGenerator, ["--help"])
     assert result.exit_code == 0
 
 
 def test_script_invalid_options(cli_runner):
-    result = cli_runner.invoke(script, ["--not_exists"])
+    result = cli_runner.invoke(ScriptGenerator, ["--not_exists"])
     assert result.exit_code == 2
 
 
-@mock.patch("fastapi_mvc.generators.script.run_copy")
+@mock.patch("fastapi_mvc.generators.script.Generator.run_copy")
 def test_script_default_values(copier_mock, monkeypatch, cli_runner):
     # Change working directory to fake project. It is easier to fake fastapi-mvc project,
     # rather than mocking ctx injected to command via @click.pass_context decorator.
     monkeypatch.chdir(DATA_DIR)
 
-    result = cli_runner.invoke(script, ["custom-script.sh"])
+    result = cli_runner.invoke(ScriptGenerator, ["custom-script.sh"])
     assert result.exit_code == 0
 
     copier_mock.assert_called_once_with(
@@ -59,13 +59,13 @@ def test_script_default_values(copier_mock, monkeypatch, cli_runner):
         )
     ],
 )
-@mock.patch("fastapi_mvc.generators.script.run_copy")
+@mock.patch("fastapi_mvc.generators.script.Generator.run_copy")
 def test_script_with_options(copier_mock, monkeypatch, cli_runner, args, expected):
     # Change working directory to fake project. It is easier to fake fastapi-mvc project,
     # rather than mocking ctx injected to command via @click.pass_context decorator.
     monkeypatch.chdir(DATA_DIR)
 
-    result = cli_runner.invoke(script, args)
+    result = cli_runner.invoke(ScriptGenerator, args)
     assert result.exit_code == 0
 
     copier_mock.assert_called_once_with(**expected)

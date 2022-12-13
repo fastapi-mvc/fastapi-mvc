@@ -3,11 +3,11 @@
   nixConfig.bash-prompt = ''\n\[\033[1;32m\][nix-develop:\w]\$\[\033[0m\] '';
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-22.05";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-22.11";
     flake-utils.url = "github:numtide/flake-utils";
     flake-utils.inputs.nixpkgs.follows = "nixpkgs";
     poetry2nix = {
-      url = "github:nix-community/poetry2nix?ref=1.31.0";
+      url = "github:nix-community/poetry2nix?ref=1.38.0";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
@@ -42,6 +42,11 @@
           fastapi-mvc-py38 = pkgs.fastapi-mvc.override { python = pkgs.python38; };
           fastapi-mvc-py39 = pkgs.fastapi-mvc.override { python = pkgs.python39; };
           fastapi-mvc-py310 = pkgs.fastapi-mvc.override { python = pkgs.python310; };
+          fastapi-mvc-py311 = (pkgs.fastapi-mvc.overrideAttrs (oldAttrs: {
+            # Override import check. It will fail for now due to:
+            # https://github.com/cython/cython/issues/4804
+            pythonImportsCheck = [ ];
+          })).override { python = pkgs.python311; };
           poetryEnv = pkgs.fastapi-mvc-dev;
         } // pkgs.lib.optionalAttrs pkgs.stdenv.isLinux {
           image = pkgs.callPackage ./image.nix {

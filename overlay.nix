@@ -5,12 +5,18 @@ final: prev: {
     # py-final & py-prev refers to python packages
     defaultPoetryOverrides = p2n-prev.defaultPoetryOverrides.extend (py-final: py-prev: {
 
-      mdit-py-plugins = py-prev.mdit-py-plugins.overridePythonAttrs (old: {
-        buildInputs = old.buildInputs or [ ] ++ [ py-final.flit-core ];
+      pyyaml-include = py-prev.pyyaml-include.overridePythonAttrs (old: {
+        postPatch = ''
+          substituteInPlace setup.py --replace 'setup()' 'setup(version="${old.version}")'
+        '';
       });
 
-      idna = py-prev.idna.overridePythonAttrs (old: {
-        buildInputs = old.buildInputs or [ ] ++ [ py-final.flit-core ];
+      flake8-todo = py-prev.flake8-todo.overridePythonAttrs (old: {
+        buildInputs = old.buildInputs or [ ] ++ [ py-final.setuptools ];
+      });
+
+      pydantic = py-prev.pydantic.overrideAttrs (old: {
+        buildInputs = old.buildInputs or [ ] ++ [ final.libxcrypt ];
       });
 
       sphinx = py-prev.sphinx.overridePythonAttrs (old: {

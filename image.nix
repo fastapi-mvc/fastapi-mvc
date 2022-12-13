@@ -7,14 +7,18 @@
 pkgs.dockerTools.buildImage {
   inherit name tag;
 
-  contents = [
-    fastapi-mvc
-    pkgs.bash
-    pkgs.coreutils
-    pkgs.curl
-    pkgs.cacert
-    pkgs.gnumake
-  ];
+  copyToRoot = pkgs.buildEnv {
+    name = "image-root";
+    paths = [
+      fastapi-mvc
+      pkgs.bash
+      pkgs.coreutils
+      pkgs.curl
+      pkgs.cacert
+      pkgs.gnumake
+    ];
+    pathsToLink = [ "/bin" ];
+  };
 
   runAsRoot = ''
     #!${pkgs.runtimeShell}
