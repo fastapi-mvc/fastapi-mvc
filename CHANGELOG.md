@@ -2,6 +2,15 @@
 
 This file documents changes to [fastapi-mvc](https://github.com/fastapi-mvc/fastapi-mvc). The release numbering uses [semantic versioning](http://semver.org).
 
+## 0.22.0 (15.12.2022)
+
+### Internal
+
+* Bump copier-project from 0.1.0 to 0.2.0. PR [#224](https://github.com/fastapi-mvc/fastapi-mvc/pull/224)
+* Update GitHub Actions:
+  * Bump nwtgck/actions-netlify from 1.2.4 to 2.0.0. PR [#222](https://github.com/fastapi-mvc/fastapi-mvc/pull/222)
+  * Bump fkirc/skip-duplicate-actions from 5.2.0 to 5.3.0. PR [#223](https://github.com/fastapi-mvc/fastapi-mvc/pull/223)
+
 ## 0.21.0 (13.12.2022)
 
 ### Features
