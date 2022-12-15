@@ -37,7 +37,7 @@ Example:
 @click.command(
     cls=Generator,
     template="https://github.com/fastapi-mvc/copier-project.git",
-    vcs_ref="0.1.1",
+    vcs_ref="0.2.0",
     help=cmd_help,
     short_help=cmd_short_help,
     epilog=epilog,

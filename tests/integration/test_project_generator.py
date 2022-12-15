@@ -38,7 +38,22 @@ def test_new_default_project(cli_runner):
             f"{tmp}/test-project/docs",
             f"{tmp}/test-project/docs",
         ]
+        files = [
+            f"{tmp}/test-project/build/dev-env.sh",
+            f"{tmp}/test-project/tests/unit/app/utils/test_redis.py",
+            f"{tmp}/test-project/test_project/app/utils/redis.py",
+            f"{tmp}/test-project/tests/unit/app/utils/test_aiohttp_client.py",
+            f"{tmp}/test-project/test_project/app/utils/aiohttp_client.py",
+            f"{tmp}/test-project/shell.nix",
+            f"{tmp}/test-project/image.nix",
+            f"{tmp}/test-project/default.nix",
+            f"{tmp}/test-project/editable.nix",
+            f"{tmp}/test-project/overlay.nix",
+            f"{tmp}/test-project/flake.nix",
+            f"{tmp}/test-project/flake.lock",
+        ]
         assert_paths(dirs, condition=lambda x: os.path.isdir(x))
+        assert_paths(files, condition=lambda x: os.path.isfile(x))
 
 
 def test_new_project_minmal(cli_runner):
@@ -61,18 +76,20 @@ def test_new_project_minmal(cli_runner):
         )
 
         paths = [
-            "charts",
-            ".github",
-            "build/dev-env.sh",
-            "manifests",
-            "tests/unit/app/utils/test_redis.py",
-            "test_project/app/utils/redis.py",
-            "tests/unit/app/utils/test_aiohttp_client.py",
-            "test_project/app/utils/aiohttp_client.py",
-            "shell.nix",
-            "image.nix",
-            "default.nix",
-            "overlay.nix",
-            "Nix.mk",
+            f"{tmp}/test-project/charts",
+            f"{tmp}/test-project/.github",
+            f"{tmp}/test-project/build/dev-env.sh",
+            f"{tmp}/test-project/manifests",
+            f"{tmp}/test-project/tests/unit/app/utils/test_redis.py",
+            f"{tmp}/test-project/test_project/app/utils/redis.py",
+            f"{tmp}/test-project/tests/unit/app/utils/test_aiohttp_client.py",
+            f"{tmp}/test-project/test_project/app/utils/aiohttp_client.py",
+            f"{tmp}/test-project/shell.nix",
+            f"{tmp}/test-project/image.nix",
+            f"{tmp}/test-project/default.nix",
+            f"{tmp}/test-project/editable.nix"
+            f"{tmp}/test-project/overlay.nix",
+            f"{tmp}/test-project/flake.nix",
+            f"{tmp}/test-project/flake.lock",
         ]
         assert_paths(paths, lambda x: not os.path.exists(x))
