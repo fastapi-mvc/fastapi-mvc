@@ -25,7 +25,7 @@ from copier.user_data import load_answersfile_data
 
 
 # CONSTANTS
-VERSION = "0.21.0"
+VERSION = "0.22.0"
 ANSWERS_FILE = ".fastapi-mvc.yml"
 
 
