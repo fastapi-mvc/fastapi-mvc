@@ -396,7 +396,7 @@ pyparsing = ">=2.0.2,<3.0.5 || >3.0.5"
 
 [[package]]
 name = "pallets-sphinx-themes"
-version = "2.0.2"
+version = "2.0.3"
 description = "Sphinx themes for Pallets and related projects."
 category = "dev"
 optional = false
@@ -814,7 +814,7 @@ testing = ["func-timeout", "jaraco.itertools", "pytest (>=6)", "pytest-black (>=
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "20cb221f4db8a9ce17a34deae4deec9424c4b7518259696d885c2cced90ea969"
+content-hash = "cf7ad68dea356fd6dd4dffd8ecdb06337c4e1813b26196254194559cc8acbd56"
 
 [metadata.files]
 alabaster = [
@@ -1072,8 +1072,8 @@ packaging = [
     {file = "packaging-21.3.tar.gz", hash = "sha256:dd47c42927d89ab911e606518907cc2d3a1f38bbd026385970643f9c5b8ecfeb"},
 ]
 pallets-sphinx-themes = [
-    {file = "Pallets-Sphinx-Themes-2.0.2.tar.gz", hash = "sha256:6d62f8ea421b035698748850ccaa6c2ee126b3bd9ed575ae558b4a99b0eed1e1"},
-    {file = "Pallets_Sphinx_Themes-2.0.2-py3-none-any.whl", hash = "sha256:70cff6456b1889b5fa11bc422c53fe677b684b4593414397341e59476776992e"},
+    {file = "Pallets-Sphinx-Themes-2.0.3.tar.gz", hash = "sha256:54f991c3897f363c757dcba01adb44791609cb02cc7eaac3a5fcdd3d3d9dfeb3"},
+    {file = "Pallets_Sphinx_Themes-2.0.3-py3-none-any.whl", hash = "sha256:0e94b3f024f171a3a30f8910950d9ec7fff95a2c24b7d30e66573d816036ea69"},
 ]
 pathspec = [
     {file = "pathspec-0.10.1-py3-none-any.whl", hash = "sha256:46846318467efc4556ccfd27816e004270a9eeeeb4d062ce5e6fc7a87c573f93"},
