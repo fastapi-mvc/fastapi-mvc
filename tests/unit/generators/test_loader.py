@@ -1,44 +1,46 @@
-import os
 from unittest import mock
 
 from fastapi_mvc.generators import load_generators
 
 
-DATA_DIR = os.path.abspath(
-    os.path.join(
-        os.path.abspath(__file__),
-        "../../data",
-    )
-)
+class TestLoadGenerators:
 
+    def test_should_load_custom_generators_from_default_path(self, monkeypatch, fake_project_with_generators):
+        # given
+        monkeypatch.chdir(fake_project_with_generators["root"])
 
-@mock.patch("fastapi_mvc.generators.loader.os.getcwd", return_value=DATA_DIR)
-def test_load_generators(getcwd_mock):
-    generators = load_generators()
-    getcwd_mock.assert_called_once()
-
-    assert sorted(generators.keys()) == sorted(
-        ["controller", "foobar", "generator", "my-controller", "script"]
-    )
-
-
-@mock.patch("fastapi_mvc.generators.loader.importlib.util")
-@mock.patch("fastapi_mvc.generators.loader.os.getcwd", return_value=DATA_DIR)
-def test_load_generators_error(getcwd_mock, importlib_mock):
-    spec_mock = mock.Mock()
-    spec_mock.loader.exec_module.side_effect = ImportError("Ups")
-    importlib_mock.spec_from_file_location.return_value = spec_mock
-
-    generators = load_generators()
-
-    assert sorted(generators.keys()) == sorted(["controller", "generator", "script"])
-
-
-def test_load_generators_from_paths():
-    env = {"FMVC_PATH": f"{DATA_DIR}/lib/generators"}
-    with mock.patch.dict(os.environ, env, clear=True):
+        # when
         generators = load_generators()
 
-    assert sorted(generators.keys()) == sorted(
-        ["controller", "foobar", "generator", "my-controller", "script"]
-    )
+        # then
+        assert sorted(generators.keys()) == sorted(
+            ["controller", "foobar", "generator", "my-controller", "script"]
+        )
+
+    @mock.patch("fastapi_mvc.generators.loader.importlib.util")
+    def test_should_continue_on_import_error(self, importlib_mock, monkeypatch, fake_project_with_generators):
+        # given
+        monkeypatch.chdir(fake_project_with_generators["root"])
+        spec_mock = mock.Mock()
+        spec_mock.loader.exec_module.side_effect = ImportError("Ups")
+        importlib_mock.spec_from_file_location.return_value = spec_mock
+
+        # when
+        generators = load_generators()
+
+        # then
+        assert sorted(generators.keys()) == sorted(
+            ["controller", "generator", "script"]
+        )
+
+    def test_should_load_generators_from_custom_path(self, monkeypatch, fake_project_with_generators):
+        # given
+        monkeypatch.setenv("FMVC_PATH", fake_project_with_generators["generators_dir"])
+
+        # when
+        generators = load_generators()
+
+        # then
+        assert sorted(generators.keys()) == sorted(
+            ["controller", "foobar", "generator", "my-controller", "script"]
+        )

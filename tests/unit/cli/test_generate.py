@@ -1,55 +1,49 @@
-from unittest import mock
-
 import pytest
 from fastapi_mvc.cli.generate import get_generate_cmd
-from fastapi_mvc.generators import ControllerGenerator, GeneratorGenerator
-from ..data.lib.generators.foobar import foobar
-from ..data.lib.generators.my_controller import my_controller
 
 
-generators = {
-    "controller": ControllerGenerator,
-    "generator": GeneratorGenerator,
-    "foobar": foobar,
-    "my-controller": my_controller,
-}
+class TestCliGenerateCommand:
 
+    def test_should_exit_zero_when_invoked_with_help(self, monkeypatch, fake_project_with_generators, cli_runner):
+        # given / when
+        monkeypatch.chdir(fake_project_with_generators["root"])
+        result = cli_runner.invoke(get_generate_cmd(), ["--help"])
 
-@mock.patch("fastapi_mvc.cli.generate.load_generators", return_value=generators)
-def test_generate_help(load_mock, cli_runner):
-    result = cli_runner.invoke(get_generate_cmd(), ["--help"])
-    assert result.exit_code == 0
-    load_mock.assert_called_once()
+        # then
+        assert result.exit_code == 0
 
+    def test_should_exit_error_when_invoked_with_invalid_option(self, cli_runner):
+        # given / when
+        result = cli_runner.invoke(get_generate_cmd(), ["--not_exists"])
 
-def test_generate_invalid_options(cli_runner):
-    result = cli_runner.invoke(get_generate_cmd(), ["--not_exists"])
-    assert result.exit_code == 2
+        # then
+        assert result.exit_code == 2
 
+    @pytest.mark.parametrize(
+        "name",
+        [
+            "controller",
+            "ctl",
+            "generator",
+            "gen",
+            "foobar",
+            "foo",
+            "my-controller",
+            "my-ctl",
+        ],
+    )
+    def test_should_exit_zero_when_invoked_existing_generator(self, monkeypatch, fake_project_with_generators, cli_runner, name):
+        # given / when
+        monkeypatch.chdir(fake_project_with_generators["root"])
+        result = cli_runner.invoke(get_generate_cmd(), [name, "--help"])
 
-@pytest.mark.parametrize(
-    "name",
-    [
-        "controller",
-        "ctl",
-        "generator",
-        "gen",
-        "foobar",
-        "foo",
-        "my-controller",
-        "my-ctl",
-    ],
-)
-@mock.patch("fastapi_mvc.cli.generate.load_generators", return_value=generators)
-def test_generate_subcommands(load_mock, cli_runner, name):
-    result = cli_runner.invoke(get_generate_cmd(), [name, "--help"])
-    assert result.exit_code == 0
-    load_mock.assert_called_once()
+        # then
+        assert result.exit_code == 0
 
+    def test_should_exit_error_when_invoked_not_existing_generator(self, monkeypatch, fake_project, cli_runner):
+        # given / when
+        monkeypatch.chdir(fake_project["root"])
+        result = cli_runner.invoke(get_generate_cmd(), ["notexist", "--help"])
 
-@mock.patch("fastapi_mvc.cli.generate.load_generators", return_value=generators)
-def test_generate_invalid_subcommand(load_mock, cli_runner):
-    result = cli_runner.invoke(get_generate_cmd(), ["notexist", "--help"])
-    assert result.exit_code == 2
-    assert "No such generator 'notexist'." in result.output
-    load_mock.assert_called_once()
+        # then
+        assert result.exit_code == 2

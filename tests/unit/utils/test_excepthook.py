@@ -1,37 +1,34 @@
-from unittest import mock
+import logging
 
 from fastapi_mvc.utils import global_except_hook
 
 
-@mock.patch("fastapi_mvc.utils.excepthook.hint", return_value=mock.Mock)
-@mock.patch("fastapi_mvc.utils.excepthook.template", return_value=mock.Mock)
-@mock.patch("fastapi_mvc.utils.excepthook.log", return_value=mock.Mock)
-def test_excepthook_debug(log_mock, template_mock, hint_mock):
-    log_mock.isEnabledFor.return_value = True
+class TestGlobalExceptHook:
 
-    ex = Exception("Oh no! Something went wrong :(")
-    global_except_hook(type(ex), ex, ex.__traceback__)
+    def test_should_format_issue_template(self, caplog):
+        # given
+        caplog.set_level(logging.DEBUG)
+        ex = Exception("Oh no! Something went wrong :(")
 
-    log_mock.exception.assert_called_once_with(
-        "Unhandled exception occurred during RunTime.",
-        exc_info=(type(ex), ex, ex.__traceback__),
-    )
-    log_mock.info.assert_called_once_with(template_mock.format())
-    hint_mock.format.assert_not_called()
+        # when
+        global_except_hook(type(ex), ex, ex.__traceback__)
 
+        # then
+        assert len(caplog.records) == 2
+        assert caplog.records[0].message == "Unhandled exception occurred during RunTime."
+        assert caplog.records[0].exc_info == (type(ex), ex, ex.__traceback__)
+        assert "**Describe the bug**" in caplog.records[1].message
 
-@mock.patch("fastapi_mvc.utils.excepthook.hint", return_value=mock.Mock)
-@mock.patch("fastapi_mvc.utils.excepthook.template", return_value=mock.Mock)
-@mock.patch("fastapi_mvc.utils.excepthook.log", return_value=mock.Mock)
-def test_excepthook_info(log_mock, template_mock, hint_mock):
-    log_mock.isEnabledFor.return_value = False
+    def test_should_format_hint_template(self, caplog):
+        # given
+        caplog.set_level(logging.INFO)
+        ex = Exception("Oh no! Something went wrong :(")
 
-    ex = Exception("Oh no! Something went wrong :(")
-    global_except_hook(type(ex), ex, ex.__traceback__)
+        # when
+        global_except_hook(type(ex), ex, ex.__traceback__)
 
-    log_mock.exception.assert_called_once_with(
-        "Unhandled exception occurred during RunTime.",
-        exc_info=(type(ex), ex, ex.__traceback__),
-    )
-    log_mock.info.assert_called_once_with(hint_mock.format())
-    template_mock.format.assert_not_called()
+        # then
+        assert len(caplog.records) == 2
+        assert caplog.records[0].message == "Unhandled exception occurred during RunTime."
+        assert caplog.records[0].exc_info == (type(ex), ex, ex.__traceback__)
+        assert "Hint:" in caplog.records[1].message
