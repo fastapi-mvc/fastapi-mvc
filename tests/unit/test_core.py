@@ -1,3 +1,4 @@
+import os
 from unittest import mock
 
 import pytest
@@ -79,20 +80,20 @@ class TestCommandPoetryPath:
         ("POETRY_BINARY", "/path/to/poetry", "/path/to/poetry"),
         ("POETRY_HOME", "/opt/poetry", "/opt/poetry/venv/bin/poetry")
     ])
-    def test_should_expand_poetry_path_from_env(self, monkeypatch, variable, value, expected):
-        # given
-        command = Command(name="test")
-        monkeypatch.setenv(variable, value)
+    def test_should_expand_poetry_path_from_env(self, variable, value, expected):
+        with mock.patch.dict(os.environ, {variable: value}, clear=True):
+            # given
+            command = Command(name="fake-command")
 
-        # when / then
-        assert command.poetry_path == expected
+            # when / then
+            assert command.poetry_path == expected
 
 
 class TestCommandEnsureProjectData:
 
     def test_should_not_raise_when_valid_fastapi_mvc_project(self, fake_project, monkeypatch):
         # given
-        command = Command(name="test")
+        command = Command(name="fake-command")
         monkeypatch.chdir(fake_project["root"])
 
         # when
@@ -104,7 +105,7 @@ class TestCommandEnsureProjectData:
 
     def test_should_raise_when_not_fastapi_mvc_project(self):
         # given
-        command = Command(name="test")
+        command = Command(name="fake-command")
 
         # when / then
         with pytest.raises(SystemExit):
@@ -156,7 +157,7 @@ class TestGeneratorEnsurePermissions:
 
         # when / then
         with pytest.raises(SystemExit):
-            generator.ensure_permissions("/etc/shadow", w=True)
+            generator.ensure_permissions("/etc/shadow", r=False, w=True)
 
     def test_should_raise_when_path_not_executable(self, fake_project):
         # given
