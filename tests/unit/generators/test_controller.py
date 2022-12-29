@@ -1,52 +1,55 @@
-import os
+import copy
 from unittest import mock
 
 import pytest
 from fastapi_mvc.generators import ControllerGenerator
 
 
-DATA_DIR = os.path.abspath(
-    os.path.join(
-        os.path.abspath(__file__),
-        "../../data",
-    )
-)
+class TestControllerGenerator:
 
+    @pytest.fixture
+    def controller(self):
+        controller = copy.deepcopy(ControllerGenerator)
+        controller.run_copy = mock.Mock()
+        controller.insert_router_import = mock.Mock()
+        yield controller
+        del controller
 
-def test_controller_help(cli_runner):
-    result = cli_runner.invoke(ControllerGenerator, ["--help"])
-    assert result.exit_code == 0
+    def test_should_exit_zero_when_invoked_with_help(self, controller, cli_runner):
+        # given / when
+        result = cli_runner.invoke(controller, ["--help"])
 
+        # then
+        assert result.exit_code == 0
 
-def test_controller_invalid_options(cli_runner):
-    result = cli_runner.invoke(ControllerGenerator, ["--not_exists"])
-    assert result.exit_code == 2
+    def test_should_exit_error_when_invoked_with_invalid_option(self, controller, cli_runner):
+        # given / when
+        result = cli_runner.invoke(controller, ["--not_exists"])
 
+        # then
+        assert result.exit_code == 2
 
-@mock.patch("fastapi_mvc.generators.controller.Generator.insert_router_import")
-@mock.patch("fastapi_mvc.generators.controller.Generator.run_copy")
-def test_controller_default_values(copier_mock, instert_mock, monkeypatch, cli_runner):
-    # Change working directory to fake project. It is easier to fake fastapi-mvc project,
-    # rather than mocking ctx injected to command via @click.pass_context decorator.
-    monkeypatch.chdir(DATA_DIR)
+    def test_should_call_copier_using_default_values(self, controller, monkeypatch, fake_project, cli_runner):
+        # given / when
+        monkeypatch.chdir(fake_project["root"])
+        result = cli_runner.invoke(controller, ["fake-controller"])
 
-    result = cli_runner.invoke(ControllerGenerator, ["custom-controller"])
-    assert result.exit_code == 0
+        # then
+        assert result.exit_code == 0
+        controller.run_copy.assert_called_once_with(
+            data={
+                "project_name": "fake-project",
+                "controller": "fake_controller",
+                "endpoints": {},
+            }
+        )
+        controller.insert_router_import.assert_called_once_with("fake_controller")
 
-    instert_mock.assert_called_once_with("custom_controller")
-    copier_mock.assert_called_once_with(
-        data={
-            "project_name": "test-app",
-            "controller": "custom_controller",
-            "endpoints": {},
-        }
-    )
-
-
-@pytest.mark.parametrize(
-    "args, expected",
-    [
-        (
+    def test_should_call_copier_with_parsed_arguments(self, controller, monkeypatch, fake_project, cli_runner):
+        # given / when
+        monkeypatch.chdir(fake_project["root"])
+        result = cli_runner.invoke(
+            controller,
             [
                 "--skip-routes",
                 "STOCK-MARKET",
@@ -54,54 +57,46 @@ def test_controller_default_values(copier_mock, instert_mock, monkeypatch, cli_r
                 "buy:post",
                 "sell:delete",
             ],
-            {
-                "project_name": "test-app",
+        )
+
+        # then
+        assert result.exit_code == 0
+        controller.run_copy.assert_called_once_with(
+            data={
+                "project_name": "fake-project",
                 "controller": "stock_market",
                 "endpoints": {
                     "ticker": "get",
                     "buy": "post",
                     "sell": "delete",
                 },
-            },
-        ),
-        (
-            [
-                "-R",
-                "invoker",
-                "execute:POST",
-                "cancel-launch:PUt",
-            ],
-            {
-                "project_name": "test-app",
-                "controller": "invoker",
-                "endpoints": {
-                    "execute": "post",
-                    "cancel_launch": "put",
-                },
-            },
-        ),
-    ],
-)
-@mock.patch("fastapi_mvc.generators.controller.Generator.insert_router_import")
-@mock.patch("fastapi_mvc.generators.controller.Generator.run_copy")
-def test_controller_with_options(
-    copier_mock, instert_mock, monkeypatch, cli_runner, args, expected
-):
-    # Change working directory to fake project. It is easier to fake fastapi-mvc project,
-    # rather than mocking ctx injected to command via @click.pass_context decorator.
-    monkeypatch.chdir(DATA_DIR)
-    result = cli_runner.invoke(ControllerGenerator, args)
-    assert result.exit_code == 0
+            }
+        )
 
-    copier_mock.assert_called_once_with(data=expected)
-    if "-R" in args or "--skip-routes" in args:
-        instert_mock.assert_not_called()
-    else:
-        instert_mock.assert_called_once_with(expected["controller"])
+    def test_should_skip_router_import_insert(self, controller, monkeypatch, fake_project, cli_runner):
+        # given / when
+        monkeypatch.chdir(fake_project["root"])
+        result = cli_runner.invoke(
+            controller,
+            ["fake-controller", "--skip-routes"],
+        )
 
+        # then
+        assert result.exit_code == 0
+        controller.run_copy.assert_called_once_with(
+            data={
+                "project_name": "fake-project",
+                "controller": "fake_controller",
+                "endpoints": {},
+            }
+        )
+        controller.insert_router_import.assert_not_called()
 
-def test_controller_not_in_project(cli_runner):
-    result = cli_runner.invoke(ControllerGenerator, ["custom-controller"])
-    assert result.exit_code == 1
-    msg = "Not a fastapi-mvc project. Try 'fastapi-mvc new --help' for details how to create one."
-    assert msg in result.output
+    def test_should_exit_error_when_not_in_fastapi_mvc_project(self, controller, cli_runner):
+        # given / when
+        result = cli_runner.invoke(controller, ["fake-controller"])
+
+        # then
+        assert result.exit_code == 1
+        msg = "Not a fastapi-mvc project. Try 'fastapi-mvc new --help' for details how to create one."
+        assert msg in result.output

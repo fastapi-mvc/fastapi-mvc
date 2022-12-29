@@ -5,214 +5,269 @@ import pytest
 from fastapi_mvc import Generator, Command, ANSWERS_FILE
 
 
-DATA_DIR = os.path.abspath(
-    os.path.join(
-        os.path.abspath(__file__),
-        "../data",
-    )
-)
 router_content = """\
 from fastapi import APIRouter
-from example.app.controllers import ready
+from fake_project.app.controllers import ready
 
 root_api_router = APIRouter(prefix="/api")
+
+root_api_router.include_router(ready.router, tags=["ready"])
+"""
+router2_content = """\
+import fastapi
+from fake_project.app.controllers import ready
+
+root_api_router = fastapi.APIRouter(prefix="/api")
 
 root_api_router.include_router(ready.router, tags=["ready"])
 """
 router_expected = """\
 from fastapi import APIRouter
-from example.app.controllers import test
-from example.app.controllers import ready
+from fake_project.app.controllers import fake_router
+from fake_project.app.controllers import ready
 
 root_api_router = APIRouter(prefix="/api")
 
 root_api_router.include_router(ready.router, tags=["ready"])
-root_api_router.include_router(test.router)
-"""
-router2_content = """\
-import fastapi
-from example.app.controllers import ready
-
-root_api_router = fastapi.APIRouter(prefix="/api")
-
-root_api_router.include_router(ready.router, tags=["ready"])
+root_api_router.include_router(fake_router.router)
 """
 router2_expected = """\
+from fake_project.app.controllers import fake_router
 import fastapi
-from example.app.controllers import ready
+from fake_project.app.controllers import ready
 
 root_api_router = fastapi.APIRouter(prefix="/api")
 
 root_api_router.include_router(ready.router, tags=["ready"])
-from example.app.controllers import test
-root_api_router.include_router(test.router)
+root_api_router.include_router(fake_router.router)
 """
 
 
 @pytest.fixture
-def cmd_obj():
-    yield Command(name="test")
+def fake_router(fake_project):
+    router = fake_project["app_dir"] / "router.py"
+    router.write_text(router_content)
+
+    yield router
+    router.unlink()
 
 
 @pytest.fixture
-def gen_obj():
-    yield Generator(
-        name="test",
-        template="https://my.repo.git",
-        vcs_ref="master",
-        category="Custom",
-    )
+def fake_router2(fake_project):
+    router2 = fake_project["app_dir"] / "router.py"
+    router2.write_text(router2_content)
+
+    yield router2
+    router2.unlink()
 
 
-def test_command_poetry_path(cmd_obj):
-    env = {"POETRY_BINARY": "/path/to/poetry"}
-    with mock.patch.dict(os.environ, env, clear=True):
-        assert cmd_obj.poetry_path == "/path/to/poetry"
+class TestCommand:
 
-    env = {"POETRY_HOME": "/opt/poetry"}
-    with mock.patch.dict(os.environ, env, clear=True):
-        assert cmd_obj.poetry_path == "/opt/poetry/venv/bin/poetry"
+    def test_should_create_command_and_populate_defaults(self):
+        # given / when
+        command = Command(name="fake-command")
 
-    env = {"HOME": "/home/john"}
-    with mock.patch.dict(os.environ, env, clear=True):
-        assert cmd_obj.poetry_path == "/home/john/.local/share/pypoetry/venv/bin/poetry"
+        # then
+        assert command.name == "fake-command"
+        assert not command.alias
+        assert not command.project_data
 
 
-def test_command_ensure_project_data(monkeypatch, cmd_obj):
-    with pytest.raises(SystemExit):
-        cmd_obj.ensure_project_data()
+class TestCommandPoetryPath:
 
-    # Change working directory to fake project. It is easier to fake fastapi-mvc project,
-    # rather than mocking ctx injected to command via @click.pass_context decorator.
-    monkeypatch.chdir(DATA_DIR)
-    cmd_obj.ensure_project_data()
-    assert cmd_obj.project_data["package_name"] == "test_app"
-    assert cmd_obj.project_data["project_name"] == "test-app"
+    @pytest.mark.parametrize("variable, value, expected", [
+        ("HOME", "/home/foobar", "/home/foobar/.local/share/pypoetry/venv/bin/poetry"),
+        ("POETRY_BINARY", "/path/to/poetry", "/path/to/poetry"),
+        ("POETRY_HOME", "/opt/poetry", "/opt/poetry/venv/bin/poetry")
+    ])
+    def test_should_expand_poetry_path_from_env(self, variable, value, expected):
+        with mock.patch.dict(os.environ, {variable: value}, clear=True):
+            # given
+            command = Command(name="fake-command")
 
-
-@mock.patch("fastapi_mvc.core.copier")
-def test_generator_run_auto(copier_mock, gen_obj):
-    gen_obj.run_auto(dst_path="/tmp/test", data={"foo": "bar"})
-    copier_mock.run_auto.assert_called_once_with(
-        src_path=gen_obj.template,
-        dst_path="/tmp/test",
-        vcs_ref=gen_obj.vcs_ref,
-        answers_file=ANSWERS_FILE,
-        data={"foo": "bar"},
-    )
+            # when / then
+            assert command.poetry_path == expected
 
 
-@mock.patch("fastapi_mvc.core.copier")
-def test_generator_run_copy(copier_mock, gen_obj):
-    gen_obj.run_copy(dst_path="/tmp/test", data={"foo": "bar"})
-    copier_mock.run_copy.assert_called_once_with(
-        src_path=gen_obj.template,
-        dst_path="/tmp/test",
-        vcs_ref=gen_obj.vcs_ref,
-        answers_file=ANSWERS_FILE,
-        data={"foo": "bar"},
-    )
+class TestCommandEnsureProjectData:
+
+    def test_should_not_raise_when_valid_fastapi_mvc_project(self, fake_project, monkeypatch):
+        # given
+        command = Command(name="fake-command")
+        monkeypatch.chdir(fake_project["root"])
+
+        # when
+        command.ensure_project_data()
+
+        # then
+        assert command.project_data["package_name"] == "fake_project"
+        assert command.project_data["project_name"] == "fake-project"
+
+    def test_should_raise_when_not_fastapi_mvc_project(self):
+        # given
+        command = Command(name="fake-command")
+
+        # when / then
+        with pytest.raises(SystemExit):
+            command.ensure_project_data()
 
 
-@mock.patch("fastapi_mvc.core.copier")
-def test_generator_run_update(copier_mock, gen_obj):
-    gen_obj.run_update(dst_path="/tmp/test", data={"foo": "bar"})
-    copier_mock.run_update.assert_called_once_with(
-        dst_path="/tmp/test",
-        vcs_ref=gen_obj.vcs_ref,
-        answers_file=ANSWERS_FILE,
-        data={"foo": "bar"},
-    )
+class TestGenerator:
+
+    def test_should_create_generator_and_populate_defaults(self):
+        # given / when
+        generator = Generator(name="fake-generator", template="https://fake.repo.git")
+
+        # then
+        assert generator.template == "https://fake.repo.git"
+        assert not generator.vcs_ref
+        assert generator.category == "Other"
 
 
-@mock.patch("fastapi_mvc.core.copier")
-def test_generator_run_auto_overrides(copier_mock, gen_obj):
-    gen_obj.template = "./."
-    gen_obj.vcs_ref = None
-    gen_obj.run_auto(dst_path="/tmp/test", data={"foo": "bar"})
-    copier_mock.run_auto.assert_called_once_with(
-        src_path="./.",
-        dst_path="/tmp/test",
-        vcs_ref=None,
-        answers_file=ANSWERS_FILE,
-        data={"foo": "bar"},
-    )
+class TestGeneratorEnsurePermissions:
+
+    def test_should_not_raise_when_correct_permissions(self, fake_project, dummy_executable):
+        # given
+        generator = Generator(name="fake-generator", template="https://fake.repo.git")
+
+        # when / then
+        generator.ensure_permissions(fake_project["answers_file"])
+        generator.ensure_permissions(fake_project["answers_file"], w=True)
+        generator.ensure_permissions(dummy_executable, x=True)
+
+    def test_should_raise_when_path_does_not_exists(self):
+        # given
+        generator = Generator(name="fake-generator", template="https://fake.repo.git")
+
+        # when / then
+        with pytest.raises(SystemExit):
+            generator.ensure_permissions("/not/exist")
+
+    def test_should_raise_when_path_not_readable(self):
+        # given
+        generator = Generator(name="fake-generator", template="https://fake.repo.git")
+
+        # when / then
+        with pytest.raises(SystemExit):
+            generator.ensure_permissions("/etc/shadow")
+
+    def test_should_raise_when_path_not_writeable(self):
+        # given
+        generator = Generator(name="fake-generator", template="https://fake.repo.git")
+
+        # when / then
+        with pytest.raises(SystemExit):
+            generator.ensure_permissions("/etc/shadow", r=False, w=True)
+
+    def test_should_raise_when_path_not_executable(self, fake_project):
+        # given
+        generator = Generator(name="fake-generator", template="https://fake.repo.git")
+
+        # when / then
+        with pytest.raises(SystemExit):
+            generator.ensure_permissions(fake_project["answers_file"], x=True)
 
 
-@mock.patch("fastapi_mvc.core.copier")
-def test_generator_run_copy_overrides(copier_mock, gen_obj):
-    gen_obj.template = "./."
-    gen_obj.vcs_ref = None
-    gen_obj.run_copy(dst_path="/tmp/test", data={"foo": "bar"})
-    copier_mock.run_copy.assert_called_once_with(
-        src_path="./.",
-        dst_path="/tmp/test",
-        vcs_ref=None,
-        answers_file=ANSWERS_FILE,
-        data={"foo": "bar"},
-    )
+class TestGeneratorInsertRouterPath:
+
+    def test_should_insert_router_import(self, monkeypatch, fake_project, fake_router):
+        # given
+        monkeypatch.chdir(fake_project["root"])
+        generator = Generator(name="fake-generator", template="https://fake.repo.git")
+        generator.ensure_project_data()
+
+        # when
+        generator.insert_router_import("fake_router")
+        # test idempotence
+        generator.insert_router_import("fake_router")
+
+        # then
+        assert fake_router.read_text() == router_expected
+
+    def test_should_insert_router_import_at_file_end(self, monkeypatch, fake_project, fake_router2):
+        # given
+        monkeypatch.chdir(fake_project["root"])
+        generator = Generator(name="fake-generator", template="https://fake.repo.git")
+        generator.ensure_project_data()
+
+        # when
+        generator.insert_router_import("fake_router")
+        # test idempotence
+        generator.insert_router_import("fake_router")
+
+        # then
+        assert fake_router2.read_text() == router2_expected
 
 
-@mock.patch("fastapi_mvc.core.copier")
-def test_generator_run_update_overrides(copier_mock, gen_obj):
-    gen_obj.vcs_ref = None
-    gen_obj.run_update(dst_path="/tmp/test", data={"foo": "bar"})
-    copier_mock.run_update.assert_called_once_with(
-        dst_path="/tmp/test",
-        vcs_ref=None,
-        answers_file=ANSWERS_FILE,
-        data={"foo": "bar"},
-    )
+class TestGeneratorRunAuto:
+
+    @mock.patch("fastapi_mvc.core.copier")
+    def test_should_call_copier_run_auto_with_defaults(self, copier_mock):
+        # given
+        generator = Generator(
+            name="fake-generator",
+            template="https://fake.repo.git",
+            vcs_ref="master",
+            category="Fake",
+        )
+
+        # when
+        generator.run_auto(dst_path="/tmp/test", data={"foo": "bar"})
+
+        # then
+        copier_mock.run_auto.assert_called_once_with(
+            src_path=generator.template,
+            dst_path="/tmp/test",
+            vcs_ref=generator.vcs_ref,
+            answers_file=ANSWERS_FILE,
+            data={"foo": "bar"},
+        )
 
 
-@pytest.mark.parametrize(
-    "content, expected",
-    [
-        (router_content, router_expected),
-        (router2_content, router2_expected),
-    ],
-)
-@mock.patch("fastapi_mvc.core.os.getcwd")
-def test_generator_insert_router_import(cwd_mock, tmp_path, gen_obj, content, expected):
-    gen_obj.project_data = {"package_name": "example"}
-    root = tmp_path / "example"
-    root.mkdir()
-    app = root / "example" / "app"
-    app.mkdir(parents=True)
-    router = app / "router.py"
-    router.write_text(content)
+class TestGeneratorRunCopy:
 
-    cwd_mock.return_value = str(root)
-    gen_obj.insert_router_import("test")
-    router.read_text() == expected
-    gen_obj.insert_router_import("test")
-    router.read_text() == expected
+    @mock.patch("fastapi_mvc.core.copier")
+    def test_should_call_copier_run_copy_with_defaults(self, copier_mock):
+        # given
+        generator = Generator(
+            name="fake-generator",
+            template="https://fake.repo.git",
+            vcs_ref="master",
+            category="Fake",
+        )
 
+        # when
+        generator.run_copy(dst_path="/tmp/test", data={"foo": "bar"})
 
-def test_ensure_permissions(gen_obj):
-    gen_obj.ensure_permissions(DATA_DIR)
-    gen_obj.ensure_permissions(DATA_DIR, w=True)
-    gen_obj.ensure_permissions(f"{DATA_DIR}/dummy_executable", x=True)
+        # then
+        copier_mock.run_copy.assert_called_once_with(
+            src_path=generator.template,
+            dst_path="/tmp/test",
+            vcs_ref=generator.vcs_ref,
+            answers_file=ANSWERS_FILE,
+            data={"foo": "bar"},
+        )
 
 
-@mock.patch("fastapi_mvc.core.os.access", return_value=False)
-def test_ensure_permissions_exceptions(os_mock, gen_obj):
-    with pytest.raises(SystemExit):
-        gen_obj.ensure_permissions("/not/exist")
+class TestGeneratorRunUpdate:
 
-    with pytest.raises(SystemExit):
-        gen_obj.ensure_permissions(DATA_DIR, r=True)
+    @mock.patch("fastapi_mvc.core.copier")
+    def test_should_call_copier_run_update_with_defaults(self, copier_mock):
+        # given
+        generator = Generator(
+            name="fake-generator",
+            template="https://fake.repo.git",
+            vcs_ref="master",
+            category="Fake",
+        )
 
-    os_mock.assert_called_once()
-    os_mock.reset_mock()
+        # when
+        generator.run_update(dst_path="/tmp/test", data={"foo": "bar"})
 
-    with pytest.raises(SystemExit):
-        gen_obj.ensure_permissions(DATA_DIR, r=False, x=True)
-
-    os_mock.assert_called_once()
-    os_mock.reset_mock()
-
-    with pytest.raises(SystemExit):
-        gen_obj.ensure_permissions(DATA_DIR, r=False, w=True)
-
-    os_mock.assert_called_once()
+        # then
+        copier_mock.run_update.assert_called_once_with(
+            dst_path="/tmp/test",
+            vcs_ref=generator.vcs_ref,
+            answers_file=ANSWERS_FILE,
+            data={"foo": "bar"},
+        )

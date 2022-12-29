@@ -1,4 +1,4 @@
-import os
+import copy
 from unittest import mock
 from datetime import datetime
 
@@ -6,50 +6,53 @@ import pytest
 from fastapi_mvc.generators import GeneratorGenerator
 
 
-DATA_DIR = os.path.abspath(
-    os.path.join(
-        os.path.abspath(__file__),
-        "../../data",
-    )
-)
+class TestGeneratorGenerator:
 
+    @pytest.fixture
+    def generator(self):
+        generator = copy.deepcopy(GeneratorGenerator)
+        generator.run_copy = mock.Mock()
+        yield generator
+        del generator
 
-def test_generator_help(cli_runner):
-    result = cli_runner.invoke(GeneratorGenerator, ["--help"])
-    assert result.exit_code == 0
+    def test_should_exit_zero_when_invoked_with_help(self, generator, cli_runner):
+        # given / when
+        result = cli_runner.invoke(generator, ["--help"])
 
+        # then
+        assert result.exit_code == 0
 
-def test_generator_invalid_options(cli_runner):
-    result = cli_runner.invoke(GeneratorGenerator, ["--not_exists"])
-    assert result.exit_code == 2
+    def test_should_exit_error_when_invoked_with_invalid_option(self, generator, cli_runner):
+        # given / when
+        result = cli_runner.invoke(generator, ["--not_exists"])
 
+        # then
+        assert result.exit_code == 2
 
-@mock.patch("fastapi_mvc.generators.generator.Generator.run_copy")
-def test_generator_default_values(copier_mock, monkeypatch, cli_runner):
-    # Change working directory to fake project. It is easier to fake fastapi-mvc project,
-    # rather than mocking ctx injected to command via @click.pass_context decorator.
-    monkeypatch.chdir(DATA_DIR)
+    def test_should_call_copier_using_default_values(self, generator, monkeypatch, fake_project, cli_runner):
+        # given / when
+        monkeypatch.chdir(fake_project["root"])
+        result = cli_runner.invoke(generator, ["fake-generator"])
 
-    result = cli_runner.invoke(GeneratorGenerator, ["custom-generator"])
-    assert result.exit_code == 0
+        # then
+        assert result.exit_code == 0
+        generator.run_copy.assert_called_once_with(
+            dst_path="./lib/generators/fake_generator",
+            data={
+                "generator": "fake_generator",
+                "nix": True,
+                "repo_url": "https://your.repo.url.here",
+                "license": "MIT",
+                "copyright_date": datetime.today().year,
+            },
+            answers_file=".generator.yml",
+        )
 
-    copier_mock.assert_called_once_with(
-        dst_path="./lib/generators/custom_generator",
-        data={
-            "generator": "custom_generator",
-            "nix": True,
-            "repo_url": "https://your.repo.url.here",
-            "license": "MIT",
-            "copyright_date": datetime.today().year,
-        },
-        answers_file=".generator.yml",
-    )
-
-
-@pytest.mark.parametrize(
-    "args, expected",
-    [
-        (
+    def test_should_call_copier_with_parsed_arguments(self, generator, monkeypatch, fake_project, cli_runner):
+        # given / when
+        monkeypatch.chdir(fake_project["root"])
+        result = cli_runner.invoke(
+            generator,
             [
                 "-N",
                 "--license",
@@ -58,34 +61,27 @@ def test_generator_default_values(copier_mock, monkeypatch, cli_runner):
                 "https://mambo.no6.git",
                 "Mambo-No6",
             ],
-            {
-                "dst_path": "./lib/generators/mambo_no6",
-                "data": {
-                    "generator": "mambo_no6",
-                    "nix": False,
-                    "repo_url": "https://mambo.no6.git",
-                    "license": "ISC",
-                    "copyright_date": datetime.today().year,
-                },
-                "answers_file": ".generator.yml",
-            },
         )
-    ],
-)
-@mock.patch("fastapi_mvc.generators.generator.Generator.run_copy")
-def test_generator_with_options(copier_mock, monkeypatch, cli_runner, args, expected):
-    # Change working directory to fake project. It is easier to fake fastapi-mvc project,
-    # rather than mocking ctx injected to command via @click.pass_context decorator.
-    monkeypatch.chdir(DATA_DIR)
 
-    result = cli_runner.invoke(GeneratorGenerator, args)
-    assert result.exit_code == 0
+        # then
+        assert result.exit_code == 0
+        generator.run_copy.assert_called_once_with(
+            dst_path="./lib/generators/mambo_no6",
+            data={
+                "generator": "mambo_no6",
+                "nix": False,
+                "repo_url": "https://mambo.no6.git",
+                "license": "ISC",
+                "copyright_date": datetime.today().year,
+            },
+            answers_file=".generator.yml",
+        )
 
-    copier_mock.assert_called_once_with(**expected)
+    def test_should_exit_error_when_not_in_fastapi_mvc_project(self, generator, cli_runner):
+        # given / when
+        result = cli_runner.invoke(generator, ["fake-generator"])
 
-
-def test_generator_not_in_project(cli_runner):
-    result = cli_runner.invoke(GeneratorGenerator, ["custom-generator"])
-    assert result.exit_code == 1
-    msg = "Not a fastapi-mvc project. Try 'fastapi-mvc new --help' for details how to create one."
-    assert msg in result.output
+        # then
+        assert result.exit_code == 1
+        msg = "Not a fastapi-mvc project. Try 'fastapi-mvc new --help' for details how to create one."
+        assert msg in result.output
