@@ -2,6 +2,14 @@
 
 This file documents changes to [fastapi-mvc](https://github.com/fastapi-mvc/fastapi-mvc). The release numbering uses [semantic versioning](http://semver.org).
 
+## Unreleased
+
+### Internal
+
+* Refactor and improve current test cases suite [#225](https://github.com/fastapi-mvc/fastapi-mvc/issues/225). PR [#227](https://github.com/fastapi-mvc/fastapi-mvc/pull/227)
+* Update dependencies:
+  * pallets-sphinx-themes (2.0.2 -> 2.0.3) PR [#226](https://github.com/fastapi-mvc/fastapi-mvc/pull/226)
+
 ## 0.22.0 (15.12.2022)
 
 ### Internal
