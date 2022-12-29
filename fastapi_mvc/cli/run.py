@@ -90,3 +90,4 @@ def run(ctx, **options):
         )
     except CalledProcessError:
         click.secho("Run 'make install` to install the project.", fg="yellow")
+        ctx.exit(1)
