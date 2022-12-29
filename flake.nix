@@ -95,6 +95,7 @@
               export PATH="${pkgs.lib.makeBinPath [
                   pkgs.fastapi-mvc-dev
                   pkgs.git
+                  pkgs.coreutils
               ]}"
               echo "[nix][unit-test] Run fastapi-mvc unit tests."
               pytest tests/unit
@@ -107,7 +108,13 @@
                   pkgs.fastapi-mvc-dev
                   pkgs.git
                   pkgs.coreutils
+                  pkgs.gnumake
+                  pkgs.poetry
+                  pkgs.bash
               ]}"
+              export POETRY_HOME=${pkgs.poetry}
+              export POETRY_BINARY=${pkgs.poetry}/bin/poetry
+              export POETRY_VIRTUALENVS_IN_PROJECT=true
               echo "[nix][integration-test] Run fastapi-mvc unit tests."
               pytest tests/integration
             '');
@@ -119,7 +126,13 @@
                   pkgs.fastapi-mvc-dev
                   pkgs.git
                   pkgs.coreutils
+                  pkgs.gnumake
+                  pkgs.poetry
+                  pkgs.bash
               ]}"
+              export POETRY_HOME=${pkgs.poetry}
+              export POETRY_BINARY=${pkgs.poetry}/bin/poetry
+              export POETRY_VIRTUALENVS_IN_PROJECT=true
               echo "[nix][coverage] Run fastapi-mvc tests coverage."
               pytest --cov-config=.coveragerc --cov=fastapi_mvc --cov-fail-under=90 --cov-report=xml --cov-report=term-missing tests
             '');
