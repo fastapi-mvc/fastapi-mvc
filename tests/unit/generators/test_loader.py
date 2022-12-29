@@ -35,7 +35,9 @@ class TestLoadGenerators:
 
     def test_should_load_generators_from_custom_path(self, monkeypatch, fake_project_with_generators):
         # given
-        monkeypatch.setenv("FMVC_PATH", fake_project_with_generators["generators_dir"])
+        monkeypatch.setenv(
+            "FMVC_PATH", str(fake_project_with_generators["generators_dir"])
+        )
 
         # when
         generators = load_generators()
