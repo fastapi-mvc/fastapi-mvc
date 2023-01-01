@@ -2,10 +2,12 @@
 
 This file documents changes to [fastapi-mvc](https://github.com/fastapi-mvc/fastapi-mvc). The release numbering uses [semantic versioning](http://semver.org).
 
-## Unreleased
+## 0.23.0 (01.01.2023)
 
 ### Internal
 
+* Bump copier-project from 0.2.0 to 0.3.0 [e99e66c](https://github.com/fastapi-mvc/fastapi-mvc/commit/e99e66c04ecef05b949071aeb2ad0dbfeb70f617).
+* Bump copier-controller from 0.1.0 to 0.2.0 [0e710c1](https://github.com/fastapi-mvc/fastapi-mvc/commit/0e710c14bea8a41543f4b9c3f0e44ff45e690064).
 * Refactor and improve current test cases suite [#225](https://github.com/fastapi-mvc/fastapi-mvc/issues/225). PR [#227](https://github.com/fastapi-mvc/fastapi-mvc/pull/227)
 * Update dependencies:
   * pallets-sphinx-themes (2.0.2 -> 2.0.3) PR [#226](https://github.com/fastapi-mvc/fastapi-mvc/pull/226)
