@@ -2,11 +2,17 @@
 
 This file documents changes to [fastapi-mvc](https://github.com/fastapi-mvc/fastapi-mvc). The release numbering uses [semantic versioning](http://semver.org).
 
-## Unreleased
+## 0.24.0 (08.01.2023)
 
 ### Features
 
 * Implement `fastapi-mvc update` command [#229](https://github.com/fastapi-mvc/fastapi-mvc/issues/229). PR [#230](https://github.com/fastapi-mvc/fastapi-mvc/pull/230)
+
+### Internal
+
+* Add `SECURITY.md`. [6f00a13](https://github.com/fastapi-mvc/fastapi-mvc/commit/6f00a139f6ed0d1e39e063f72562aa4bc65374c9)
+* Refactor `.coveragerc` into `pyproject.toml`. PR [#232](https://github.com/fastapi-mvc/fastapi-mvc/pull/232)
+* Remove override for a non-existent input in `flake.nix`. [49dc9c0](https://github.com/fastapi-mvc/fastapi-mvc/commit/49dc9c0e58d3c791f40c35e353d9cc57a534ddab)
 
 ### Docs
 
