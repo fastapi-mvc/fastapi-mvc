@@ -199,31 +199,6 @@ class TestGeneratorInsertRouterPath:
         assert fake_router2.read_text() == router2_expected
 
 
-class TestGeneratorRunAuto:
-
-    @mock.patch("fastapi_mvc.core.copier")
-    def test_should_call_copier_run_auto_with_defaults(self, copier_mock):
-        # given
-        generator = Generator(
-            name="fake-generator",
-            template="https://fake.repo.git",
-            vcs_ref="master",
-            category="Fake",
-        )
-
-        # when
-        generator.run_auto(dst_path="/tmp/test", data={"foo": "bar"})
-
-        # then
-        copier_mock.run_auto.assert_called_once_with(
-            src_path=generator.template,
-            dst_path="/tmp/test",
-            vcs_ref=generator.vcs_ref,
-            answers_file=ANSWERS_FILE,
-            data={"foo": "bar"},
-        )
-
-
 class TestGeneratorRunCopy:
 
     @mock.patch("fastapi_mvc.core.copier")
