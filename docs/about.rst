@@ -85,8 +85,8 @@ when uvicorn (or other ASGI for that matter) will catch up to this benchmark.
 
 Last but not least, gunicorn gives a ton of `settings to configure <https://docs.gunicorn.org/en/stable/settings.html>`__, which can come in handy.
 
-Generated project comes with Sphinx documentation and 100% unit tests coverage
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Generated project comes with Sphinx documentation and 100% tests coverage
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Unit test coverage is at 100% regardless of chosen configuration. There is also a placeholder for integration tests with an example dummy test.
 The metrics stage in CI workflow ensures important PEP rules are enforced. For additional readability and formatting checks - black is used.
@@ -146,6 +146,14 @@ Generated project comes with set of Nix expressions for building:
 * Container image
 
 To make things easier, provided ``Makefile`` targets are the same regardless if one choose to use Nix or the default way (OS + Poetry). Lastly, there is ``Nix CI`` workflow included as well.
+
+Update already generated project with changes from the new template version
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Generated projects by ``fastapi-mvc`` can be easily updated with changes from the given `copier-project <https://github.com/fastapi-mvc/copier-project>`__ template version.
+The only requirement is that the project needs to be git tracked and not git dirty. The update feature also allows extending projects with previously not selected features or even changing namespaces.
+During ``fastapi-mvc`` integration tests, the update process correctness is verified by calculating the checksum of all files and comparing them to the reference project.
+More information on how the update process works can be found `here <https://copier.readthedocs.io/en/v7.0.1/updating/#how-the-update-works>`__.
 
 Virtualized reproducible development environment using Vagrant
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

@@ -651,3 +651,27 @@ To build docs manually:
 Then open ``./site/index.html`` with any browser.
 
 Lastly, you can always have a look at the ``fastapi-mvc/example`` `documentation deployment <https://fastapi-mvc.github.io/example/index.html>`__.
+
+Updating project
+----------------
+
+Prerequisites:
+
+* Project is git tracked
+* Project is not git dirty
+
+Generated projects by ``fastapi-mvc`` can be easily updated with changes from the given `copier-project <https://github.com/fastapi-mvc/copier-project>`__ template version.
+For that we will run ``fastapi-mvc update`` command:
+
+.. code-block:: bash
+
+    fastapi-mvc update
+    # Or using alias short-cut
+    fm u
+
+    # Update to concrete version
+    fastapi-mvc update --use-version 0.3.0
+
+The update feature also allows extending projects with previously not selected features or even changing namespaces. To do so just update answers to project questions.
+More information on how the update process works can be found `here <https://copier.readthedocs.io/en/v7.0.1/updating/#how-the-update-works>`__.
+
