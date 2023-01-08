@@ -5,7 +5,6 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-22.11";
     flake-utils.url = "github:numtide/flake-utils";
-    flake-utils.inputs.nixpkgs.follows = "nixpkgs";
     poetry2nix = {
       url = "github:nix-community/poetry2nix?ref=1.38.0";
       inputs.nixpkgs.follows = "nixpkgs";
