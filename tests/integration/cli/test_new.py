@@ -3,16 +3,15 @@ import os
 from copier.user_data import load_answersfile_data
 from tests.integration.conftest import assert_paths
 from fastapi_mvc import ANSWERS_FILE
-from fastapi_mvc.cli.new import new
 
 
 class TestCliNewCommand:
 
-    def test_should_generate_new_project_with_default_structure(self, cli_runner):
+    def test_should_generate_new_project_with_default_structure(self, new_copy, cli_runner):
         with cli_runner.isolated_filesystem() as tmp:
             # given / when
             result = cli_runner.invoke(
-                new, ["--skip-install", "--no-interaction", "test-project"]
+                new_copy, ["--skip-install", "--no-interaction", "test-project"]
             )
 
             # then
@@ -62,11 +61,11 @@ class TestCliNewCommand:
                 condition=lambda x: os.path.isfile(x),
             )
 
-    def test_should_generate_new_project_with_minimal_structure(self, cli_runner):
+    def test_should_generate_new_project_with_minimal_structure(self, new_copy, cli_runner):
         with cli_runner.isolated_filesystem() as tmp:
             # given / when
             result = cli_runner.invoke(
-                new,
+                new_copy,
                 [
                     "--skip-redis",
                     "--skip-aiohttp",
@@ -102,11 +101,11 @@ class TestCliNewCommand:
                 condition=lambda x: not os.path.exists(x),
             )
 
-    def test_should_generate_using_overriden_template(self, cli_runner):
+    def test_should_generate_using_overriden_template(self, new_copy, cli_runner):
         with cli_runner.isolated_filesystem() as tmp:
             # given / when
             result = cli_runner.invoke(
-                new,
+                new_copy,
                 [
                     "--skip-install",
                     "--no-interaction",
@@ -124,11 +123,11 @@ class TestCliNewCommand:
             assert data["_commit"] == "82234c2"
             assert data["_src_path"] == "https://github.com/rszamszur/copier-project"
 
-    def test_should_generate_and_install(self, monkeypatch, cli_runner):
+    def test_should_generate_and_install(self, new_copy, monkeypatch, cli_runner):
         with cli_runner.isolated_filesystem() as tmp:
             # given / when
             monkeypatch.setenv("POETRY_VIRTUALENVS_IN_PROJECT", "true")
-            result = cli_runner.invoke(new, ["--no-interaction", "test-project"])
+            result = cli_runner.invoke(new_copy, ["--no-interaction", "test-project"])
 
             # then
             assert result.exit_code == 0
