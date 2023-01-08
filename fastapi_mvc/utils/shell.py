@@ -44,7 +44,15 @@ def get_git_user_info():
     return author, email
 
 
-def run_shell(cmd, cwd=None, check=False, stdout=None, stderr=None, input=None, capture_output=False):
+def run_shell(
+    cmd,
+    cwd=None,
+    check=False,
+    stdout=None,
+    stderr=None,
+    input=None,
+    capture_output=False,
+):
     """Run shell command without activated virtualenv.
 
     If virtual env is activated, remove it from PATH in order to ensure command proper
