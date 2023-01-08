@@ -25,7 +25,7 @@ class TestCliNewCommand:
         cmd.run_shell = shell_patch.start()
         cmd.get_git_user_info = git_patch.start()
         cmd.shutil_which = which_patch.start()
-        cmd.run_auto = mock.Mock()
+        cmd.run_copy = mock.Mock()
         yield cmd
         shell_patch.stop()
         git_patch.stop()
@@ -59,7 +59,7 @@ class TestCliNewCommand:
             ]
         )
         patched_new.shutil_which.assert_called_once_with("make")
-        patched_new.run_auto.assert_called_once_with(
+        patched_new.run_copy.assert_called_once_with(
             dst_path=f"{DIR}/test-project",
             user_defaults={
                 "project_name": "test-project",
@@ -153,6 +153,7 @@ class TestCliNewCommand:
                             "project_description": "This project was generated with fastapi-mvc.",
                             "version": "0.1.0",
                         },
+                        "overwrite": True,
                     },
             ),
             (
@@ -188,7 +189,7 @@ class TestCliNewCommand:
 
         # then
         assert result.exit_code == 0
-        patched_new.run_auto.assert_called_once_with(**expected)
+        patched_new.run_copy.assert_called_once_with(**expected)
 
     def test_should_skip_make_if_not_present(self, patched_new, cli_runner):
         # given / when
