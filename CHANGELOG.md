@@ -2,6 +2,17 @@
 
 This file documents changes to [fastapi-mvc](https://github.com/fastapi-mvc/fastapi-mvc). The release numbering uses [semantic versioning](http://semver.org).
 
+## Unreleased
+
+### Features
+
+* Implement `fastapi-mvc update` command [#229](https://github.com/fastapi-mvc/fastapi-mvc/issues/229). PR [#230](https://github.com/fastapi-mvc/fastapi-mvc/pull/230)
+
+### Docs
+
+* Update `about.rst` page. PR [#230](https://github.com/fastapi-mvc/fastapi-mvc/pull/230)
+* Update `quickstart.rst` page. PR [#230](https://github.com/fastapi-mvc/fastapi-mvc/pull/230)
+
 ## 0.23.0 (01.01.2023)
 
 ### Internal
