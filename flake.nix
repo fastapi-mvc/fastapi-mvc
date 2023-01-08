@@ -111,6 +111,7 @@
                   pkgs.gnumake
                   pkgs.poetry
                   pkgs.bash
+                  pkgs.findutils
               ]}"
               export POETRY_HOME=${pkgs.poetry}
               export POETRY_BINARY=${pkgs.poetry}/bin/poetry
@@ -129,6 +130,7 @@
                   pkgs.gnumake
                   pkgs.poetry
                   pkgs.bash
+                  pkgs.findutils
               ]}"
               export POETRY_HOME=${pkgs.poetry}
               export POETRY_BINARY=${pkgs.poetry}/bin/poetry
