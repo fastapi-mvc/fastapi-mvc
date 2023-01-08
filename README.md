@@ -33,7 +33,7 @@ It allows you to write less code while accomplishing more. Core features:
 
 * Generated project based on MVC architectural pattern
 * WSGI + ASGI production server
-* Generated project comes with Sphinx documentation and 100% unit tests coverage
+* Generated project comes with Sphinx documentation and 100% tests coverage
 * Kubernetes deployment with Redis HA cluster
 * Makefile, GitHub actions and utilities
 * Helm chart for Kubernetes deployment
@@ -41,6 +41,7 @@ It allows you to write less code while accomplishing more. Core features:
 * Generate pieces of code or even your own generators
 * Uses Poetry dependency management
 * Includes set of Nix expressions
+* Update already generated project with changes from the new template version
 * Virtualized reproducible development environment using Vagrant
 
 Fastapi-mvc comes with a number of scripts called generators that are designed to make your development life easier by 

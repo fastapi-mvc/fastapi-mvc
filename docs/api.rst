@@ -49,6 +49,8 @@ CLI
 
 .. autofunction:: fastapi_mvc.cli.generate.get_generate_cmd
 
+.. autofunction:: fastapi_mvc.cli.update.update
+
 Utils
 -----
 

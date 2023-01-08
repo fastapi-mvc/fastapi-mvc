@@ -169,4 +169,6 @@ class TestRunShell:
             check=False,
             stdout=None,
             stderr=None,
+            input=None,
+            capture_output=False,
         )

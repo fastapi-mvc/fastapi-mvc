@@ -44,7 +44,15 @@ def get_git_user_info():
     return author, email
 
 
-def run_shell(cmd, cwd=None, check=False, stdout=None, stderr=None):
+def run_shell(
+    cmd,
+    cwd=None,
+    check=False,
+    stdout=None,
+    stderr=None,
+    input=None,
+    capture_output=False,
+):
     """Run shell command without activated virtualenv.
 
     If virtual env is activated, remove it from PATH in order to ensure command proper
@@ -57,10 +65,13 @@ def run_shell(cmd, cwd=None, check=False, stdout=None, stderr=None):
             to current working directory.
         check (bool): If True raise a subprocess.CalledProcessError error
             when a process returns non-zero exit status.
-        stdout (typing.Union[None, int, typing.IO[typing.Any]]): Specify the
+        stdout (None | int | typing.IO[typing.Any]): Specify the
             executed program’s standard output file handles.
-        stderr (typing.Union[None, int, typing.IO[typing.Any]]): Specify the
+        stderr (None | int | typing.IO[typing.Any]): Specify the
             executed program’s standard error file handles.
+        input (bytes | str | None): If given the input argument is passed to the
+            subprocess’s stdin.
+        capture_output (bool): If True, stdout and stderr will be captured.
 
     Raises:
         subprocess.CalledProcessError: If spawned proces finishes with an
@@ -89,6 +100,8 @@ def run_shell(cmd, cwd=None, check=False, stdout=None, stderr=None):
             check=check,
             stdout=stdout,
             stderr=stderr,
+            input=input,
+            capture_output=capture_output,
         )
         return process
     except subprocess.CalledProcessError as ex:
