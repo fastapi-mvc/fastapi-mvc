@@ -51,7 +51,7 @@ class TestCliUpdateCommand:
         ("0.1.1", "0.3.0"),
         ("0.2.0", "0.3.0"),
     ])
-    def test_should_update_project_to_given_version(self, tmp_path, monkeypatch, new_copy, update_copy, cli_runner, reference_projects, old, target):
+    def test_should_update_outdated_project_to_given_version(self, tmp_path, monkeypatch, new_copy, update_copy, cli_runner, reference_projects, old, target):
         # given
         old_project = tmp_path / "update-test"
         old_project.mkdir(parents=True)
@@ -68,6 +68,8 @@ class TestCliUpdateCommand:
         # make sure project was generated successfully
         assert create_result.exit_code == 0
         monkeypatch.chdir(str(old_project))
+        run_shell(["git", "config", "user.email", "git@jdoe.com"], check=True)
+        run_shell(["git", "config", "user.name", "John Doe"], check=True)
         run_shell(["git", "add", "."], check=True)
         run_shell(["git", "commit", "-m", "Initial commit"], check=True)
 
