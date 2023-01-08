@@ -12,6 +12,7 @@ This file documents changes to [fastapi-mvc](https://github.com/fastapi-mvc/fast
 
 * Update `about.rst` page. PR [#230](https://github.com/fastapi-mvc/fastapi-mvc/pull/230)
 * Update `quickstart.rst` page. PR [#230](https://github.com/fastapi-mvc/fastapi-mvc/pull/230)
+* Add `cli.rst` page. PR [#231](https://github.com/fastapi-mvc/fastapi-mvc/pull/231)
 
 ## 0.23.0 (01.01.2023)
 
