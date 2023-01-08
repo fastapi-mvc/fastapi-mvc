@@ -23,6 +23,10 @@ final: prev: {
         buildInputs = old.buildInputs or [ ] ++ [ py-final.flit-core ];
       });
 
+      sphinx-click = py-prev.sphinx-click.override (old: {
+        preferWheel = true;
+      });
+
     });
 
   });

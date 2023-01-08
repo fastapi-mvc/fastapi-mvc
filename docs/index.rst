@@ -123,6 +123,7 @@ This part of the documentation guides you through all of the features and usage.
 
    about
    quickstart
+   cli
    generators
 
 API Reference

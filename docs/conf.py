@@ -22,6 +22,7 @@ extensions = [
     "sphinx.ext.autosectionlabel",
     "pallets_sphinx_themes",
     "myst_parser",
+    "sphinx_click",
 ]
 
 autodoc_typehints = "description"
