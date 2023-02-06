@@ -11,12 +11,12 @@ final: prev: {
         '';
       });
 
-      flake8-todo = py-prev.flake8-todo.overridePythonAttrs (old: {
-        buildInputs = old.buildInputs or [ ] ++ [ py-final.setuptools ];
-      });
-
       pydantic = py-prev.pydantic.overrideAttrs (old: {
         buildInputs = old.buildInputs or [ ] ++ [ final.libxcrypt ];
+      });
+
+      flake8-todo = py-prev.flake8-todo.overridePythonAttrs (old: {
+        buildInputs = old.buildInputs or [ ] ++ [ py-final.setuptools ];
       });
 
       sphinx = py-prev.sphinx.overridePythonAttrs (old: {
@@ -25,6 +25,27 @@ final: prev: {
 
       sphinx-click = py-prev.sphinx-click.override (old: {
         preferWheel = true;
+      });
+
+      pathspec = py-prev.pathspec.overridePythonAttrs (old: {
+        buildInputs = old.buildInputs or [ ] ++ [ py-final.flit-core ];
+      });
+
+      plumbum = py-prev.plumbum.overridePythonAttrs (old: {
+        buildInputs = old.buildInputs or [ ] ++ [ py-final.hatch-vcs py-final.hatchling ];
+      });
+
+      pydocstyle = py-prev.pydocstyle.overridePythonAttrs (old: {
+        buildInputs = old.buildInputs or [ ] ++ [ py-final.poetry-core py-final.setuptools ];
+      });
+
+      iniconfig = py-prev.iniconfig.overridePythonAttrs (old: {
+        buildInputs = old.buildInputs or [ ] ++ [
+          py-final.hatch-vcs
+          py-final.hatchling
+          py-final.build
+          py-final.setuptools-scm
+        ];
       });
 
     });
