@@ -2,10 +2,11 @@
 
 This file documents changes to [fastapi-mvc](https://github.com/fastapi-mvc/fastapi-mvc). The release numbering uses [semantic versioning](http://semver.org).
 
-## Unreleased
+## 0.25.0 (07.02.2023)
 
 ### Internal
 
+* Bump copier-project from 0.3.0 to 0.4.0. PR [#240](https://github.com/fastapi-mvc/fastapi-mvc/pull/240)
 * Update Poetry to 1.3.x [#236](https://github.com/fastapi-mvc/fastapi-mvc/issues/236). PR [#237](https://github.com/fastapi-mvc/fastapi-mvc/pull/237)
 * Update dependencies:
   * Bump flake8-docstrings from 1.6.0 to 1.7.0. PR [#235](https://github.com/fastapi-mvc/fastapi-mvc/pull/235)
