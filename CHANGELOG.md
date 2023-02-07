@@ -2,6 +2,18 @@
 
 This file documents changes to [fastapi-mvc](https://github.com/fastapi-mvc/fastapi-mvc). The release numbering uses [semantic versioning](http://semver.org).
 
+## Unreleased
+
+### Internal
+
+* Update Poetry to 1.3.x [#236](https://github.com/fastapi-mvc/fastapi-mvc/issues/236). PR [#237](https://github.com/fastapi-mvc/fastapi-mvc/pull/237)
+* Update dependencies:
+  * Bump flake8-docstrings from 1.6.0 to 1.7.0. PR [#235](https://github.com/fastapi-mvc/fastapi-mvc/pull/235)
+  * Bump black from 22.12.0 to 23.1.0. PR [#239](https://github.com/fastapi-mvc/fastapi-mvc/pull/239)
+* Update GitHub Actions:
+  * Bump docker/build-push-action from 3 to 4. PR [#234](https://github.com/fastapi-mvc/fastapi-mvc/pull/234)
+  * Bump cachix/install-nix-action from 18 to 19. PR [#238](https://github.com/fastapi-mvc/fastapi-mvc/pull/238)
+
 ## 0.24.0 (08.01.2023)
 
 ### Features
@@ -28,7 +40,7 @@ This file documents changes to [fastapi-mvc](https://github.com/fastapi-mvc/fast
 * Bump copier-controller from 0.1.0 to 0.2.0 [0e710c1](https://github.com/fastapi-mvc/fastapi-mvc/commit/0e710c14bea8a41543f4b9c3f0e44ff45e690064).
 * Refactor and improve current test cases suite [#225](https://github.com/fastapi-mvc/fastapi-mvc/issues/225). PR [#227](https://github.com/fastapi-mvc/fastapi-mvc/pull/227)
 * Update dependencies:
-  * pallets-sphinx-themes (2.0.2 -> 2.0.3) PR [#226](https://github.com/fastapi-mvc/fastapi-mvc/pull/226)
+  * Bump pallets-sphinx-themes from 2.0.2 to 2.0.3. PR [#226](https://github.com/fastapi-mvc/fastapi-mvc/pull/226)
 
 ## 0.22.0 (15.12.2022)
 
@@ -49,11 +61,11 @@ This file documents changes to [fastapi-mvc](https://github.com/fastapi-mvc/fast
 ### Internal
 
 * Update dependencies:
-  * pytest (7.1.3 -> 7.2.0) PR [#203](https://github.com/fastapi-mvc/fastapi-mvc/pull/203)
-  * sphinx (5.2.3 -> 5.3.0) PR [#205](https://github.com/fastapi-mvc/fastapi-mvc/pull/205)
-  * flake8-import-order (0.18.1 -> 0.18.2) PR [#215](https://github.com/fastapi-mvc/fastapi-mvc/pull/215)
-  * black (22.8.0 -> 22.12.0) PR [#221](https://github.com/fastapi-mvc/fastapi-mvc/pull/221)
-  * certifi (2022.9.24 -> 2022.12.7) PR [#219](https://github.com/fastapi-mvc/fastapi-mvc/pull/219)
+  * Bump pytest from 7.1.3 to 7.2.0. PR [#203](https://github.com/fastapi-mvc/fastapi-mvc/pull/203)
+  * Bump sphinx from 5.2.3 to 5.3.0. PR [#205](https://github.com/fastapi-mvc/fastapi-mvc/pull/205)
+  * Bump flake8-import-order from 0.18.1 to 0.18.2. PR [#215](https://github.com/fastapi-mvc/fastapi-mvc/pull/215)
+  * Bump black from 22.8.0 to 22.12.0. PR [#221](https://github.com/fastapi-mvc/fastapi-mvc/pull/221)
+  * Bump certifi from 2022.9.24 to 2022.12.7. PR [#219](https://github.com/fastapi-mvc/fastapi-mvc/pull/219)
 
 ## 0.20.0 (11.11.2022)
 
@@ -121,12 +133,12 @@ This file documents changes to [fastapi-mvc](https://github.com/fastapi-mvc/fast
 * Drop mock dev-dependency [#128](https://github.com/fastapi-mvc/fastapi-mvc/issues/128). PR [#169](https://github.com/fastapi-mvc/fastapi-mvc/pull/169)
 * Add poetry2nix overlay. PR [#168](https://github.com/fastapi-mvc/fastapi-mvc/pull/168)
 * Update dependencies. PR [#167](https://github.com/fastapi-mvc/fastapi-mvc/pull/167)
-  * pytest (6.2.5 -> 7.1.3)
-  * pytest-cov (2.12.0 -> 4.0.0)
-  * flake8 (3.9.2 -> 5.0.4)
-  * black (22.3.0 -> 22.8.0)
-  * Sphinx (4.5.0 -> 5.2.3)
-  * myst-parser (0.17.2 -> 0.18.1)
+  * Bump pytest from 6.2.5 to 7.1.3.
+  * Bump pytest-cov from 2.12.0 to 4.0.0.
+  * Bump flake8 from 3.9.2 to 5.0.4.
+  * Bump black from 22.3.0 to 22.8.0.
+  * Bump Sphinx from 4.5.0 to 5.2.3.
+  * Bump myst-parser from 0.17.2 to 0.18.1.
 
 ## 0.16.1 (04.10.2022)
 
@@ -172,10 +184,10 @@ If so, feel free to raise an issue, and I'll handle it as soon as possible.
 
 * Add `flake8` pyflakes checks to `make metrics` target [#135](https://github.com/fastapi-mvc/fastapi-mvc/issues/135). PR [#136](https://github.com/fastapi-mvc/fastapi-mvc/pull/136)
 * Update project template dependencies:
-  * fastapi (0.75.0 -> 0.82.0)
-  * uvicorn (0.17.0 -> 0.18.3)
-  * aioredis (2.0.0 -> 2.0.1)
-  * aiohttp (3.8.0 -> 3.8.1)
+  * Bump fastapi from 0.75.0 to 0.82.0.
+  * Bump uvicorn from 0.17.0 to 0.18.3.
+  * Bump aioredis from 2.0.0 to 2.0.1.
+  * Bump aiohttp from 3.8.0 to 3.8.1.
 
 ## 0.14.1 (11.08.2022)
 
@@ -211,7 +223,7 @@ If so, feel free to raise an issue, and I'll handle it as soon as possible.
 ### Security
 
 * [CVE-2022-24065](http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2022-24065) OS Command Injection in cookiecutter. Update vulnerable dependency:
-  * cookiecutter (1.7.3 -> 2.1.1)
+  * Bump cookiecutter from 1.7.3 to 2.1.1.
 
 ## 0.13.0 (09.06.2022)
 
@@ -242,11 +254,11 @@ If so, feel free to raise an issue, and I'll handle it as soon as possible.
 * Refactor and improve project template structure [#90](https://github.com/fastapi-mvc/fastapi-mvc/issues/90). PR [#99](https://github.com/fastapi-mvc/fastapi-mvc/pull/99)
 * Increase project template unit tests coverage to 100%. PR [#99](https://github.com/fastapi-mvc/fastapi-mvc/pull/99)
 * Update package dependencies:
-  * click (7.1.2 -> 8.1.3)
-  * black (21.12b0 -> 22.3.0)
+  * Bump click from 7.1.2 to 8.1.3.
+  * Bump black from 21.12b0 to 22.3.0.
 * Update project template dependencies:
-  * click (7.1.2 -> 8.1.3)
-  * black (21.12b0 -> 22.3.0)
+  * Bump click from 7.1.2 to 8.1.3.
+  * Bump black from 21.12b0 to 22.3.0.
 
 ## 0.11.1 (27.04.2022)
 
@@ -294,8 +306,8 @@ If so, feel free to raise an issue, and I'll handle it as soon as possible.
 ### Internal
 
 * Update template dependencies:
-  * fastapi (0.70.0 -> 0.75.0)
-  * uvicorn (0.15.0 -> 0.17.0)
+  * Bump fastapi from 0.70.0 to 0.75.0.
+  * Bump uvicorn from 0.15.0 to 0.17.0.
 * Add minor `ShellUtils` unit test case improvement.
 * Add python 3.10 in CI tests [#62](https://github.com/fastapi-mvc/fastapi-mvc/issues/62). PR [#61](https://github.com/fastapi-mvc/fastapi-mvc/pull/61) by [@Merinorus](https://github.com/Merinorus)
 
@@ -394,10 +406,10 @@ If so, feel free to raise an issue, and I'll handle it as soon as possible.
 ### Internal
 
 * Update project dependencies:
-  * fastapi (0.66.0 -> 0.70.0)
-  * aioredis (2.0.0a1 -> 2.0.0)
-  * aiohttp (3.7.4.post0 -> 3.8.1)
-  * uvicorn (0.14.0 -> 0.15.0)
+  * Bump fastapi from 0.66.0 to 0.70.0.
+  * Bump aioredis from 2.0.0a1 to 2.0.0.
+  * Bump aiohttp from 3.7.4.post0 to 3.8.1.
+  * Bump uvicorn from 0.14.0 to 0.15.0.
 * Improve submodules import paths.
 * Move `fastapi_mvc.app.config` submodule to `fastapi_mvc.config`.
 * Refactor application and redis config with using `pydantic.BaseSetting`.
