@@ -2,11 +2,21 @@
 
 This file documents changes to [fastapi-mvc](https://github.com/fastapi-mvc/fastapi-mvc). The release numbering uses [semantic versioning](http://semver.org).
 
+## Unreleased
+
+### Generators
+
+* Bump copier-controller from 0.2.0 to 0.2.1. [16acea1](https://github.com/fastapi-mvc/fastapi-mvc/commit/16acea1b8281bd7e295c51c6052088dc4b1d1bf2)
+* Bump copier-script from 0.1.0 to 0.1.1. [96a46d8](https://github.com/fastapi-mvc/fastapi-mvc/commit/96a46d85728ec1202dea23764e23c97b4a69bcd6)
+
 ## 0.25.0 (07.02.2023)
+
+### Generators
+
+* Bump copier-project from 0.3.0 to 0.4.0. PR [#240](https://github.com/fastapi-mvc/fastapi-mvc/pull/240)
 
 ### Internal
 
-* Bump copier-project from 0.3.0 to 0.4.0. PR [#240](https://github.com/fastapi-mvc/fastapi-mvc/pull/240)
 * Update Poetry to 1.3.x [#236](https://github.com/fastapi-mvc/fastapi-mvc/issues/236). PR [#237](https://github.com/fastapi-mvc/fastapi-mvc/pull/237)
 * Update dependencies:
   * Bump flake8-docstrings from 1.6.0 to 1.7.0. PR [#235](https://github.com/fastapi-mvc/fastapi-mvc/pull/235)
@@ -35,19 +45,25 @@ This file documents changes to [fastapi-mvc](https://github.com/fastapi-mvc/fast
 
 ## 0.23.0 (01.01.2023)
 
+### Generators
+
+* Bump copier-project from 0.2.0 to 0.3.0. [e99e66c](https://github.com/fastapi-mvc/fastapi-mvc/commit/e99e66c04ecef05b949071aeb2ad0dbfeb70f617)
+* Bump copier-controller from 0.1.0 to 0.2.0. [0e710c1](https://github.com/fastapi-mvc/fastapi-mvc/commit/0e710c14bea8a41543f4b9c3f0e44ff45e690064)
+
 ### Internal
 
-* Bump copier-project from 0.2.0 to 0.3.0 [e99e66c](https://github.com/fastapi-mvc/fastapi-mvc/commit/e99e66c04ecef05b949071aeb2ad0dbfeb70f617).
-* Bump copier-controller from 0.1.0 to 0.2.0 [0e710c1](https://github.com/fastapi-mvc/fastapi-mvc/commit/0e710c14bea8a41543f4b9c3f0e44ff45e690064).
 * Refactor and improve current test cases suite [#225](https://github.com/fastapi-mvc/fastapi-mvc/issues/225). PR [#227](https://github.com/fastapi-mvc/fastapi-mvc/pull/227)
 * Update dependencies:
   * Bump pallets-sphinx-themes from 2.0.2 to 2.0.3. PR [#226](https://github.com/fastapi-mvc/fastapi-mvc/pull/226)
 
 ## 0.22.0 (15.12.2022)
 
-### Internal
+### Generators
 
 * Bump copier-project from 0.1.0 to 0.2.0. PR [#224](https://github.com/fastapi-mvc/fastapi-mvc/pull/224)
+
+### Internal
+
 * Update GitHub Actions:
   * Bump nwtgck/actions-netlify from 1.2.4 to 2.0.0. PR [#222](https://github.com/fastapi-mvc/fastapi-mvc/pull/222)
   * Bump fkirc/skip-duplicate-actions from 5.2.0 to 5.3.0. PR [#223](https://github.com/fastapi-mvc/fastapi-mvc/pull/223)
@@ -104,6 +120,10 @@ This file documents changes to [fastapi-mvc](https://github.com/fastapi-mvc/fast
 
 ## 0.18.1 (17.10.2022)
 
+### Generators
+
+* Bump copier-project version from 0.1.0 to 0.1.1. [6afb1fd](https://github.com/fastapi-mvc/fastapi-mvc/commit/6afb1fd0d8d888c10887647dfe789060b2bcc5c4)
+
 ### Fixed
 
 * Invalid default project name if destination is `.` [#187](https://github.com/fastapi-mvc/fastapi-mvc/issues/187). PR [#188](https://github.com/fastapi-mvc/fastapi-mvc/pull/188)
@@ -111,7 +131,6 @@ This file documents changes to [fastapi-mvc](https://github.com/fastapi-mvc/fast
 ### Internal
 
 * Implement ensure_permission method [#185](https://github.com/fastapi-mvc/fastapi-mvc/issues/185). PR [#188](https://github.com/fastapi-mvc/fastapi-mvc/pull/188)
-* Bump copier-project version from 0.1.0 to 0.1.1 [6afb1fd](https://github.com/fastapi-mvc/fastapi-mvc/commit/6afb1fd0d8d888c10887647dfe789060b2bcc5c4).
 
 ## 0.18.0 (10.10.2022)
 
