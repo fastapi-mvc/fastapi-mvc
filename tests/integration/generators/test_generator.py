@@ -22,11 +22,9 @@ class TestGeneratorGeneratorCli:
                 "lib/generators/foo_bar/CHANGELOG.md",
                 "lib/generators/foo_bar/README.md",
                 "lib/generators/foo_bar/copier.yml",
-                "lib/generators/foo_bar/poetry.lock",
-                "lib/generators/foo_bar/pyproject.toml",
                 "lib/generators/foo_bar/update.sh",
-                "lib/generators/foo_bar/default.nix",
-                "lib/generators/foo_bar/shell.nix",
+                "lib/generators/foo_bar/flake.nix",
+                "lib/generators/foo_bar/flake.lock",
                 "lib/generators/foo_bar/.generator.yml",
                 "lib/generators/foo_bar/template/{{package_name}}/hello_world.py.jinja",
             ],
@@ -42,8 +40,8 @@ class TestGeneratorGeneratorCli:
         assert result.exit_code == 0
         assert_paths(
             [
-                "lib/generators/foo_bar/default.nix",
-                "lib/generators/foo_bar/shell.nix",
+                "lib/generators/foo_bar/flake.nix",
+                "lib/generators/foo_bar/flake.lock",
             ],
             condition=lambda x: os.path.exists(x),
         )
