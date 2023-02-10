@@ -6,6 +6,7 @@ This file documents changes to [fastapi-mvc](https://github.com/fastapi-mvc/fast
 
 ### Generators
 
+* Bump copier-generator from 0.1.0 to 0.2.0. PR [#241](https://github.com/fastapi-mvc/fastapi-mvc/pull/241)
 * Bump copier-controller from 0.2.0 to 0.2.1. [16acea1](https://github.com/fastapi-mvc/fastapi-mvc/commit/16acea1b8281bd7e295c51c6052088dc4b1d1bf2)
 * Bump copier-script from 0.1.0 to 0.1.1. [96a46d8](https://github.com/fastapi-mvc/fastapi-mvc/commit/96a46d85728ec1202dea23764e23c97b4a69bcd6)
 
