@@ -75,3 +75,8 @@ test: unit-test integration-test  ## Run fastapi-mvc tests
 docs: install ## Build fastapi-mvc documentation
 	echo "[docs] Build fastapi-mvc documentation."
 	${POETRY_BINARY} run sphinx-build docs site
+
+.PHONY: mypy
+mypy: install  ## Run fastapi-mvc mypy checks
+	echo "[mypy] Run fastapi-mvc mypy checks."
+	${POETRY_BINARY} mypy fastapi_mvc
