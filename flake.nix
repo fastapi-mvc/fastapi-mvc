@@ -138,6 +138,13 @@
               pytest --cov=fastapi_mvc --cov-fail-under=90 --cov-report=xml --cov-report=term-missing tests
             '');
           };
+          mypy = {
+            type = "app";
+            program = toString (pkgs.writeScript "mypy" ''
+              echo "[nix][mypy] Run fastapi-mvc mypy checks."
+              mypy fastapi_mvc
+            '');
+          };
           test = {
             type = "app";
             program = toString (pkgs.writeScript "test" ''
