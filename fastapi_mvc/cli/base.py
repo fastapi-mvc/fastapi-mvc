@@ -7,6 +7,7 @@ Resources:
     https://click.palletsprojects.com/en/8.1.x/
 
 """
+from typing import Dict, Any, List
 from collections import defaultdict
 
 import click
@@ -16,12 +17,12 @@ class ClickAliasedCommand(click.Command):
     """Defines base class for all concrete fastapi-mvc CLI commands.
 
     Args:
-        alias (typing.Optional[str]): Given command alias.
+        alias (str): Given command alias.
         *args (list): Parent class constructor args.
         **kwargs (dict): Parent class constructor kwargs.
 
     Attributes:
-        alias (typing.Optional[str]): Given command alias.
+        alias (str): Given command alias.
 
     Resources:
         1. `click.Command class documentation`_
@@ -31,7 +32,7 @@ class ClickAliasedCommand(click.Command):
 
     """
 
-    def __init__(self, alias=None, *args, **kwargs):
+    def __init__(self, alias: str = "", *args: Any, **kwargs: Any):
         """Initialize Command class object instance."""
         super().__init__(*args, **kwargs)
         self.alias = alias
@@ -51,12 +52,12 @@ class ClickAliasedGroup(click.Group):
 
     """
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args: Any, **kwargs: Any):
         """Initialize ClickAliasedGroup class object instance."""
         super().__init__(*args, **kwargs)
-        self.aliases = dict()
+        self.aliases: Dict[str, str] = dict()
 
-    def add_command(self, cmd, name=None):
+    def add_command(self, cmd: click.Command, name: str | None = None) -> None:
         """Register another Command class object instance with this group.
 
         If the name is not provided, the name of the command is used.
@@ -68,11 +69,12 @@ class ClickAliasedGroup(click.Group):
         """
         super().add_command(cmd, name)
         name = name or cmd.name
+        alias = getattr(cmd, "alias", None)
 
-        if hasattr(cmd, "alias") and cmd.alias:
-            self.aliases[cmd.alias] = name
+        if name and alias:
+            self.aliases[alias] = name
 
-    def get_command(self, ctx, cmd_name):
+    def get_command(self, ctx: click.Context, cmd_name: str) -> click.Command | None:
         """Return Command class object instance.
 
         Given a context and a command name or alias, this returns a ``Command`` class
@@ -89,7 +91,9 @@ class ClickAliasedGroup(click.Group):
         cmd_name = self.aliases.get(cmd_name, cmd_name)
         return super().get_command(ctx, cmd_name)
 
-    def format_commands(self, ctx, formatter):
+    def format_commands(
+        self, ctx: click.Context, formatter: click.HelpFormatter
+    ) -> None:
         """Write all the commands into the formatter if they exist.
 
         Args:
@@ -138,12 +142,12 @@ class GeneratorCommand(ClickAliasedCommand):
 
     """
 
-    def __init__(self, category="Other", *args, **kwargs):
+    def __init__(self, category: str = "Other", *args: Any, **kwargs: Any):
         """Initialize Generator class object instance."""
         super().__init__(*args, **kwargs)
         self.category = category
 
-    def format_epilog(self, ctx, formatter):
+    def format_epilog(self, ctx: click.Context, formatter: click.HelpFormatter) -> None:
         """Write the epilog into the formatter if it exists.
 
         Args:
@@ -181,7 +185,13 @@ class GeneratorsMultiCommand(click.MultiCommand):
 
     """
 
-    def __init__(self, generators, alias=None, *args, **kwargs):
+    def __init__(
+        self,
+        generators: Dict[str, click.Command],
+        alias: str = "",
+        *args: Any,
+        **kwargs: Any,
+    ):
         """Initialize GeneratorsMultiCommand class object instance."""
         super().__init__(*args, **kwargs)
         self.generators = generators
@@ -193,7 +203,9 @@ class GeneratorsMultiCommand(click.MultiCommand):
 
         self.alias = alias
 
-    def format_commands(self, ctx, formatter):
+    def format_commands(
+        self, ctx: click.Context, formatter: click.HelpFormatter
+    ) -> None:
         """Write all the generators into the formatter if they exist.
 
         Extra format methods for multi methods that adds all the generators after the
@@ -238,7 +250,7 @@ class GeneratorsMultiCommand(click.MultiCommand):
                 with formatter.section(key):
                     formatter.write_dl(value)
 
-    def list_commands(self, ctx):
+    def list_commands(self, ctx: click.Context) -> List[str]:
         """Return a list of subcommand names in the order they should appear.
 
         Args:
@@ -248,9 +260,9 @@ class GeneratorsMultiCommand(click.MultiCommand):
             list: List of subcommand names in the order they should appear.
 
         """
-        return self.generators.keys()
+        return list(self.generators.keys())
 
-    def get_command(self, ctx, name):
+    def get_command(self, ctx: click.Context, name: str) -> click.Command:
         """Return GeneratorCommand class object instance.
 
         Given a context and a command name or alias, this returns a ``GeneratorCommand``

@@ -6,6 +6,7 @@ Attributes:
         command listing of the parent command.
 
 """
+from typing import Dict, Any
 import os
 
 import click
@@ -47,7 +48,7 @@ from new template version.
     type=click.STRING,
 )
 @click.pass_context
-def update(ctx, **options):
+def update(ctx: click.Context, **options: Dict[str, Any]) -> None:
     """Define command-line interface update command.
 
     Args:

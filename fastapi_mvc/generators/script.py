@@ -8,6 +8,7 @@ Attributes:
         after everything else.
 
 """
+from typing import Dict, Any
 import os
 
 import click
@@ -54,7 +55,7 @@ Example:
     required=True,
     nargs=1,
 )
-def script(name, **options):
+def script(name: str, **options: Dict[str, Any]) -> None:
     """Define script generator command-line interface.
 
     Args:

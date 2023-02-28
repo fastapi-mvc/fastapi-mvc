@@ -5,6 +5,8 @@ Attributes:
     template (str): Unhandled exception issue message template.
 
 """
+from typing import Type
+from types import TracebackType
 import logging
 import sys
 import platform
@@ -61,7 +63,9 @@ fastapi-mvc {argv}
 """
 
 
-def global_except_hook(exctype, value, traceback):
+def global_except_hook(
+    exctype: Type[BaseException], value: BaseException, traceback: TracebackType | None
+) -> None:
     """Global except hook method.
 
     Args:

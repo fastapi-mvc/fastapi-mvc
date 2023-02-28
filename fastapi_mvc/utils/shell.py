@@ -4,6 +4,7 @@ Attributes:
     log (logging.Logger): Logger class object instance.
 
 """
+from typing import Tuple, List, IO, Any, TypeVar
 import os
 import logging
 import subprocess
@@ -11,13 +12,14 @@ import shutil
 
 
 log = logging.getLogger(__name__)
+_T = TypeVar("_T")
 
 
-def get_poetry_path():
-    """Get Poetry binary abspath.
+def get_poetry_path() -> str:
+    """Get Poetry executable abspath.
 
     Returns:
-        str: Poetry binary abspath.
+        Poetry executable abspath.
 
     """
     poetry_path = os.getenv("POETRY_BINARY", "")
@@ -31,14 +33,14 @@ def get_poetry_path():
     return poetry_path
 
 
-def get_git_user_info():
+def get_git_user_info() -> Tuple[str, str]:
     """Get git user information.
 
     Reads username and email information from git. If not exists, provide defaults
     values.
 
     Returns:
-        typing.Tuple[str, str]: Tuple containing git username and email.
+        Tuple containing git username and email.
 
     """
     log.debug("Try read git user information.")
@@ -48,14 +50,20 @@ def get_git_user_info():
         return defaults
 
     try:
-        author = subprocess.check_output(["git", "config", "--get", "user.name"])
-        author = author.decode("utf-8").strip()
+        author = (
+            subprocess.check_output(["git", "config", "--get", "user.name"])
+            .decode("utf-8")
+            .strip()
+        )
     except subprocess.CalledProcessError:
         author = defaults[0]
 
     try:
-        email = subprocess.check_output(["git", "config", "--get", "user.email"])
-        email = email.decode("utf-8").strip()
+        email = (
+            subprocess.check_output(["git", "config", "--get", "user.email"])
+            .decode("utf-8")
+            .strip()
+        )
     except subprocess.CalledProcessError:
         email = defaults[1]
 
@@ -63,14 +71,14 @@ def get_git_user_info():
 
 
 def run_shell(
-    cmd,
-    cwd=None,
-    check=False,
-    stdout=None,
-    stderr=None,
-    input=None,
-    capture_output=False,
-):
+    cmd: List[str],
+    cwd: str | None = None,
+    check: bool = False,
+    stdout: int | IO[Any] | None = None,
+    stderr: int | IO[Any] | None = None,
+    input: bytes | str | None = None,
+    capture_output: bool = False,
+) -> subprocess.CompletedProcess[_T]:
     """Run shell command without activated virtualenv.
 
     If virtual env is activated, remove it from PATH in order to ensure command proper

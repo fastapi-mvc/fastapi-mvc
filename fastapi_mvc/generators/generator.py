@@ -8,6 +8,7 @@ Attributes:
         after everything else.
 
 """
+from typing import Dict, Any
 from datetime import datetime
 
 import click
@@ -97,7 +98,7 @@ Example:
     envvar="REPO_URL",
     default="https://your.repo.url.here",
 )
-def generator(name, **options):
+def generator(name: str, **options: Dict[str, Any]) -> None:
     """Define generator generator command-line interface.
 
     Args:

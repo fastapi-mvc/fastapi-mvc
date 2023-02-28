@@ -8,6 +8,7 @@ Attributes:
         after everything else.
 
 """
+from typing import List, Dict, Any
 import os
 
 import click
@@ -41,7 +42,7 @@ Example:
 """
 
 
-def insert_router_import(package_name, controller_name):
+def insert_router_import(package_name: str, controller_name: str) -> None:
     """Insert import and router entry into ``app/router.py`` file.
 
     Args:
@@ -96,7 +97,7 @@ def insert_router_import(package_name, controller_name):
     help="Do not add router entry to app/router.py.",
     is_flag=True,
 )
-def controller(name, endpoints, **options):
+def controller(name: str, endpoints: List[str], **options: Dict[str, Any]) -> None:
     """Define controller generator command-line interface.
 
     Args:
@@ -130,7 +131,7 @@ def controller(name, endpoints, **options):
         vcs_ref=COPIER_CONTROLLER.vcs_ref,
         dst_path=os.getcwd(),
         answers_file=ANSWERS_FILE,
-        data=data
+        data=data,
     )
 
     if not options["skip_routes"]:

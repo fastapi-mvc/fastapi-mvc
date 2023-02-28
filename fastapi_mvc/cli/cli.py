@@ -4,6 +4,7 @@ Attributes:
     cmd_help (str): The help string to use for this command.
 
 """
+from typing import Dict, Any
 import logging
 import sys
 
@@ -38,7 +39,7 @@ Source: https://github.com/fastapi-mvc/fastapi-mvc
     is_flag=True,
     default=False,
 )
-def cli(**options):
+def cli(**options: Dict[str, Any]) -> None:
     """Define command-line interface root.
 
     Args:

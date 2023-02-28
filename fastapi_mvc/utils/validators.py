@@ -15,7 +15,9 @@ from fastapi_mvc.constants import ANSWERS_FILE
 log = logging.getLogger(__name__)
 
 
-def ensure_permissions(path: str, r: bool = True, w: bool = False, x: bool = False) -> None:
+def ensure_permissions(
+    path: str, r: bool = True, w: bool = False, x: bool = False
+) -> None:
     """Ensure correct permissions to given path.
 
     Args:
@@ -45,7 +47,9 @@ def ensure_permissions(path: str, r: bool = True, w: bool = False, x: bool = Fal
         raise SystemExit(1)
 
 
-def ensure_project_data(project_root: Optional[str] = None, answers_file: str = ANSWERS_FILE) -> Dict[str, Any]:
+def ensure_project_data(
+    project_root: Optional[str] = None, answers_file: str = ANSWERS_FILE
+) -> Dict[str, Any]:
     """Ensure necessary fastapi-mvc project data existence.
 
     Args:

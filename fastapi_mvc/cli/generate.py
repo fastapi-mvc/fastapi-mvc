@@ -17,7 +17,7 @@ fastapi-mvc project at the current working directory.
 """
 
 
-def get_generate_cmd():
+def get_generate_cmd() -> GeneratorsMultiCommand:
     """Return command-line interface generate command.
 
     Returns:

@@ -8,6 +8,7 @@ Attributes:
         after everything else.
 
 """
+from typing import Dict, Any
 import shutil
 import logging
 import os
@@ -128,7 +129,7 @@ Example:
     help="The branch, tag or commit ID to checkout after clone.",
     type=click.STRING,
 )
-def new(app_path, **options):
+def new(app_path: str, **options: Dict[str, Any]) -> None:
     """Define command-line interface new command.
 
     Args:

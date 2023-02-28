@@ -6,6 +6,7 @@ Attributes:
         command listing of the parent command.
 
 """
+from typing import Dict, Any
 from subprocess import CalledProcessError
 
 import click
@@ -50,7 +51,7 @@ fastapi-mvc project at the current working directory.
     is_flag=True,
 )
 @click.pass_context
-def run(ctx, **options):
+def run(ctx: click.Context, **options: Dict[str, Any]) -> None:
     """Define command-line interface run command.
 
     Args:
@@ -80,9 +81,9 @@ def run(ctx, **options):
                 "uvicorn",
                 "--factory",
                 "--host",
-                options["host"],
+                f"{options['host']}",
                 "--port",
-                options["port"],
+                f"{options['port']}",
                 "--reload",
                 f"{project_data['package_name']}.app:get_application",
             ],
