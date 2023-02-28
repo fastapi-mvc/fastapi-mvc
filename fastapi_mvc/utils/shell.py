@@ -4,7 +4,7 @@ Attributes:
     log (logging.Logger): Logger class object instance.
 
 """
-from typing import Tuple, List, IO, Any, TypeVar
+from typing import Tuple, List, IO, Any, TypeVar, Optional, Union
 import os
 import logging
 import subprocess
@@ -72,11 +72,11 @@ def get_git_user_info() -> Tuple[str, str]:
 
 def run_shell(
     cmd: List[str],
-    cwd: str | None = None,
+    cwd: Optional[str] = None,
     check: bool = False,
-    stdout: int | IO[Any] | None = None,
-    stderr: int | IO[Any] | None = None,
-    input: bytes | str | None = None,
+    stdout: Optional[Union[int, IO]] = None,
+    stderr: Optional[Union[int, IO]] = None,
+    input: Optional[Union[str, bytes]] = None,
     capture_output: bool = False,
 ) -> subprocess.CompletedProcess[_T]:
     """Run shell command without activated virtualenv.
@@ -91,11 +91,11 @@ def run_shell(
             to current working directory.
         check (bool): If True raise a subprocess.CalledProcessError error
             when a process returns non-zero exit status.
-        stdout (None | int | typing.IO[typing.Any]): Specify the
+        stdout (typing.Optional[typing.Union[int, IO]]): Specify the
             executed program’s standard output file handles.
-        stderr (None | int | typing.IO[typing.Any]): Specify the
+        stderr (typing.Optional[typing.Union[int, IO]])): Specify the
             executed program’s standard error file handles.
-        input (bytes | str | None): If given the input argument is passed to the
+        input (typing.Optional[typing.Union[bytes, str]])): If given the input argument is passed to the
             subprocess’s stdin.
         capture_output (bool): If True, stdout and stderr will be captured.
 

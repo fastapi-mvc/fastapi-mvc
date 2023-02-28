@@ -7,7 +7,7 @@ Resources:
     https://click.palletsprojects.com/en/8.1.x/
 
 """
-from typing import Dict, Any, List
+from typing import Dict, Any, List, Optional
 from collections import defaultdict
 
 import click
@@ -78,7 +78,7 @@ class ClickAliasedGroup(click.Group):
         if name and alias:
             self.aliases[alias] = name
 
-    def get_command(self, ctx: click.Context, cmd_name: str) -> click.Command | None:
+    def get_command(self, ctx: click.Context, cmd_name: str) -> Optional[click.Command]:
         """Return Command class object instance.
 
         Given a context and a command name or alias, this returns a ``Command`` class
@@ -89,7 +89,7 @@ class ClickAliasedGroup(click.Group):
             cmd_name (str): Chosen command name.
 
         Returns:
-            click.Command: Command class object instance for given command name.
+            typing.Optional[click.Command]: Command class object instance for given command name.
 
         """
         cmd_name = self.aliases.get(cmd_name, cmd_name)
@@ -170,7 +170,7 @@ class GeneratorsMultiCommand(click.MultiCommand):
     """Custom click.MultiCommand class implementation.
 
     Args:
-        generators (typing.Dict[str, Generator]): Given dictionary containing all
+        generators (typing.Dict[str, GeneratorCommand]): Given dictionary containing all
             available fastapi-mvc generators.
         alias (str): Given command alias.
         *args (typing.Any): Parent class constructor args.
