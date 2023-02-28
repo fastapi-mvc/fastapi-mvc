@@ -79,4 +79,4 @@ docs: install ## Build fastapi-mvc documentation
 .PHONY: mypy
 mypy: install  ## Run fastapi-mvc mypy checks
 	echo "[mypy] Run fastapi-mvc mypy checks."
-	${POETRY_BINARY} mypy fastapi_mvc
+	${POETRY_BINARY} run mypy fastapi_mvc
