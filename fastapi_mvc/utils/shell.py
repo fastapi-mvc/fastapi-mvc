@@ -4,7 +4,7 @@ Attributes:
     log (logging.Logger): Logger class object instance.
 
 """
-from typing import Tuple, List, IO, AnyStr, TypeVar, Optional, Union
+from typing import Tuple, List, IO, AnyStr, Optional, Union, Any
 import os
 import logging
 import subprocess
@@ -12,7 +12,6 @@ import shutil
 
 
 log = logging.getLogger(__name__)
-_T = TypeVar("_T")
 
 
 def get_poetry_path() -> str:
@@ -78,7 +77,7 @@ def run_shell(
     stderr: Optional[Union[int, IO[AnyStr]]] = None,
     input: Optional[Union[str, bytes]] = None,
     capture_output: bool = False,
-) -> subprocess.CompletedProcess[_T]:
+) -> subprocess.CompletedProcess[Any]:
     """Run shell command without activated virtualenv.
 
     If virtual env is activated, remove it from PATH in order to ensure command proper
