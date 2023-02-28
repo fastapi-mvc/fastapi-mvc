@@ -47,6 +47,8 @@ jobs:
         run: nix flake check
       - name: Run fastapi-mvc metrics checks
         run: nix run .#metrics
+      - name: Run fastapi-mvc mypy checks
+        run: nix run .#mypy
       - name: Run fastapi-mvc tests
         run: nix run .#test
   nix-build:
