@@ -89,7 +89,8 @@ class ClickAliasedGroup(click.Group):
             cmd_name (str): Chosen command name.
 
         Returns:
-            typing.Optional[click.Command]: Command class object instance for given command name.
+            typing.Optional[click.Command]: Command class object instance for given
+                command name.
 
         """
         cmd_name = self.aliases.get(cmd_name, cmd_name)

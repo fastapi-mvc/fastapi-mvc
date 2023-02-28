@@ -65,7 +65,9 @@ fastapi-mvc {argv}
 
 
 def global_except_hook(
-    exctype: Type[BaseException], value: BaseException, traceback: Optional[TracebackType]
+    exctype: Type[BaseException],
+    value: BaseException,
+    traceback: Optional[TracebackType],
 ) -> None:
     """Global except hook method.
 

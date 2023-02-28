@@ -12,6 +12,7 @@ import sys
 import os
 
 import click
+
 from .controller import controller
 from .generator import generator
 from .script import script
@@ -23,7 +24,8 @@ log = logging.getLogger(__name__)
 def load_generators() -> Dict[str, click.Command]:
     """Load user fastapi-mvc generators.
 
-    Programmatically import all available user generators from known paths to search in.
+    Programmatically import all available user generators from known paths to search
+    in.
 
     Returns:
         typing.Dict[str, click.Command]: Builtin and imported fastapi-mvc generators.
