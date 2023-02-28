@@ -2,6 +2,7 @@
 
 Attributes:
     log (logging.Logger): Logger class object instance.
+    hint (str): Unhandled exception hint message template.
     template (str): Unhandled exception issue message template.
 
 """
@@ -69,9 +70,9 @@ def global_except_hook(
     """Global except hook method.
 
     Args:
-        exctype: Exception object instance.
-        value: Exception value.
-        traceback: Traceback object instance.
+        exctype (typing.Type[BaseException]): Exception object instance.
+        value (BaseException): Exception value.
+        traceback (types.TracebackType): Traceback object instance.
 
     """
     log.exception(

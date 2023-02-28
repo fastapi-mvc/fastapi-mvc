@@ -102,7 +102,7 @@ def controller(name: str, endpoints: List[str], **options: Dict[str, Any]) -> No
 
     Args:
         name (str): Given controller name.
-        endpoints (str): Given controller endpoints.
+        endpoints (typing.List[str]): Given controller endpoints.
         options (typing.Dict[str, typing.Any]): Map of command option names to
             their parsed values.
 

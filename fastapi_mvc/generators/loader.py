@@ -4,20 +4,17 @@ Attributes:
     log (logging.Logger): Logger class object instance.
 
 """
-from typing import Dict, TYPE_CHECKING
+from typing import Dict
 from importlib.util import spec_from_file_location, module_from_spec
 import logging
 import pkgutil
 import sys
 import os
 
+import click
 from .controller import controller
 from .generator import generator
 from .script import script
-
-
-if TYPE_CHECKING:
-    import click
 
 
 log = logging.getLogger(__name__)
@@ -27,6 +24,9 @@ def load_generators() -> Dict[str, click.Command]:
     """Load user fastapi-mvc generators.
 
     Programmatically import all available user generators from known paths to search in.
+
+    Returns:
+        typing.Dict[str, click.Command]: Builtin and imported fastapi-mvc generators.
 
     References:
         1. Importing programmatically

@@ -99,6 +99,9 @@ def run_shell(
             subprocess’s stdin.
         capture_output (bool): If True, stdout and stderr will be captured.
 
+    Returns:
+        CompletedProcess: Class object instance.
+
     Raises:
         subprocess.CalledProcessError: If spawned proces finishes with an
             error and check is True.

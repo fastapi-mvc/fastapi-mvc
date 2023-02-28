@@ -48,13 +48,16 @@ def ensure_permissions(
 
 
 def ensure_project_data(
-    project_root: Optional[str] = None, answers_file: str = ANSWERS_FILE
+    project_root: str | None = None, answers_file: str = ANSWERS_FILE
 ) -> Dict[str, Any]:
     """Ensure necessary fastapi-mvc project data existence.
 
     Args:
-        project_root: Given fastapi-mvc project root path.
-        answers_file: Given name of Copier answers_file relative to project root.
+        project_root (str | None): Given fastapi-mvc project root path.
+        answers_file (str): Given name of Copier answers_file relative to project root.
+
+    Returns:
+        typing.Dict[str, typing.Any]: Loaded answers data.
 
     Raises:
         SystemExit: If project data is empty or is missing required values.

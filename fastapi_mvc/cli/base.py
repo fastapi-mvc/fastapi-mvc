@@ -18,11 +18,11 @@ class ClickAliasedCommand(click.Command):
 
     Args:
         alias (str): Given command alias.
-        *args (list): Parent class constructor args.
-        **kwargs (dict): Parent class constructor kwargs.
+        *args (typing.Any): Parent class constructor args.
+        **kwargs (typing.Any): Parent class constructor kwargs.
 
     Attributes:
-        alias (str): Given command alias.
+        alias (str): Command alias.
 
     Resources:
         1. `click.Command class documentation`_
@@ -41,8 +41,12 @@ class ClickAliasedCommand(click.Command):
 class ClickAliasedGroup(click.Group):
     """Custom click.Group class implementation.
 
+    Args:
+        *args (typing.Any): Parent class constructor args.
+        **kwargs (typing.Any): Parent class constructor kwargs.
+
     Attributes:
-        aliases (typing.Dict[str, str]): Map of command aliases to their names.
+        aliases (str): Map of command aliases to their names.
 
     Resources:
         1. `click.Group class documentation`_
@@ -63,7 +67,7 @@ class ClickAliasedGroup(click.Group):
         If the name is not provided, the name of the command is used.
 
         Args:
-            cmd (Command): Command class object instance to register.
+            cmd (click.Command): Command class object instance to register.
             name (typing.Optional[str]): Given command name.
 
         """
@@ -85,7 +89,7 @@ class ClickAliasedGroup(click.Group):
             cmd_name (str): Chosen command name.
 
         Returns:
-            Command: Class object instance for given command name.
+            click.Command: Command class object instance for given command name.
 
         """
         cmd_name = self.aliases.get(cmd_name, cmd_name)
@@ -133,8 +137,10 @@ class GeneratorCommand(ClickAliasedCommand):
     """Defines base class for all concrete fastapi-mvc generators.
 
     Args:
-        category (str): Name under which generator should be printed in
+        category (str): Given name under which generator should be printed in
             ``fastapi-mvc generate`` CLI command help page.
+        *args (typing.Any): Parent class constructor args.
+        **kwargs (typing.Any): Parent class constructor kwargs.
 
     Attributes:
         category (str): Name under which generator should be printed in
@@ -164,12 +170,11 @@ class GeneratorsMultiCommand(click.MultiCommand):
     """Custom click.MultiCommand class implementation.
 
     Args:
-        generators (typing.Dict[str, Generator]): Dictionary containing all available
-            fastapi-mvc generators.
-        generators_aliases (typing.Dict[str, str]): Map of generator aliases to their
-            names.
-        *args (list): Parent class constructor args.
-        **kwargs (dict): Parent class constructor kwargs.
+        generators (typing.Dict[str, Generator]): Given dictionary containing all
+            available fastapi-mvc generators.
+        alias (str): Given command alias.
+        *args (typing.Any): Parent class constructor args.
+        **kwargs (typing.Any): Parent class constructor kwargs.
 
     Attributes:
         generators (typing.Dict[str, Generator]): Dictionary containing all available
@@ -257,7 +262,7 @@ class GeneratorsMultiCommand(click.MultiCommand):
             ctx (click.Context): Click Context class object instance.
 
         Returns:
-            list: List of subcommand names in the order they should appear.
+            typing.List[str]: List of subcommand names.
 
         """
         return list(self.generators.keys())
@@ -273,7 +278,7 @@ class GeneratorsMultiCommand(click.MultiCommand):
             name (str): Chosen generator name.
 
         Returns:
-            Generator: Class object instance for given command name.
+            click.Command: Command class object instance for given command name.
 
         """
         name = self.generators_aliases.get(name, name)
