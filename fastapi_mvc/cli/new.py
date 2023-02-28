@@ -14,8 +14,9 @@ import os
 from datetime import datetime
 
 import click
-from fastapi_mvc import Generator
-from fastapi_mvc.constants import VERSION, COPIER_PROJECT
+import copier
+from fastapi_mvc.cli import GeneratorCommand
+from fastapi_mvc.constants import VERSION, COPIER_PROJECT, ANSWERS_FILE
 from fastapi_mvc.utils import run_shell, get_git_user_info, ensure_permissions
 
 
@@ -36,9 +37,7 @@ Example:
 
 
 @click.command(
-    cls=Generator,
-    template=COPIER_PROJECT.template,
-    vcs_ref=COPIER_PROJECT.vcs_ref,
+    cls=GeneratorCommand,
     help=cmd_help,
     short_help=cmd_short_help,
     epilog=epilog,
@@ -129,12 +128,10 @@ Example:
     help="The branch, tag or commit ID to checkout after clone.",
     type=click.STRING,
 )
-@click.pass_context
-def new(ctx, app_path, **options):
+def new(app_path, **options):
     """Define command-line interface new command.
 
     Args:
-        ctx (click.Context): Click Context class object instance.
         app_path (str): Destination path where to render the project.
         options (typing.Dict[str, typing.Any]): Map of command option names to their
             parsed values.
@@ -146,11 +143,6 @@ def new(ctx, app_path, **options):
         ensure_permissions(app_abspath, w=True)
     else:
         ensure_permissions(os.path.dirname(app_abspath), w=True)
-
-    if options["use_repo"]:
-        ctx.command.template = options["use_repo"]
-    if options["use_version"]:
-        ctx.command.vcs_ref = options["use_version"]
 
     author, email = get_git_user_info()
     data = {
@@ -174,25 +166,38 @@ def new(ctx, app_path, **options):
     }
 
     if options["no_interaction"]:
-        ctx.command.run_copy(dst_path=app_abspath, data=data, overwrite=True)
+        copier.run_copy(
+            src_path=options["use_repo"] or COPIER_PROJECT.template,
+            vcs_ref=options["use_version"] or COPIER_PROJECT.vcs_ref,
+            dst_path=app_abspath,
+            data=data,
+            overwrite=True,
+            answers_file=ANSWERS_FILE,
+        )
     else:
-        ctx.command.run_copy(dst_path=app_abspath, user_defaults=data)
+        copier.run_copy(
+            src_path=options["use_repo"] or COPIER_PROJECT.template,
+            vcs_ref=options["use_version"] or COPIER_PROJECT.vcs_ref,
+            dst_path=app_abspath,
+            user_defaults=data,
+            answers_file=ANSWERS_FILE,
+        )
 
-    ctx.command.copier_printf(action="run", msg="git init", style="OK")
+    copier.printf(action="run", msg="git init", style=copier.Style.OK)
     run_shell(cmd=["git", "init"], cwd=app_abspath)
 
     if not options["skip_install"]:
         if shutil.which("make"):
-            ctx.command.copier_printf(
+            copier.printf(
                 action="run",
                 msg="make install",
-                style="OK",
+                style=copier.Style.OK,
             )
             run_shell(cmd=["make", "install"], cwd=app_abspath)
         else:
             click.secho("make: shell command not found", fg="yellow")
-            ctx.command.copier_printf(
+            copier.printf(
                 action="skipping",
                 msg="make install",
-                style="IGNORE",
+                style=copier.Style.IGNORE,
             )

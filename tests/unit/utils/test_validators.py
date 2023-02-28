@@ -1,45 +1,28 @@
 import pytest
 
 from fastapi_mvc.utils import ensure_permissions, ensure_project_data
+from fastapi_mvc.constants import ANSWERS_FILE
 
 
 class TestEnsureProjectData:
 
-    def test_should_not_raise_when_valid_fastapi_mvc_project_data(self):
+    def test_should_not_raise_when_valid_fastapi_mvc_project_data(self, fake_project, monkeypatch):
         # given
-        project_data = {
-            "_commit": "0.4.0",
-            "_src_path": "https://github.com/fastapi-mvc/copier-project.git",
-            "aiohttp": True,
-            "author": "John Doe",
-            "chart_name": "fake-project",
-            "container_image_name": "fake-project",
-            "copyright_date": "2023",
-            "email": "example@email.com",
-            "fastapi_mvc_version": "0.26.0",
-            "github_actions": True,
-            "helm": True,
-            "license": "MIT",
-            "nix": True,
-            "package_name": "fake_project",
-            "project_description": "This project was generated with fastapi-mvc.",
-            "project_name": "fake-project",
-            "redis": True,
-            "repo_url": "https://your.repo.url.here",
-            "script_name": "fake-project",
-            "version": "0.1.0"
-        }
+        monkeypatch.chdir(fake_project["root"])
 
-        # when / then
-        ensure_project_data(project_data)
+        # then
+        project_data = ensure_project_data()
 
-    def test_should_raise_when_not_valid_fastapi_mvc_project_data(self):
-        # given
-        project_data = {}
+        # then
+        assert project_data["project_name"] == "fake-project"
+        assert project_data["package_name"] == "fake_project"
+        assert project_data["_src_path"] == "https://github.com/fastapi-mvc/copier-project.git"
 
-        # when / then
+    def test_should_raise_when_not_valid_fastapi_mvc_project_data(self, fake_project):
+        # given / when / then
         with pytest.raises(SystemExit):
-            ensure_project_data(project_data)
+            ensure_project_data("/not/fastapi-mvc/project", answers_file=ANSWERS_FILE)
+            ensure_project_data(str(fake_project["root"]), answers_file=".invalid_file")
 
 
 class TestGeneratorEnsurePermissions:

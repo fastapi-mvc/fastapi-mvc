@@ -4,9 +4,12 @@ Attributes:
     log (logging.Logger): Logger class object instance.
 
 """
-from typing import Dict, Any
+from typing import Dict, Any, Optional
 import os
 import logging
+
+from copier.user_data import load_answersfile_data
+from fastapi_mvc.constants import ANSWERS_FILE
 
 
 log = logging.getLogger(__name__)
@@ -42,19 +45,27 @@ def ensure_permissions(path: str, r: bool = True, w: bool = False, x: bool = Fal
         raise SystemExit(1)
 
 
-def ensure_project_data(project_data: Dict[str, Any]) -> None:
+def ensure_project_data(project_root: Optional[str] = None, answers_file: str = ANSWERS_FILE) -> Dict[str, Any]:
     """Ensure necessary fastapi-mvc project data existence.
 
     Args:
-        project_data: Given fastapi-mvc answers file data.
+        project_root: Given fastapi-mvc project root path.
+        answers_file: Given name of Copier answers_file relative to project root.
 
     Raises:
         SystemExit: If project data is empty or is missing required values.
 
     """
+    project_data = load_answersfile_data(
+        dst_path=project_root or os.getcwd(),
+        answers_file=answers_file,
+    )
+
     if not project_data or "package_name" not in project_data:
         log.error(
             "Not a fastapi-mvc project. Try 'fastapi-mvc new --help' for "
             "details how to create one."
         )
         raise SystemExit(1)
+
+    return project_data

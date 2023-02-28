@@ -49,7 +49,7 @@ class TestCliRunCommand:
                 "--port",
                 "8000",
                 "--reload",
-                f"{patched_run.project_data['package_name']}.app:get_application",
+                "fake_project.app:get_application",
             ],
             check=True,
         )
@@ -76,7 +76,7 @@ class TestCliRunCommand:
                 "--port",
                 "1234",
                 "--reload",
-                f"{patched_run.project_data['package_name']}.app:get_application",
+                "fake_project.app:get_application",
             ],
             check=True,
         )
@@ -98,14 +98,14 @@ class TestCliRunCommand:
             check=True,
         )
 
-    def test_should_exit_error_when_not_in_fastapi_mvc_project(self, cli_runner):
+    def test_should_exit_error_when_not_in_fastapi_mvc_project(self, cli_runner, caplog):
         # given / when
         result = cli_runner.invoke(run, [])
 
         # then
         assert result.exit_code == 1
         msg = "Not a fastapi-mvc project. Try 'fastapi-mvc new --help' for details how to create one."
-        assert msg in result.output
+        assert msg in caplog.text
 
     def test_should_exit_error_on_subprocess_error(self, patched_run, monkeypatch, fake_project, cli_runner):
         # given / when

@@ -2,7 +2,7 @@ import os
 
 from copier.user_data import load_answersfile_data
 from tests.integration.conftest import assert_paths
-from fastapi_mvc import ANSWERS_FILE
+from fastapi_mvc.constants import ANSWERS_FILE
 
 
 class TestCliNewCommand:

@@ -9,7 +9,7 @@ Attributes:
 from subprocess import CalledProcessError
 
 import click
-from fastapi_mvc import Command
+from fastapi_mvc.cli import ClickAliasedCommand
 from fastapi_mvc.utils import run_shell, get_poetry_path, ensure_project_data
 
 
@@ -21,7 +21,7 @@ fastapi-mvc project at the current working directory.
 
 
 @click.command(
-    cls=Command,
+    cls=ClickAliasedCommand,
     help=cmd_help,
     short_help=cmd_short_help,
     alias="r",
@@ -59,8 +59,7 @@ def run(ctx, **options):
             parsed values.
 
     """
-    ensure_project_data(ctx.command.project_data)
-    package_name = ctx.command.project_data["package_name"]
+    project_data = ensure_project_data()
     poetry_path = get_poetry_path()
 
     if options["install"]:
@@ -85,7 +84,7 @@ def run(ctx, **options):
                 "--port",
                 options["port"],
                 "--reload",
-                f"{package_name}.app:get_application",
+                f"{project_data['package_name']}.app:get_application",
             ],
             check=True,
         )

@@ -11,8 +11,9 @@ Attributes:
 import os
 
 import click
-from fastapi_mvc import Generator
-from fastapi_mvc.constants import COPIER_CONTROLLER
+import copier
+from fastapi_mvc.cli import GeneratorCommand
+from fastapi_mvc.constants import COPIER_CONTROLLER, ANSWERS_FILE
 from fastapi_mvc.utils import ensure_project_data
 
 
@@ -72,9 +73,7 @@ def insert_router_import(package_name, controller_name):
 
 
 @click.command(
-    cls=Generator,
-    template=COPIER_CONTROLLER.template,
-    vcs_ref=COPIER_CONTROLLER.vcs_ref,
+    cls=GeneratorCommand,
     category="Builtins",
     help=cmd_help,
     short_help=cmd_short_help,
@@ -97,22 +96,20 @@ def insert_router_import(package_name, controller_name):
     help="Do not add router entry to app/router.py.",
     is_flag=True,
 )
-@click.pass_context
-def controller(ctx, name, endpoints, **options):
+def controller(name, endpoints, **options):
     """Define controller generator command-line interface.
 
     Args:
-        ctx (click.Context): Click Context class object instance.
         name (str): Given controller name.
         endpoints (str): Given controller endpoints.
         options (typing.Dict[str, typing.Any]): Map of command option names to
             their parsed values.
 
     """
-    ensure_project_data(ctx.command.project_data)
+    project_data = ensure_project_data()
     name = name.lower().replace("-", "_")
     data = {
-        "project_name": ctx.command.project_data["project_name"],
+        "project_name": project_data["project_name"],
         "controller": name,
         "endpoints": {},
     }
@@ -123,13 +120,18 @@ def controller(ctx, name, endpoints, **options):
         except ValueError:
             endpoint, method = entry, "get"
 
-        # Sanitize values
         endpoint = endpoint.lower().replace("-", "_")
         method = method.lower()
 
         data["endpoints"][endpoint] = method
 
-    ctx.command.run_copy(data=data)
+    copier.run_copy(
+        src_path=COPIER_CONTROLLER.template,
+        vcs_ref=COPIER_CONTROLLER.vcs_ref,
+        dst_path=os.getcwd(),
+        answers_file=ANSWERS_FILE,
+        data=data
+    )
 
     if not options["skip_routes"]:
-        insert_router_import(ctx.command.project_data["package_name"], name)
+        insert_router_import(project_data["package_name"], name)

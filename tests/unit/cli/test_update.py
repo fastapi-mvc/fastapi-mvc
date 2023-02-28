@@ -4,6 +4,7 @@ from unittest import mock
 import pytest
 from copier.errors import UserMessageError
 from fastapi_mvc.cli.update import update
+from fastapi_mvc.constants import ANSWERS_FILE, COPIER_PROJECT
 
 
 class TestCliUpdateCommand:
@@ -11,8 +12,12 @@ class TestCliUpdateCommand:
     @pytest.fixture
     def patched_update(self):
         cmd = copy.deepcopy(update)
-        cmd.run_update = mock.Mock()
+        copier_patch = mock.patch(
+            "fastapi_mvc.cli.update.copier",
+        )
+        cmd.copier = copier_patch.start()
         yield cmd
+        copier_patch.stop()
         del cmd
 
     def test_should_exit_zero_when_invoked_with_help(self, monkeypatch, fake_project, cli_runner):
@@ -37,7 +42,9 @@ class TestCliUpdateCommand:
 
         # then
         assert result.exit_code == 0
-        patched_update.run_update.assert_called_once_with(
+        patched_update.copier.run_update.assert_called_once_with(
+            vcs_ref=COPIER_PROJECT.vcs_ref,
+            answers_file=ANSWERS_FILE,
             user_defaults={
                 "_commit": "efb938e",
                 "_src_path": "https://github.com/fastapi-mvc/copier-project.git",
@@ -77,7 +84,9 @@ class TestCliUpdateCommand:
 
         # then
         assert result.exit_code == 0
-        patched_update.run_update.assert_called_once_with(
+        patched_update.copier.run_update.assert_called_once_with(
+            vcs_ref="master",
+            answers_file=ANSWERS_FILE,
             data={
                 "_commit": "efb938e",
                 "_src_path": "https://github.com/fastapi-mvc/copier-project.git",
@@ -103,24 +112,23 @@ class TestCliUpdateCommand:
             overwrite=True,
             pretend=True,
         )
-        assert patched_update.vcs_ref == "master"
 
-    def test_should_exit_error_when_not_in_fastapi_mvc_project(self, cli_runner):
+    def test_should_exit_error_when_not_in_fastapi_mvc_project(self, cli_runner, caplog):
         # given / when
         result = cli_runner.invoke(update, [])
 
         # then
         assert result.exit_code == 1
         msg = "Not a fastapi-mvc project. Try 'fastapi-mvc new --help' for details how to create one."
-        assert msg in result.output
+        assert msg in caplog.text
 
     def test_should_exit_error_on_copier_error(self, patched_update, monkeypatch, fake_project, cli_runner):
         # given / when
-        patched_update.run_update.side_effect = UserMessageError("Fake error")
+        patched_update.copier.run_update.side_effect = UserMessageError("Fake error")
         monkeypatch.chdir(fake_project["root"])
         result = cli_runner.invoke(patched_update, [])
 
         # then
         assert result.exit_code == 2
         assert "Fake error" in result.output
-        patched_update.run_update.assert_called_once()
+        patched_update.copier.run_update.assert_called_once()

@@ -6,7 +6,7 @@ Attributes:
         command listing of the parent command.
 
 """
-from fastapi_mvc import GeneratorsMultiCommand
+from fastapi_mvc.cli import GeneratorsMultiCommand
 from fastapi_mvc.generators import load_generators
 
 

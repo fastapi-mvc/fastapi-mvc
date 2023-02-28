@@ -3,6 +3,7 @@ from unittest import mock
 
 import pytest
 from fastapi_mvc.generators import ControllerGenerator
+from fastapi_mvc.constants import COPIER_CONTROLLER, ANSWERS_FILE
 from fastapi_mvc.generators.controller import insert_router_import
 
 
@@ -94,14 +95,16 @@ class TestControllerGenerator:
     @pytest.fixture
     def controller(self):
         controller = copy.deepcopy(ControllerGenerator)
-        controller.run_copy = mock.Mock()
+        copier_patch = mock.patch(
+            "fastapi_mvc.generators.controller.copier",
+        )
+        insert_patch = mock.patch("fastapi_mvc.generators.controller.insert_router_import")
+        controller.copier = copier_patch.start()
+        controller.insert_router_import = insert_patch.start()
         yield controller
+        copier_patch.stop()
+        insert_patch.stop()
         del controller
-
-    @pytest.fixture
-    def patched_insert(self):
-        with mock.patch("fastapi_mvc.generators.controller.insert_router_import") as mck:
-            yield mck
 
     def test_should_exit_zero_when_invoked_with_help(self, controller, cli_runner):
         # given / when
@@ -117,21 +120,25 @@ class TestControllerGenerator:
         # then
         assert result.exit_code == 2
 
-    def test_should_call_copier_using_default_values(self, controller, monkeypatch, fake_project, cli_runner, patched_insert):
+    def test_should_call_copier_using_default_values(self, controller, monkeypatch, fake_project, cli_runner):
         # given / when
         monkeypatch.chdir(fake_project["root"])
         result = cli_runner.invoke(controller, ["fake-controller"])
 
         # then
         assert result.exit_code == 0
-        controller.run_copy.assert_called_once_with(
+        controller.copier.run_copy.assert_called_once_with(
+            src_path=COPIER_CONTROLLER.template,
+            vcs_ref=COPIER_CONTROLLER.vcs_ref,
+            dst_path=str(fake_project["root"]),
+            answers_file=ANSWERS_FILE,
             data={
                 "project_name": "fake-project",
                 "controller": "fake_controller",
                 "endpoints": {},
             }
         )
-        patched_insert.assert_called_once_with("fake_project", "fake_controller")
+        controller.insert_router_import.assert_called_once_with("fake_project", "fake_controller")
 
     def test_should_call_copier_with_parsed_arguments(self, controller, monkeypatch, fake_project, cli_runner):
         # given / when
@@ -149,7 +156,11 @@ class TestControllerGenerator:
 
         # then
         assert result.exit_code == 0
-        controller.run_copy.assert_called_once_with(
+        controller.copier.run_copy.assert_called_once_with(
+            src_path=COPIER_CONTROLLER.template,
+            vcs_ref=COPIER_CONTROLLER.vcs_ref,
+            dst_path=str(fake_project["root"]),
+            answers_file=ANSWERS_FILE,
             data={
                 "project_name": "fake-project",
                 "controller": "stock_market",
@@ -171,7 +182,11 @@ class TestControllerGenerator:
 
         # then
         assert result.exit_code == 0
-        controller.run_copy.assert_called_once_with(
+        controller.copier.run_copy.assert_called_once_with(
+            src_path=COPIER_CONTROLLER.template,
+            vcs_ref=COPIER_CONTROLLER.vcs_ref,
+            dst_path=str(fake_project["root"]),
+            answers_file=ANSWERS_FILE,
             data={
                 "project_name": "fake-project",
                 "controller": "fake_controller",
@@ -180,11 +195,11 @@ class TestControllerGenerator:
         )
         controller.insert_router_import.assert_not_called()
 
-    def test_should_exit_error_when_not_in_fastapi_mvc_project(self, controller, cli_runner):
+    def test_should_exit_error_when_not_in_fastapi_mvc_project(self, controller, cli_runner, caplog):
         # given / when
         result = cli_runner.invoke(controller, ["fake-controller"])
 
         # then
         assert result.exit_code == 1
         msg = "Not a fastapi-mvc project. Try 'fastapi-mvc new --help' for details how to create one."
-        assert msg in result.output
+        assert msg in caplog.text

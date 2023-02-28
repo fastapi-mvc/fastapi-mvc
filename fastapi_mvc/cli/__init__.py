@@ -10,3 +10,17 @@ Resources:
     https://click.palletsprojects.com/en/8.1.x/
 
 """
+from fastapi_mvc.cli.base import (
+    ClickAliasedGroup,
+    ClickAliasedCommand,
+    GeneratorCommand,
+    GeneratorsMultiCommand,
+)
+
+
+__all__ = (
+    "ClickAliasedGroup",
+    "ClickAliasedCommand",
+    "GeneratorCommand",
+    "GeneratorsMultiCommand",
+)

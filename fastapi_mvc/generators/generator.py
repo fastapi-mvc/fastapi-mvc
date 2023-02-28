@@ -11,9 +11,10 @@ Attributes:
 from datetime import datetime
 
 import click
-from fastapi_mvc import Generator
-from fastapi_mvc.constants import COPIER_GENERATOR
+import copier
+from fastapi_mvc.cli import GeneratorCommand
 from fastapi_mvc.utils import ensure_project_data
+from fastapi_mvc.constants import COPIER_GENERATOR
 
 
 cmd_short_help = "Run fastapi-mvc generator generator."
@@ -51,9 +52,7 @@ Example:
 
 
 @click.command(
-    cls=Generator,
-    template=COPIER_GENERATOR.template,
-    vcs_ref=COPIER_GENERATOR.vcs_ref,
+    cls=GeneratorCommand,
     category="Builtins",
     help=cmd_help,
     short_help=cmd_short_help,
@@ -98,22 +97,17 @@ Example:
     envvar="REPO_URL",
     default="https://your.repo.url.here",
 )
-@click.pass_context
-def generator(ctx, name, **options):
+def generator(name, **options):
     """Define generator generator command-line interface.
 
     Args:
-        ctx (click.Context): Click Context class object instance.
         name (str): Given generator name.
         options (typing.Dict[str, typing.Any]): Map of command option names to
             their parsed values.
 
     """
-    ensure_project_data(ctx.command.project_data)
-
-    # Sanitize value
+    ensure_project_data()
     name = name.lower().replace("-", "_").replace(" ", "_")
-
     data = {
         "generator": name,
         "nix": not options["skip_nix"],
@@ -122,7 +116,9 @@ def generator(ctx, name, **options):
         "copyright_date": datetime.today().year,
     }
 
-    ctx.command.run_copy(
+    copier.run_copy(
+        src_path=COPIER_GENERATOR.template,
+        vcs_ref=COPIER_GENERATOR.vcs_ref,
         dst_path=f"./lib/generators/{name}",
         data=data,
         answers_file=".generator.yml",

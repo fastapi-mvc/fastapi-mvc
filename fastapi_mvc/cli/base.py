@@ -1,24 +1,40 @@
-"""Fastapi-mvc core implementations.
+"""Command-line interface - core implementations.
 
 Resources:
     1. `Click documentation`_
-    2. `Copier documentation`_
 
 .. _Click documentation:
     https://click.palletsprojects.com/en/8.1.x/
 
-.. _Copier documentation:
-    https://copier.readthedocs.io/en/v6.2.0
-
 """
-import os
 from collections import defaultdict
 
 import click
-import copier
-from copier.tools import Style, printf
-from copier.user_data import load_answersfile_data
-from fastapi_mvc.constants import ANSWERS_FILE
+
+
+class ClickAliasedCommand(click.Command):
+    """Defines base class for all concrete fastapi-mvc CLI commands.
+
+    Args:
+        alias (typing.Optional[str]): Given command alias.
+        *args (list): Parent class constructor args.
+        **kwargs (dict): Parent class constructor kwargs.
+
+    Attributes:
+        alias (typing.Optional[str]): Given command alias.
+
+    Resources:
+        1. `click.Command class documentation`_
+
+    .. _click.Command class documentation:
+        https://click.palletsprojects.com/en/8.1.x/api/#click.Command
+
+    """
+
+    def __init__(self, alias=None, *args, **kwargs):
+        """Initialize Command class object instance."""
+        super().__init__(*args, **kwargs)
+        self.alias = alias
 
 
 class ClickAliasedGroup(click.Group):
@@ -109,61 +125,22 @@ class ClickAliasedGroup(click.Group):
                     formatter.write_dl(rows)
 
 
-class Command(click.Command):
-    """Defines base class for all concrete fastapi-mvc CLI commands.
-
-    Args:
-        alias (typing.Optional[str]): Given command alias.
-        *args (list): Parent class constructor args.
-        **kwargs (dict): Parent class constructor kwargs.
-
-    Attributes:
-        project_data (typing.Dict[str, typing.Any]): Map of copier
-            answers file questions to their parsed values.
-        alias (typing.Optional[str]): Given command alias.
-
-    Resources:
-        1. `click.Command class documentation`_
-
-    .. _click.Command class documentation:
-        https://click.palletsprojects.com/en/8.1.x/api/#click.Command
-
-    """
-
-    def __init__(self, alias=None, *args, **kwargs):
-        """Initialize Command class object instance."""
-        super().__init__(*args, **kwargs)
-        self.project_data = load_answersfile_data(
-            dst_path=os.getcwd(),
-            answers_file=ANSWERS_FILE,
-        )
-        self.alias = alias
-
-
-class Generator(Command):
+class GeneratorCommand(ClickAliasedCommand):
     """Defines base class for all concrete fastapi-mvc generators.
 
     Args:
-        template (str): Copier template source. Can be repository URL or local path.
-        vcs_ref (typing.Optional[str]): The branch, tag or commit ID to checkout after
-            clone. Provided template is a repostiory URL.
         category (str): Name under which generator should be printed in
             ``fastapi-mvc generate`` CLI command help page.
 
     Attributes:
-        template (str): Copier template source. Can be repository URL or local path.
-        vcs_ref (typing.Optional[str]): The branch, tag or commit ID to checkout after
-            clone. Provided template is a repostiory URL.
         category (str): Name under which generator should be printed in
             ``fastapi-mvc generate`` CLI command help page.
 
     """
 
-    def __init__(self, template, vcs_ref=None, category="Other", *args, **kwargs):
+    def __init__(self, category="Other", *args, **kwargs):
         """Initialize Generator class object instance."""
         super().__init__(*args, **kwargs)
-        self.template = template
-        self.vcs_ref = vcs_ref
         self.category = category
 
     def format_epilog(self, ctx, formatter):
@@ -177,65 +154,6 @@ class Generator(Command):
         if self.epilog:
             formatter.write_paragraph()
             formatter.write(self.epilog)
-
-    @staticmethod
-    def copier_printf(action, msg="", style=None, **kwargs):
-        """Define wrapper for ``copier.printf`` method.
-
-        Args:
-            action (str): Given action value, ex: run, create, etc.
-            msg (str): Given messsage to print.
-            style (copier.tools.Style): Style to color action with.
-
-        """
-        if style:
-            style = getattr(Style, style)
-
-        printf(
-            action=action,
-            msg=msg,
-            style=style,
-            **kwargs,
-        )
-
-    def run_copy(self, dst_path=".", data=None, answers_file=ANSWERS_FILE, **kwargs):
-        """Define wrapper for ``copier.run_copy`` method.
-
-        Args:
-            dst_path (str | pathlib.Path): Destination path where to render the project.
-            data (typing.Optional[typing.Dict[str, typing.Any]): Answers to the
-                questionary defined in the template.
-            answers_file (str): Indicates the path for the answers file. The path must
-                be relative to dst_path.
-
-        """
-        copier.run_copy(
-            src_path=self.template,
-            dst_path=dst_path,
-            vcs_ref=self.vcs_ref,
-            answers_file=answers_file,
-            data=data,
-            **kwargs,
-        )
-
-    def run_update(self, dst_path=".", data=None, answers_file=ANSWERS_FILE, **kwargs):
-        """Define wrapper for ``copier.run_update`` method.
-
-        Args:
-            dst_path (str | pathlib.Path): Destination path where to render the project.
-            data (typing.Optional[typing.Dict[str, typing.Any]): Answers to the
-                questionary defined in the template.
-            answers_file (str): Indicates the path for the answers file. The path must
-                be relative to dst_path.
-
-        """
-        copier.run_update(
-            dst_path=dst_path,
-            vcs_ref=self.vcs_ref,
-            answers_file=answers_file,
-            data=data,
-            **kwargs,
-        )
 
 
 class GeneratorsMultiCommand(click.MultiCommand):
