@@ -4,7 +4,7 @@ Attributes:
     log (logging.Logger): Logger class object instance.
 
 """
-from typing import Tuple, List, IO, Any, TypeVar, Optional, Union
+from typing import Tuple, List, IO, AnyStr, TypeVar, Optional, Union
 import os
 import logging
 import subprocess
@@ -74,8 +74,8 @@ def run_shell(
     cmd: List[str],
     cwd: Optional[str] = None,
     check: bool = False,
-    stdout: Optional[Union[int, IO]] = None,
-    stderr: Optional[Union[int, IO]] = None,
+    stdout: Optional[Union[int, IO[AnyStr]]] = None,
+    stderr: Optional[Union[int, IO[AnyStr]]] = None,
     input: Optional[Union[str, bytes]] = None,
     capture_output: bool = False,
 ) -> subprocess.CompletedProcess[_T]:
@@ -91,12 +91,12 @@ def run_shell(
             to current working directory.
         check (bool): If True raise a subprocess.CalledProcessError error
             when a process returns non-zero exit status.
-        stdout (typing.Optional[typing.Union[int, IO]]): Specify the
+        stdout (typing.Optional[typing.Union[int, IO[typing.AnyStr]]]): Specify the
             executed program’s standard output file handles.
-        stderr (typing.Optional[typing.Union[int, IO]])): Specify the
+        stderr (typing.Optional[typing.Union[int, IO[typing.AnyStr]])): Specify the
             executed program’s standard error file handles.
-        input (typing.Optional[typing.Union[bytes, str]])): If given the input argument is passed to the
-            subprocess’s stdin.
+        input (typing.Optional[typing.Union[bytes, str]])): If given the input argument
+            is passed to the subprocess’s stdin.
         capture_output (bool): If True, stdout and stderr will be captured.
 
     Returns:
