@@ -388,10 +388,3 @@ And, now invoke it with speed: ``fm g foo ...``
 .. note::
     ``fm`` is an alias for ``fastapi-mvc`` entrypoint, and ``g`` is an alias for ``generate`` command.
 
-Generator base class API reference
-----------------------------------
-
-.. autoclass:: fastapi_mvc.Generator
-   :members:
-   :inherited-members:
-   :show-inheritance:
