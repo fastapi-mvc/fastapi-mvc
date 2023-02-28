@@ -15,7 +15,7 @@ from datetime import datetime
 
 import click
 from fastapi_mvc import Generator, VERSION
-from fastapi_mvc.utils import run_shell, get_git_user_info
+from fastapi_mvc.utils import run_shell, get_git_user_info, ensure_permissions
 
 
 log = logging.getLogger(__name__)
@@ -142,9 +142,9 @@ def new(ctx, app_path, **options):
     app_abspath = os.path.abspath(app_path)
 
     if app_path == "." or os.path.exists(app_abspath):
-        ctx.command.ensure_permissions(app_abspath, w=True)
+        ensure_permissions(app_abspath, w=True)
     else:
-        ctx.command.ensure_permissions(os.path.dirname(app_abspath), w=True)
+        ensure_permissions(os.path.dirname(app_abspath), w=True)
 
     if options["use_repo"]:
         ctx.command.template = options["use_repo"]

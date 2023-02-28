@@ -11,6 +11,7 @@ import os
 import click
 from copier.errors import UserMessageError
 from fastapi_mvc import Generator
+from fastapi_mvc.utils import ensure_permissions, ensure_project_data
 
 
 cmd_short_help = "Update fastapi-mvc project."
@@ -55,8 +56,8 @@ def update(ctx, **options):
             parsed values.
 
     """
-    ctx.command.ensure_project_data()
-    ctx.command.ensure_permissions(os.getcwd(), w=True)
+    ensure_project_data(ctx.command.project_data)
+    ensure_permissions(os.getcwd(), w=True)
 
     if options["use_version"]:
         ctx.command.vcs_ref = options["use_version"]

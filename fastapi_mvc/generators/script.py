@@ -12,6 +12,7 @@ import os.path
 
 import click
 from fastapi_mvc import Generator
+from fastapi_mvc.utils import ensure_permissions
 
 
 cmd_short_help = "Run shell script generator."
@@ -64,7 +65,7 @@ def script(ctx, name, **options):
             their parsed values.
 
     """
-    ctx.command.ensure_permissions(os.getcwd(), w=True)
+    ensure_permissions(os.getcwd(), w=True)
 
     # Sanitize values
     name = name.lower().replace(" ", "_")

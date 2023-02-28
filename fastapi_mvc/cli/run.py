@@ -10,7 +10,7 @@ from subprocess import CalledProcessError
 
 import click
 from fastapi_mvc import Command
-from fastapi_mvc.utils import run_shell, get_poetry_path
+from fastapi_mvc.utils import run_shell, get_poetry_path, ensure_project_data
 
 
 cmd_short_help = "Run development uvicorn server."
@@ -59,7 +59,7 @@ def run(ctx, **options):
             parsed values.
 
     """
-    ctx.command.ensure_project_data()
+    ensure_project_data(ctx.command.project_data)
     package_name = ctx.command.project_data["package_name"]
     poetry_path = get_poetry_path()
 

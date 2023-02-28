@@ -126,7 +126,7 @@ class Command(click.Command):
         **kwargs (dict): Parent class constructor kwargs.
 
     Attributes:
-        project_data (typing.Optional[typing.Dict[str, typing.Any]): Map of copier
+        project_data (typing.Dict[str, typing.Any]): Map of copier
             answers file questions to their parsed values.
         alias (typing.Optional[str]): Given command alias.
 
@@ -141,32 +141,11 @@ class Command(click.Command):
     def __init__(self, alias=None, *args, **kwargs):
         """Initialize Command class object instance."""
         super().__init__(*args, **kwargs)
-        self.project_data = None
-        self.alias = alias
-
-    def ensure_project_data(self):
-        """Ensure necessary project data existence.
-
-        Run ``copier.user_data.load_answersfile_data`` method, and ensure existence of
-        required values.
-
-        Raises:
-            SystemExit: If project data is empty or is missing required values.
-
-        """
         self.project_data = load_answersfile_data(
             dst_path=os.getcwd(),
             answers_file=ANSWERS_FILE,
         )
-
-        if not self.project_data or "package_name" not in self.project_data:
-            click.secho(
-                "Not a fastapi-mvc project. Try 'fastapi-mvc new --help' for "
-                "details how to create one.",
-                fg="red",
-                err=True,
-            )
-            raise SystemExit(1)
+        self.alias = alias
 
 
 class Generator(Command):
@@ -185,12 +164,6 @@ class Generator(Command):
             clone. Provided template is a repostiory URL.
         category (str): Name under which generator should be printed in
             ``fastapi-mvc generate`` CLI command help page.
-
-    Resources:
-        1. `click.Command class documentation`_
-
-    .. _click.Command class documentation:
-        https://click.palletsprojects.com/en/8.1.x/api/#click.Command
 
     """
 
@@ -212,36 +185,6 @@ class Generator(Command):
         if self.epilog:
             formatter.write_paragraph()
             formatter.write(self.epilog)
-
-    @staticmethod
-    def ensure_permissions(path, r=True, w=False, x=False):
-        """Ensure correct permissions to given path.
-
-        Args:
-            path (str): Given path to check.
-            r (bool): Check read ok.
-            w (bool): Check write ok.
-            x (bool): Check executable ok.
-
-        Raises:
-            SystemExit: If path has insufficient permissions.
-
-        """
-        if not os.path.exists(path):
-            click.secho(f"Path: '{path}' does not exist.")
-            raise SystemExit(1)
-
-        if r and not os.access(path, os.R_OK):
-            click.secho(f"Path: '{path}' is not readable.", fg="red", err=True)
-            raise SystemExit(1)
-
-        if w and not os.access(path, os.W_OK):
-            click.secho(f"Path: '{path}' is not writable.", fg="red", err=True)
-            raise SystemExit(1)
-
-        if x and not os.access(path, os.X_OK):
-            click.secho(f"Path: '{path}' is not executable.", fg="red", err=True)
-            raise SystemExit(1)
 
     @staticmethod
     def copier_printf(action, msg="", style=None, **kwargs):

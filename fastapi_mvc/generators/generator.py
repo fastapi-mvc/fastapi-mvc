@@ -12,6 +12,7 @@ from datetime import datetime
 
 import click
 from fastapi_mvc import Generator
+from fastapi_mvc.utils import ensure_project_data
 
 
 cmd_short_help = "Run fastapi-mvc generator generator."
@@ -107,7 +108,7 @@ def generator(ctx, name, **options):
             their parsed values.
 
     """
-    ctx.command.ensure_project_data()
+    ensure_project_data(ctx.command.project_data)
 
     # Sanitize value
     name = name.lower().replace("-", "_").replace(" ", "_")

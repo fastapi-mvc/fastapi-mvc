@@ -73,29 +73,6 @@ class TestCommand:
         assert not command.project_data
 
 
-class TestCommandEnsureProjectData:
-
-    def test_should_not_raise_when_valid_fastapi_mvc_project(self, fake_project, monkeypatch):
-        # given
-        command = Command(name="fake-command")
-        monkeypatch.chdir(fake_project["root"])
-
-        # when
-        command.ensure_project_data()
-
-        # then
-        assert command.project_data["package_name"] == "fake_project"
-        assert command.project_data["project_name"] == "fake-project"
-
-    def test_should_raise_when_not_fastapi_mvc_project(self):
-        # given
-        command = Command(name="fake-command")
-
-        # when / then
-        with pytest.raises(SystemExit):
-            command.ensure_project_data()
-
-
 class TestGenerator:
 
     def test_should_create_generator_and_populate_defaults(self):
@@ -108,57 +85,12 @@ class TestGenerator:
         assert generator.category == "Other"
 
 
-class TestGeneratorEnsurePermissions:
-
-    def test_should_not_raise_when_correct_permissions(self, fake_project, dummy_executable):
-        # given
-        generator = Generator(name="fake-generator", template="https://fake.repo.git")
-
-        # when / then
-        generator.ensure_permissions(fake_project["answers_file"])
-        generator.ensure_permissions(fake_project["answers_file"], w=True)
-        generator.ensure_permissions(dummy_executable, x=True)
-
-    def test_should_raise_when_path_does_not_exists(self):
-        # given
-        generator = Generator(name="fake-generator", template="https://fake.repo.git")
-
-        # when / then
-        with pytest.raises(SystemExit):
-            generator.ensure_permissions("/not/exist")
-
-    def test_should_raise_when_path_not_readable(self):
-        # given
-        generator = Generator(name="fake-generator", template="https://fake.repo.git")
-
-        # when / then
-        with pytest.raises(SystemExit):
-            generator.ensure_permissions("/etc/shadow")
-
-    def test_should_raise_when_path_not_writeable(self):
-        # given
-        generator = Generator(name="fake-generator", template="https://fake.repo.git")
-
-        # when / then
-        with pytest.raises(SystemExit):
-            generator.ensure_permissions("/etc/shadow", r=False, w=True)
-
-    def test_should_raise_when_path_not_executable(self, fake_project):
-        # given
-        generator = Generator(name="fake-generator", template="https://fake.repo.git")
-
-        # when / then
-        with pytest.raises(SystemExit):
-            generator.ensure_permissions(fake_project["answers_file"], x=True)
-
-
 class TestGeneratorInsertRouterPath:
 
     def test_should_insert_router_import(self, monkeypatch, fake_project, fake_router):
         # given
         monkeypatch.chdir(fake_project["root"])
         generator = Generator(name="fake-generator", template="https://fake.repo.git")
-        generator.ensure_project_data()
 
         # when
         generator.insert_router_import("fake_router")
@@ -172,7 +104,6 @@ class TestGeneratorInsertRouterPath:
         # given
         monkeypatch.chdir(fake_project["root"])
         generator = Generator(name="fake-generator", template="https://fake.repo.git")
-        generator.ensure_project_data()
 
         # when
         generator.insert_router_import("fake_router")

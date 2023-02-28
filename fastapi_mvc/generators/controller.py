@@ -10,6 +10,7 @@ Attributes:
 """
 import click
 from fastapi_mvc import Generator
+from fastapi_mvc.utils import ensure_project_data
 
 
 cmd_short_help = "Run fastapi-mvc controller generator."
@@ -74,7 +75,7 @@ def controller(ctx, name, endpoints, **options):
             their parsed values.
 
     """
-    ctx.command.ensure_project_data()
+    ensure_project_data(ctx.command.project_data)
     name = name.lower().replace("-", "_")
     data = {
         "project_name": ctx.command.project_data["project_name"],
