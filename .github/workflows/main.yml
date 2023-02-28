@@ -114,6 +114,23 @@ jobs:
           key: ${{ runner.os }}-3.9-${{ hashFiles('./pyproject.toml') }}-${{ hashFiles('./poetry.lock') }}
       - name: Run metrics checks
         run: make metrics
+  mypy:
+    needs: install
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python 3.9
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.9
+      - name: Load Poetry cache
+        uses: actions/cache@v3
+        with:
+          path: ${{ env.POETRY_HOME }}
+          key: ${{ runner.os }}-3.9-${{ hashFiles('./pyproject.toml') }}-${{ hashFiles('./poetry.lock') }}
+      - name: Run mypy checks
+        run: make mypy
   unit-tests:
     needs: install
     strategy:
