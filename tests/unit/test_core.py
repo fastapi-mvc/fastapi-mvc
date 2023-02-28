@@ -2,7 +2,8 @@ import os
 from unittest import mock
 
 import pytest
-from fastapi_mvc import Generator, Command, ANSWERS_FILE
+from fastapi_mvc import Generator, Command
+from fastapi_mvc.constants import ANSWERS_FILE
 
 
 router_content = """\

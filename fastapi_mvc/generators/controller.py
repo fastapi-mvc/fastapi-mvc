@@ -10,6 +10,7 @@ Attributes:
 """
 import click
 from fastapi_mvc import Generator
+from fastapi_mvc.constants import COPIER_CONTROLLER
 from fastapi_mvc.utils import ensure_project_data
 
 
@@ -39,8 +40,8 @@ Example:
 
 @click.command(
     cls=Generator,
-    template="https://github.com/fastapi-mvc/copier-controller.git",
-    vcs_ref="0.2.1",
+    template=COPIER_CONTROLLER.template,
+    vcs_ref=COPIER_CONTROLLER.vcs_ref,
     category="Builtins",
     help=cmd_help,
     short_help=cmd_short_help,

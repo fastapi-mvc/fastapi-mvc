@@ -14,7 +14,8 @@ import os
 from datetime import datetime
 
 import click
-from fastapi_mvc import Generator, VERSION
+from fastapi_mvc import Generator
+from fastapi_mvc.constants import VERSION, COPIER_PROJECT
 from fastapi_mvc.utils import run_shell, get_git_user_info, ensure_permissions
 
 
@@ -36,8 +37,8 @@ Example:
 
 @click.command(
     cls=Generator,
-    template="https://github.com/fastapi-mvc/copier-project.git",
-    vcs_ref="0.4.0",
+    template=COPIER_PROJECT.template,
+    vcs_ref=COPIER_PROJECT.vcs_ref,
     help=cmd_help,
     short_help=cmd_short_help,
     epilog=epilog,

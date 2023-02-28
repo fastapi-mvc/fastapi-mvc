@@ -4,7 +4,7 @@ from datetime import datetime
 from unittest import mock
 
 import pytest
-from fastapi_mvc import VERSION
+from fastapi_mvc.constants import VERSION
 from fastapi_mvc.cli.new import new
 
 

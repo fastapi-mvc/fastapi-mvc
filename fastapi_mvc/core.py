@@ -1,9 +1,5 @@
 """Fastapi-mvc core implementations.
 
-Attributes:
-    VERSION (str): Fastapi-mvc version.
-    ANSWERS_FILE (str): Relative path to copier answers file.
-
 Resources:
     1. `Click documentation`_
     2. `Copier documentation`_
@@ -22,11 +18,7 @@ import click
 import copier
 from copier.tools import Style, printf
 from copier.user_data import load_answersfile_data
-
-
-# CONSTANTS
-VERSION = "0.26.0"
-ANSWERS_FILE = ".fastapi-mvc.yml"
+from fastapi_mvc.constants import ANSWERS_FILE
 
 
 class ClickAliasedGroup(click.Group):

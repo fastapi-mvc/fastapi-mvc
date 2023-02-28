@@ -10,7 +10,7 @@ import sys
 import platform
 from traceback import format_exception
 
-from fastapi_mvc import VERSION
+from fastapi_mvc.constants import VERSION
 
 
 log = logging.getLogger("GlobalExceptHook")

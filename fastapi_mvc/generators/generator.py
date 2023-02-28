@@ -12,6 +12,7 @@ from datetime import datetime
 
 import click
 from fastapi_mvc import Generator
+from fastapi_mvc.constants import COPIER_GENERATOR
 from fastapi_mvc.utils import ensure_project_data
 
 
@@ -51,8 +52,8 @@ Example:
 
 @click.command(
     cls=Generator,
-    template="https://github.com/fastapi-mvc/copier-generator.git",
-    vcs_ref="0.2.0",
+    template=COPIER_GENERATOR.template,
+    vcs_ref=COPIER_GENERATOR.vcs_ref,
     category="Builtins",
     help=cmd_help,
     short_help=cmd_short_help,

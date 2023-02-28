@@ -12,6 +12,7 @@ import os.path
 
 import click
 from fastapi_mvc import Generator
+from fastapi_mvc.constants import COPIER_SCRIPT
 from fastapi_mvc.utils import ensure_permissions
 
 
@@ -35,8 +36,8 @@ Example:
 
 @click.command(
     cls=Generator,
-    template="https://github.com/fastapi-mvc/copier-script.git",
-    vcs_ref="0.1.1",
+    template=COPIER_SCRIPT.template,
+    vcs_ref=COPIER_SCRIPT.vcs_ref,
     category="Builtins",
     help=cmd_help,
     short_help=cmd_short_help,
