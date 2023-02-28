@@ -8,6 +8,8 @@ Attributes:
         after everything else.
 
 """
+import os
+
 import click
 from fastapi_mvc import Generator
 from fastapi_mvc.constants import COPIER_CONTROLLER
@@ -36,6 +38,37 @@ Example:
         Controller: app/controllers/stock_market.py
         Test:       tests/unit/app/controllers/test_stock_market.py
 """
+
+
+def insert_router_import(package_name, controller_name):
+    """Insert import and router entry into ``app/router.py`` file.
+
+    Args:
+        package_name (str): Given fastapi-mvc project Python package name.
+        controller_name (str): Given controller name.
+
+    """
+    router = os.path.join(os.getcwd(), f"{package_name}/app/router.py")
+    import_str = f"from {package_name}.app.controllers import {controller_name}\n"
+
+    with open(router, "r") as f:
+        lines = f.readlines()
+
+    if import_str in lines:
+        return
+
+    for i in range(len(lines)):
+        if lines[i].strip() == "from fastapi import APIRouter":
+            index = i + 1
+            break
+    else:
+        index = 0
+
+    lines.insert(index, import_str)
+    lines.append(f"root_api_router.include_router({controller_name}.router)\n")
+
+    with open(router, "w") as f:
+        f.writelines(lines)
 
 
 @click.command(
@@ -99,4 +132,4 @@ def controller(ctx, name, endpoints, **options):
     ctx.command.run_copy(data=data)
 
     if not options["skip_routes"]:
-        ctx.command.insert_router_import(name)
+        insert_router_import(ctx.command.project_data["package_name"], name)

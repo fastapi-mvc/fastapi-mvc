@@ -237,36 +237,6 @@ class Generator(Command):
             **kwargs,
         )
 
-    def insert_router_import(self, controller_name):
-        """Insert import and router entry into ``app/router.py`` file.
-
-        Args:
-            controller_name (str): Given controller name.
-
-        """
-        package_name = self.project_data["package_name"]
-        router = os.path.join(os.getcwd(), f"{package_name}/app/router.py")
-        import_str = f"from {package_name}.app.controllers import {controller_name}\n"
-
-        with open(router, "r") as f:
-            lines = f.readlines()
-
-        if import_str in lines:
-            return
-
-        for i in range(len(lines)):
-            if lines[i].strip() == "from fastapi import APIRouter":
-                index = i + 1
-                break
-        else:
-            index = 0
-
-        lines.insert(index, import_str)
-        lines.append(f"root_api_router.include_router({controller_name}.router)\n")
-
-        with open(router, "w") as f:
-            f.writelines(lines)
-
 
 class GeneratorsMultiCommand(click.MultiCommand):
     """Custom click.MultiCommand class implementation.

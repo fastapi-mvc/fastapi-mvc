@@ -3,6 +3,90 @@ from unittest import mock
 
 import pytest
 from fastapi_mvc.generators import ControllerGenerator
+from fastapi_mvc.generators.controller import insert_router_import
+
+
+router_content = """\
+from fastapi import APIRouter
+from fake_project.app.controllers import ready
+
+root_api_router = APIRouter(prefix="/api")
+
+root_api_router.include_router(ready.router, tags=["ready"])
+"""
+router2_content = """\
+import fastapi
+from fake_project.app.controllers import ready
+
+root_api_router = fastapi.APIRouter(prefix="/api")
+
+root_api_router.include_router(ready.router, tags=["ready"])
+"""
+router_expected = """\
+from fastapi import APIRouter
+from fake_project.app.controllers import fake_router
+from fake_project.app.controllers import ready
+
+root_api_router = APIRouter(prefix="/api")
+
+root_api_router.include_router(ready.router, tags=["ready"])
+root_api_router.include_router(fake_router.router)
+"""
+router2_expected = """\
+from fake_project.app.controllers import fake_router
+import fastapi
+from fake_project.app.controllers import ready
+
+root_api_router = fastapi.APIRouter(prefix="/api")
+
+root_api_router.include_router(ready.router, tags=["ready"])
+root_api_router.include_router(fake_router.router)
+"""
+
+
+@pytest.fixture
+def fake_router(fake_project):
+    router = fake_project["app_dir"] / "router.py"
+    router.write_text(router_content)
+
+    yield router
+    router.unlink()
+
+
+@pytest.fixture
+def fake_router2(fake_project):
+    router2 = fake_project["app_dir"] / "router.py"
+    router2.write_text(router2_content)
+
+    yield router2
+    router2.unlink()
+
+
+class TestGeneratorInsertRouterPath:
+
+    def test_should_insert_router_import(self, monkeypatch, fake_project, fake_router):
+        # given
+        monkeypatch.chdir(fake_project["root"])
+
+        # when
+        insert_router_import("fake_project", "fake_router")
+        # test idempotence
+        insert_router_import("fake_project", "fake_router")
+
+        # then
+        assert fake_router.read_text() == router_expected
+
+    def test_should_insert_router_import_at_file_end(self, monkeypatch, fake_project, fake_router2):
+        # given
+        monkeypatch.chdir(fake_project["root"])
+
+        # when
+        insert_router_import("fake_project", "fake_router")
+        # test idempotence
+        insert_router_import("fake_project", "fake_router")
+
+        # then
+        assert fake_router2.read_text() == router2_expected
 
 
 class TestControllerGenerator:
@@ -11,9 +95,13 @@ class TestControllerGenerator:
     def controller(self):
         controller = copy.deepcopy(ControllerGenerator)
         controller.run_copy = mock.Mock()
-        controller.insert_router_import = mock.Mock()
         yield controller
         del controller
+
+    @pytest.fixture
+    def patched_insert(self):
+        with mock.patch("fastapi_mvc.generators.controller.insert_router_import") as mck:
+            yield mck
 
     def test_should_exit_zero_when_invoked_with_help(self, controller, cli_runner):
         # given / when
@@ -29,7 +117,7 @@ class TestControllerGenerator:
         # then
         assert result.exit_code == 2
 
-    def test_should_call_copier_using_default_values(self, controller, monkeypatch, fake_project, cli_runner):
+    def test_should_call_copier_using_default_values(self, controller, monkeypatch, fake_project, cli_runner, patched_insert):
         # given / when
         monkeypatch.chdir(fake_project["root"])
         result = cli_runner.invoke(controller, ["fake-controller"])
@@ -43,7 +131,7 @@ class TestControllerGenerator:
                 "endpoints": {},
             }
         )
-        controller.insert_router_import.assert_called_once_with("fake_controller")
+        patched_insert.assert_called_once_with("fake_project", "fake_controller")
 
     def test_should_call_copier_with_parsed_arguments(self, controller, monkeypatch, fake_project, cli_runner):
         # given / when
