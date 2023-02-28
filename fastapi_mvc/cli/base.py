@@ -61,7 +61,7 @@ class ClickAliasedGroup(click.Group):
         super().__init__(*args, **kwargs)
         self.aliases: Dict[str, str] = dict()
 
-    def add_command(self, cmd: click.Command, name: str | None = None) -> None:
+    def add_command(self, cmd: click.Command, name: Optional[str] = None) -> None:
         """Register another Command class object instance with this group.
 
         If the name is not provided, the name of the command is used.
