@@ -13,6 +13,24 @@ import shutil
 log = logging.getLogger(__name__)
 
 
+def get_poetry_path():
+    """Get Poetry binary abspath.
+
+    Returns:
+        str: Poetry binary abspath.
+
+    """
+    poetry_path = os.getenv("POETRY_BINARY", "")
+
+    if not poetry_path:
+        poetry_home = os.getenv(
+            "POETRY_HOME", f"{os.getenv('HOME')}/.local/share/pypoetry"
+        )
+        return f"{poetry_home}/venv/bin/poetry"
+
+    return poetry_path
+
+
 def get_git_user_info():
     """Get git user information.
 

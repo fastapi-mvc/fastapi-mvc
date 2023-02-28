@@ -73,22 +73,6 @@ class TestCommand:
         assert not command.project_data
 
 
-class TestCommandPoetryPath:
-
-    @pytest.mark.parametrize("variable, value, expected", [
-        ("HOME", "/home/foobar", "/home/foobar/.local/share/pypoetry/venv/bin/poetry"),
-        ("POETRY_BINARY", "/path/to/poetry", "/path/to/poetry"),
-        ("POETRY_HOME", "/opt/poetry", "/opt/poetry/venv/bin/poetry")
-    ])
-    def test_should_expand_poetry_path_from_env(self, variable, value, expected):
-        with mock.patch.dict(os.environ, {variable: value}, clear=True):
-            # given
-            command = Command(name="fake-command")
-
-            # when / then
-            assert command.poetry_path == expected
-
-
 class TestCommandEnsureProjectData:
 
     def test_should_not_raise_when_valid_fastapi_mvc_project(self, fake_project, monkeypatch):

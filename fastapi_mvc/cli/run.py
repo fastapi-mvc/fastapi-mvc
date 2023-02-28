@@ -10,7 +10,7 @@ from subprocess import CalledProcessError
 
 import click
 from fastapi_mvc import Command
-from fastapi_mvc.utils import run_shell
+from fastapi_mvc.utils import run_shell, get_poetry_path
 
 
 cmd_short_help = "Run development uvicorn server."
@@ -61,11 +61,12 @@ def run(ctx, **options):
     """
     ctx.command.ensure_project_data()
     package_name = ctx.command.project_data["package_name"]
+    poetry_path = get_poetry_path()
 
     if options["install"]:
         run_shell(
             cmd=[
-                ctx.command.poetry_path,
+                poetry_path,
                 "install",
                 "--no-interaction",
             ],
@@ -75,7 +76,7 @@ def run(ctx, **options):
     try:
         run_shell(
             cmd=[
-                ctx.command.poetry_path,
+                poetry_path,
                 "run",
                 "uvicorn",
                 "--factory",

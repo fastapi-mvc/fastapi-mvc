@@ -144,22 +144,6 @@ class Command(click.Command):
         self.project_data = None
         self.alias = alias
 
-    @property
-    def poetry_path(self):
-        """Get Poetry binary abspath.
-
-        Returns:
-            str: Poetry binary abspath.
-
-        """
-        if os.getenv("POETRY_BINARY"):
-            return os.getenv("POETRY_BINARY")
-
-        poetry_home = os.getenv(
-            "POETRY_HOME", f"{os.getenv('HOME')}/.local/share/pypoetry"
-        )
-        return f"{poetry_home}/venv/bin/poetry"
-
     def ensure_project_data(self):
         """Ensure necessary project data existence.
 

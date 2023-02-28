@@ -33,13 +33,14 @@ class TestCliRunCommand:
     def test_should_use_default_values_when_invoked_empty(self, patched_run, monkeypatch, fake_project, cli_runner):
         # given / when
         monkeypatch.chdir(fake_project["root"])
+        monkeypatch.setenv("POETRY_BINARY", "/opt/poetry")
         result = cli_runner.invoke(patched_run, [])
 
         # then
         assert result.exit_code == 0
         patched_run.run_shell.assert_called_once_with(
             cmd=[
-                patched_run.poetry_path,
+                "/opt/poetry",
                 "run",
                 "uvicorn",
                 "--factory",
@@ -56,6 +57,7 @@ class TestCliRunCommand:
     def test_should_call_run_shell_with_parsed_arguments(self, patched_run, monkeypatch, fake_project, cli_runner):
         # given / when
         monkeypatch.chdir(fake_project["root"])
+        monkeypatch.setenv("POETRY_BINARY", "/opt/poetry")
         result = cli_runner.invoke(
             patched_run,
             ["--host", "10.20.30.40", "--port", "1234"],
@@ -65,7 +67,7 @@ class TestCliRunCommand:
         assert result.exit_code == 0
         patched_run.run_shell.assert_called_once_with(
             cmd=[
-                patched_run.poetry_path,
+                "/opt/poetry",
                 "run",
                 "uvicorn",
                 "--factory",
@@ -82,13 +84,14 @@ class TestCliRunCommand:
     def test_should_execute_make_install_and_exit_zero(self, patched_run, monkeypatch, fake_project, cli_runner):
         # given / when
         monkeypatch.chdir(fake_project["root"])
+        monkeypatch.setenv("POETRY_BINARY", "/opt/poetry")
         result = cli_runner.invoke(patched_run, ["--install"])
 
         # then
         assert result.exit_code == 0
         patched_run.run_shell.assert_any_call(
             cmd=[
-                patched_run.poetry_path,
+                "/opt/poetry",
                 "install",
                 "--no-interaction",
             ],
