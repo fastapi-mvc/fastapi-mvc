@@ -62,8 +62,10 @@ Utils
 
 .. autofunction:: fastapi_mvc.utils.get_git_user_info
 
+.. autofunction:: fastapi_mvc.utils.load_answers_file
+
 .. autofunction:: fastapi_mvc.utils.ensure_permissions
 
-.. autofunction:: fastapi_mvc.utils.ensure_project_data
+.. autofunction:: fastapi_mvc.utils.require_fastapi_mvc_project
 
 .. autofunction:: fastapi_mvc.utils.excepthook.global_except_hook
