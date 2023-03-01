@@ -4,7 +4,7 @@ import os
 import click
 import copier
 from fastapi_mvc.cli import GeneratorCommand
-from fastapi_mvc.utils import ensure_project_data
+from fastapi_mvc.utils import require_fastapi_mvc_project
 from fastapi_mvc.constants import ANSWERS_FILE
 
 
@@ -35,7 +35,7 @@ Example:
     nargs=1,
 )
 def foobar(name):
-    project_data = ensure_project_data()
+    project_data = require_fastapi_mvc_project()
     data = {
         "project_name": project_data["project_name"],
         "name": name.lower().replace("-", "_"),

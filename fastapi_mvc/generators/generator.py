@@ -14,7 +14,7 @@ from datetime import datetime
 import click
 import copier
 from fastapi_mvc.cli import GeneratorCommand
-from fastapi_mvc.utils import ensure_project_data
+from fastapi_mvc.utils import require_fastapi_mvc_project
 from fastapi_mvc.constants import COPIER_GENERATOR
 
 
@@ -107,7 +107,7 @@ def generator(name: str, **options: Dict[str, Any]) -> None:
             their parsed values.
 
     """
-    ensure_project_data()
+    require_fastapi_mvc_project()
     name = name.lower().replace("-", "_").replace(" ", "_")
     data = {
         "generator": name,

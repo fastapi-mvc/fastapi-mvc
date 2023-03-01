@@ -14,7 +14,7 @@ import copier
 from copier.errors import UserMessageError
 from fastapi_mvc.constants import ANSWERS_FILE, COPIER_PROJECT
 from fastapi_mvc.cli import ClickAliasedCommand
-from fastapi_mvc.utils import ensure_permissions, ensure_project_data
+from fastapi_mvc.utils import ensure_permissions, require_fastapi_mvc_project
 
 
 cmd_short_help = "Update fastapi-mvc project."
@@ -57,7 +57,7 @@ def update(ctx: click.Context, **options: Dict[str, Any]) -> None:
             parsed values.
 
     """
-    project_data = ensure_project_data()
+    project_data = require_fastapi_mvc_project()
     ensure_permissions(os.getcwd(), w=True)
 
     if options["no_interaction"]:

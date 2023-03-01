@@ -11,7 +11,7 @@ from subprocess import CalledProcessError
 
 import click
 from fastapi_mvc.cli import ClickAliasedCommand
-from fastapi_mvc.utils import run_shell, get_poetry_path, ensure_project_data
+from fastapi_mvc.utils import run_shell, get_poetry_path, require_fastapi_mvc_project
 
 
 cmd_short_help = "Run development uvicorn server."
@@ -60,7 +60,7 @@ def run(ctx: click.Context, **options: Dict[str, Any]) -> None:
             parsed values.
 
     """
-    project_data = ensure_project_data()
+    project_data = require_fastapi_mvc_project()
     poetry_path = get_poetry_path()
 
     if options["install"]:

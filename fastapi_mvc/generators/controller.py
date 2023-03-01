@@ -15,7 +15,7 @@ import click
 import copier
 from fastapi_mvc.cli import GeneratorCommand
 from fastapi_mvc.constants import COPIER_CONTROLLER, ANSWERS_FILE
-from fastapi_mvc.utils import ensure_project_data
+from fastapi_mvc.utils import require_fastapi_mvc_project
 
 
 cmd_short_help = "Run fastapi-mvc controller generator."
@@ -107,7 +107,7 @@ def controller(name: str, endpoints: List[str], **options: Dict[str, Any]) -> No
             their parsed values.
 
     """
-    project_data = ensure_project_data()
+    project_data = require_fastapi_mvc_project()
     name = name.lower().replace("-", "_")
     data = {
         "project_name": project_data["project_name"],

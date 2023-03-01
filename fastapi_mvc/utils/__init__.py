@@ -6,7 +6,11 @@ the package.
 """
 from fastapi_mvc.utils.shell import run_shell, get_git_user_info, get_poetry_path
 from fastapi_mvc.utils.excepthook import global_except_hook
-from fastapi_mvc.utils.validators import ensure_permissions, ensure_project_data
+from fastapi_mvc.utils.generators import (
+    ensure_permissions,
+    require_fastapi_mvc_project,
+    load_answers_file,
+)
 
 
 __all__ = (
@@ -15,5 +19,6 @@ __all__ = (
     "global_except_hook",
     "get_poetry_path",
     "ensure_permissions",
-    "ensure_project_data",
+    "require_fastapi_mvc_project",
+    "load_answers_file",
 )

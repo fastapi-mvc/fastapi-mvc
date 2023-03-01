@@ -1,4 +1,4 @@
-"""Fastapi-mvc validators.
+"""Fastapi-mvc utilities - generators.
 
 Attributes:
     log (logging.Logger): Logger class object instance.
@@ -13,6 +13,27 @@ from fastapi_mvc.constants import ANSWERS_FILE
 
 
 log = logging.getLogger(__name__)
+
+
+def load_answers_file(
+    project_root: Optional[str] = None, answers_file: str = ANSWERS_FILE
+) -> Dict[str, Any]:
+    """Define wrapper for Copier `load_answersfile_data` method.
+
+    Load answers data from a `$project_root/$answers_file` file if it exists.
+
+    Args:
+        project_root (typing.Optional[str]): Given fastapi-mvc project root path.
+        answers_file (str): Given name of Copier answers_file relative to project root.
+
+    Returns:
+        typing.Dict[str, typing.Any]: Loaded answers data.
+
+    """
+    return load_answersfile_data(
+        dst_path=project_root or os.getcwd(),
+        answers_file=answers_file,
+    )
 
 
 def ensure_permissions(
@@ -47,32 +68,32 @@ def ensure_permissions(
         raise SystemExit(1)
 
 
-def ensure_project_data(
-    project_root: Optional[str] = None, answers_file: str = ANSWERS_FILE
-) -> Dict[str, Any]:
-    """Ensure necessary fastapi-mvc project data existence.
-
-    Args:
-        project_root (typing.Optional[str]): Given fastapi-mvc project root path.
-        answers_file (str): Given name of Copier answers_file relative to project root.
+def require_fastapi_mvc_project() -> Dict[str, Any]:
+    """Ensure valid fastapi-mvc project, and return loaded project data.
 
     Returns:
-        typing.Dict[str, typing.Any]: Loaded answers data.
+        typing.Dict[str, Any]: Loaded fastapi-mvc project answers data.
 
     Raises:
         SystemExit: If project data is empty or is missing required values.
 
     """
-    project_data = load_answersfile_data(
-        dst_path=project_root or os.getcwd(),
-        answers_file=answers_file,
-    )
+    project_data = load_answers_file()
+    keys = [
+        "_commit",
+        "_src_path",
+        "project_name",
+        "package_name",
+    ]
 
-    if not project_data or "package_name" not in project_data:
+    if not project_data:
         log.error(
             "Not a fastapi-mvc project. Try 'fastapi-mvc new --help' for "
             "details how to create one."
         )
+        raise SystemExit(1)
+    elif not all(el in project_data for el in keys):
+        log.error(f"Answers file: {ANSWERS_FILE} is missing required values.")
         raise SystemExit(1)
 
     return project_data
