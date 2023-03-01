@@ -141,6 +141,10 @@
           mypy = {
             type = "app";
             program = toString (pkgs.writeScript "mypy" ''
+              export PATH="${pkgs.lib.makeBinPath [
+                  pkgs.fastapi-mvc-dev
+                  pkgs.git
+              ]}"
               echo "[nix][mypy] Run fastapi-mvc mypy checks."
               mypy fastapi_mvc
             '');
