@@ -56,7 +56,7 @@ def load_generators() -> Dict[str, click.Command]:
         )
 
         if not spec:
-            continue
+            continue  # pragma: no cover
 
         module = module_from_spec(spec)
         # Register module before running `exec_module()` to make all
