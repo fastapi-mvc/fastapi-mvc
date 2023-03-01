@@ -2,11 +2,15 @@
 
 This file documents changes to [fastapi-mvc](https://github.com/fastapi-mvc/fastapi-mvc). The release numbering uses [semantic versioning](http://semver.org).
 
-## Unreleased
+## 0.27.0 (01.03.2023)
 
 ### Breaking Changes
 
 * Refactor API for generator command line interface implementation [#246](https://github.com/fastapi-mvc/fastapi-mvc/issues/246). PR [#245](https://github.com/fastapi-mvc/fastapi-mvc/pull/245)
+
+### Generators
+
+* Bump copier-project from 0.4.0 to 0.5.0. PR [#249](https://github.com/fastapi-mvc/fastapi-mvc/pull/249)
 
 ### Internal
 
