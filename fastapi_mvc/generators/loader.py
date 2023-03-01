@@ -30,8 +30,8 @@ def load_generators() -> Dict[str, click.Command]:
     Returns:
         typing.Dict[str, click.Command]: Builtin and imported fastapi-mvc generators.
 
-    References:
-        1. Importing programmatically
+    Resources:
+        1. `Importing programmatically`_
 
     .. _Importing programmatically:
         https://docs.python.org/3/library/importlib.html#importing-programmatically
