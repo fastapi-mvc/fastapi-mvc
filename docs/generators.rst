@@ -76,7 +76,7 @@ The first step is to create a bare minimum generator command line interface at `
         nargs=1,
     )
     def foobar(name: str) -> None:
-        """Define {{generator_name}} generator command-line interface.
+        """Define foobar generator command-line interface.
 
         Args:
             name (str): Given name to greet.
@@ -161,7 +161,7 @@ The ``copier.yml`` defines template configuration, in our case it will be the fo
 .. note::
     You might wonder why ``project_name`` and ``package_name`` are included in the template configuration when the generator only uses ``name`` (equivalent to name CLI argument) question?
     Since ``foobar`` generator will create a file inside the project Python module, it needs to know its directory name first.
-    As a way to sanitize/standardize value for the template, ``package_name`` - the non-configurable default is based on ``project_name`` value.
+    As a way to normalize value for the template, ``package_name`` - the non-configurable default is based on ``project_name`` value.
     Hence ``project_name`` question in ``copier.yml`` and the value in the ``data`` dictionary passed to the ``run_copy`` method.
     Moreover, for your convenience, this value is automatically read from ``.fastapi-mvc.yml`` file via ``require_fastapi_mvc_project()`` utility method.
     But nothing stands in your way of providing package_name directly or in any valid way you’d see fit.
