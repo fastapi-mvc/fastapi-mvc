@@ -77,7 +77,7 @@ def run_shell(
     stderr: Optional[Union[int, IO[AnyStr]]] = None,
     input: Optional[Union[str, bytes]] = None,
     capture_output: bool = False,
-) -> subprocess.CompletedProcess[Any]:
+) -> "subprocess.CompletedProcess[Any]":
     """Run shell command without activated virtualenv.
 
     If virtual env is activated, remove it from PATH in order to ensure command proper
