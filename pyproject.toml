@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "fastapi-mvc"
-version = "0.26.0"
+version = "0.27.0"
 description = "Developer productivity tool for making high-quality FastAPI production-ready APIs."
 authors = ["Radosław Szamszur <github@rsd.sh>"]
 license = "MIT"
@@ -62,7 +62,6 @@ omit = [
 ]
 
 [tool.mypy]
-# temporarily ignore some files
 python_version = '3.10'
 show_error_codes = true
 follow_imports = 'silent'
