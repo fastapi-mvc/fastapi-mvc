@@ -75,7 +75,13 @@ The first step is to create a bare minimum generator command line interface at `
         required=True,
         nargs=1,
     )
-    def foobar(name):
+    def foobar(name: str) -> None:
+        """Define {{generator_name}} generator command-line interface.
+
+        Args:
+            name (str): Given name to greet.
+
+        """
         project_data = require_fastapi_mvc_project()
 
         data = {
@@ -83,7 +89,11 @@ The first step is to create a bare minimum generator command line interface at `
             "name": name.lower().replace("-", "_"),
         }
 
-        copier.run_copy(data=data)
+        copier.run_copy(
+            src_path=os.path.dirname(__file__),  # Or use repository address
+            data=data,
+            answers_file=ANSWERS_FILE,
+        )
 
 
 Our new generator is quite simple, it uses ``GeneratorCommand`` class to instantiate command line interface for this concrete generator. If you have used `Click <https://click.palletsprojects.com/en/8.1.x/>`__ before, this should be familiar to you.
@@ -291,15 +301,13 @@ Generators themselves have a generator:
             lib/generators/awesome/LICENSE
             lib/generators/awesome/README.md
             lib/generators/awesome/__init__.py
-            lib/generators/awesome/poetry.lock
-            lib/generators/awesome/pyproject.toml
             lib/generators/awesome/template
             lib/generators/awesome/template/{{package_name}}
             lib/generators/awesome/template/{{package_name}}/hello_world.py
             lib/generators/awesome/update.sh
-            lib/generators/awesome/default.nix
-            lib/generators/awesome/shell.nix
-            lib/generators/awesome/.fastapi-mvc.yml
+            lib/generators/awesome/flake.nix
+            lib/generators/awesome/flake.lock
+            lib/generators/awesome/.generator.yml
             lib/generators/awesome/awesome.py
 
 Adding CLI options and arguments
@@ -368,7 +376,7 @@ It is all about efficiency. Why type the long ``fastapi-mvc generate foobar ...`
 .. code-block:: python
 
     @click.command(
-        cls=Generator,
+        cls=GeneratorCommand,
         ...,
         alias="foo",
     )
