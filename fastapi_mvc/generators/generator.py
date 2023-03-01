@@ -39,15 +39,13 @@ Example:
         lib/generators/awesome/LICENSE
         lib/generators/awesome/README.md
         lib/generators/awesome/__init__.py
-        lib/generators/awesome/poetry.lock
-        lib/generators/awesome/pyproject.toml
         lib/generators/awesome/template
         lib/generators/awesome/template/{{package_name}}
         lib/generators/awesome/template/{{package_name}}/hello_world.py
         lib/generators/awesome/update.sh
-        lib/generators/awesome/default.nix
-        lib/generators/awesome/shell.nix
-        lib/generators/awesome/.fastapi-mvc.yml
+        lib/generators/awesome/flake.nix
+        lib/generators/awesome/flake.lock
+        lib/generators/awesome/.generator.yml
         lib/generators/awesome/awesome.py
 """
 
