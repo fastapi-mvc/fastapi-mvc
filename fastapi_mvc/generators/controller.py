@@ -8,8 +8,14 @@ Attributes:
         after everything else.
 
 """
+from typing import List, Dict, Any
+import os
+
 import click
-from fastapi_mvc import Generator
+import copier
+from fastapi_mvc.cli import GeneratorCommand
+from fastapi_mvc.constants import COPIER_CONTROLLER, ANSWERS_FILE
+from fastapi_mvc.utils import require_fastapi_mvc_project
 
 
 cmd_short_help = "Run fastapi-mvc controller generator."
@@ -36,10 +42,39 @@ Example:
 """
 
 
+def insert_router_import(package_name: str, controller_name: str) -> None:
+    """Insert import and router entry into ``app/router.py`` file.
+
+    Args:
+        package_name (str): Given fastapi-mvc project Python package name.
+        controller_name (str): Given controller name.
+
+    """
+    router = os.path.join(os.getcwd(), f"{package_name}/app/router.py")
+    import_str = f"from {package_name}.app.controllers import {controller_name}\n"
+
+    with open(router, "r") as f:
+        lines = f.readlines()
+
+    if import_str in lines:
+        return
+
+    for i in range(len(lines)):
+        if lines[i].strip() == "from fastapi import APIRouter":
+            index = i + 1
+            break
+    else:
+        index = 0
+
+    lines.insert(index, import_str)
+    lines.append(f"root_api_router.include_router({controller_name}.router)\n")
+
+    with open(router, "w") as f:
+        f.writelines(lines)
+
+
 @click.command(
-    cls=Generator,
-    template="https://github.com/fastapi-mvc/copier-controller.git",
-    vcs_ref="0.2.1",
+    cls=GeneratorCommand,
     category="Builtins",
     help=cmd_help,
     short_help=cmd_short_help,
@@ -62,22 +97,20 @@ Example:
     help="Do not add router entry to app/router.py.",
     is_flag=True,
 )
-@click.pass_context
-def controller(ctx, name, endpoints, **options):
+def controller(name: str, endpoints: List[str], **options: Dict[str, Any]) -> None:
     """Define controller generator command-line interface.
 
     Args:
-        ctx (click.Context): Click Context class object instance.
         name (str): Given controller name.
-        endpoints (str): Given controller endpoints.
+        endpoints (typing.List[str]): Given controller endpoints.
         options (typing.Dict[str, typing.Any]): Map of command option names to
             their parsed values.
 
     """
-    ctx.command.ensure_project_data()
+    project_data = require_fastapi_mvc_project()
     name = name.lower().replace("-", "_")
     data = {
-        "project_name": ctx.command.project_data["project_name"],
+        "project_name": project_data["project_name"],
         "controller": name,
         "endpoints": {},
     }
@@ -88,13 +121,18 @@ def controller(ctx, name, endpoints, **options):
         except ValueError:
             endpoint, method = entry, "get"
 
-        # Sanitize values
         endpoint = endpoint.lower().replace("-", "_")
         method = method.lower()
 
         data["endpoints"][endpoint] = method
 
-    ctx.command.run_copy(data=data)
+    copier.run_copy(
+        src_path=COPIER_CONTROLLER.template,
+        vcs_ref=COPIER_CONTROLLER.vcs_ref,
+        dst_path=os.getcwd(),
+        answers_file=ANSWERS_FILE,
+        data=data,
+    )
 
     if not options["skip_routes"]:
-        ctx.command.insert_router_import(name)
+        insert_router_import(project_data["package_name"], name)

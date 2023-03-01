@@ -2,7 +2,10 @@
 import os
 
 import click
-from fastapi_mvc import Generator
+import copier
+from fastapi_mvc.cli import GeneratorCommand
+from fastapi_mvc.utils import require_fastapi_mvc_project
+from fastapi_mvc.constants import ANSWERS_FILE
 
 
 cmd_short_help = "Run custom generator foobar."
@@ -20,9 +23,7 @@ Example:
 
 
 @click.command(
-    cls=Generator,
-    # Or use repository address
-    template=os.path.dirname(__file__),
+    cls=GeneratorCommand,
     category="Custom",
     help=cmd_help,
     short_help=cmd_short_help,
@@ -33,15 +34,15 @@ Example:
     required=True,
     nargs=1,
 )
-@click.pass_context
-def foobar(ctx, name):
-    # You can access Generator class object instance for this command via click.Context
-    # https://click.palletsprojects.com/en/8.1.x/api/?highlight=context#click.Context.command
-    ctx.command.ensure_project_data()
-
+def foobar(name):
+    project_data = require_fastapi_mvc_project()
     data = {
-        "project_name": ctx.command.project_data["project_name"],
+        "project_name": project_data["project_name"],
         "name": name.lower().replace("-", "_"),
     }
 
-    ctx.command.run_copy(data=data)
+    copier.run_copy(
+        src_path=os.path.dirname(__file__),  # Or use repository address
+        data=data,
+        answers_file=ANSWERS_FILE,
+    )

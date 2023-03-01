@@ -6,11 +6,12 @@ Attributes:
         command listing of the parent command.
 
 """
+from typing import Dict, Any
 from subprocess import CalledProcessError
 
 import click
-from fastapi_mvc import Command
-from fastapi_mvc.utils import run_shell
+from fastapi_mvc.cli import ClickAliasedCommand
+from fastapi_mvc.utils import run_shell, get_poetry_path, require_fastapi_mvc_project
 
 
 cmd_short_help = "Run development uvicorn server."
@@ -21,7 +22,7 @@ fastapi-mvc project at the current working directory.
 
 
 @click.command(
-    cls=Command,
+    cls=ClickAliasedCommand,
     help=cmd_help,
     short_help=cmd_short_help,
     alias="r",
@@ -50,7 +51,7 @@ fastapi-mvc project at the current working directory.
     is_flag=True,
 )
 @click.pass_context
-def run(ctx, **options):
+def run(ctx: click.Context, **options: Dict[str, Any]) -> None:
     """Define command-line interface run command.
 
     Args:
@@ -59,13 +60,13 @@ def run(ctx, **options):
             parsed values.
 
     """
-    ctx.command.ensure_project_data()
-    package_name = ctx.command.project_data["package_name"]
+    project_data = require_fastapi_mvc_project()
+    poetry_path = get_poetry_path()
 
     if options["install"]:
         run_shell(
             cmd=[
-                ctx.command.poetry_path,
+                poetry_path,
                 "install",
                 "--no-interaction",
             ],
@@ -75,16 +76,16 @@ def run(ctx, **options):
     try:
         run_shell(
             cmd=[
-                ctx.command.poetry_path,
+                poetry_path,
                 "run",
                 "uvicorn",
                 "--factory",
                 "--host",
-                options["host"],
+                f"{options['host']}",
                 "--port",
-                options["port"],
+                f"{options['port']}",
                 "--reload",
-                f"{package_name}.app:get_application",
+                f"{project_data['package_name']}.app:get_application",
             ],
             check=True,
         )

@@ -17,13 +17,13 @@ class TestLoadGenerators:
             ["controller", "foobar", "generator", "my-controller", "script"]
         )
 
-    @mock.patch("fastapi_mvc.generators.loader.importlib.util")
+    @mock.patch("fastapi_mvc.generators.loader.spec_from_file_location")
     def test_should_continue_on_import_error(self, importlib_mock, monkeypatch, fake_project_with_generators):
         # given
         monkeypatch.chdir(fake_project_with_generators["root"])
         spec_mock = mock.Mock()
         spec_mock.loader.exec_module.side_effect = ImportError("Ups")
-        importlib_mock.spec_from_file_location.return_value = spec_mock
+        importlib_mock.return_value = spec_mock
 
         # when
         generators = load_generators()

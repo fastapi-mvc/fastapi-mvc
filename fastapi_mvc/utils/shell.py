@@ -4,6 +4,7 @@ Attributes:
     log (logging.Logger): Logger class object instance.
 
 """
+from typing import Tuple, List, IO, AnyStr, Optional, Union, Any
 import os
 import logging
 import subprocess
@@ -13,14 +14,32 @@ import shutil
 log = logging.getLogger(__name__)
 
 
-def get_git_user_info():
+def get_poetry_path() -> str:
+    """Get Poetry executable abspath.
+
+    Returns:
+        Poetry executable abspath.
+
+    """
+    poetry_path = os.getenv("POETRY_BINARY", "")
+
+    if not poetry_path:
+        poetry_home = os.getenv(
+            "POETRY_HOME", f"{os.getenv('HOME')}/.local/share/pypoetry"
+        )
+        return f"{poetry_home}/venv/bin/poetry"
+
+    return poetry_path
+
+
+def get_git_user_info() -> Tuple[str, str]:
     """Get git user information.
 
     Reads username and email information from git. If not exists, provide defaults
     values.
 
     Returns:
-        typing.Tuple[str, str]: Tuple containing git username and email.
+        Tuple containing git username and email.
 
     """
     log.debug("Try read git user information.")
@@ -30,14 +49,20 @@ def get_git_user_info():
         return defaults
 
     try:
-        author = subprocess.check_output(["git", "config", "--get", "user.name"])
-        author = author.decode("utf-8").strip()
+        author = (
+            subprocess.check_output(["git", "config", "--get", "user.name"])
+            .decode("utf-8")
+            .strip()
+        )
     except subprocess.CalledProcessError:
         author = defaults[0]
 
     try:
-        email = subprocess.check_output(["git", "config", "--get", "user.email"])
-        email = email.decode("utf-8").strip()
+        email = (
+            subprocess.check_output(["git", "config", "--get", "user.email"])
+            .decode("utf-8")
+            .strip()
+        )
     except subprocess.CalledProcessError:
         email = defaults[1]
 
@@ -45,14 +70,14 @@ def get_git_user_info():
 
 
 def run_shell(
-    cmd,
-    cwd=None,
-    check=False,
-    stdout=None,
-    stderr=None,
-    input=None,
-    capture_output=False,
-):
+    cmd: List[str],
+    cwd: Optional[str] = None,
+    check: bool = False,
+    stdout: Optional[Union[int, IO[AnyStr]]] = None,
+    stderr: Optional[Union[int, IO[AnyStr]]] = None,
+    input: Optional[Union[str, bytes]] = None,
+    capture_output: bool = False,
+) -> "subprocess.CompletedProcess[Any]":
     """Run shell command without activated virtualenv.
 
     If virtual env is activated, remove it from PATH in order to ensure command proper
@@ -65,13 +90,16 @@ def run_shell(
             to current working directory.
         check (bool): If True raise a subprocess.CalledProcessError error
             when a process returns non-zero exit status.
-        stdout (None | int | typing.IO[typing.Any]): Specify the
+        stdout (typing.Optional[typing.Union[int, IO[typing.AnyStr]]]): Specify the
             executed program’s standard output file handles.
-        stderr (None | int | typing.IO[typing.Any]): Specify the
+        stderr (typing.Optional[typing.Union[int, IO[typing.AnyStr]])): Specify the
             executed program’s standard error file handles.
-        input (bytes | str | None): If given the input argument is passed to the
-            subprocess’s stdin.
+        input (typing.Optional[typing.Union[bytes, str]])): If given the input argument
+            is passed to the subprocess’s stdin.
         capture_output (bool): If True, stdout and stderr will be captured.
+
+    Returns:
+        CompletedProcess: Class object instance.
 
     Raises:
         subprocess.CalledProcessError: If spawned proces finishes with an

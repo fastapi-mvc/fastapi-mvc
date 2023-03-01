@@ -6,11 +6,15 @@ Attributes:
         command listing of the parent command.
 
 """
+from typing import Dict, Any
 import os
 
 import click
+import copier
 from copier.errors import UserMessageError
-from fastapi_mvc import Generator
+from fastapi_mvc.constants import ANSWERS_FILE, COPIER_PROJECT
+from fastapi_mvc.cli import ClickAliasedCommand
+from fastapi_mvc.utils import ensure_permissions, require_fastapi_mvc_project
 
 
 cmd_short_help = "Update fastapi-mvc project."
@@ -21,9 +25,7 @@ from new template version.
 
 
 @click.command(
-    cls=Generator,
-    template="https://github.com/fastapi-mvc/copier-project.git",
-    vcs_ref="0.3.0",
+    cls=ClickAliasedCommand,
     help=cmd_help,
     short_help=cmd_short_help,
     alias="u",
@@ -46,7 +48,7 @@ from new template version.
     type=click.STRING,
 )
 @click.pass_context
-def update(ctx, **options):
+def update(ctx: click.Context, **options: Dict[str, Any]) -> None:
     """Define command-line interface update command.
 
     Args:
@@ -55,24 +57,26 @@ def update(ctx, **options):
             parsed values.
 
     """
-    ctx.command.ensure_project_data()
-    ctx.command.ensure_permissions(os.getcwd(), w=True)
-
-    if options["use_version"]:
-        ctx.command.vcs_ref = options["use_version"]
+    project_data = require_fastapi_mvc_project()
+    ensure_permissions(os.getcwd(), w=True)
 
     if options["no_interaction"]:
         update_kwargs = {
-            "data": ctx.command.project_data,
+            "data": project_data,
             "overwrite": True,
         }
     else:
         update_kwargs = {
-            "user_defaults": ctx.command.project_data,
+            "user_defaults": project_data,
         }
 
     try:
-        ctx.command.run_update(**update_kwargs, pretend=options["pretend"])
+        copier.run_update(
+            vcs_ref=options["use_version"] or COPIER_PROJECT.vcs_ref,
+            answers_file=ANSWERS_FILE,
+            pretend=options["pretend"],
+            **update_kwargs,
+        )
     except UserMessageError as ex:
         click.secho(ex, fg="yellow")
         ctx.exit(2)

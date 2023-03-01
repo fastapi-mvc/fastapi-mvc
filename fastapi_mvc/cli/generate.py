@@ -6,7 +6,7 @@ Attributes:
         command listing of the parent command.
 
 """
-from fastapi_mvc import GeneratorsMultiCommand
+from fastapi_mvc.cli import GeneratorsMultiCommand
 from fastapi_mvc.generators import load_generators
 
 
@@ -17,7 +17,7 @@ fastapi-mvc project at the current working directory.
 """
 
 
-def get_generate_cmd():
+def get_generate_cmd() -> GeneratorsMultiCommand:
     """Return command-line interface generate command.
 
     Returns:

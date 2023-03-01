@@ -2,15 +2,18 @@
 
 Attributes:
     log (logging.Logger): Logger class object instance.
+    hint (str): Unhandled exception hint message template.
     template (str): Unhandled exception issue message template.
 
 """
+from typing import Type, Optional
+from types import TracebackType
 import logging
 import sys
 import platform
 from traceback import format_exception
 
-from fastapi_mvc import VERSION
+from fastapi_mvc.constants import VERSION
 
 
 log = logging.getLogger("GlobalExceptHook")
@@ -61,13 +64,17 @@ fastapi-mvc {argv}
 """
 
 
-def global_except_hook(exctype, value, traceback):
+def global_except_hook(
+    exctype: Type[BaseException],
+    value: BaseException,
+    traceback: Optional[TracebackType],
+) -> None:
     """Global except hook method.
 
     Args:
-        exctype: Exception object instance.
-        value: Exception value.
-        traceback: Traceback object instance.
+        exctype (typing.Type[BaseException]): Exception object instance.
+        value (BaseException): Exception value.
+        traceback (typing.Optional[types.TracebackType]): Traceback object instance.
 
     """
     log.exception(

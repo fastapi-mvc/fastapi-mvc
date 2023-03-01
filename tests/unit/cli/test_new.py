@@ -4,8 +4,9 @@ from datetime import datetime
 from unittest import mock
 
 import pytest
-from fastapi_mvc import VERSION
+from fastapi_mvc.constants import VERSION
 from fastapi_mvc.cli.new import new
+from fastapi_mvc.constants import ANSWERS_FILE, COPIER_PROJECT
 
 
 DIR = os.getcwd()
@@ -22,14 +23,16 @@ class TestCliNewCommand:
             return_value=("John Doe", "example@email.com"),
         )
         which_patch = mock.patch("fastapi_mvc.cli.new.shutil.which")
+        copier_patch = mock.patch("fastapi_mvc.cli.new.copier")
         cmd.run_shell = shell_patch.start()
         cmd.get_git_user_info = git_patch.start()
         cmd.shutil_which = which_patch.start()
-        cmd.run_copy = mock.Mock()
+        cmd.copier = copier_patch.start()
         yield cmd
         shell_patch.stop()
         git_patch.stop()
         which_patch.stop()
+        copier_patch.stop()
         del cmd
 
     def test_should_exit_zero_when_invoked_with_help(self, cli_runner):
@@ -59,8 +62,11 @@ class TestCliNewCommand:
             ]
         )
         patched_new.shutil_which.assert_called_once_with("make")
-        patched_new.run_copy.assert_called_once_with(
+        patched_new.copier.run_copy.assert_called_once_with(
+            src_path=COPIER_PROJECT.template,
+            vcs_ref=COPIER_PROJECT.vcs_ref,
             dst_path=f"{DIR}/test-project",
+            answers_file=ANSWERS_FILE,
             user_defaults={
                 "project_name": "test-project",
                 "author": "John Doe",
@@ -99,7 +105,10 @@ class TestCliNewCommand:
                         "test-project",
                     ],
                     {
+                        "src_path": COPIER_PROJECT.template,
+                        "vcs_ref": COPIER_PROJECT.vcs_ref,
                         "dst_path": f"{DIR}/test-project",
+                        "answers_file": ANSWERS_FILE,
                         "user_defaults": {
                             "project_name": "test-project",
                             "author": "John Doe",
@@ -133,6 +142,9 @@ class TestCliNewCommand:
                         f"{DIR}/Mambo_No6",
                     ],
                     {
+                        "src_path": "https://howtomambo.git",
+                        "vcs_ref": "0.1.0",
+                        "answers_file": ANSWERS_FILE,
                         "dst_path": f"{DIR}/Mambo_No6",
                         "data": {
                             "project_name": "Mambo_No6",
@@ -159,6 +171,9 @@ class TestCliNewCommand:
             (
                     ["."],
                     {
+                        "src_path": COPIER_PROJECT.template,
+                        "vcs_ref": COPIER_PROJECT.vcs_ref,
+                        "answers_file": ANSWERS_FILE,
                         "dst_path": f"{DIR}",
                         "user_defaults": {
                             "project_name": os.path.basename(DIR),
@@ -189,7 +204,7 @@ class TestCliNewCommand:
 
         # then
         assert result.exit_code == 0
-        patched_new.run_copy.assert_called_once_with(**expected)
+        patched_new.copier.run_copy.assert_called_once_with(**expected)
 
     def test_should_skip_make_if_not_present(self, patched_new, cli_runner):
         # given / when

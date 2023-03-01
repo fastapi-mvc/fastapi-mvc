@@ -4,11 +4,14 @@ Attributes:
     log (logging.Logger): Logger class object instance.
 
 """
-import importlib
+from typing import Dict
+from importlib.util import spec_from_file_location, module_from_spec
 import logging
 import pkgutil
 import sys
 import os
+
+import click
 
 from .controller import controller
 from .generator import generator
@@ -18,13 +21,17 @@ from .script import script
 log = logging.getLogger(__name__)
 
 
-def load_generators():
+def load_generators() -> Dict[str, click.Command]:
     """Load user fastapi-mvc generators.
 
-    Programmatically import all available user generators from known paths to search in.
+    Programmatically import all available user generators from known paths to search
+    in.
 
-    References:
-        1. Importing programmatically
+    Returns:
+        typing.Dict[str, click.Command]: Builtin and imported fastapi-mvc generators.
+
+    Resources:
+        1. `Importing programmatically`_
 
     .. _Importing programmatically:
         https://docs.python.org/3/library/importlib.html#importing-programmatically
@@ -39,15 +46,19 @@ def load_generators():
 
     for item in pkgutil.iter_modules(paths):
         m_path = os.path.join(
-            item.module_finder.path,
+            item.module_finder.path,  # type: ignore
             item.name,
             "__init__.py",
         )
-        spec = importlib.util.spec_from_file_location(
+        spec = spec_from_file_location(
             "fastapi_mvc_generators",
             m_path,
         )
-        module = importlib.util.module_from_spec(spec)
+
+        if not spec:
+            continue  # pragma: no cover
+
+        module = module_from_spec(spec)
         # Register module before running `exec_module()` to make all
         # submodules in it able to find their parent package:
         # `fastapi_mvc_generators`.
@@ -55,7 +66,7 @@ def load_generators():
         #     ModuleNotFoundError: No module named 'fastapi_mvc_generators'
         sys.modules[spec.name] = module
         try:
-            spec.loader.exec_module(module)
+            spec.loader.exec_module(module)  # type: ignore
         except (ModuleNotFoundError, ImportError) as err:
             log.error(f"Could not load custom generator: {m_path}")
             log.error(err)
@@ -66,4 +77,4 @@ def load_generators():
         if imported:
             unique.add(imported)
 
-    return {item.name: item for item in unique}
+    return {str(item.name): item for item in unique}

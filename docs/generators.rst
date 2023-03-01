@@ -40,7 +40,10 @@ The first step is to create a bare minimum generator command line interface at `
     import os
 
     import click
-    from fastapi_mvc import Generator
+    import copier
+    from fastapi_mvc.cli import GeneratorCommand
+    from fastapi_mvc.utils import require_fastapi_mvc_project
+    from fastapi_mvc.constants import ANSWERS_FILE
 
 
     cmd_short_help = "Run custom generator foobar."
@@ -58,37 +61,44 @@ The first step is to create a bare minimum generator command line interface at `
 
 
     @click.command(
-        cls=Generator,
-        # Or use repository address
-        template=os.path.dirname(__file__),
-        category="Custom",
+        cls=GeneratorCommand,
         help=cmd_help,
         short_help=cmd_short_help,
         epilog=epilog,
         # Define alias short-cut for more efficient invocation
         alias="foo",
+        # Define category under which generator should be printed in ``fastapi-mvc generate`` CLI command help page.
+        category="Custom",
     )
     @click.argument(
         "NAME",
         required=True,
         nargs=1,
     )
-    @click.pass_context
-    def foobar(ctx, name):
-        # You can access Generator class object instance for this command via click.Context
-        # https://click.palletsprojects.com/en/8.1.x/api/?highlight=context#click.Context.command
-        ctx.command.ensure_project_data()
+    def foobar(name: str) -> None:
+        """Define foobar generator command-line interface.
+
+        Args:
+            name (str): Given name to greet.
+
+        """
+        project_data = require_fastapi_mvc_project()
 
         data = {
-            "project_name": ctx.command.project_data["project_name"],
+            "project_name": project_data["project_name"],
             "name": name.lower().replace("-", "_"),
         }
 
-        ctx.command.run_copy(data=data)
+        copier.run_copy(
+            src_path=os.path.dirname(__file__),  # Or use repository address
+            data=data,
+            answers_file=ANSWERS_FILE,
+        )
 
 
-Our new generator is quite simple, it uses ``Generator`` class to instantiate command line interface for this concrete generator. If you have used `Click <https://click.palletsprojects.com/en/8.1.x/>`__ before, this should be familiar to you.
-When a generator is invoked, the decorated method is executed with arguments and options provided from CLI command. In this case it is ``name`` CLI argument and a ``click.Context`` object - more on that a bit later.
+Our new generator is quite simple, it uses ``GeneratorCommand`` class to instantiate command line interface for this concrete generator. If you have used `Click <https://click.palletsprojects.com/en/8.1.x/>`__ before, this should be familiar to you.
+When a generator is invoked, the decorated method is executed with arguments and options provided from CLI command. In this case it is ``name`` CLI argument. Using ``GeneratorCommand`` class is not required. It only provides you with ``alias``, ``category`` and some help formatting utils.
+You can use ``click.Command`` should you choose.
 
 Copier template
 ~~~~~~~~~~~~~~~
@@ -151,9 +161,9 @@ The ``copier.yml`` defines template configuration, in our case it will be the fo
 .. note::
     You might wonder why ``project_name`` and ``package_name`` are included in the template configuration when the generator only uses ``name`` (equivalent to name CLI argument) question?
     Since ``foobar`` generator will create a file inside the project Python module, it needs to know its directory name first.
-    As a way to sanitize/standardize value for the template, ``package_name`` - the non-configurable default is based on ``project_name`` value.
+    As a way to normalize value for the template, ``package_name`` - the non-configurable default is based on ``project_name`` value.
     Hence ``project_name`` question in ``copier.yml`` and the value in the ``data`` dictionary passed to the ``run_copy`` method.
-    Moreover, for your convenience, this value is automatically read from ``.fastapi-mvc.yml`` file via ``ctx.command.ensure_project_data()`` ``Generator`` class object instance method.
+    Moreover, for your convenience, this value is automatically read from ``.fastapi-mvc.yml`` file via ``require_fastapi_mvc_project()`` utility method.
     But nothing stands in your way of providing package_name directly or in any valid way you’d see fit.
 
 Template questions looks familiar? It is contains exactly the same keys as copier data dictionary:
@@ -291,15 +301,13 @@ Generators themselves have a generator:
             lib/generators/awesome/LICENSE
             lib/generators/awesome/README.md
             lib/generators/awesome/__init__.py
-            lib/generators/awesome/poetry.lock
-            lib/generators/awesome/pyproject.toml
             lib/generators/awesome/template
             lib/generators/awesome/template/{{package_name}}
             lib/generators/awesome/template/{{package_name}}/hello_world.py
             lib/generators/awesome/update.sh
-            lib/generators/awesome/default.nix
-            lib/generators/awesome/shell.nix
-            lib/generators/awesome/.fastapi-mvc.yml
+            lib/generators/awesome/flake.nix
+            lib/generators/awesome/flake.lock
+            lib/generators/awesome/.generator.yml
             lib/generators/awesome/awesome.py
 
 Adding CLI options and arguments
@@ -311,35 +319,25 @@ Really, the only difference between any ``Click`` command and fastapi-mvc genera
 The differences are highlighted:
 
 .. code-block:: python
-    :emphasize-lines: 2 - 4, 8
+    :emphasize-lines: 2, 6 - 7
 
     @click.command(
-        cls=Generator,
-        template=os.path.dirname(__file__),
-        category="Custom",
+        cls=GeneratorCommand,
         help=cmd_help,
         short_help=cmd_short_help,
         epilog=epilog,
         alias="foo",
+        category="Custom",
     )
 
 The rest of the implementation is just a pure Python Click.
 
-What about Context and project data?
-------------------------------------
-
-You might wonder what is this ``ctx`` (a ``click.Context`` object instance) and why it is needed in the generator method callback (the decorated method).
-
-.. pull-quote::
-
-    From `Click docs: <https://click.palletsprojects.com/en/8.1.x/api/?highlight=context#context>`__ The context is a special internal object that holds state relevant for the script execution at every single level. It’s normally invisible to commands unless they opt-in to getting access to it.
-
-In the case of fastapi-mvc generators ``click.Context`` is used in order to access the ``Generator`` class object instance and use its methods or attributes.
+What about project data?
+------------------------
 
 Some generators might need to know the state from which a concrete project was rendered to generate something on top of it.
 For instance, it might depend on the information if the project has enabled Nix and will render its contents accordingly or just simply needs to know the name of the Python package directory name.
-This is where project data comes in. Via ``Generator.ensure_project_data()`` method, the generator will parse ``.fastapi-mvc.yml`` file and validate the project.
-Then, a dictionary with parsed values will be available at Generator class object instance ``project_data`` attribute.
+This is where project data comes in. Via ``require_fastapi_mvc_project()`` method, one can load ``.fastapi-mvc.yml`` file and validate the project.
 
 But wait? What data is actually stored in ``.fastapi-mvc.yml`` file? Well this depends on the `copier project template <https://github.com/fastapi-mvc/copier-project>`__ used for rendering the project.
 In a nutshell it is a copier answers file that includes the current answers and copier metadata. It is used both by copier (updating, copying over, etc.) and fastapi-mvc.
@@ -378,7 +376,7 @@ It is all about efficiency. Why type the long ``fastapi-mvc generate foobar ...`
 .. code-block:: python
 
     @click.command(
-        cls=Generator,
+        cls=GeneratorCommand,
         ...,
         alias="foo",
     )
@@ -387,11 +385,3 @@ And, now invoke it with speed: ``fm g foo ...``
 
 .. note::
     ``fm`` is an alias for ``fastapi-mvc`` entrypoint, and ``g`` is an alias for ``generate`` command.
-
-Generator base class API reference
-----------------------------------
-
-.. autoclass:: fastapi_mvc.Generator
-   :members:
-   :inherited-members:
-   :show-inheritance:

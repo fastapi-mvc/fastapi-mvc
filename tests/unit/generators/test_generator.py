@@ -4,6 +4,7 @@ from datetime import datetime
 
 import pytest
 from fastapi_mvc.generators import GeneratorGenerator
+from fastapi_mvc.constants import COPIER_GENERATOR
 
 
 class TestGeneratorGenerator:
@@ -11,8 +12,12 @@ class TestGeneratorGenerator:
     @pytest.fixture
     def generator(self):
         generator = copy.deepcopy(GeneratorGenerator)
-        generator.run_copy = mock.Mock()
+        copier_patch = mock.patch(
+            "fastapi_mvc.generators.generator.copier",
+        )
+        generator.copier = copier_patch.start()
         yield generator
+        copier_patch.stop()
         del generator
 
     def test_should_exit_zero_when_invoked_with_help(self, generator, cli_runner):
@@ -36,7 +41,9 @@ class TestGeneratorGenerator:
 
         # then
         assert result.exit_code == 0
-        generator.run_copy.assert_called_once_with(
+        generator.copier.run_copy.assert_called_once_with(
+            src_path=COPIER_GENERATOR.template,
+            vcs_ref=COPIER_GENERATOR.vcs_ref,
             dst_path="./lib/generators/fake_generator",
             data={
                 "generator": "fake_generator",
@@ -65,7 +72,9 @@ class TestGeneratorGenerator:
 
         # then
         assert result.exit_code == 0
-        generator.run_copy.assert_called_once_with(
+        generator.copier.run_copy.assert_called_once_with(
+            src_path=COPIER_GENERATOR.template,
+            vcs_ref=COPIER_GENERATOR.vcs_ref,
             dst_path="./lib/generators/mambo_no6",
             data={
                 "generator": "mambo_no6",
@@ -77,11 +86,11 @@ class TestGeneratorGenerator:
             answers_file=".generator.yml",
         )
 
-    def test_should_exit_error_when_not_in_fastapi_mvc_project(self, generator, cli_runner):
+    def test_should_exit_error_when_not_in_fastapi_mvc_project(self, generator, cli_runner, caplog):
         # given / when
         result = cli_runner.invoke(generator, ["fake-generator"])
 
         # then
         assert result.exit_code == 1
         msg = "Not a fastapi-mvc project. Try 'fastapi-mvc new --help' for details how to create one."
-        assert msg in result.output
+        assert msg in caplog.text

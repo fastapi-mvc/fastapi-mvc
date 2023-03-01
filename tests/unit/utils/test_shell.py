@@ -4,7 +4,23 @@ from subprocess import CalledProcessError
 from unittest import mock
 
 import pytest
-from fastapi_mvc.utils import get_git_user_info, run_shell
+from fastapi_mvc.utils import get_git_user_info, run_shell, get_poetry_path
+
+
+class TestGetPoetryPath:
+
+    @pytest.mark.parametrize("variable, value, expected", [
+        ("HOME", "/home/foobar", "/home/foobar/.local/share/pypoetry/venv/bin/poetry"),
+        ("POETRY_BINARY", "/path/to/poetry", "/path/to/poetry"),
+        ("POETRY_HOME", "/opt/poetry", "/opt/poetry/venv/bin/poetry")
+    ])
+    def test_should_return_poetry_path_from_env(self, variable, value, expected):
+        with mock.patch.dict(os.environ, {variable: value}, clear=True):
+            # given / when
+            poetry_path = get_poetry_path()
+
+            # then
+            assert poetry_path == expected
 
 
 class TestGetGitUserInfo:

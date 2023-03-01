@@ -8,10 +8,14 @@ Attributes:
         after everything else.
 
 """
+from typing import Dict, Any
 from datetime import datetime
 
 import click
-from fastapi_mvc import Generator
+import copier
+from fastapi_mvc.cli import GeneratorCommand
+from fastapi_mvc.utils import require_fastapi_mvc_project
+from fastapi_mvc.constants import COPIER_GENERATOR
 
 
 cmd_short_help = "Run fastapi-mvc generator generator."
@@ -35,23 +39,19 @@ Example:
         lib/generators/awesome/LICENSE
         lib/generators/awesome/README.md
         lib/generators/awesome/__init__.py
-        lib/generators/awesome/poetry.lock
-        lib/generators/awesome/pyproject.toml
         lib/generators/awesome/template
         lib/generators/awesome/template/{{package_name}}
         lib/generators/awesome/template/{{package_name}}/hello_world.py
         lib/generators/awesome/update.sh
-        lib/generators/awesome/default.nix
-        lib/generators/awesome/shell.nix
-        lib/generators/awesome/.fastapi-mvc.yml
+        lib/generators/awesome/flake.nix
+        lib/generators/awesome/flake.lock
+        lib/generators/awesome/.generator.yml
         lib/generators/awesome/awesome.py
 """
 
 
 @click.command(
-    cls=Generator,
-    template="https://github.com/fastapi-mvc/copier-generator.git",
-    vcs_ref="0.2.0",
+    cls=GeneratorCommand,
     category="Builtins",
     help=cmd_help,
     short_help=cmd_short_help,
@@ -96,22 +96,17 @@ Example:
     envvar="REPO_URL",
     default="https://your.repo.url.here",
 )
-@click.pass_context
-def generator(ctx, name, **options):
+def generator(name: str, **options: Dict[str, Any]) -> None:
     """Define generator generator command-line interface.
 
     Args:
-        ctx (click.Context): Click Context class object instance.
         name (str): Given generator name.
         options (typing.Dict[str, typing.Any]): Map of command option names to
             their parsed values.
 
     """
-    ctx.command.ensure_project_data()
-
-    # Sanitize value
+    require_fastapi_mvc_project()
     name = name.lower().replace("-", "_").replace(" ", "_")
-
     data = {
         "generator": name,
         "nix": not options["skip_nix"],
@@ -120,7 +115,9 @@ def generator(ctx, name, **options):
         "copyright_date": datetime.today().year,
     }
 
-    ctx.command.run_copy(
+    copier.run_copy(
+        src_path=COPIER_GENERATOR.template,
+        vcs_ref=COPIER_GENERATOR.vcs_ref,
         dst_path=f"./lib/generators/{name}",
         data=data,
         answers_file=".generator.yml",

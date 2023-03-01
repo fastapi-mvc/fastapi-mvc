@@ -8,10 +8,14 @@ Attributes:
         after everything else.
 
 """
-import os.path
+from typing import Dict, Any
+import os
 
 import click
-from fastapi_mvc import Generator
+import copier
+from fastapi_mvc.cli import GeneratorCommand
+from fastapi_mvc.constants import COPIER_SCRIPT
+from fastapi_mvc.utils import ensure_permissions
 
 
 cmd_short_help = "Run shell script generator."
@@ -33,9 +37,7 @@ Example:
 
 
 @click.command(
-    cls=Generator,
-    template="https://github.com/fastapi-mvc/copier-script.git",
-    vcs_ref="0.1.1",
+    cls=GeneratorCommand,
     category="Builtins",
     help=cmd_help,
     short_help=cmd_short_help,
@@ -53,25 +55,22 @@ Example:
     required=True,
     nargs=1,
 )
-@click.pass_context
-def script(ctx, name, **options):
+def script(name: str, **options: Dict[str, Any]) -> None:
     """Define script generator command-line interface.
 
     Args:
-        ctx (click.Context): Click Context class object instance.
         name (str): Given script name.
         options (typing.Dict[str, typing.Any]): Map of command option names to
             their parsed values.
 
     """
-    ctx.command.ensure_permissions(os.getcwd(), w=True)
-
-    # Sanitize values
-    name = name.lower().replace(" ", "_")
-
+    ensure_permissions(os.getcwd(), w=True)
     data = {
         "nix": options["use_nix"],
-        "script": name,
+        "script": name.lower().replace(" ", "_"),
     }
-
-    ctx.command.run_copy(data=data, answers_file=None)
+    copier.run_copy(
+        src_path=COPIER_SCRIPT.template,
+        vcs_ref=COPIER_SCRIPT.vcs_ref,
+        data=data,
+    )

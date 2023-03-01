@@ -2,6 +2,18 @@
 
 This file documents changes to [fastapi-mvc](https://github.com/fastapi-mvc/fastapi-mvc). The release numbering uses [semantic versioning](http://semver.org).
 
+## Unreleased
+
+### Breaking Changes
+
+* Refactor API for generator command line interface implementation [#246](https://github.com/fastapi-mvc/fastapi-mvc/issues/246). PR [#245](https://github.com/fastapi-mvc/fastapi-mvc/pull/245)
+
+### Internal
+
+* Implement type checking [#120](https://github.com/fastapi-mvc/fastapi-mvc/issues/120). PR [#245](https://github.com/fastapi-mvc/fastapi-mvc/pull/245)
+* Update dependencies:
+  * Bump markdown-it-py from 2.1.0 to 2.2.0. PR [#244](https://github.com/fastapi-mvc/fastapi-mvc/pull/244)
+
 ## 0.26.0 (12.02.2023)
 
 ### Generators

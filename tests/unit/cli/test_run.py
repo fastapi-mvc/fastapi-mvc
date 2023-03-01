@@ -33,13 +33,14 @@ class TestCliRunCommand:
     def test_should_use_default_values_when_invoked_empty(self, patched_run, monkeypatch, fake_project, cli_runner):
         # given / when
         monkeypatch.chdir(fake_project["root"])
+        monkeypatch.setenv("POETRY_BINARY", "/opt/poetry")
         result = cli_runner.invoke(patched_run, [])
 
         # then
         assert result.exit_code == 0
         patched_run.run_shell.assert_called_once_with(
             cmd=[
-                patched_run.poetry_path,
+                "/opt/poetry",
                 "run",
                 "uvicorn",
                 "--factory",
@@ -48,7 +49,7 @@ class TestCliRunCommand:
                 "--port",
                 "8000",
                 "--reload",
-                f"{patched_run.project_data['package_name']}.app:get_application",
+                "fake_project.app:get_application",
             ],
             check=True,
         )
@@ -56,6 +57,7 @@ class TestCliRunCommand:
     def test_should_call_run_shell_with_parsed_arguments(self, patched_run, monkeypatch, fake_project, cli_runner):
         # given / when
         monkeypatch.chdir(fake_project["root"])
+        monkeypatch.setenv("POETRY_BINARY", "/opt/poetry")
         result = cli_runner.invoke(
             patched_run,
             ["--host", "10.20.30.40", "--port", "1234"],
@@ -65,7 +67,7 @@ class TestCliRunCommand:
         assert result.exit_code == 0
         patched_run.run_shell.assert_called_once_with(
             cmd=[
-                patched_run.poetry_path,
+                "/opt/poetry",
                 "run",
                 "uvicorn",
                 "--factory",
@@ -74,7 +76,7 @@ class TestCliRunCommand:
                 "--port",
                 "1234",
                 "--reload",
-                f"{patched_run.project_data['package_name']}.app:get_application",
+                "fake_project.app:get_application",
             ],
             check=True,
         )
@@ -82,27 +84,28 @@ class TestCliRunCommand:
     def test_should_execute_make_install_and_exit_zero(self, patched_run, monkeypatch, fake_project, cli_runner):
         # given / when
         monkeypatch.chdir(fake_project["root"])
+        monkeypatch.setenv("POETRY_BINARY", "/opt/poetry")
         result = cli_runner.invoke(patched_run, ["--install"])
 
         # then
         assert result.exit_code == 0
         patched_run.run_shell.assert_any_call(
             cmd=[
-                patched_run.poetry_path,
+                "/opt/poetry",
                 "install",
                 "--no-interaction",
             ],
             check=True,
         )
 
-    def test_should_exit_error_when_not_in_fastapi_mvc_project(self, cli_runner):
+    def test_should_exit_error_when_not_in_fastapi_mvc_project(self, cli_runner, caplog):
         # given / when
         result = cli_runner.invoke(run, [])
 
         # then
         assert result.exit_code == 1
         msg = "Not a fastapi-mvc project. Try 'fastapi-mvc new --help' for details how to create one."
-        assert msg in result.output
+        assert msg in caplog.text
 
     def test_should_exit_error_on_subprocess_error(self, patched_run, monkeypatch, fake_project, cli_runner):
         # given / when
