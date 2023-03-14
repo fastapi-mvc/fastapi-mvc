@@ -766,14 +766,14 @@ files = [
 
 [[package]]
 name = "myst-parser"
-version = "0.19.1"
+version = "1.0.0"
 description = "An extended [CommonMark](https://spec.commonmark.org/) compliant parser,"
 category = "dev"
 optional = false
 python-versions = ">=3.7"
 files = [
-    {file = "myst-parser-0.19.1.tar.gz", hash = "sha256:f2dc168ed380e01d77973ad22a64fff1377cc72a3d1ac4bced423f28258d0a42"},
-    {file = "myst_parser-0.19.1-py3-none-any.whl", hash = "sha256:356b38aef29ed09144285ad222e5c3cb7a8e7fae8015d53dba40dbb8b9f73e2c"},
+    {file = "myst-parser-1.0.0.tar.gz", hash = "sha256:502845659313099542bd38a2ae62f01360e7dd4b1310f025dd014dfc0439cdae"},
+    {file = "myst_parser-1.0.0-py3-none-any.whl", hash = "sha256:69fb40a586c6fa68995e6521ac0a525793935db7e724ca9bac1d33be51be9a4c"},
 ]
 
 [package.dependencies]
@@ -1445,4 +1445,4 @@ testing = ["big-O", "flake8 (<5)", "jaraco.functools", "jaraco.itertools", "more
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.8"
-content-hash = "f29d9cb994ee2aac3e183aa69342cf5378d99f7436f56597e1b9fca002205c6d"
+content-hash = "c4842f46f643726b0fc47f978f9bdbc24510d61c05d65126f4c3d2555dcd1c27"
