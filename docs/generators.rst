@@ -295,6 +295,9 @@ Generators themselves have a generator:
         `fastapi-mvc generate generator awesome`
 
         creates a standard awesome generator:
+            lib/generators/awesome/.github
+            lib/generators/awesome/.github/dependabot.yml
+            lib/generators/awesome/.github/workflows/update-flake.yml
             lib/generators/awesome/.envrc
             lib/generators/awesome/.gitignore
             lib/generators/awesome/CHANGELOG.md

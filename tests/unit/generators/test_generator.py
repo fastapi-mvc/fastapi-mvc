@@ -48,6 +48,7 @@ class TestGeneratorGenerator:
             data={
                 "generator": "fake_generator",
                 "nix": True,
+                "github_actions": True,
                 "repo_url": "https://your.repo.url.here",
                 "license": "MIT",
                 "copyright_date": datetime.today().year,
@@ -61,7 +62,8 @@ class TestGeneratorGenerator:
         result = cli_runner.invoke(
             generator,
             [
-                "-N",
+                "--skip-nix",
+                "--skip-actions",
                 "--license",
                 "ISC",
                 "--repo-url",
@@ -79,6 +81,7 @@ class TestGeneratorGenerator:
             data={
                 "generator": "mambo_no6",
                 "nix": False,
+                "github_actions": False,
                 "repo_url": "https://mambo.no6.git",
                 "license": "ISC",
                 "copyright_date": datetime.today().year,
