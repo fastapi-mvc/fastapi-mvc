@@ -33,6 +33,9 @@ Example:
     `fm g gen awesome`
 
     creates a standard awesome generator:
+        lib/generators/awesome/.github
+        lib/generators/awesome/.github/dependabot.yml
+        lib/generators/awesome/.github/workflows/update-flake.yml
         lib/generators/awesome/.envrc
         lib/generators/awesome/.gitignore
         lib/generators/awesome/CHANGELOG.md
@@ -67,6 +70,12 @@ Example:
     "-N",
     "--skip-nix",
     help="Skip nix expression files.",
+    is_flag=True,
+)
+@click.option(
+    "-G",
+    "--skip-actions",
+    help="Skip GitHub actions files.",
     is_flag=True,
 )
 @click.option(
@@ -111,6 +120,7 @@ def generator(name: str, **options: Dict[str, Any]) -> None:
         "generator": name,
         "nix": not options["skip_nix"],
         "repo_url": options["repo_url"],
+        "github_actions": not options["skip_actions"],
         "license": options["license"],
         "copyright_date": datetime.today().year,
     }
