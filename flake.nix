@@ -55,9 +55,10 @@
               };
           in
           {
-            default = mkProject { python = pkgs.python310; };
+            default = mkProject { };
             fastapi-mvc-py38 = mkProject { python = pkgs.python38; };
             fastapi-mvc-py39 = mkProject { python = pkgs.python39; };
+            fastapi-mvc-py310 = mkProject { python = pkgs.python310; };
             fastapi-mvc-py311 = mkProject { python = pkgs.python311; };
             fastapi-mvc-dev = pkgs.callPackage ./editable.nix {
               poetry2nix = pkgs.poetry2nix;
