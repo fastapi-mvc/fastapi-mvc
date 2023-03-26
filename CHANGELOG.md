@@ -4,6 +4,11 @@ This file documents changes to [fastapi-mvc](https://github.com/fastapi-mvc/fast
 
 ## Unreleased
 
+### Generators
+
+* Bump copier-controller from 0.2.1 to 0.2.2. [952bf68](https://github.com/fastapi-mvc/fastapi-mvc/commit/952bf68d6361de0c94ed81dc39ed1a5e7fcbb494)
+* Bump copier-script from 0.1.1 to 0.1.2. [af51059](https://github.com/fastapi-mvc/fastapi-mvc/commit/af51059b4c1dd4e4a270c791aede1a66ac719eb7)
+
 ### Internal
 
 * Refactor `flake.nix` using [flake-parts](https://github.com/hercules-ci/flake-parts). PR [#257](https://github.com/fastapi-mvc/fastapi-mvc/pull/257)
