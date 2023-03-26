@@ -120,6 +120,11 @@ If you have created a project with fastapi-mvc, feel free to open PR and add you
 Projects:
 * [fastapi-mvc/example](https://github.com/fastapi-mvc/example) - Default generated project by `fastapi-mvc new ...`
 
+## Community generators
+
+List of community generators that can be used with fastapi-mvc:
+* [rszamszur/copier-python-base](https://github.com/rszamszur/copier-python-base) - Copier template for scaffolding new Python project
+
 ## Contributing
 
 [CONTRIBUTING](https://github.com/fastapi-mvc/fastapi-mvc/blob/master/CONTRIBUTING.md)
