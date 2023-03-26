@@ -2,6 +2,21 @@
 
 This file documents changes to [fastapi-mvc](https://github.com/fastapi-mvc/fastapi-mvc). The release numbering uses [semantic versioning](http://semver.org).
 
+## Unreleased
+
+### Internal
+
+* Refactor `flake.nix` using [flake-parts](https://github.com/hercules-ci/flake-parts). PR [#257](https://github.com/fastapi-mvc/fastapi-mvc/pull/257)
+* Implement workflow for updating `flake.lock` inputs. PR [#257](https://github.com/fastapi-mvc/fastapi-mvc/pull/257)
+* Update dependencies:
+  * Bump myst-parser from 0.18.1 to 0.19.1. PR [#251](https://github.com/fastapi-mvc/fastapi-mvc/pull/251)
+  * Bump pytest from 7.2.1 to 7.2.2. PR [#252](https://github.com/fastapi-mvc/fastapi-mvc/pull/252)
+  * Bump sphinx from 5.3.0 to 6.1.3. PR [#254](https://github.com/fastapi-mvc/fastapi-mvc/pull/254)
+  * Bump mypy from 1.0.1 to 1.1.1. PR [#255](https://github.com/fastapi-mvc/fastapi-mvc/pull/255)
+  * Bump myst-parser from 0.19.1 to 1.0.0. PR [#256](https://github.com/fastapi-mvc/fastapi-mvc/pull/256)
+* Update GitHub Actions:
+  * Bump cachix/install-nix-action from 19 to 20. PR [#250](https://github.com/fastapi-mvc/fastapi-mvc/pull/250)
+
 ## 0.27.0 (01.03.2023)
 
 ### Breaking Changes
