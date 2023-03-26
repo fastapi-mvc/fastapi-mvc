@@ -18,4 +18,4 @@ COPIER_CONTROLLER = Template(
 COPIER_GENERATOR = Template(
     "https://github.com/fastapi-mvc/copier-generator.git", "0.3.0"
 )
-COPIER_SCRIPT = Template("https://github.com/fastapi-mvc/copier-script.git", "0.1.1")
+COPIER_SCRIPT = Template("https://github.com/fastapi-mvc/copier-script.git", "0.1.2")
