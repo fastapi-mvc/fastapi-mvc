@@ -47,11 +47,12 @@ def dirhash(path):
 class TestCliUpdateCommand:
 
     @pytest.mark.parametrize("old, target", [
-        ("0.1.0", "0.5.0"),
-        ("0.1.1", "0.5.0"),
-        ("0.2.0", "0.5.0"),
-        ("0.3.0", "0.5.0"),
-        ("0.4.0", "0.5.0"),
+        ("0.1.0", "0.6.0"),
+        ("0.1.1", "0.6.0"),
+        ("0.2.0", "0.6.0"),
+        ("0.3.0", "0.6.0"),
+        ("0.4.0", "0.6.0"),
+        ("0.5.0", "0.6.0"),
     ])
     def test_should_update_outdated_project_to_given_version(self, tmp_path, monkeypatch, new_copy, update_copy, cli_runner, reference_projects, old, target):
         # given
