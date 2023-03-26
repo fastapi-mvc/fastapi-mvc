@@ -140,7 +140,7 @@ cachix use fastapi-mvc
 Build fastapi-mvc development environment with Nix:
 
 ```shell
-nix build .#poetryEnv --print-build-logs
+nix build .#fastapi-mvc-dev --print-build-logs
 ```
 
 **NOTE!** On first run this may take a while.
