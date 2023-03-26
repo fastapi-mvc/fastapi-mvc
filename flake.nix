@@ -1,66 +1,87 @@
 {
   description = "Fastapi-mvc flake";
-  nixConfig.bash-prompt = ''\n\[\033[1;32m\][nix-develop:\w]\$\[\033[0m\] '';
+  nixConfig = {
+    bash-prompt = ''\n\[\033[1;32m\][nix-develop:\w]\$\[\033[0m\] '';
+    extra-trusted-public-keys = [
+      "fastapi-mvc.cachix.org-1:knQ8Qo41bnhBmOB6Sp0UH10EV76AXW5o69SbAS668Fg="
+    ];
+    extra-substituters = [
+      "https://fastapi-mvc.cachix.org"
+    ];
+  };
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-22.11";
-    flake-utils.url = "github:numtide/flake-utils";
+    flake-parts.url = "github:hercules-ci/flake-parts";
     poetry2nix = {
-      url = "github:nix-community/poetry2nix?ref=1.39.1";
+      url = "github:nix-community/poetry2nix?ref=1.40.1";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
-  outputs = { self, nixpkgs, flake-utils, poetry2nix }:
-    {
-      overlays.default = nixpkgs.lib.composeManyExtensions [
-        poetry2nix.overlay
-        (import ./overlay.nix)
-        (final: prev: {
-          fastapi-mvc = prev.callPackage ./default.nix {
-            python = final.python3;
-            poetry2nix = final.poetry2nix;
-            git = final.git;
-          };
-          fastapi-mvc-dev = prev.callPackage ./editable.nix {
-            python = final.python3;
-            poetry2nix = final.poetry2nix;
-          };
-        })
-      ];
-    } // (flake-utils.lib.eachDefaultSystem (system:
-      let
-        pkgs = import nixpkgs {
-          inherit system;
-          overlays = [ self.overlays.default ];
+  outputs = { self, nixpkgs, flake-parts, poetry2nix }@inputs:
+    let
+      mkApp =
+        { drv
+        , name ? drv.pname or drv.name
+        , exePath ? drv.passthru.exePath or "/bin/${name}"
+        }:
+        {
+          type = "app";
+          program = "${drv}${exePath}";
         };
-      in
-      rec {
-        packages = {
-          default = pkgs.fastapi-mvc;
-          fastapi-mvc-py38 = pkgs.fastapi-mvc.override { python = pkgs.python38; };
-          fastapi-mvc-py39 = pkgs.fastapi-mvc.override { python = pkgs.python39; };
-          fastapi-mvc-py310 = pkgs.fastapi-mvc.override { python = pkgs.python310; };
-          fastapi-mvc-py311 = (pkgs.fastapi-mvc.overrideAttrs (oldAttrs: {
-            # Override import check. It will fail for now due to:
-            # https://github.com/cython/cython/issues/4804
-            pythonImportsCheck = [ ];
-          })).override { python = pkgs.python311; };
-          poetryEnv = pkgs.fastapi-mvc-dev;
-        } // pkgs.lib.optionalAttrs pkgs.stdenv.isLinux {
-          image = pkgs.callPackage ./image.nix {
-            inherit pkgs;
-            fastapi-mvc = pkgs.fastapi-mvc;
+    in
+    flake-parts.lib.mkFlake { inherit inputs; } {
+      imports = [
+        inputs.flake-parts.flakeModules.easyOverlay
+      ];
+      systems = [ "x86_64-linux" "aarch64-linux" "x86_64-darwin" "aarch64-darwin" ];
+      perSystem = { config, self', inputs', pkgs, system, ... }: {
+        # Add poetry2nix overrides to nixpkgs
+        _module.args.pkgs = import nixpkgs {
+          inherit system;
+          overlays = [ self.overlays.poetry2nix ];
+        };
+
+        packages =
+          let
+            mkProject =
+              { python ? pkgs.python3
+              }:
+              pkgs.callPackage ./default.nix {
+                inherit python;
+                poetry2nix = pkgs.poetry2nix;
+                git = pkgs.git;
+              };
+          in
+          {
+            default = mkProject { };
+            fastapi-mvc-py38 = mkProject { python = pkgs.python38; };
+            fastapi-mvc-py39 = mkProject { python = pkgs.python39; };
+            fastapi-mvc-py310 = mkProject { python = pkgs.python310; };
+            fastapi-mvc-py311 = mkProject { python = pkgs.python311; };
+            fastapi-mvc-dev = pkgs.callPackage ./editable.nix {
+              poetry2nix = pkgs.poetry2nix;
+              python = pkgs.python3;
+            };
+          } // pkgs.lib.optionalAttrs pkgs.stdenv.isLinux {
+            image = pkgs.callPackage ./image.nix {
+              inherit pkgs;
+              fastapi-mvc = config.packages.default;
+            };
           };
+
+        overlayAttrs = {
+          inherit (config.packages) default;
         };
 
         apps = {
-          fastapi-mvc = flake-utils.lib.mkApp { drv = pkgs.fastapi-mvc; };
+          fastapi-mvc = mkApp { drv = config.packages.default; };
           metrics = {
             type = "app";
             program = toString (pkgs.writeScript "metrics" ''
               export PATH="${pkgs.lib.makeBinPath [
-                  pkgs.fastapi-mvc-dev
+                  config.packages.fastapi-mvc-dev
                   pkgs.git
               ]}"
               echo "[nix][metrics] Run fastapi-mvc PEP 8 checks."
@@ -81,7 +102,7 @@
             type = "app";
             program = toString (pkgs.writeScript "docs" ''
               export PATH="${pkgs.lib.makeBinPath [
-                  pkgs.fastapi-mvc-dev
+                  config.packages.fastapi-mvc-dev
                   pkgs.git
               ]}"
               echo "[nix][docs] Build fastapi-mvc documentation."
@@ -92,7 +113,7 @@
             type = "app";
             program = toString (pkgs.writeScript "unit-test" ''
               export PATH="${pkgs.lib.makeBinPath [
-                  pkgs.fastapi-mvc-dev
+                  config.packages.fastapi-mvc-dev
                   pkgs.git
                   pkgs.coreutils
               ]}"
@@ -104,7 +125,7 @@
             type = "app";
             program = toString (pkgs.writeScript "integration-test" ''
               export PATH="${pkgs.lib.makeBinPath [
-                  pkgs.fastapi-mvc-dev
+                  config.packages.fastapi-mvc-dev
                   pkgs.git
                   pkgs.coreutils
                   pkgs.gnumake
@@ -123,7 +144,7 @@
             type = "app";
             program = toString (pkgs.writeScript "coverage" ''
               export PATH="${pkgs.lib.makeBinPath [
-                  pkgs.fastapi-mvc-dev
+                  config.packages.fastapi-mvc-dev
                   pkgs.git
                   pkgs.coreutils
                   pkgs.gnumake
@@ -142,7 +163,7 @@
             type = "app";
             program = toString (pkgs.writeScript "mypy" ''
               export PATH="${pkgs.lib.makeBinPath [
-                  pkgs.fastapi-mvc-dev
+                  config.packages.fastapi-mvc-dev
                   pkgs.git
               ]}"
               echo "[nix][mypy] Run fastapi-mvc mypy checks."
@@ -152,20 +173,29 @@
           test = {
             type = "app";
             program = toString (pkgs.writeScript "test" ''
-              ${apps.unit-test.program}
-              ${apps.integration-test.program}
+              ${config.apps.unit-test.program}
+              ${config.apps.integration-test.program}
             '');
           };
         };
 
         devShells = {
-          default = pkgs.fastapi-mvc-dev.env.overrideAttrs (oldAttrs: {
+          default = config.packages.fastapi-mvc-dev.env.overrideAttrs (oldAttrs: {
             buildInputs = [
               pkgs.git
               pkgs.poetry
+              pkgs.coreutils
+              pkgs.findutils
             ];
           });
           poetry = import ./shell.nix { inherit pkgs; };
         };
-      }));
+      };
+      flake = {
+        overlays.poetry2nix = nixpkgs.lib.composeManyExtensions [
+          poetry2nix.overlay
+          (import ./overlay.nix)
+        ];
+      };
+    };
 }
