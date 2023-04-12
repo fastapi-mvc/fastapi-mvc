@@ -13,7 +13,7 @@ jobs:
       - name: Install Nix
         uses: DeterminateSystems/nix-installer-action@v1
       - name: Update flake.lock
-        uses: DeterminateSystems/update-flake-lock@v18
+        uses: DeterminateSystems/update-flake-lock@v19
         with:
           pr-title: "Update flake.lock"
           pr-assignees: rszamszur
