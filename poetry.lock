@@ -786,19 +786,19 @@ files = [
 
 [[package]]
 name = "pallets-sphinx-themes"
-version = "2.0.3"
+version = "2.1.0"
 description = "Sphinx themes for Pallets and related projects."
 category = "dev"
 optional = false
-python-versions = ">=3.6"
+python-versions = ">=3.8"
 files = [
-    {file = "Pallets-Sphinx-Themes-2.0.3.tar.gz", hash = "sha256:54f991c3897f363c757dcba01adb44791609cb02cc7eaac3a5fcdd3d3d9dfeb3"},
-    {file = "Pallets_Sphinx_Themes-2.0.3-py3-none-any.whl", hash = "sha256:0e94b3f024f171a3a30f8910950d9ec7fff95a2c24b7d30e66573d816036ea69"},
+    {file = "Pallets-Sphinx-Themes-2.1.0.tar.gz", hash = "sha256:4b2536495e58facce6047cf481f613558f11c89351f913f392b8eba002c6b7c7"},
+    {file = "Pallets_Sphinx_Themes-2.1.0-py3-none-any.whl", hash = "sha256:a34e6e62c63c3e0f0793470c5c9c0f6f9191a0d40767d3c119670850da072c45"},
 ]
 
 [package.dependencies]
 packaging = "*"
-Sphinx = "*"
+Sphinx = ">=3"
 
 [[package]]
 name = "pathspec"
@@ -1425,4 +1425,4 @@ testing = ["big-O", "flake8 (<5)", "jaraco.functools", "jaraco.itertools", "more
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.8"
-content-hash = "82847908564b1f9659c414998bf01050b1f14e1dc71634b1d5a913bf13807c5a"
+content-hash = "3e9d44bb372fa0e35040e7feba73cd68bb0085400dcc202fd134a4a3082ddb6c"
