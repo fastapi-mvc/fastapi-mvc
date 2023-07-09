@@ -2,10 +2,15 @@
 
 This file documents changes to [fastapi-mvc](https://github.com/fastapi-mvc/fastapi-mvc). The release numbering uses [semantic versioning](http://semver.org).
 
-## Unreleased
+## 0.28.1 (09.07.2023)
+
+### Generators
+
+* Bump copier-project from 0.6.0 to 0.6.1. PR [#297](https://github.com/fastapi-mvc/fastapi-mvc/pull/297)
 
 ### Internal
 
+* Update Poetry to 1.5.x [#291](https://github.com/fastapi-mvc/fastapi-mvc/issues/291). PR [#296](https://github.com/fastapi-mvc/fastapi-mvc/pull/296)
 * Bump nixpkgs from 22.11 to 23.05. PR [#292](https://github.com/fastapi-mvc/fastapi-mvc/pull/292)
 * Bump poetry2nix from 1.40.1 to 1.42.0. PR [#292](https://github.com/fastapi-mvc/fastapi-mvc/pull/292)
 * Update dependencies:
@@ -16,6 +21,7 @@ This file documents changes to [fastapi-mvc](https://github.com/fastapi-mvc/fast
   * Bump requests from 2.28.2 to 2.31.0. PR [#277](https://github.com/fastapi-mvc/fastapi-mvc/pull/277)
   * Bump pallets-sphinx-themes from 2.0.3 to 2.1.1. PR [#285](https://github.com/fastapi-mvc/fastapi-mvc/pull/285)
   * Bump pytest from 7.3.1 to 7.4.0. PR [#289](https://github.com/fastapi-mvc/fastapi-mvc/pull/289)
+  * Bump mypy from 1.2.0 to 1.4.1. PR [#288](https://github.com/fastapi-mvc/fastapi-mvc/pull/288)
 * Update GitHub Actions:
   * Bump DeterminateSystems/update-flake-lock from 18 to 19. PR [#264](https://github.com/fastapi-mvc/fastapi-mvc/pull/264)
   * Bump cachix/install-nix-action from 20 to 22. PR [#286](https://github.com/fastapi-mvc/fastapi-mvc/pull/286)
