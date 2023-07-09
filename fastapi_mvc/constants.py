@@ -9,7 +9,7 @@ from collections import namedtuple
 
 
 Template = namedtuple("Template", "template vcs_ref")
-VERSION = "0.28.0"
+VERSION = "0.28.1"
 ANSWERS_FILE = ".fastapi-mvc.yml"
 COPIER_PROJECT = Template("https://github.com/fastapi-mvc/copier-project.git", "0.6.1")
 COPIER_CONTROLLER = Template(
