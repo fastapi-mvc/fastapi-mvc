@@ -34,10 +34,10 @@ fi
 
 POETRY_HOME="${POETRY_HOME:=${HOME}/.local/share/pypoetry}"
 POETRY_BINARY="${POETRY_BINARY:=${POETRY_HOME}/venv/bin/poetry}"
-POETRY_VERSION="${POETRY_VERSION:=1.3.2}"
+POETRY_VERSION="${POETRY_VERSION:=1.5.1}"
 if ! command -v "$POETRY_BINARY" &> /dev/null; then
   echo "[install] Poetry is not installed. Begin download and install."
-  curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/1.3.2/install-poetry.py | POETRY_HOME=$POETRY_HOME POETRY_VERSION=$POETRY_VERSION $PYTHON -
+  curl -sSL https://install.python-poetry.org | POETRY_HOME=$POETRY_HOME POETRY_VERSION=$POETRY_VERSION $PYTHON -
 fi
 
 POETRY_INSTALL_OPTS="${POETRY_INSTALL_OPTS:="--no-interaction"}"
