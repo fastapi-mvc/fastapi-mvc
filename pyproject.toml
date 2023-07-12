@@ -33,7 +33,7 @@ copier = "6.2.0"
 
 [tool.poetry.group.dev.dependencies]
 pytest = ">=7.2,<7.5"
-pytest-cov = "~4.0.0"
+pytest-cov = ">=4.0,<4.2"
 flake8 = "~5.0.4"
 flake8-docstrings = "~1.7.0"
 flake8-import-order = "~0.18.2"
