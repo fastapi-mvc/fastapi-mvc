@@ -42,7 +42,7 @@ jobs:
           commit: ${{ github.event.inputs.sha }}
           path: site
       - name: Publish docs to Netlify
-        uses: nwtgck/actions-netlify@v2.0.0
+        uses: nwtgck/actions-netlify@v2.1.0
         with:
           publish-dir: site
           production-deploy: true
