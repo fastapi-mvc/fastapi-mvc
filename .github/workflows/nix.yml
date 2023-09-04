@@ -42,7 +42,7 @@ jobs:
         with:
           name: fastapi-mvc
           authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Check format
         run: nix-shell -p nixpkgs-fmt --run 'nixpkgs-fmt --check .'
       - name: Run nix flake check
@@ -64,7 +64,7 @@ jobs:
     runs-on: ${{ matrix.os }}
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Install Nix ❄️
         uses: cachix/install-nix-action@v22
         with:
