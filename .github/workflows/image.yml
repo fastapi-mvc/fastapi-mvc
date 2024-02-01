@@ -46,7 +46,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Install Nix ❄️
-        uses: cachix/install-nix-action@v22
+        uses: cachix/install-nix-action@v25
         with:
           extra_nix_config: "system-features = nixos-test benchmark big-parallel kvm"
           nix_path: ${{ env.NIX_CHANNEL }}
