@@ -25,7 +25,7 @@ jobs:
           python-version: 3.9
       - name: Load Poetry cache
         id: poetry-cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: ${{ env.POETRY_HOME }}
           key: ${{ runner.os }}-3.9-${{ hashFiles('./pyproject.toml') }}-${{ hashFiles('./poetry.lock') }}
