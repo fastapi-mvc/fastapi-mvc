@@ -33,16 +33,16 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: cachix/install-nix-action@v25
+      - uses: cachix/install-nix-action@v31
         with:
           nix_path: ${{ env.NIX_CHANNEL }}
           install_url: ${{ env.NIX_INSTALL_URL }}
       - name: Setup Cachix ❄️
-        uses: cachix/cachix-action@v14
+        uses: cachix/install-nix-action@v16
         with:
           name: fastapi-mvc
           authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - name: Check format
         run: nix-shell -p nixpkgs-fmt --run 'nixpkgs-fmt --check .'
       - name: Run nix flake check
@@ -60,19 +60,19 @@ jobs:
       fail-fast: false
       matrix:
         python-version: [ '38', '39', '310', '311' ]
-        os: [ubuntu-latest, macos-12]
+        os: [ubuntu-latest, macos-latest]
     runs-on: ${{ matrix.os }}
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - name: Install Nix ❄️
-        uses: cachix/install-nix-action@v25
+        uses: cachix/install-nix-action@v31
         with:
           extra_nix_config: "system-features = nixos-test benchmark big-parallel kvm"
           nix_path: ${{ env.NIX_CHANNEL }}
           install_url: ${{ env.NIX_INSTALL_URL }}
       - name: Setup Cachix ❄️
-        uses: cachix/cachix-action@v14
+        uses: cachix/install-nix-action@v16
         with:
           name: fastapi-mvc
           authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
