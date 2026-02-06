@@ -4,9 +4,6 @@ on:
   push:
     branches:
       - master
-  pull_request:
-    branches:
-      - master
 
 env:
   POETRY_HOME: /opt/poetry
@@ -18,32 +15,31 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v6
         with:
           python-version: 3.9
       - name: Load Poetry cache
         id: poetry-cache
-        uses: actions/cache@v3
+        uses: actions/cache@v5
         with:
           path: ${{ env.POETRY_HOME }}
           key: ${{ runner.os }}-3.9-${{ hashFiles('./pyproject.toml') }}-${{ hashFiles('./poetry.lock') }}
       - name: Build documentation
         run: make docs
       - name: Archive build artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v6
         with:
           name: ${{ format('docs-{0}', github.sha) }}
           path: site
           retention-days: 60
-      - name: Deploy to Netlify
-        uses: nwtgck/actions-netlify@v2.1.0
+      - name: Deploy to GitHub Pages
+        uses: crazy-max/ghaction-github-pages@v4
         with:
-          publish-dir: site
-          production-deploy: false
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          enable-commit-comment: false
+          target_branch: gh-pages
+          build_dir: site
+          commit_message: "Deploy to GitHubPages"
+          jekyll: false
         env:
-          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
