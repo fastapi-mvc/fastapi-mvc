@@ -45,11 +45,7 @@ The project template (copier-project) has their own tests and checks. However, s
 
 ### Style guide
 
-Git Commit Messages:
-
-* Use the present tense ("Add feature" not "Added feature")
-* Use the imperative mood ("Move cursor to..." not "Moves cursor to...")
-* Reference issues and pull requests liberally after the first line
+Git Commit Messages: https://www.conventionalcommits.org/en/v1.0.0/#summary
 
 Metrics stage ensure following rules are followed:
 
@@ -63,7 +59,7 @@ This project provides two ways of setting up the project for local development. 
 
 <table>
 <tr>
-<th> Poetry </th>
+<th> uv </th>
 <th> Nix (recommended) </th>
 </tr>
 <tr>
@@ -75,7 +71,7 @@ Prerequisites:
 * make
 * git 2.27 or later
 * (optional) curl
-* (optional) Poetry [How to install poetry](https://python-poetry.org/docs/#installation)
+* (optional) uv [How to install uv](https://docs.astral.sh/uv/#highlights)
 
 </td>
 <td>
@@ -101,7 +97,7 @@ cd fastapi-mvc
 <tr>
 <td>
 
-Now, you will need to install the required dependencies for fastapi-mvc with `Poetry` via `make install` target:
+Now, you will need to install the required dependencies for fastapi-mvc with `uv` via `make install` target:
 
 ```shell
 make install
@@ -115,13 +111,13 @@ export PYTHON=/path/to/my/python
 make install
 ```
 
-If `Poetry` is not found in its default installation directory (`${HOME}/.local/share/pypoetry`) this target will install it for you.
-However, one can always point to existing/customize `Poetry` installation with [environment variables](https://python-poetry.org/docs/configuration/#using-environment-variables):
+If `uv` is not found in its default installation directory (`${HOME}/.local/bin`) this target will install it for you.
+However, one can always point to existing/customize `uv` installation with [environment variables](https://docs.astral.sh/uv/reference/environment/):
 
 ```shell
-export POETRY_HOME=/custom/poetry/path
-export POETRY_CACHE_DIR=/custom/poetry/path/cache
-export POETRY_VIRTUALENVS_IN_PROJECT=true
+export UV_INSTALL_DIR=/custom/uv/path
+export UV_CACHE_DIR=/custom/uv/path/cache
+export UV_PROJECT_ENVIRONMENT=/custom/uv/path/venv
 make install
 ```
 
@@ -191,7 +187,7 @@ Commit your changes and push your branch to GitHub:
 
 ```shell
 git add .
-git commit -m "Meaningfull commit message"
+git commit -m "conventional_commit_type: meaningfull commit message"
 git push origin name-of-your-bugfix-or-feature
 ```
 
@@ -203,7 +199,6 @@ git push origin name-of-your-bugfix-or-feature
 
 Before you submit a pull request, check that it meets these guidelines:
 
-* Updated the `CHANGELOG.md` file with your changes.
 * Added tests for changed code where applicable.
 * Documentation reflects the changes where applicable.
 * [Open a new pull request](https://github.com/fastapi-mvc/fastapi-mvc/compare)

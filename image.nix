@@ -13,7 +13,7 @@ pkgs.dockerTools.buildImage {
       fastapi-mvc
       pkgs.bash
       pkgs.coreutils
-      pkgs.curl
+      pkgs.git
       pkgs.cacert
       pkgs.gnumake
     ];
@@ -23,7 +23,7 @@ pkgs.dockerTools.buildImage {
   runAsRoot = ''
     #!${pkgs.runtimeShell}
     ${pkgs.dockerTools.shadowSetup}
-    mkdir /tmp
+    mkdir -p /tmp
     chmod 777 -R /tmp
     mkdir -p /usr/bin
     ln -s ${pkgs.coreutils}/bin/env /usr/bin/env

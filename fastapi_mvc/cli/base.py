@@ -167,7 +167,7 @@ class GeneratorCommand(ClickAliasedCommand):
             formatter.write(self.epilog)
 
 
-class GeneratorsMultiCommand(click.MultiCommand):
+class GeneratorsMultiCommand(click.MultiCommand):  # type: ignore[valid-type,misc]
     """Custom click.MultiCommand class implementation.
 
     Args:

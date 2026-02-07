@@ -11,15 +11,29 @@
   };
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-23.05";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
     flake-parts.url = "github:hercules-ci/flake-parts";
-    poetry2nix = {
-      url = "github:nix-community/poetry2nix?ref=1.42.0";
+    pyproject-nix = {
+      url = "github:pyproject-nix/pyproject.nix";
       inputs.nixpkgs.follows = "nixpkgs";
+    };
+    uv2nix = {
+      url = "github:pyproject-nix/uv2nix";
+      inputs.pyproject-nix.follows = "pyproject-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    pyproject-build-systems = {
+      url = "github:pyproject-nix/build-system-pkgs";
+      inputs.pyproject-nix.follows = "pyproject-nix";
+      inputs.uv2nix.follows = "uv2nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    rszamszur-nixos-config = {
+      url = "github:rszamszur/nixos-config";
     };
   };
 
-  outputs = { self, nixpkgs, flake-parts, poetry2nix }@inputs:
+  outputs = { self, nixpkgs, flake-parts, pyproject-nix, uv2nix, pyproject-build-systems, rszamszur-nixos-config }@inputs:
     let
       mkApp =
         { drv
@@ -37,10 +51,10 @@
       ];
       systems = [ "x86_64-linux" "aarch64-linux" "x86_64-darwin" "aarch64-darwin" ];
       perSystem = { config, self', inputs', pkgs, system, ... }: {
-        # Add poetry2nix overrides to nixpkgs
+        # Add rszamszur lib overlay
         _module.args.pkgs = import nixpkgs {
           inherit system;
-          overlays = [ self.overlays.poetry2nix ];
+          overlays = [ rszamszur-nixos-config.overlays.mylib ];
         };
 
         packages =
@@ -48,26 +62,33 @@
             mkProject =
               { python ? pkgs.python3
               }:
-              pkgs.callPackage ./default.nix {
-                inherit python;
-                poetry2nix = pkgs.poetry2nix;
-                git = pkgs.git;
+              let
+                build = pkgs.callPackage ./build.nix {
+                  inherit python pkgs src uv2nix pyproject-nix pyproject-build-systems;
+                  lib = pkgs.lib;
+                };
+              in
+              {
+                "fastapi-mvc-${python.sourceVersion.major}${python.sourceVersion.minor}-wheel" = build.wheel;
+                "fastapi-mvc-${python.sourceVersion.major}${python.sourceVersion.minor}-sdist" = build.sdist;
+                "fastapi-mvc-${python.sourceVersion.major}${python.sourceVersion.minor}-venv" = build.virtualenv;
+                "fastapi-mvc-${python.sourceVersion.major}${python.sourceVersion.minor}-app" = build.application;
               };
+
+            src = pkgs.mylib.sources.filterPythonSources {
+              path = ./.;
+            };
           in
           {
-            default = mkProject { };
-            fastapi-mvc-py38 = mkProject { python = pkgs.python38; };
-            fastapi-mvc-py39 = mkProject { python = pkgs.python39; };
-            fastapi-mvc-py310 = mkProject { python = pkgs.python310; };
-            fastapi-mvc-py311 = mkProject { python = pkgs.python311; };
-            fastapi-mvc-dev = pkgs.callPackage ./editable.nix {
-              poetry2nix = pkgs.poetry2nix;
-              python = pkgs.python3;
-            };
-          } // pkgs.lib.optionalAttrs pkgs.stdenv.isLinux {
+            default = self'.packages.fastapi-mvc-311-venv;
+          }
+          // (mkProject { python = pkgs.python310; })
+          // (mkProject { python = pkgs.python311; })
+          // (mkProject { python = pkgs.python312; })
+          // pkgs.lib.optionalAttrs pkgs.stdenv.isLinux {
             image = pkgs.callPackage ./image.nix {
               inherit pkgs;
-              fastapi-mvc = config.packages.default;
+              fastapi-mvc = self'.packages.fastapi-mvc-311-app;
             };
           };
 
@@ -76,12 +97,13 @@
         };
 
         apps = {
-          fastapi-mvc = mkApp { drv = config.packages.default; };
+          fastapi-mvc = mkApp { drv = self'.packages.default; };
           metrics = {
             type = "app";
             program = toString (pkgs.writeScript "metrics" ''
+              #!${pkgs.bash}/bin/bash
               export PATH="${pkgs.lib.makeBinPath [
-                  config.packages.fastapi-mvc-dev
+                  self'.packages.default
                   pkgs.git
               ]}"
               echo "[nix][metrics] Run fastapi-mvc PEP 8 checks."
@@ -101,8 +123,9 @@
           docs = {
             type = "app";
             program = toString (pkgs.writeScript "docs" ''
+              #!${pkgs.bash}/bin/bash
               export PATH="${pkgs.lib.makeBinPath [
-                  config.packages.fastapi-mvc-dev
+                  self'.packages.default
                   pkgs.git
               ]}"
               echo "[nix][docs] Build fastapi-mvc documentation."
@@ -112,8 +135,9 @@
           unit-test = {
             type = "app";
             program = toString (pkgs.writeScript "unit-test" ''
+              #!${pkgs.bash}/bin/bash
               export PATH="${pkgs.lib.makeBinPath [
-                  config.packages.fastapi-mvc-dev
+                  self'.packages.default
                   pkgs.git
                   pkgs.coreutils
               ]}"
@@ -124,18 +148,17 @@
           integration-test = {
             type = "app";
             program = toString (pkgs.writeScript "integration-test" ''
+              #!${pkgs.bash}/bin/bash
               export PATH="${pkgs.lib.makeBinPath [
-                  config.packages.fastapi-mvc-dev
+                  self'.packages.default
                   pkgs.git
                   pkgs.coreutils
                   pkgs.gnumake
-                  pkgs.poetry
+                  pkgs.uv
                   pkgs.bash
                   pkgs.findutils
+                  pkgs.curl
               ]}"
-              export POETRY_HOME=${pkgs.poetry}
-              export POETRY_BINARY=${pkgs.poetry}/bin/poetry
-              export POETRY_VIRTUALENVS_IN_PROJECT=true
               echo "[nix][integration-test] Run fastapi-mvc unit tests."
               pytest tests/integration
             '');
@@ -143,18 +166,16 @@
           coverage = {
             type = "app";
             program = toString (pkgs.writeScript "coverage" ''
+              #!${pkgs.bash}/bin/bash
               export PATH="${pkgs.lib.makeBinPath [
-                  config.packages.fastapi-mvc-dev
+                  self'.packages.default
                   pkgs.git
                   pkgs.coreutils
                   pkgs.gnumake
-                  pkgs.poetry
+                  pkgs.uv
                   pkgs.bash
                   pkgs.findutils
               ]}"
-              export POETRY_HOME=${pkgs.poetry}
-              export POETRY_BINARY=${pkgs.poetry}/bin/poetry
-              export POETRY_VIRTUALENVS_IN_PROJECT=true
               echo "[nix][coverage] Run fastapi-mvc tests coverage."
               pytest --cov=fastapi_mvc --cov-fail-under=90 --cov-report=xml --cov-report=term-missing tests
             '');
@@ -162,8 +183,9 @@
           mypy = {
             type = "app";
             program = toString (pkgs.writeScript "mypy" ''
+              #!${pkgs.bash}/bin/bash
               export PATH="${pkgs.lib.makeBinPath [
-                  config.packages.fastapi-mvc-dev
+                  self'.packages.default
                   pkgs.git
               ]}"
               echo "[nix][mypy] Run fastapi-mvc mypy checks."
@@ -173,29 +195,58 @@
           test = {
             type = "app";
             program = toString (pkgs.writeScript "test" ''
-              ${config.apps.unit-test.program}
-              ${config.apps.integration-test.program}
+              #!${pkgs.bash}/bin/bash
+              ${self'.apps.unit-test.program}
+              ${self'.apps.integration-test.program}
             '');
           };
         };
 
         devShells = {
-          default = config.packages.fastapi-mvc-dev.env.overrideAttrs (oldAttrs: {
-            buildInputs = [
+          default = self'.devShells.virtualenv;
+          virtualenv = pkgs.mkShell {
+            name = "fastapi-mvc-venv";
+            packages = [
+              self'.packages.default
+              pkgs.uv
               pkgs.git
-              pkgs.poetry
-              pkgs.coreutils
-              pkgs.findutils
             ];
-          });
-          poetry = import ./shell.nix { inherit pkgs; };
+
+            env = {
+              UV_NO_SYNC = "1";
+              UV_PYTHON = "${self'.packages.default}/bin/python";
+              UV_PYTHON_DOWNLOADS = "never";
+            };
+
+            shellHook = ''
+              # Undo dependency propagation by nixpkgs.
+              unset PYTHONPATH
+              # Get repository root using git. This is expanded at runtime by the editable `.pth` machinery.
+              export REPO_ROOT=$(git rev-parse --show-toplevel)
+            '';
+          };
+          dev-shell = pkgs.mkShell {
+            name = "fastapi-mvc-dev-shell";
+            packages = [
+              pkgs.python3
+              pkgs.uv
+              pkgs.git
+              pkgs.coreutils
+              pkgs.gnumake
+              pkgs.curl
+            ];
+
+            env = {
+              UV_PYTHON = pkgs.python3.interpreter;
+              UV_PYTHON_DOWNLOADS = "never";
+            };
+
+            shellHook = ''
+              unset PYTHONPATH
+            '';
+          };
         };
       };
-      flake = {
-        overlays.poetry2nix = nixpkgs.lib.composeManyExtensions [
-          poetry2nix.overlay
-          (import ./overlay.nix)
-        ];
-      };
+      flake = { };
     };
 }
