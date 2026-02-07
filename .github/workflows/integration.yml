@@ -4,9 +4,10 @@ on:
   workflow_dispatch:
 
 env:
-  POETRY_HOME: /tmp/poetry
-  POETRY_CONFIG_DIR: /tmp/poetry
-  POETRY_VIRTUALENVS_PATH: /tmp/poetry/store
+  UV_INSTALL_DIR: /tmp/uv
+  UV_BINARY: /tmp/uv/uv
+  UV_PROJECT_ENVIRONMENT: /tmp/uv/store
+  DEFAULT_PYTHON: '3.11'
 
 jobs:
   # This job checks if an identical workflow is being triggered by different
@@ -30,36 +31,36 @@ jobs:
 
     steps:
       - uses: actions/checkout@v6
-      - name: Set up Python 3.9
+      - name: Set up Python 3.11
         uses: actions/setup-python@v6
         with:
-          python-version: 3.9
-      - name: Init Poetry cache
-        id: cached-poetry
+          python-version: 3.11
+      - name: Init uv cache
+        id: cached-uv
         uses: actions/cache@v5
         with:
-          path: ${{ env.POETRY_HOME }}
-          key: ${{ runner.os }}-3.9-${{ hashFiles('**/pyproject.toml') }}-${{ hashFiles('**/poetry.lock') }}
+          path: ${{ env.UV_INSTALL_DIR }}
+          key: ${{ runner.os }}-3.11-${{ hashFiles('**/pyproject.toml') }}-${{ hashFiles('**/uv.lock') }}
       - name: Install package
         run: make install
-        if: steps.cached-poetry.outputs.cache-hit != 'true'
+        if: steps.cached-uv.outputs.cache-hit != 'true'
   test-redis-ha:
     needs: install
     runs-on: macos-latest
 
     steps:
       - uses: actions/checkout@v6
-      - name: Set up Python 3.9
+      - name: Set up Python 3.11
         uses: actions/setup-python@v6
         with:
-          python-version: 3.9
-      - name: Load Poetry cache
+          python-version: 3.11
+      - name: Load uv cache
         uses: actions/cache@v5
         with:
-          path: ${{ env.POETRY_HOME }}
-          key: ${{ runner.os }}-3.9-${{ hashFiles('**/pyproject.toml') }}-${{ hashFiles('**/poetry.lock') }}
+          path: ${{ env.UV_INSTALL_DIR }}
+          key: ${{ runner.os }}-3.11-${{ hashFiles('**/pyproject.toml') }}-${{ hashFiles('**/uv.lock') }}
       - name: Set fastapi-mvc path
-        run: echo "FASTAPI_MVC_BIN=$($POETRY_HOME/bin/poetry env info -p)/bin/fastapi-mvc" >> $GITHUB_ENV
+        run: echo "FASTAPI_MVC_BIN=$($UV_BINARY env info -p)/bin/fastapi-mvc" >> $GITHUB_ENV
       - name: Generate test-project
         run: $FASTAPI_MVC_BIN new --skip-install --no-interaction test-project
       - name: Generate test controller
@@ -88,17 +89,17 @@ jobs:
 
     steps:
       - uses: actions/checkout@v6
-      - name: Set up Python 3.9
+      - name: Set up Python 3.11
         uses: actions/setup-python@v6
         with:
-          python-version: 3.9
-      - name: Load Poetry cache
+          python-version: 3.11
+      - name: Load uv cache
         uses: actions/cache@v5
         with:
-          path: ${{ env.POETRY_HOME }}
-          key: ${{ runner.os }}-3.9-${{ hashFiles('**/pyproject.toml') }}-${{ hashFiles('**/poetry.lock') }}
+          path: ${{ env.UV_INSTALL_DIR }}
+          key: ${{ runner.os }}-3.11-${{ hashFiles('**/pyproject.toml') }}-${{ hashFiles('**/uv.lock') }}
       - name: Set fastapi-mvc path
-        run: echo "FASTAPI_MVC_BIN=$($POETRY_HOME/bin/poetry env info -p)/bin/fastapi-mvc" >> $GITHUB_ENV
+        run: echo "FASTAPI_MVC_BIN=$($UV_BINARY env info -p)/bin/fastapi-mvc" >> $GITHUB_ENV
       - name: Generate test-project
         run: $FASTAPI_MVC_BIN new --skip-redis --skip-aiohttp --skip-actions --skip-install --no-interaction test-project
       - name: Generate test controller

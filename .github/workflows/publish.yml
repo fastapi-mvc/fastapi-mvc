@@ -29,29 +29,6 @@ jobs:
         with:
           user: __token__
           password: ${{ secrets.PYPI_TOKEN }}
-  publish-docs:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Download docs artifact
-        uses: dawidd6/action-download-artifact@v14
-        with:
-          workflow: docs.yml
-          workflow_conclusion: success
-          name: ${{ format('docs-{0}', github.event.inputs.sha) }}
-          commit: ${{ github.event.inputs.sha }}
-          path: site
-      - name: Publish docs to Netlify
-        uses: nwtgck/actions-netlify@v2.1.0
-        with:
-          publish-dir: site
-          production-deploy: true
-          production-branch: master
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          enable-commit-comment: false
-        env:
-          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
   publish-image:
     runs-on: ubuntu-latest
 

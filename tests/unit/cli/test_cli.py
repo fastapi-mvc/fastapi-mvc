@@ -6,12 +6,12 @@ from fastapi_mvc.cli.cli import cli
 
 class TestCliRoot:
 
-    def test_should_exit_zero_when_invoked_empty(self, cli_runner):
+    def test_should_exit_error_when_invoked_empty(self, cli_runner):
         # given / when
         result = cli_runner.invoke(cli)
 
         # then
-        assert result.exit_code == 0
+        assert result.exit_code == 2
 
     def test_should_exit_zero_when_invoked_with_help(self, cli_runner):
         # given / when

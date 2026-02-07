@@ -4,8 +4,8 @@ on:
   workflow_dispatch:
 
 env:
-  NIX_CHANNEL: nixpkgs=channel:nixos-22.05
-  NIX_INSTALL_URL: https://releases.nixos.org/nix/nix-2.13.3/install
+  NIX_CHANNEL: nixpkgs=channel:nixos-25.11
+  NIX_INSTALL_URL: https://releases.nixos.org/nix/nix-2.31.3/install
 
 jobs:
   # This job checks if an identical workflow is being triggered by different

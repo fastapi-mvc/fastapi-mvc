@@ -9,10 +9,10 @@ on:
       - master
 
 env:
-  POETRY_HOME: /tmp/poetry
-  POETRY_CONFIG_DIR: /tmp/poetry
-  POETRY_VIRTUALENVS_PATH: /tmp/poetry/store
-  DEFAULT_PYTHON: '3.10'
+  UV_INSTALL_DIR: /tmp/uv
+  UV_BINARY: /tmp/uv/uv
+  UV_PROJECT_ENVIRONMENT: /tmp/uv/store
+  DEFAULT_PYTHON: '3.11'
 
 jobs:
   # This job checks if an identical workflow is being triggered by different
@@ -34,8 +34,8 @@ jobs:
     if: ${{ needs.pre_job.outputs.should_skip != 'true' }}
     strategy:
       matrix:
-        python-version: [ '3.8', '3.9', '3.10', '3.11' ]
-        os: [ubuntu-latest, macos-latest]
+        python-version: [ '3.10', '3.11', '3.12' ]
+        os: [ubuntu-latest, macos-15]
     runs-on: ${{ matrix.os }}
 
     steps:
@@ -44,15 +44,15 @@ jobs:
         uses: actions/setup-python@v6
         with:
           python-version: ${{ matrix.python-version }}
-      - name: Init Poetry cache
-        id: cached-poetry
+      - name: Init uv cache
+        id: cached-uv
         uses: actions/cache@v5
         with:
-          path: ${{ env.POETRY_HOME }}
-          key: ${{ runner.os }}-${{ matrix.python-version }}-${{ hashFiles('./pyproject.toml') }}-${{ hashFiles('./poetry.lock') }}
+          path: ${{ env.UV_INSTALL_DIR }}
+          key: ${{ runner.os }}-${{ matrix.python-version }}-${{ hashFiles('./pyproject.toml') }}-${{ hashFiles('./uv.lock') }}
       - name: Install package
         run: make install
-        if: steps.cached-poetry.outputs.cache-hit != 'true'
+        if: steps.cached-uv.outputs.cache-hit != 'true'
   build:
     needs: install
     runs-on: ubuntu-latest
@@ -63,11 +63,11 @@ jobs:
         uses: actions/setup-python@v6
         with:
           python-version: ${{ env.DEFAULT_PYTHON }}
-      - name: Load Poetry cache
+      - name: Load uv cache
         uses: actions/cache@v5
         with:
-          path: ${{ env.POETRY_HOME }}
-          key: ${{ runner.os }}-${{ env.DEFAULT_PYTHON }}-${{ hashFiles('./pyproject.toml') }}-${{ hashFiles('./poetry.lock') }}
+          path: ${{ env.UV_INSTALL_DIR }}
+          key: ${{ runner.os }}-${{ env.DEFAULT_PYTHON }}-${{ hashFiles('./pyproject.toml') }}-${{ hashFiles('./uv.lock') }}
       - name: Build wheel
         run: make build
       - name: Archive build artifacts
@@ -86,18 +86,19 @@ jobs:
         uses: actions/setup-python@v6
         with:
           python-version: ${{ env.DEFAULT_PYTHON }}
-      - name: Load Poetry cache
+      - name: Load uv cache
         uses: actions/cache@v5
         with:
-          path: ${{ env.POETRY_HOME }}
-          key: ${{ runner.os }}-${{ env.DEFAULT_PYTHON }}-${{ hashFiles('./pyproject.toml') }}-${{ hashFiles('./poetry.lock') }}
+          path: ${{ env.UV_INSTALL_DIR }}
+          key: ${{ runner.os }}-${{ env.DEFAULT_PYTHON }}-${{ hashFiles('./pyproject.toml') }}-${{ hashFiles('./uv.lock') }}
       - name: Run fastapi-mvc coverage
         run: make coverage
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v3
+        uses: codecov/codecov-action@v5
         with:
           fail_ci_if_error: true
           files: ./coverage.xml
+          token: ${{ secrets.CODECOV_TOKEN }}
   metrics:
     needs: install
     runs-on: ubuntu-latest
@@ -108,11 +109,11 @@ jobs:
         uses: actions/setup-python@v6
         with:
           python-version: ${{ env.DEFAULT_PYTHON }}
-      - name: Load Poetry cache
+      - name: Load uv cache
         uses: actions/cache@v5
         with:
-          path: ${{ env.POETRY_HOME }}
-          key: ${{ runner.os }}-${{ env.DEFAULT_PYTHON }}-${{ hashFiles('./pyproject.toml') }}-${{ hashFiles('./poetry.lock') }}
+          path: ${{ env.UV_INSTALL_DIR }}
+          key: ${{ runner.os }}-${{ env.DEFAULT_PYTHON }}-${{ hashFiles('./pyproject.toml') }}-${{ hashFiles('./uv.lock') }}
       - name: Run metrics checks
         run: make metrics
   mypy:
@@ -125,11 +126,11 @@ jobs:
         uses: actions/setup-python@v6
         with:
           python-version: ${{ env.DEFAULT_PYTHON }}
-      - name: Load Poetry cache
+      - name: Load uv cache
         uses: actions/cache@v5
         with:
-          path: ${{ env.POETRY_HOME }}
-          key: ${{ runner.os }}-${{ env.DEFAULT_PYTHON }}-${{ hashFiles('./pyproject.toml') }}-${{ hashFiles('./poetry.lock') }}
+          path: ${{ env.UV_INSTALL_DIR }}
+          key: ${{ runner.os }}-${{ env.DEFAULT_PYTHON }}-${{ hashFiles('./pyproject.toml') }}-${{ hashFiles('./uv.lock') }}
       - name: Run mypy checks
         run: make mypy
   unit-tests:
@@ -137,8 +138,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: [ '3.8', '3.9', '3.10', '3.11' ]
-        os: [ubuntu-latest, macos-latest]
+        python-version: [ '3.10', '3.11', '3.12' ]
+        os: [ubuntu-latest, macos-15]
     runs-on: ${{ matrix.os }}
 
     steps:
@@ -147,11 +148,11 @@ jobs:
         uses: actions/setup-python@v6
         with:
           python-version: ${{ matrix.python-version }}
-      - name: Load Poetry cache
+      - name: Load uv cache
         uses: actions/cache@v5
         with:
-          path: ${{ env.POETRY_HOME }}
-          key: ${{ runner.os }}-${{ matrix.python-version }}-${{ hashFiles('./pyproject.toml') }}-${{ hashFiles('./poetry.lock') }}
+          path: ${{ env.UV_INSTALL_DIR }}
+          key: ${{ runner.os }}-${{ matrix.python-version }}-${{ hashFiles('./pyproject.toml') }}-${{ hashFiles('./uv.lock') }}
       - name: Run unit tests
         run: make unit-test
   integration-tests:
@@ -159,14 +160,14 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: [ '3.8', '3.9', '3.10', '3.11' ]
-        os: [ubuntu-latest, macos-latest]
+        python-version: [ '3.10', '3.11', '3.12' ]
+        os: [ubuntu-latest, macos-15]
     runs-on: ${{ matrix.os }}
 
     steps:
       - uses: actions/checkout@v6
       - name: Set up GNU coreutils on macos runner
-        if: matrix.os == 'macos-latest'
+        if: matrix.os == 'macos-15'
         run: |
           brew install coreutils
           echo "/usr/local/opt/coreutils/libexec/gnubin" >> $GITHUB_PATH
@@ -174,10 +175,10 @@ jobs:
         uses: actions/setup-python@v6
         with:
           python-version: ${{ matrix.python-version }}
-      - name: Load Poetry cache
+      - name: Load uv cache
         uses: actions/cache@v5
         with:
-          path: ${{ env.POETRY_HOME }}
-          key: ${{ runner.os }}-${{ matrix.python-version }}-${{ hashFiles('./pyproject.toml') }}-${{ hashFiles('./poetry.lock') }}
+          path: ${{ env.UV_INSTALL_DIR }}
+          key: ${{ runner.os }}-${{ matrix.python-version }}-${{ hashFiles('./pyproject.toml') }}-${{ hashFiles('./uv.lock') }}
       - name: Run integration tests
         run: make integration-test

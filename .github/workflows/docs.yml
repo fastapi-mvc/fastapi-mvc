@@ -6,9 +6,9 @@ on:
       - master
 
 env:
-  POETRY_HOME: /opt/poetry
-  POETRY_CONFIG_DIR: /opt/poetry
-  POETRY_VIRTUALENVS_PATH: /opt/poetry/store
+  UV_INSTALL_DIR: /tmp/uv
+  UV_BINARY: /tmp/uv/uv
+  UV_PROJECT_ENVIRONMENT: /tmp/uv/store
 
 jobs:
   build-docs:
@@ -19,13 +19,13 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v6
         with:
-          python-version: 3.9
-      - name: Load Poetry cache
-        id: poetry-cache
+          python-version: 3.11
+      - name: Load uv cache
+        id: uv-cache
         uses: actions/cache@v5
         with:
-          path: ${{ env.POETRY_HOME }}
-          key: ${{ runner.os }}-3.9-${{ hashFiles('./pyproject.toml') }}-${{ hashFiles('./poetry.lock') }}
+          path: ${{ env.UV_INSTALL_DIR }}
+          key: ${{ runner.os }}-3.11-${{ hashFiles('./pyproject.toml') }}-${{ hashFiles('./uv.lock') }}
       - name: Build documentation
         run: make docs
       - name: Archive build artifacts

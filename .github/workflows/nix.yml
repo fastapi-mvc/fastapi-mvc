@@ -1,4 +1,4 @@
-name: ❄️ Nix CI ❄️
+name: Nix CI ❄️
 
 on:
   push:
@@ -9,8 +9,8 @@ on:
       - master
 
 env:
-  NIX_CHANNEL: nixpkgs=channel:nixos-22.11
-  NIX_INSTALL_URL: https://releases.nixos.org/nix/nix-2.13.3/install
+  NIX_CHANNEL: nixpkgs=channel:nixos-25.11
+  NIX_INSTALL_URL: https://releases.nixos.org/nix/nix-2.31.3/install
 
 jobs:
   # This job checks if an identical workflow is being triggered by different
@@ -59,8 +59,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: [ '38', '39', '310', '311' ]
-        os: [ubuntu-latest, macos-latest]
+        python-version: [ '310', '311', '312' ]
+        os: [ubuntu-latest, macos-15]
     runs-on: ${{ matrix.os }}
 
     steps:
@@ -77,4 +77,9 @@ jobs:
           name: fastapi-mvc
           authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
       - name: Build fastapi-mvc
-        run: nix build .#fastapi-mvc-py${{ matrix.python-version }}
+        run: |
+          nix build .#fastapi-mvc-${{ matrix.python-version }}-sdist
+          nix build .#fastapi-mvc-${{ matrix.python-version }}-wheel
+          nix build .#fastapi-mvc-${{ matrix.python-version }}-venv
+          nix build .#fastapi-mvc-${{ matrix.python-version }}-app
+    

@@ -27,28 +27,31 @@ fi
 
 PYTHON_MAJOR_VERSION=$($PYTHON -c 'import sys; print(sys.version_info[0])')
 PYTHON_MINOR_VERSION=$($PYTHON -c 'import sys; print(sys.version_info[1])')
-if [[ "$PYTHON_MAJOR_VERSION" -lt 3 ]] || [[ "$PYTHON_MINOR_VERSION" -lt 8 ]]; then
-  echo "[install] Python version 3.8.0 or higher is required."
+if [[ "$PYTHON_MAJOR_VERSION" -lt 3 ]] || [[ "$PYTHON_MINOR_VERSION" -lt 10 ]]; then
+  echo "[install] Python version 3.10.0 or higher is required."
   exit 1
 fi
 
-POETRY_HOME="${POETRY_HOME:=${HOME}/.local/share/pypoetry}"
-POETRY_BINARY="${POETRY_BINARY:=${POETRY_HOME}/venv/bin/poetry}"
-POETRY_VERSION="${POETRY_VERSION:=1.5.1}"
-if ! command -v "$POETRY_BINARY" &> /dev/null; then
-  echo "[install] Poetry is not installed. Begin download and install."
-  curl -sSL https://install.python-poetry.org | POETRY_HOME=$POETRY_HOME POETRY_VERSION=$POETRY_VERSION $PYTHON -
+UV_INSTALL_DIR="${UV_INSTALL_DIR:=${HOME}/.local/bin}"
+UV_BINARY="${UV_BINARY:=${UV_INSTALL_DIR}/uv}"
+UV_VERSION="${UV_VERSION:=0.10.0}"
+if ! command -v "$UV_BINARY" &> /dev/null; then
+  echo "[install] UV is not installed. Begin download and install."
+  export UV_VERSION
+  export UV_BINARY
+  curl -LsSf https://astral.sh/uv/$UV_VERSION/install.sh | sh
 fi
 
-POETRY_INSTALL_OPTS="${POETRY_INSTALL_OPTS:="--no-interaction"}"
+UV_INSTALL_OPTS="${UV_INSTALL_OPTS:="--extra test --extra docs"}"
 echo "[install] Begin installing project."
-"$POETRY_BINARY" install $POETRY_INSTALL_OPTS
+echo "OPTS: $UV_INSTALL_OPTS"
+"$UV_BINARY" sync $UV_INSTALL_OPTS
 
 cat << 'EOF'
 Project successfully installed.
-To activate virtualenv run: $ poetry shell
+To activate virtualenv run: $ uv venv
 Now you should access CLI script: $ fastapi-mvc --help
-Alternatively you can access CLI script via poetry run: $ poetry run fastapi-mvc --help
+Alternatively you can access CLI script via uv run: $ uv run fastapi-mvc --help
 To deactivate virtualenv simply type: $ deactivate
 To activate shell completion:
  - for bash: $ echo 'eval "$(_FASTAPI_MVC_COMPLETE=source_bash fastapi-mvc)' >> ~/.bashrc
