@@ -27,7 +27,7 @@ jobs:
   install:
     needs: pre_job
     if: ${{ needs.pre_job.outputs.should_skip != 'true' }}
-    runs-on: macos-latest
+    runs-on: nested-virt
 
     steps:
       - uses: actions/checkout@v6
@@ -46,7 +46,7 @@ jobs:
         if: steps.cached-uv.outputs.cache-hit != 'true'
   test-redis-ha:
     needs: install
-    runs-on: macos-latest
+    runs-on: nested-virt
 
     steps:
       - uses: actions/checkout@v6
@@ -59,13 +59,11 @@ jobs:
         with:
           path: ${{ env.UV_INSTALL_DIR }}
           key: ${{ runner.os }}-3.11-${{ hashFiles('**/pyproject.toml') }}-${{ hashFiles('**/uv.lock') }}
-      - name: Set fastapi-mvc path
-        run: echo "FASTAPI_MVC_BIN=$($UV_BINARY env info -p)/bin/fastapi-mvc" >> $GITHUB_ENV
       - name: Generate test-project
-        run: $FASTAPI_MVC_BIN new --skip-install --no-interaction test-project
+        run: $UV_BINARY run fastapi-mvc new --skip-install --no-interaction test-project
       - name: Generate test controller
         working-directory: ./test-project
-        run: $FASTAPI_MVC_BIN generate controller foobar index create:post update:put delete:delete
+        run: $UV_BINARY run fastapi-mvc generate controller foobar index create:post update:put delete:delete
       - name: Run vagrant up
         working-directory: ./test-project
         run: vagrant up
@@ -85,7 +83,7 @@ jobs:
   test-minimal:
     needs: install
     if: ${{ needs.pre_job.outputs.should_skip != 'true' }}
-    runs-on: macos-latest
+    runs-on: nested-virt
 
     steps:
       - uses: actions/checkout@v6
@@ -98,13 +96,11 @@ jobs:
         with:
           path: ${{ env.UV_INSTALL_DIR }}
           key: ${{ runner.os }}-3.11-${{ hashFiles('**/pyproject.toml') }}-${{ hashFiles('**/uv.lock') }}
-      - name: Set fastapi-mvc path
-        run: echo "FASTAPI_MVC_BIN=$($UV_BINARY env info -p)/bin/fastapi-mvc" >> $GITHUB_ENV
       - name: Generate test-project
-        run: $FASTAPI_MVC_BIN new --skip-redis --skip-aiohttp --skip-actions --skip-install --no-interaction test-project
+        run: $UV_BINARY run fastapi-mvc new --skip-redis --skip-aiohttp --skip-actions --skip-install --no-interaction test-project
       - name: Generate test controller
         working-directory: ./test-project
-        run: $FASTAPI_MVC_BIN generate controller foobar index create:post update:put delete:delete
+        run: $UV_BINARY run fastapi-mvc generate controller foobar index create:post update:put delete:delete
       - name: Run vagrant up
         working-directory: ./test-project
         run: vagrant up
@@ -121,3 +117,6 @@ jobs:
           vagrant ssh -c 'curl -X POST "http://test-project.$(minikube ip).nip.io/api/foobar/create"'
           vagrant ssh -c 'curl -X PUT "http://test-project.$(minikube ip).nip.io/api/foobar/update"'
           vagrant ssh -c 'curl -X DELETE "http://test-project.$(minikube ip).nip.io/api/foobar/delete"'
+      - name: Clean up
+        if: always()
+        run: vagrant destroy
