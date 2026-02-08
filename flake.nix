@@ -198,12 +198,30 @@
           };
         };
 
+        checks = {
+          treefmt = pkgs.runCommand "treefmt" { } ''
+            ${self'.formatter}/bin/treefmt --ci --working-dir ${self}
+            touch $out
+          '';
+        };
+
+        formatter = pkgs.writeShellApplication {
+          name = "treefmt";
+          text = ''treefmt "$@"'';
+          runtimeInputs = [
+            pkgs.deadnix
+            pkgs.nixfmt
+            pkgs.treefmt
+          ];
+        };
+
         devShells = {
           default = self'.devShells.virtualenv;
           virtualenv = pkgs.mkShell {
             name = "fastapi-mvc-venv";
             packages = [
               self'.packages.default
+              self'.formatter
               pkgs.uv
               pkgs.git
             ];
@@ -224,6 +242,7 @@
           dev-shell = pkgs.mkShell {
             name = "fastapi-mvc-dev-shell";
             packages = [
+              self'.formatter
               pkgs.python3
               pkgs.uv
               pkgs.git
