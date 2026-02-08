@@ -14,9 +14,8 @@ import os
 import click
 import copier
 from fastapi_mvc.cli import GeneratorCommand
-from fastapi_mvc.constants import COPIER_CONTROLLER, ANSWERS_FILE
+from fastapi_mvc.constants import COPIER_CONTROLLER
 from fastapi_mvc.utils import require_fastapi_mvc_project
-
 
 cmd_short_help = "Run fastapi-mvc controller generator."
 cmd_help = """\
@@ -130,7 +129,6 @@ def controller(name: str, endpoints: List[str], **options: Dict[str, Any]) -> No
         src_path=COPIER_CONTROLLER.template,
         vcs_ref=COPIER_CONTROLLER.vcs_ref,
         dst_path=os.getcwd(),
-        answers_file=ANSWERS_FILE,
         data=data,
     )
 

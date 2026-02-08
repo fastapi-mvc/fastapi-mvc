@@ -67,7 +67,8 @@ class TestCliUpdateCommand:
                 "script_name": "fake-project",
                 "version": "0.1.0",
             },
-            pretend=False
+            pretend=False,
+            unsafe=True,
         )
 
     def test_should_exit_zero_and_call_copier_with_parsed_arguments(self, patched_update, monkeypatch, fake_project, cli_runner):
@@ -111,6 +112,7 @@ class TestCliUpdateCommand:
             },
             overwrite=True,
             pretend=True,
+            unsafe=True,
         )
 
     def test_should_exit_error_when_not_in_fastapi_mvc_project(self, cli_runner, caplog):

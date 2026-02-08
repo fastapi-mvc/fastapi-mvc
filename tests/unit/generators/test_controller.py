@@ -3,7 +3,7 @@ from unittest import mock
 
 import pytest
 from fastapi_mvc.generators import ControllerGenerator
-from fastapi_mvc.constants import COPIER_CONTROLLER, ANSWERS_FILE
+from fastapi_mvc.constants import COPIER_CONTROLLER
 from fastapi_mvc.generators.controller import insert_router_import
 
 
@@ -131,7 +131,6 @@ class TestControllerGenerator:
             src_path=COPIER_CONTROLLER.template,
             vcs_ref=COPIER_CONTROLLER.vcs_ref,
             dst_path=str(fake_project["root"]),
-            answers_file=ANSWERS_FILE,
             data={
                 "project_name": "fake-project",
                 "controller": "fake_controller",
@@ -160,7 +159,6 @@ class TestControllerGenerator:
             src_path=COPIER_CONTROLLER.template,
             vcs_ref=COPIER_CONTROLLER.vcs_ref,
             dst_path=str(fake_project["root"]),
-            answers_file=ANSWERS_FILE,
             data={
                 "project_name": "fake-project",
                 "controller": "stock_market",
@@ -186,7 +184,6 @@ class TestControllerGenerator:
             src_path=COPIER_CONTROLLER.template,
             vcs_ref=COPIER_CONTROLLER.vcs_ref,
             dst_path=str(fake_project["root"]),
-            answers_file=ANSWERS_FILE,
             data={
                 "project_name": "fake-project",
                 "controller": "fake_controller",

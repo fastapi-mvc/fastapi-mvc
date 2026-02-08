@@ -86,6 +86,7 @@ class TestCliNewCommand:
                 "project_description": "This project was generated with fastapi-mvc.",
                 "version": "0.1.0",
             },
+            unsafe=True,
         )
 
     @pytest.mark.parametrize(
@@ -128,6 +129,7 @@ class TestCliNewCommand:
                             "project_description": "This project was generated with fastapi-mvc.",
                             "version": "0.1.0",
                         },
+                        "unsafe": True,
                     },
             ),
             (
@@ -166,6 +168,7 @@ class TestCliNewCommand:
                             "version": "0.1.0",
                         },
                         "overwrite": True,
+                        "unsafe": True,
                     },
             ),
             (
@@ -194,6 +197,7 @@ class TestCliNewCommand:
                             "project_description": "This project was generated with fastapi-mvc.",
                             "version": "0.1.0",
                         },
+                        "unsafe": True,
                     }
             ),
         ],

@@ -46,6 +46,7 @@ class TestScriptGenerator:
                 "nix": False,
                 "script": "fake-script.sh",
             },
+            unsafe=True,
         )
 
     def test_should_call_copier_with_parsed_arguments(self, script, cli_runner):
@@ -61,4 +62,5 @@ class TestScriptGenerator:
                 "nix": True,
                 "script": "mambo-no6",
             },
+            unsafe=True,
         )
