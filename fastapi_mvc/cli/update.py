@@ -75,6 +75,7 @@ def update(ctx: click.Context, **options: Dict[str, Any]) -> None:
             vcs_ref=options["use_version"] or COPIER_PROJECT.vcs_ref,
             answers_file=ANSWERS_FILE,
             pretend=options["pretend"],
+            unsafe=True,
             **update_kwargs,
         )
     except UserMessageError as ex:

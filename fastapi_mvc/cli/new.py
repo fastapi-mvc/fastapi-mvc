@@ -174,6 +174,7 @@ def new(app_path: str, **options: Dict[str, Any]) -> None:
             data=data,
             overwrite=True,
             answers_file=ANSWERS_FILE,
+            unsafe=True,
         )
     else:
         copier.run_copy(
@@ -182,6 +183,7 @@ def new(app_path: str, **options: Dict[str, Any]) -> None:
             dst_path=app_abspath,
             user_defaults=data,
             answers_file=ANSWERS_FILE,
+            unsafe=True,
         )
 
     copier.printf(action="run", msg="git init", style=copier.Style.OK)

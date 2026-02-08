@@ -72,5 +72,6 @@ def script(name: str, **options: Dict[str, Any]) -> None:
     copier.run_copy(
         src_path=COPIER_SCRIPT.template,
         vcs_ref=COPIER_SCRIPT.vcs_ref,
+        unsafe=True,
         data=data,
     )

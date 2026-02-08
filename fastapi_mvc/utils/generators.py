@@ -83,7 +83,6 @@ def require_fastapi_mvc_project() -> Dict[str, Any]:
         "_commit",
         "_src_path",
         "project_name",
-        "package_name",
     ]
 
     if not project_data:
@@ -95,5 +94,7 @@ def require_fastapi_mvc_project() -> Dict[str, Any]:
     elif not all(el in project_data for el in keys):
         log.error(f"Answers file: {ANSWERS_FILE} is missing required values.")
         raise SystemExit(1)
+
+    project_data["package_name"] = project_data["project_name"].lower().replace(' ','_').replace('-','_')
 
     return project_data
