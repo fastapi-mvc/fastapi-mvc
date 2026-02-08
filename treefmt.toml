@@ -1,6 +1,7 @@
 [formatter.nix]
 command = "nixfmt"
 includes = ["*.nix"]
+excludes = ["tests/unit/custom_generators/**/*.nix"]
 
 [formatter.deadnix]
 command = "deadnix"
