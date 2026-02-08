@@ -310,6 +310,7 @@
               ];
 
               env = {
+                UV_BINARY = "${pkgs.uv}/bin/uv";
                 UV_PYTHON = pkgs.python3.interpreter;
                 UV_PYTHON_DOWNLOADS = "never";
               };
