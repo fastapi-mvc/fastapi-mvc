@@ -28,12 +28,13 @@
       inputs.uv2nix.follows = "uv2nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    rszamszur-nixos-config = {
-      url = "github:rszamszur/nixos-config";
+    nix-utils = {
+      url = "github:rszamszur/nix-utils";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
-  outputs = { self, nixpkgs, flake-parts, pyproject-nix, uv2nix, pyproject-build-systems, rszamszur-nixos-config }@inputs:
+  outputs = { self, nixpkgs, flake-parts, pyproject-nix, uv2nix, pyproject-build-systems, nix-utils }@inputs:
     let
       mkApp =
         { drv
@@ -51,12 +52,6 @@
       ];
       systems = [ "x86_64-linux" "aarch64-linux" "x86_64-darwin" "aarch64-darwin" ];
       perSystem = { config, self', inputs', pkgs, system, ... }: {
-        # Add rszamszur lib overlay
-        _module.args.pkgs = import nixpkgs {
-          inherit system;
-          overlays = [ rszamszur-nixos-config.overlays.mylib ];
-        };
-
         packages =
           let
             mkProject =
@@ -66,6 +61,7 @@
                 build = pkgs.callPackage ./build.nix {
                   inherit python pkgs src uv2nix pyproject-nix pyproject-build-systems;
                   lib = pkgs.lib;
+                  nix-utils = nix-utils.lib;
                 };
               in
               {
@@ -75,7 +71,7 @@
                 "fastapi-mvc-${python.sourceVersion.major}${python.sourceVersion.minor}-app" = build.application;
               };
 
-            src = pkgs.mylib.sources.filterPythonSources {
+            src = nix-utils.lib.sources.filterPythonSources {
               path = ./.;
             };
           in
