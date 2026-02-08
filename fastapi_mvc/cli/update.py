@@ -60,24 +60,24 @@ def update(ctx: click.Context, **options: Dict[str, Any]) -> None:
     project_data = require_fastapi_mvc_project()
     ensure_permissions(os.getcwd(), w=True)
 
-    if options["no_interaction"]:
-        update_kwargs = {
-            "data": project_data,
-            "overwrite": True,
-        }
-    else:
-        update_kwargs = {
-            "user_defaults": project_data,
-        }
-
     try:
-        copier.run_update(
-            vcs_ref=options["use_version"] or COPIER_PROJECT.vcs_ref,
-            answers_file=ANSWERS_FILE,
-            pretend=options["pretend"],
-            unsafe=True,
-            **update_kwargs,
-        )
+        if options["no_interaction"]:
+            copier.run_update(
+                vcs_ref=options["use_version"] or COPIER_PROJECT.vcs_ref,
+                answers_file=ANSWERS_FILE,
+                pretend=options["pretend"],
+                unsafe=True,
+                data=project_data,
+                overwrite=True,
+            )
+        else:
+            copier.run_update(
+                vcs_ref=options["use_version"] or COPIER_PROJECT.vcs_ref,
+                answers_file=ANSWERS_FILE,
+                pretend=options["pretend"],
+                unsafe=True,
+                user_defaults=project_data,
+            )
     except UserMessageError as ex:
         click.secho(ex, fg="yellow")
         ctx.exit(2)

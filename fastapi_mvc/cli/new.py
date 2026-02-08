@@ -166,10 +166,20 @@ def new(app_path: str, **options: Dict[str, Any]) -> None:
         "version": "0.1.0",
     }
 
+    if options["use_repo"]:
+        src_path = str(options["use_repo"])
+    else:
+        src_path = COPIER_PROJECT.template
+
+    if options["use_version"]:
+        vcs_ref = str(options["use_version"])
+    else:
+        vcs_ref = COPIER_PROJECT.vcs_ref
+
     if options["no_interaction"]:
         copier.run_copy(
-            src_path=options["use_repo"] or COPIER_PROJECT.template,
-            vcs_ref=options["use_version"] or COPIER_PROJECT.vcs_ref,
+            src_path=src_path,
+            vcs_ref=vcs_ref,
             dst_path=app_abspath,
             data=data,
             overwrite=True,
@@ -178,8 +188,8 @@ def new(app_path: str, **options: Dict[str, Any]) -> None:
         )
     else:
         copier.run_copy(
-            src_path=options["use_repo"] or COPIER_PROJECT.template,
-            vcs_ref=options["use_version"] or COPIER_PROJECT.vcs_ref,
+            src_path=src_path,
+            vcs_ref=vcs_ref,
             dst_path=app_abspath,
             user_defaults=data,
             answers_file=ANSWERS_FILE,
