@@ -8,6 +8,7 @@ Attributes:
         after everything else.
 
 """
+
 from typing import Dict, Any
 from datetime import datetime
 
@@ -16,7 +17,6 @@ import copier
 from fastapi_mvc.cli import GeneratorCommand
 from fastapi_mvc.utils import require_fastapi_mvc_project
 from fastapi_mvc.constants import COPIER_GENERATOR
-
 
 cmd_short_help = "Run fastapi-mvc generator generator."
 cmd_help = """\

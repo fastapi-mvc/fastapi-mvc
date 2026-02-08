@@ -5,8 +5,8 @@ Attributes:
     ANSWERS_FILE (str): Relative path to copier answers file.
 
 """
-from collections import namedtuple
 
+from collections import namedtuple
 
 Template = namedtuple("Template", "template vcs_ref")
 VERSION = "0.28.1"

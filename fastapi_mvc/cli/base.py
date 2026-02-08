@@ -7,6 +7,7 @@ Resources:
     https://click.palletsprojects.com/en/8.1.x/
 
 """
+
 from typing import Dict, Any, List, Optional
 from collections import defaultdict
 

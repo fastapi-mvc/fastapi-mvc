@@ -4,6 +4,7 @@ The ``fastapi-mvc.utils`` submodule implements generic utilities for the need of
 the package.
 
 """
+
 from fastapi_mvc.utils.shell import run_shell, get_git_user_info, get_poetry_path
 from fastapi_mvc.utils.excepthook import global_except_hook
 from fastapi_mvc.utils.generators import (
@@ -11,7 +12,6 @@ from fastapi_mvc.utils.generators import (
     require_fastapi_mvc_project,
     load_answers_file,
 )
-
 
 __all__ = (
     "run_shell",

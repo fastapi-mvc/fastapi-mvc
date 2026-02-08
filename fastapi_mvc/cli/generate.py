@@ -6,9 +6,9 @@ Attributes:
         command listing of the parent command.
 
 """
+
 from fastapi_mvc.cli import GeneratorsMultiCommand
 from fastapi_mvc.generators import load_generators
-
 
 cmd_short_help = "Run chosen fastapi-mvc generator."
 cmd_help = """\

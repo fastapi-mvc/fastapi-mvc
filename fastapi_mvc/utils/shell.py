@@ -4,12 +4,12 @@ Attributes:
     log (logging.Logger): Logger class object instance.
 
 """
+
 from typing import Tuple, List, IO, AnyStr, Optional, Union, Any
 import os
 import logging
 import subprocess
 import shutil
-
 
 log = logging.getLogger(__name__)
 

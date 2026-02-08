@@ -4,13 +4,13 @@ Attributes:
     log (logging.Logger): Logger class object instance.
 
 """
+
 from typing import Dict, Any, Optional
 import os
 import logging
 
 from copier.user_data import load_answersfile_data
 from fastapi_mvc.constants import ANSWERS_FILE
-
 
 log = logging.getLogger(__name__)
 
@@ -95,6 +95,8 @@ def require_fastapi_mvc_project() -> Dict[str, Any]:
         log.error(f"Answers file: {ANSWERS_FILE} is missing required values.")
         raise SystemExit(1)
 
-    project_data["package_name"] = project_data["project_name"].lower().replace(' ','_').replace('-','_')
+    project_data["package_name"] = (
+        project_data["project_name"].lower().replace(" ", "_").replace("-", "_")
+    )
 
     return project_data

@@ -1,6 +1,6 @@
 """fastapi-mvc."""
-import logging
 
+import logging
 
 # initialize logging
 log = logging.getLogger(__name__)

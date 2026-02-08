@@ -6,6 +6,7 @@ Attributes:
     template (str): Unhandled exception issue message template.
 
 """
+
 from typing import Type, Optional
 from types import TracebackType
 import logging
@@ -14,7 +15,6 @@ import platform
 from traceback import format_exception
 
 from fastapi_mvc.constants import VERSION
-
 
 log = logging.getLogger("GlobalExceptHook")
 hint = """Help improve fastapi-mvc :)

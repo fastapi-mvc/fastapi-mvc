@@ -8,6 +8,7 @@ Attributes:
         after everything else.
 
 """
+
 from typing import Dict, Any
 import os
 
@@ -16,7 +17,6 @@ import copier
 from fastapi_mvc.cli import GeneratorCommand
 from fastapi_mvc.constants import COPIER_SCRIPT
 from fastapi_mvc.utils import ensure_permissions
-
 
 cmd_short_help = "Run shell script generator."
 cmd_help = """\
