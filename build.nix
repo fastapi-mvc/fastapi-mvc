@@ -1,12 +1,12 @@
-{ pkgs
-, lib
-, src
-, python
-, uv2nix
-, pyproject-nix
-, pyproject-build-systems
-, nix-utils
-,
+{
+  pkgs,
+  lib,
+  src,
+  python,
+  uv2nix,
+  pyproject-nix,
+  pyproject-build-systems,
+  nix-utils,
 }:
 
 let
@@ -50,11 +50,17 @@ let
     });
 
     plumbum = prev.plumbum.overrideAttrs (old: {
-      buildInputs = old.buildInputs or [ ] ++ [ final.hatch-vcs final.hatchling ];
+      buildInputs = old.buildInputs or [ ] ++ [
+        final.hatch-vcs
+        final.hatchling
+      ];
     });
 
     pydocstyle = prev.pydocstyle.overrideAttrs (old: {
-      buildInputs = old.buildInputs or [ ] ++ [ final.poetry-core final.setuptools ];
+      buildInputs = old.buildInputs or [ ] ++ [
+        final.poetry-core
+        final.setuptools
+      ];
     });
 
     iniconfig = prev.iniconfig.overrideAttrs (old: {
@@ -131,9 +137,7 @@ let
           # This behaviour is documented in PEP-660
           #
           # With Nix the dependency needs to be explicitly declared.
-          nativeBuildInputs =
-            old.nativeBuildInputs
-            ++ final.resolveBuildSystem { editables = [ ]; };
+          nativeBuildInputs = old.nativeBuildInputs ++ final.resolveBuildSystem { editables = [ ]; };
         });
       })
     ]
@@ -144,21 +148,31 @@ let
   # Enable all optional dependencies for development.
   virtualenv = editablePythonSet.mkVirtualEnv "fastapi-mvc-dev-env" workspace.deps.all;
 
-  sdist = (pythonSet.fastapi-mvc.override {
-    pyprojectHook = pythonSet.pyprojectDistHook;
-  }).overrideAttrs (_: {
-    env.uvBuildType = "sdist";
-  });
+  sdist =
+    (pythonSet.fastapi-mvc.override {
+      pyprojectHook = pythonSet.pyprojectDistHook;
+    }).overrideAttrs
+      (_: {
+        env.uvBuildType = "sdist";
+      });
   wheel = pythonSet.fastapi-mvc.override {
     pyprojectHook = pythonSet.pyprojectDistHook;
   };
 
-  util = pyproject-nix.build.util { runCommand = pkgs.runCommand; python3 = pythonSet.python; };
+  util = pyproject-nix.build.util {
+    runCommand = pkgs.runCommand;
+    python3 = pythonSet.python;
+  };
   application = util.mkApplication {
     venv = pythonSet.mkVirtualEnv "application-env" workspace.deps.default;
     package = pythonSet.fastapi-mvc;
   };
 in
 {
-  inherit sdist wheel virtualenv application;
+  inherit
+    sdist
+    wheel
+    virtualenv
+    application
+    ;
 }
