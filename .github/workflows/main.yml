@@ -166,15 +166,15 @@ jobs:
 
     steps:
       - uses: actions/checkout@v6
-      - name: Set up GNU coreutils on macos runner
-        if: matrix.os == 'macos-15'
-        run: |
-          brew install coreutils
-          echo "/usr/local/opt/coreutils/libexec/gnubin" >> $GITHUB_PATH
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v6
         with:
           python-version: ${{ matrix.python-version }}
+      - name: Set up GNU coreutils on macos runner
+        if: runner.os == 'macOS'
+        run: |
+          brew install coreutils
+          echo "/opt/homebrew/opt/coreutils/libexec/gnubin" >> $GITHUB_PATH
       - name: Load uv cache
         uses: actions/cache@v5
         with:
