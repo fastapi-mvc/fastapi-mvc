@@ -1,7 +1,8 @@
-{ pkgs ? import <nixpkgs> { }
-, fastapi-mvc
-, name ? "fastapi-mvc"
-, tag ? "latest"
+{
+  pkgs ? import <nixpkgs> { },
+  fastapi-mvc,
+  name ? "fastapi-mvc",
+  tag ? "latest",
 }:
 
 pkgs.dockerTools.buildImage {
