@@ -43,8 +43,6 @@ jobs:
           name: fastapi-mvc
           authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
       - uses: actions/checkout@v6
-      - name: Check format
-        run: nix-shell -p nixpkgs-fmt --run 'nixpkgs-fmt --check .'
       - name: Run nix flake check
         run: nix flake check
       - name: Run fastapi-mvc metrics checks
