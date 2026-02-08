@@ -5,11 +5,12 @@
 , uv2nix
 , pyproject-nix
 , pyproject-build-systems
+, nix-utils
 ,
 }:
 
 let
-  inherit (pkgs.mylib.sources)
+  inherit (nix-utils.sources)
     filterSources
     languageIgnoreFilesets
     languageFileFilters
