@@ -8,6 +8,7 @@ Attributes:
         after everything else.
 
 """
+
 from typing import Dict, Any
 import shutil
 import logging
@@ -19,7 +20,6 @@ import copier
 from fastapi_mvc.cli import GeneratorCommand
 from fastapi_mvc.constants import VERSION, COPIER_PROJECT, ANSWERS_FILE
 from fastapi_mvc.utils import run_shell, get_git_user_info, ensure_permissions
-
 
 log = logging.getLogger(__name__)
 cmd_short_help = "Create a new FastAPI application."

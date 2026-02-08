@@ -24,11 +24,11 @@ Resources:
     https://copier.readthedocs.io/en/v6.2.0
 
 """
+
 from fastapi_mvc.generators.loader import load_generators
 from fastapi_mvc.generators.generator import generator as GeneratorGenerator
 from fastapi_mvc.generators.controller import controller as ControllerGenerator
 from fastapi_mvc.generators.script import script as ScriptGenerator
-
 
 __all__ = (
     "load_generators",

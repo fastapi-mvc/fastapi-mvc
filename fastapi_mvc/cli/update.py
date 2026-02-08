@@ -6,6 +6,7 @@ Attributes:
         command listing of the parent command.
 
 """
+
 from typing import Dict, Any
 import os
 
@@ -15,7 +16,6 @@ from copier.errors import UserMessageError
 from fastapi_mvc.constants import ANSWERS_FILE, COPIER_PROJECT
 from fastapi_mvc.cli import ClickAliasedCommand
 from fastapi_mvc.utils import ensure_permissions, require_fastapi_mvc_project
-
 
 cmd_short_help = "Update fastapi-mvc project."
 cmd_help = """\

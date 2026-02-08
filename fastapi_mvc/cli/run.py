@@ -6,13 +6,13 @@ Attributes:
         command listing of the parent command.
 
 """
+
 from typing import Dict, Any
 from subprocess import CalledProcessError
 
 import click
 from fastapi_mvc.cli import ClickAliasedCommand
 from fastapi_mvc.utils import run_shell, get_poetry_path, require_fastapi_mvc_project
-
 
 cmd_short_help = "Run development uvicorn server."
 cmd_help = """\

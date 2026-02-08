@@ -4,6 +4,7 @@ Attributes:
     cmd_help (str): The help string to use for this command.
 
 """
+
 from typing import Dict, Any
 import logging
 import sys
@@ -15,7 +16,6 @@ from fastapi_mvc.cli.new import new
 from fastapi_mvc.cli.generate import get_generate_cmd
 from fastapi_mvc.cli.update import update
 from fastapi_mvc.utils import global_except_hook
-
 
 sys.excepthook = global_except_hook
 cmd_help = """\

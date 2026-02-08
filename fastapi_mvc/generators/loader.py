@@ -4,6 +4,7 @@ Attributes:
     log (logging.Logger): Logger class object instance.
 
 """
+
 from typing import Dict
 from importlib.util import spec_from_file_location, module_from_spec
 import logging
@@ -16,7 +17,6 @@ import click
 from .controller import controller
 from .generator import generator
 from .script import script
-
 
 log = logging.getLogger(__name__)
 
