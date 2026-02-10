@@ -32,7 +32,7 @@ classifiers = [
 ]
 requires-python = ">=3.10"
 dependencies = [
-  "click ==8.2.1",
+  "click ==8.3.1",
   "copier >=9.11.3, <10",
 ]
 
