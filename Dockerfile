@@ -5,7 +5,7 @@ LABEL maintainer="Radosław Szamszur, radoslawszamszur@gmail.com"
 # Configure environment variables
 ENV PYTHONUNBUFFERED=1 \
     PYTHONHASHSEED=0 \
-    SOURCE_DATE_EPOCH=0 \
+    SOURCE_DATE_EPOCH=315532800 \
     CFLAGS=-g0 \
     PYTHONDONTWRITEBYTECODE=1 \
     PIP_NO_CACHE_DIR=off \
