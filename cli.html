@@ -1,0 +1,459 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>CLI Reference &#8212; Fastapi-mvc Documentation (0.29.0)</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/click.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/sphinx_highlight.js"></script>
+    <link rel="author" title="About these documents" href="about.html" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Generators" href="generators.html" />
+    <link rel="prev" title="Quickstart" href="quickstart.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="generators.html" title="Generators"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="quickstart.html" title="Quickstart"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Fastapi-mvc Documentation (0.29.0)</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">CLI Reference</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="cli-reference">
+<h1>CLI Reference<a class="headerlink" href="#cli-reference" title="Permalink to this heading">¶</a></h1>
+<section id="fastapi-mvc">
+<h2>fastapi-mvc<a class="headerlink" href="#fastapi-mvc" title="Permalink to this heading">¶</a></h2>
+<p>Developer productivity tool for making high-quality FastAPI production-ready
+APIs.</p>
+<p>Documentation: <a class="reference external" href="https://fastapi-mvc.netlify.app">https://fastapi-mvc.netlify.app</a></p>
+<p>Source: <a class="reference external" href="https://github.com/fastapi-mvc/fastapi-mvc">https://github.com/fastapi-mvc/fastapi-mvc</a></p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>fastapi-mvc<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span><span class="w"> </span>COMMAND<span class="w"> </span><span class="o">[</span>ARGS<span class="o">]</span>...
+</pre></div>
+</div>
+<p class="rubric">Options</p>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-fastapi-mvc-v">
+<span id="cmdoption-fastapi-mvc-verbose"></span><span class="sig-name descname"><span class="pre">-v</span></span><span class="sig-prename descclassname"></span><span class="sig-prename descclassname"><span class="pre">,</span> </span><span class="sig-name descname"><span class="pre">--verbose</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-fastapi-mvc-v" title="Permalink to this definition">¶</a></dt>
+<dd><p>Enable verbose logging.</p>
+</dd></dl>
+
+<section id="fastapi-mvc-generate">
+<h3>generate<a class="headerlink" href="#fastapi-mvc-generate" title="Permalink to this heading">¶</a></h3>
+<p>The ‘fastapi-mvc generate’ commands runs a generator of your choice for a
+fastapi-mvc project at the current working directory.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>fastapi-mvc<span class="w"> </span>generate<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span><span class="w"> </span>GENERATOR<span class="w"> </span><span class="o">[</span>ARGS<span class="o">]</span>...
+</pre></div>
+</div>
+<section id="fastapi-mvc-generate-controller">
+<h4>controller<a class="headerlink" href="#fastapi-mvc-generate-controller" title="Permalink to this heading">¶</a></h4>
+<p>Creates a new controller and its endpoints. Pass the controller name
+under_scored, and a list of endpoints as arguments.</p>
+<p>This generates a controller file in app/controllers with unit test
+file. Finally, edits config/router.py in order to add controller to
+FastAPI router.</p>
+<p>Generator template used: <a class="reference external" href="https://github.com/fastapi-mvc/copier-controller">https://github.com/fastapi-mvc/copier-controller</a></p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>fastapi-mvc<span class="w"> </span>generate<span class="w"> </span>controller<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span><span class="w"> </span>NAME<span class="w"> </span><span class="o">[</span>ENDPOINTS<span class="o">]</span>...
+</pre></div>
+</div>
+<p class="rubric">Options</p>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-fastapi-mvc-generate-controller-R">
+<span id="cmdoption-fastapi-mvc-generate-controller-r"></span><span id="cmdoption-fastapi-mvc-generate-controller-skip-routes"></span><span class="sig-name descname"><span class="pre">-R</span></span><span class="sig-prename descclassname"></span><span class="sig-prename descclassname"><span class="pre">,</span> </span><span class="sig-name descname"><span class="pre">--skip-routes</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-fastapi-mvc-generate-controller-R" title="Permalink to this definition">¶</a></dt>
+<dd><p>Do not add router entry to app/router.py.</p>
+</dd></dl>
+
+<p class="rubric">Arguments</p>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-fastapi-mvc-generate-controller-arg-NAME">
+<span id="cmdoption-fastapi-mvc-generate-controller-arg-name"></span><span class="sig-name descname"><span class="pre">NAME</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-fastapi-mvc-generate-controller-arg-NAME" title="Permalink to this definition">¶</a></dt>
+<dd><p>Required argument</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-fastapi-mvc-generate-controller-arg-ENDPOINTS">
+<span id="cmdoption-fastapi-mvc-generate-controller-arg-endpoints"></span><span class="sig-name descname"><span class="pre">ENDPOINTS</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-fastapi-mvc-generate-controller-arg-ENDPOINTS" title="Permalink to this definition">¶</a></dt>
+<dd><p>Optional argument(s)</p>
+</dd></dl>
+
+<p>Example:
+<cite>fastapi-mvc generate controller stock_market ticker buy:post sell:delete</cite></p>
+<p>Or using short-cut alias:
+<cite>fm g ctl stock_market ticker buy:post sell:delete</cite></p>
+<dl class="simple">
+<dt>Creates controller with URLs like /stock_market/ticker.</dt><dd><p>Controller: app/controllers/stock_market.py
+Test:       tests/unit/app/controllers/test_stock_market.py</p>
+</dd>
+</dl>
+</section>
+<section id="fastapi-mvc-generate-generator">
+<h4>generator<a class="headerlink" href="#fastapi-mvc-generate-generator" title="Permalink to this heading">¶</a></h4>
+<p>Creates a new generator at lib/generators. Pass the generator name
+under_scored.</p>
+<p>Generator template used: <a class="reference external" href="https://github.com/fastapi-mvc/copier-generator">https://github.com/fastapi-mvc/copier-generator</a></p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>fastapi-mvc<span class="w"> </span>generate<span class="w"> </span>generator<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span><span class="w"> </span>NAME
+</pre></div>
+</div>
+<p class="rubric">Options</p>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-fastapi-mvc-generate-generator-N">
+<span id="cmdoption-fastapi-mvc-generate-generator-n"></span><span id="cmdoption-fastapi-mvc-generate-generator-skip-nix"></span><span class="sig-name descname"><span class="pre">-N</span></span><span class="sig-prename descclassname"></span><span class="sig-prename descclassname"><span class="pre">,</span> </span><span class="sig-name descname"><span class="pre">--skip-nix</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-fastapi-mvc-generate-generator-N" title="Permalink to this definition">¶</a></dt>
+<dd><p>Skip nix expression files.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-fastapi-mvc-generate-generator-G">
+<span id="cmdoption-fastapi-mvc-generate-generator-g"></span><span id="cmdoption-fastapi-mvc-generate-generator-skip-actions"></span><span class="sig-name descname"><span class="pre">-G</span></span><span class="sig-prename descclassname"></span><span class="sig-prename descclassname"><span class="pre">,</span> </span><span class="sig-name descname"><span class="pre">--skip-actions</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-fastapi-mvc-generate-generator-G" title="Permalink to this definition">¶</a></dt>
+<dd><p>Skip GitHub actions files.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-fastapi-mvc-generate-generator-license">
+<span class="sig-name descname"><span class="pre">--license</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;license&gt;</span></span><a class="headerlink" href="#cmdoption-fastapi-mvc-generate-generator-license" title="Permalink to this definition">¶</a></dt>
+<dd><p>Choose license.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Default<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">MIT</span></code></p>
+</dd>
+<dt class="field-even">Options<span class="colon">:</span></dt>
+<dd class="field-even"><p>MIT | BSD2 | BSD3 | ISC | Apache2.0 | LGPLv3+ | LGPLv3 | LGPLv2+ | LGPLv2 | no</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-fastapi-mvc-generate-generator-repo-url">
+<span class="sig-name descname"><span class="pre">--repo-url</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;repo_url&gt;</span></span><a class="headerlink" href="#cmdoption-fastapi-mvc-generate-generator-repo-url" title="Permalink to this definition">¶</a></dt>
+<dd><p>New project repository url.</p>
+</dd></dl>
+
+<p class="rubric">Arguments</p>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-fastapi-mvc-generate-generator-arg-NAME">
+<span id="cmdoption-fastapi-mvc-generate-generator-arg-name"></span><span class="sig-name descname"><span class="pre">NAME</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-fastapi-mvc-generate-generator-arg-NAME" title="Permalink to this definition">¶</a></dt>
+<dd><p>Required argument</p>
+</dd></dl>
+
+<p class="rubric">Environment variables</p>
+<span class="target" id="fastapi-mvc-generate-generator-repo-url-repo-url"></span><dl class="std envvar">
+<dt class="sig sig-object std">
+<span class="sig-name descname"><span class="pre">REPO_URL</span></span></dt>
+<dd><blockquote>
+<div><p>Provide a default for <a class="reference internal" href="#cmdoption-fastapi-mvc-generate-generator-repo-url"><code class="xref std std-option docutils literal notranslate"><span class="pre">--repo-url</span></code></a></p>
+</div></blockquote>
+</dd></dl>
+
+<p>Example:
+<cite>fastapi-mvc generate generator awesome</cite></p>
+<p>Or using short-cut alias:
+<cite>fm g gen awesome</cite></p>
+<dl class="simple">
+<dt>creates a standard awesome generator:</dt><dd><p>lib/generators/awesome/.github
+lib/generators/awesome/.github/dependabot.yml
+lib/generators/awesome/.github/workflows/update-flake.yml
+lib/generators/awesome/.envrc
+lib/generators/awesome/.gitignore
+lib/generators/awesome/CHANGELOG.md
+lib/generators/awesome/LICENSE
+lib/generators/awesome/README.md
+lib/generators/awesome/__init__.py
+lib/generators/awesome/template
+lib/generators/awesome/template/{{package_name}}
+lib/generators/awesome/template/{{package_name}}/hello_world.py
+lib/generators/awesome/update.sh
+lib/generators/awesome/flake.nix
+lib/generators/awesome/flake.lock
+lib/generators/awesome/.generator.yml
+lib/generators/awesome/awesome.py</p>
+</dd>
+</dl>
+</section>
+<section id="fastapi-mvc-generate-script">
+<h4>script<a class="headerlink" href="#fastapi-mvc-generate-script" title="Permalink to this heading">¶</a></h4>
+<p>Creates an executable shell script scaffold at the current working directory.</p>
+<p>Generator template used: <a class="reference external" href="https://github.com/fastapi-mvc/copier-script">https://github.com/fastapi-mvc/copier-script</a></p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>fastapi-mvc<span class="w"> </span>generate<span class="w"> </span>script<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span><span class="w"> </span>NAME
+</pre></div>
+</div>
+<p class="rubric">Options</p>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-fastapi-mvc-generate-script-n">
+<span id="cmdoption-fastapi-mvc-generate-script-use-nix"></span><span class="sig-name descname"><span class="pre">-n</span></span><span class="sig-prename descclassname"></span><span class="sig-prename descclassname"><span class="pre">,</span> </span><span class="sig-name descname"><span class="pre">--use-nix</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-fastapi-mvc-generate-script-n" title="Permalink to this definition">¶</a></dt>
+<dd><p>Use nix-shell (shebang header).</p>
+</dd></dl>
+
+<p class="rubric">Arguments</p>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-fastapi-mvc-generate-script-arg-NAME">
+<span id="cmdoption-fastapi-mvc-generate-script-arg-name"></span><span class="sig-name descname"><span class="pre">NAME</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-fastapi-mvc-generate-script-arg-NAME" title="Permalink to this definition">¶</a></dt>
+<dd><p>Required argument</p>
+</dd></dl>
+
+<p>Example:
+<cite>fastapi-mvc generate script example.sh</cite></p>
+<p>Or using short-cut alias:
+<cite>fm g ss example.sh</cite></p>
+<dl class="simple">
+<dt>creates an executable file:</dt><dd><p>example.sh</p>
+</dd>
+</dl>
+</section>
+</section>
+<section id="fastapi-mvc-new">
+<h3>new<a class="headerlink" href="#fastapi-mvc-new" title="Permalink to this heading">¶</a></h3>
+<p>The ‘fastapi-mvc new’ command creates a new FastAPI application with a
+default directory structure and configuration at the path you specify.</p>
+<p>Default Project template used: <a class="reference external" href="https://github.com/fastapi-mvc/copier-project">https://github.com/fastapi-mvc/copier-project</a></p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>fastapi-mvc<span class="w"> </span>new<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span><span class="w"> </span>APP_PATH
+</pre></div>
+</div>
+<p class="rubric">Options</p>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-fastapi-mvc-new-R">
+<span id="cmdoption-fastapi-mvc-new-r"></span><span id="cmdoption-fastapi-mvc-new-skip-redis"></span><span class="sig-name descname"><span class="pre">-R</span></span><span class="sig-prename descclassname"></span><span class="sig-prename descclassname"><span class="pre">,</span> </span><span class="sig-name descname"><span class="pre">--skip-redis</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-fastapi-mvc-new-R" title="Permalink to this definition">¶</a></dt>
+<dd><p>Skip Redis utility files.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-fastapi-mvc-new-A">
+<span id="cmdoption-fastapi-mvc-new-a"></span><span id="cmdoption-fastapi-mvc-new-skip-aiohttp"></span><span class="sig-name descname"><span class="pre">-A</span></span><span class="sig-prename descclassname"></span><span class="sig-prename descclassname"><span class="pre">,</span> </span><span class="sig-name descname"><span class="pre">--skip-aiohttp</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-fastapi-mvc-new-A" title="Permalink to this definition">¶</a></dt>
+<dd><p>Skip aiohttp utility files.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-fastapi-mvc-new-H">
+<span id="cmdoption-fastapi-mvc-new-h"></span><span id="cmdoption-fastapi-mvc-new-skip-helm"></span><span class="sig-name descname"><span class="pre">-H</span></span><span class="sig-prename descclassname"></span><span class="sig-prename descclassname"><span class="pre">,</span> </span><span class="sig-name descname"><span class="pre">--skip-helm</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-fastapi-mvc-new-H" title="Permalink to this definition">¶</a></dt>
+<dd><p>Skip Helm chart files.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-fastapi-mvc-new-G">
+<span id="cmdoption-fastapi-mvc-new-g"></span><span id="cmdoption-fastapi-mvc-new-skip-actions"></span><span class="sig-name descname"><span class="pre">-G</span></span><span class="sig-prename descclassname"></span><span class="sig-prename descclassname"><span class="pre">,</span> </span><span class="sig-name descname"><span class="pre">--skip-actions</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-fastapi-mvc-new-G" title="Permalink to this definition">¶</a></dt>
+<dd><p>Skip GitHub actions files.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-fastapi-mvc-new-I">
+<span id="cmdoption-fastapi-mvc-new-i"></span><span id="cmdoption-fastapi-mvc-new-skip-install"></span><span class="sig-name descname"><span class="pre">-I</span></span><span class="sig-prename descclassname"></span><span class="sig-prename descclassname"><span class="pre">,</span> </span><span class="sig-name descname"><span class="pre">--skip-install</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-fastapi-mvc-new-I" title="Permalink to this definition">¶</a></dt>
+<dd><p>Do not run make install after project generation.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-fastapi-mvc-new-N">
+<span id="cmdoption-fastapi-mvc-new-n"></span><span id="cmdoption-fastapi-mvc-new-skip-nix"></span><span class="sig-name descname"><span class="pre">-N</span></span><span class="sig-prename descclassname"></span><span class="sig-prename descclassname"><span class="pre">,</span> </span><span class="sig-name descname"><span class="pre">--skip-nix</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-fastapi-mvc-new-N" title="Permalink to this definition">¶</a></dt>
+<dd><p>Skip nix expression files.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-fastapi-mvc-new-license">
+<span class="sig-name descname"><span class="pre">--license</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;license&gt;</span></span><a class="headerlink" href="#cmdoption-fastapi-mvc-new-license" title="Permalink to this definition">¶</a></dt>
+<dd><p>Choose license.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Default<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">MIT</span></code></p>
+</dd>
+<dt class="field-even">Options<span class="colon">:</span></dt>
+<dd class="field-even"><p>MIT | BSD2 | BSD3 | ISC | Apache2.0 | LGPLv3+ | LGPLv3 | LGPLv2+ | LGPLv2 | no</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-fastapi-mvc-new-repo-url">
+<span class="sig-name descname"><span class="pre">--repo-url</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;repo_url&gt;</span></span><a class="headerlink" href="#cmdoption-fastapi-mvc-new-repo-url" title="Permalink to this definition">¶</a></dt>
+<dd><p>New project repository url.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-fastapi-mvc-new-0">
+<span id="cmdoption-fastapi-mvc-new-no-interaction"></span><span class="sig-name descname"><span class="pre">-n</span></span><span class="sig-prename descclassname"></span><span class="sig-prename descclassname"><span class="pre">,</span> </span><span class="sig-name descname"><span class="pre">--no-interaction</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-fastapi-mvc-new-0" title="Permalink to this definition">¶</a></dt>
+<dd><p>Do not ask any interactive question.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-fastapi-mvc-new-use-repo">
+<span class="sig-name descname"><span class="pre">--use-repo</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;use_repo&gt;</span></span><a class="headerlink" href="#cmdoption-fastapi-mvc-new-use-repo" title="Permalink to this definition">¶</a></dt>
+<dd><p>Overrides fastapi-mvc copier-project repository.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-fastapi-mvc-new-use-version">
+<span class="sig-name descname"><span class="pre">--use-version</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;use_version&gt;</span></span><a class="headerlink" href="#cmdoption-fastapi-mvc-new-use-version" title="Permalink to this definition">¶</a></dt>
+<dd><p>The branch, tag or commit ID to checkout after clone.</p>
+</dd></dl>
+
+<p class="rubric">Arguments</p>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-fastapi-mvc-new-arg-APP_PATH">
+<span id="cmdoption-fastapi-mvc-new-arg-app-path"></span><span class="sig-name descname"><span class="pre">APP_PATH</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-fastapi-mvc-new-arg-APP_PATH" title="Permalink to this definition">¶</a></dt>
+<dd><p>Required argument</p>
+</dd></dl>
+
+<p class="rubric">Environment variables</p>
+<span class="target" id="fastapi-mvc-new-repo-url-repo-url"></span><dl class="std envvar">
+<dt class="sig sig-object std">
+<span class="sig-name descname"><span class="pre">REPO_URL</span></span></dt>
+<dd><blockquote>
+<div><p>Provide a default for <a class="reference internal" href="#cmdoption-fastapi-mvc-new-repo-url"><code class="xref std std-option docutils literal notranslate"><span class="pre">--repo-url</span></code></a></p>
+</div></blockquote>
+</dd></dl>
+
+<p>Example:
+fastapi-mvc new ~/apis/Skynet</p>
+<p>This generates a skeletal fastapi-mvc project in ~/apis/Skynet.</p>
+</section>
+<section id="fastapi-mvc-run">
+<h3>run<a class="headerlink" href="#fastapi-mvc-run" title="Permalink to this heading">¶</a></h3>
+<p>The ‘fastapi-mvc run’ commands runs development uvicorn server for a
+fastapi-mvc project at the current working directory.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>fastapi-mvc<span class="w"> </span>run<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span>
+</pre></div>
+</div>
+<p class="rubric">Options</p>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-fastapi-mvc-run-host">
+<span class="sig-name descname"><span class="pre">--host</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;host&gt;</span></span><a class="headerlink" href="#cmdoption-fastapi-mvc-run-host" title="Permalink to this definition">¶</a></dt>
+<dd><p>Host to bind.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Default<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">127.0.0.1</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-fastapi-mvc-run-p">
+<span id="cmdoption-fastapi-mvc-run-port"></span><span class="sig-name descname"><span class="pre">-p</span></span><span class="sig-prename descclassname"></span><span class="sig-prename descclassname"><span class="pre">,</span> </span><span class="sig-name descname"><span class="pre">--port</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;port&gt;</span></span><a class="headerlink" href="#cmdoption-fastapi-mvc-run-p" title="Permalink to this definition">¶</a></dt>
+<dd><p>Port to bind.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Default<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">8000</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-fastapi-mvc-run-i">
+<span id="cmdoption-fastapi-mvc-run-install"></span><span class="sig-name descname"><span class="pre">-i</span></span><span class="sig-prename descclassname"></span><span class="sig-prename descclassname"><span class="pre">,</span> </span><span class="sig-name descname"><span class="pre">--install</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-fastapi-mvc-run-i" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run poetry install.</p>
+</dd></dl>
+
+</section>
+<section id="fastapi-mvc-update">
+<h3>update<a class="headerlink" href="#fastapi-mvc-update" title="Permalink to this heading">¶</a></h3>
+<p>The ‘fastapi-mvc update’ commands updates already generated project with the changes
+from new template version.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>fastapi-mvc<span class="w"> </span>update<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span>
+</pre></div>
+</div>
+<p class="rubric">Options</p>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-fastapi-mvc-update-n">
+<span id="cmdoption-fastapi-mvc-update-no-interaction"></span><span class="sig-name descname"><span class="pre">-n</span></span><span class="sig-prename descclassname"></span><span class="sig-prename descclassname"><span class="pre">,</span> </span><span class="sig-name descname"><span class="pre">--no-interaction</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-fastapi-mvc-update-n" title="Permalink to this definition">¶</a></dt>
+<dd><p>Do not ask any interactive question.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-fastapi-mvc-update-p">
+<span id="cmdoption-fastapi-mvc-update-pretend"></span><span class="sig-name descname"><span class="pre">-p</span></span><span class="sig-prename descclassname"></span><span class="sig-prename descclassname"><span class="pre">,</span> </span><span class="sig-name descname"><span class="pre">--pretend</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-fastapi-mvc-update-p" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run but do not make any changes.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-fastapi-mvc-update-use-version">
+<span class="sig-name descname"><span class="pre">--use-version</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;use_version&gt;</span></span><a class="headerlink" href="#cmdoption-fastapi-mvc-update-use-version" title="Permalink to this definition">¶</a></dt>
+<dd><p>The branch, tag or commit ID to checkout after clone.</p>
+</dd></dl>
+
+</section>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+  <span id="sidebar-top"></span>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  
+    
+            <p class="logo"><a href="index.html">
+              <img class="logo" src="_static/logo.png" alt="Logo"/>
+            </a></p>
+  
+
+  <h3>Contents</h3>
+  <ul>
+<li><a class="reference internal" href="#">CLI Reference</a><ul>
+<li><a class="reference internal" href="#fastapi-mvc">fastapi-mvc</a><ul>
+<li><a class="reference internal" href="#fastapi-mvc-generate">generate</a><ul>
+<li><a class="reference internal" href="#fastapi-mvc-generate-controller">controller</a></li>
+<li><a class="reference internal" href="#fastapi-mvc-generate-generator">generator</a></li>
+<li><a class="reference internal" href="#fastapi-mvc-generate-script">script</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#fastapi-mvc-new">new</a></li>
+<li><a class="reference internal" href="#fastapi-mvc-run">run</a></li>
+<li><a class="reference internal" href="#fastapi-mvc-update">update</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3>Navigation</h3>
+<ul>
+  <li><a href="index.html">Overview</a>
+    <ul>
+          <li>Previous: <a href="quickstart.html" title="previous chapter">Quickstart</a>
+          <li>Next: <a href="generators.html" title="next chapter">Generators</a>
+    </ul>
+  </li>
+</ul>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+  
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2022, Radosław Szamszur.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 6.2.1.
+    </div>
+  <script src="_static/version_warning_offset.js"></script>
+
+  </body>
+</html>

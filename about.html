@@ -1,0 +1,270 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Why fastapi-mvc? &#8212; Fastapi-mvc Documentation (0.29.0)</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/click.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/sphinx_highlight.js"></script>
+    <link rel="author" title="About these documents" href="#" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Quickstart" href="quickstart.html" />
+    <link rel="prev" title="Welcome to fastapi-mvc" href="index.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="quickstart.html" title="Quickstart"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Welcome to fastapi-mvc"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Fastapi-mvc Documentation (0.29.0)</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Why fastapi-mvc?</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="why-fastapi-mvc">
+<h1>Why fastapi-mvc?<a class="headerlink" href="#why-fastapi-mvc" title="Permalink to this heading">¶</a></h1>
+<section id="what-is-fastapi-mvc">
+<h2>What is fastapi-mvc?<a class="headerlink" href="#what-is-fastapi-mvc" title="Permalink to this heading">¶</a></h2>
+<p>Fastapi-mvc is a developer productivity tool for <a class="reference external" href="https://fastapi.tiangolo.com/">FastAPI</a> web framework.
+It is designed to make programming <a class="reference external" href="https://fastapi.tiangolo.com/">FastAPI</a> applications easier by making assumptions about what every developer needs to get started.
+It allows you to write less code while accomplishing more. It comes with a number of scripts called generators that are designed to make your development life easier by
+creating everything necessary to start working on a particular task.</p>
+<p>Fastapi-mvc is opinionated software. It assumes that there is a “best” way to do things, and it’s designed to encourage that way - and in some cases, to discourage alternatives.
+If you learn “fastapi-mvc way” you’ll probably discover a tremendous increase in productivity.
+However, suppose you persist in bringing old habits from other languages to your fastapi-mvc development, and trying to use patterns you learned elsewhere.
+In that case, you may have a less happy experience.</p>
+</section>
+<section id="motivation">
+<h2>Motivation<a class="headerlink" href="#motivation" title="Permalink to this heading">¶</a></h2>
+<p><a class="reference external" href="https://fastapi.tiangolo.com/">FastAPI</a> is an excellent, modern, fast (high-performance), web framework, but it lacks essential
+utilities and generators for the developer, for instance: creating new project structure.</p>
+<p>In some podcast (I believe it was one of Kubernetes Podcast from Google) I heard this quote:</p>
+<p>“The common denominator in excellent frameworks is that they got people working very quickly on what they’re trying to learn, experiment with, or use.”</p>
+<p>An excellent example of that is Ruby On Rails, you experience success rapidly, but then success merely opens the door to learn the underlying technology you’re using and relying upon.</p>
+<p>Think of <a class="reference external" href="https://fastapi.tiangolo.com/">FastAPI</a> + fastapi-mvc as Ruby on Rails, at least that’s the goal.</p>
+</section>
+<section id="features">
+<h2>Features<a class="headerlink" href="#features" title="Permalink to this heading">¶</a></h2>
+<section id="implemented-using-mvc-architectural-pattern">
+<h3>Implemented using MVC architectural pattern<a class="headerlink" href="#implemented-using-mvc-architectural-pattern" title="Permalink to this heading">¶</a></h3>
+<p>Generated project by fastapi-mvc is structured in MVC architectural pattern to help developers who don’t know FastAPI yet but are familiar with MVC to get up to speed quickly.</p>
+</section>
+<section id="wsgi-asgi-production-server">
+<h3>WSGI + ASGI production server<a class="headerlink" href="#wsgi-asgi-production-server" title="Permalink to this heading">¶</a></h3>
+<p><strong>TLDR;</strong></p>
+<p>Running WSGI as a master worker with ASGI workers gives better results than running pure ASGI:</p>
+<ul class="simple">
+<li><p>better performance (requests per second)</p></li>
+<li><p>better support for different protocols</p></li>
+<li><p>broader configuration</p></li>
+<li><p>better support with using reverse proxy</p></li>
+</ul>
+<p>First of all, whether it’s ASGI, WSGI, or combined, think of this as something that serves the application.
+For instance, Ruby on Rails uses Puma. The result of any of those servers is a TCP/IP or UNIX socket which is
+later on utilized by reverse proxy ex: Nginx (a TCP/IP socket you can access directly over the network, but still in
+production, usually it’ll be behind a reverse proxy).</p>
+<p>Now to WSGI + ASGI part. FastAPI is implemented with <a class="reference external" href="https://docs.python.org/3/library/asyncio.html">asyncio</a>, so having a pure WSGI server doesn’t make sense since
+you’d lose all the benefits of asynchronous concurrency. That’s where ASGI comes in. However, Python journey with
+asyncio is still pretty young. Most projects have yet to reach maturity level (you should expect early bugs and a limited feature set).
+FastAPI, as ASGI server uses uvicorn, which is still prior 1.x.x release (17 in total so far, current 0.16.0) and lacks support for some protocols (ex: no HTTP/2).
+Moreover, some reverse proxy might not know how to work with asynchronous servers, and some problems or early bugs on this layer might happen as well.</p>
+<p>I’m not saying uvicorn is bad. Quite contrary, if you’d run 4 pure uvicorn workes, you’d still get great results.
+But if you’d run the same amount of workers with gunicorn (WSGI) as a master worker, it turns out you can even pump those numbers up.</p>
+<p>Gunicorn with 4 Uvicorn Workers <a class="reference external" href="https://stackoverflow.com/a/62977786/10566747">(source)</a>:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>Requests<span class="w"> </span>per<span class="w"> </span>second:<span class="w"> </span><span class="m">7891</span>.28<span class="w"> </span><span class="o">[</span><span class="c1">#/sec] (mean)</span>
+Time<span class="w"> </span>per<span class="w"> </span>request:<span class="w"> </span><span class="m">126</span>.722<span class="w"> </span><span class="o">[</span>ms<span class="o">]</span><span class="w"> </span><span class="o">(</span>mean<span class="o">)</span>
+Time<span class="w"> </span>per<span class="w"> </span>request:<span class="w"> </span><span class="m">0</span>.127<span class="w"> </span><span class="o">[</span>ms<span class="o">]</span><span class="w"> </span><span class="o">(</span>mean,<span class="w"> </span>across<span class="w"> </span>all<span class="w"> </span>concurrent<span class="w"> </span>requests<span class="o">)</span>
+</pre></div>
+</div>
+<p>Pure Uvicorn with 4 workers:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>Requests<span class="w"> </span>per<span class="w"> </span>second:<span class="w"> </span><span class="m">4359</span>.68<span class="w"> </span><span class="o">[</span><span class="c1">#/sec] (mean)</span>
+Time<span class="w"> </span>per<span class="w"> </span>request:<span class="w"> </span><span class="m">229</span>.375<span class="w"> </span><span class="o">[</span>ms<span class="o">]</span><span class="w"> </span><span class="o">(</span>mean<span class="o">)</span>
+Time<span class="w"> </span>per<span class="w"> </span>request:<span class="w"> </span><span class="m">0</span>.229<span class="w"> </span><span class="o">[</span>ms<span class="o">]</span><span class="w"> </span><span class="o">(</span>mean,<span class="w"> </span>across<span class="w"> </span>all<span class="w"> </span>concurrent<span class="w"> </span>requests<span class="o">)</span>
+</pre></div>
+</div>
+<p>~80% better</p>
+<p>I guess gunicorn does a better job in worker management. However, it’s a more mature project, so it’s probably a matter of time
+when uvicorn (or other ASGI for that matter) will catch up to this benchmark.</p>
+<p>Last but not least, gunicorn gives a ton of <a class="reference external" href="https://docs.gunicorn.org/en/stable/settings.html">settings to configure</a>, which can come in handy.</p>
+</section>
+<section id="generated-project-comes-with-sphinx-documentation-and-100-tests-coverage">
+<h3>Generated project comes with Sphinx documentation and 100% tests coverage<a class="headerlink" href="#generated-project-comes-with-sphinx-documentation-and-100-tests-coverage" title="Permalink to this heading">¶</a></h3>
+<p>Unit test coverage is at 100% regardless of chosen configuration. There is also a placeholder for integration tests with an example dummy test.
+The metrics stage in CI workflow ensures important PEP rules are enforced. For additional readability and formatting checks - black is used.
+Every piece of generated code is documented with docstrings. Last but not least Sphinx documentation with API reference is included.</p>
+</section>
+<section id="dockerfile-with-k8s-and-cloud-in-mind">
+<h3>Dockerfile with K8s and cloud in mind<a class="headerlink" href="#dockerfile-with-k8s-and-cloud-in-mind" title="Permalink to this heading">¶</a></h3>
+<p>Container image features:</p>
+<ul class="simple">
+<li><p>Based on distroless image</p></li>
+<li><p>Run as PID 1 (with child processes)</p></li>
+<li><p>Utilizes multi-stage build for smallest size possible, also this results in having only necessary libraries/dependencies/tools in outcome container image.</p></li>
+<li><p>DigestSHA - immutable identifier instead of tags, for better reproducibility and security.</p></li>
+<li><p>Signal handling, for Kubernetes to be able to gracefully shut down pods.</p></li>
+<li><p>Created with common layers.</p></li>
+<li><p>By default runs as non-root user</p></li>
+</ul>
+<p>Based on <a class="reference external" href="https://cloud.google.com/architecture/best-practices-for-building-containers">Google Best practices for building containers</a>, <a class="reference external" href="https://sysdig.com/blog/dockerfile-best-practices">Top 20 Dockerfile best practices</a>, and own experience.</p>
+</section>
+<section id="extensive-github-actions-for-ci">
+<h3>Extensive GitHub actions for CI<a class="headerlink" href="#extensive-github-actions-for-ci" title="Permalink to this heading">¶</a></h3>
+<img alt="_images/ci.png" src="_images/ci.png" />
+</section>
+<section id="helm-chart">
+<h3>Helm chart<a class="headerlink" href="#helm-chart" title="Permalink to this heading">¶</a></h3>
+<p>For easy deployments in Kubernetes cluster.</p>
+</section>
+<section id="kubernetes-deployment-with-ha-redis-cluster">
+<h3>Kubernetes deployment with HA Redis cluster<a class="headerlink" href="#kubernetes-deployment-with-ha-redis-cluster" title="Permalink to this heading">¶</a></h3>
+<p>Application stack in Kubernetes:</p>
+<img alt="_images/k8s_arch.png" src="_images/k8s_arch.png" />
+</section>
+<section id="generate-pieces-of-code-or-even-your-own-generators">
+<h3>Generate pieces of code or even your own generators<a class="headerlink" href="#generate-pieces-of-code-or-even-your-own-generators" title="Permalink to this heading">¶</a></h3>
+<p>Fastapi-mvc comes with a number of scripts called generators that are designed to make your development life easier by creating everything that’s necessary to start working on a particular task.
+Generators are built on top of <a class="reference external" href="https://github.com/copier-org/copier">copier</a>. It provides powerful options for manipulating and creating files based on given input and template.
+Moreover, it is agnostic to the programming language one is templating.</p>
+</section>
+<section id="uses-poetry-dependency-management">
+<h3>Uses <a class="reference external" href="https://github.com/python-poetry/poetry">Poetry</a> dependency management<a class="headerlink" href="#uses-poetry-dependency-management" title="Permalink to this heading">¶</a></h3>
+<p>Poetry comes with all the tools you might need to manage your project in a deterministic way. Moreover, it’s based on new unified Python project settings file - <a class="reference external" href="https://www.python.org/dev/peps/pep-0518/">PEP 518</a> that replaces setup.py.</p>
+</section>
+<section id="includes-set-of-nix-expressions">
+<h3>Includes set of Nix expressions<a class="headerlink" href="#includes-set-of-nix-expressions" title="Permalink to this heading">¶</a></h3>
+<p>Generated project comes with set of Nix expressions for building:</p>
+<ul class="simple">
+<li><p>Python package</p></li>
+<li><p>Development environment</p></li>
+<li><p>Container image</p></li>
+</ul>
+<p>To make things easier, provided <code class="docutils literal notranslate"><span class="pre">Makefile</span></code> targets are the same regardless if one choose to use Nix or the default way (OS + Poetry). Lastly, there is <code class="docutils literal notranslate"><span class="pre">Nix</span> <span class="pre">CI</span></code> workflow included as well.</p>
+</section>
+<section id="update-already-generated-project-with-changes-from-the-new-template-version">
+<h3>Update already generated project with changes from the new template version<a class="headerlink" href="#update-already-generated-project-with-changes-from-the-new-template-version" title="Permalink to this heading">¶</a></h3>
+<p>Generated projects by <code class="docutils literal notranslate"><span class="pre">fastapi-mvc</span></code> can be easily updated with changes from the given <a class="reference external" href="https://github.com/fastapi-mvc/copier-project">copier-project</a> template version.
+The only requirement is that the project needs to be git tracked and not git dirty. The update feature also allows extending projects with previously not selected features or even changing namespaces.
+During <code class="docutils literal notranslate"><span class="pre">fastapi-mvc</span></code> integration tests, the update process correctness is verified by calculating the checksum of all files and comparing them to the reference project.
+More information on how the update process works can be found <a class="reference external" href="https://copier.readthedocs.io/en/v7.0.1/updating/#how-the-update-works">here</a>.</p>
+</section>
+<section id="virtualized-reproducible-development-environment-using-vagrant">
+<h3>Virtualized reproducible development environment using Vagrant<a class="headerlink" href="#virtualized-reproducible-development-environment-using-vagrant" title="Permalink to this heading">¶</a></h3>
+<p>Easily boot virtual machine with Vagrant. Code and test straight away.</p>
+<p><em>Note: Project directory is rsync’ed between Host and Guest.</em></p>
+<p><em>Note2: provided Vagrant vm doesn’t have port forwarding configured which means, that application won’t be accessible on Host OS.</em></p>
+</section>
+<section id="builtin-utilities">
+<h3>Builtin utilities<a class="headerlink" href="#builtin-utilities" title="Permalink to this heading">¶</a></h3>
+<p>For your discretion, I’ve provided some basic utilities:</p>
+<ul class="simple">
+<li><p>RedisClient <code class="docutils literal notranslate"><span class="pre">.app.utils.redis</span></code></p></li>
+<li><p>AiohttpClient <code class="docutils literal notranslate"><span class="pre">.app.utils.aiohttp_client</span></code></p></li>
+</ul>
+<p>They’re initialized in <code class="docutils literal notranslate"><span class="pre">asgi.py</span></code> on FastAPI startup event handler, and are available for whole application scope without passing object instances between controllers.</p>
+</section>
+<section id="configurable-from-env">
+<h3>Configurable from env<a class="headerlink" href="#configurable-from-env" title="Permalink to this heading">¶</a></h3>
+<p>Generated application provides flexibility of configuration. All significant settings are defined by the environment variables, each with the default value.</p>
+</section>
+</section>
+<section id="roadmap">
+<h2>Roadmap<a class="headerlink" href="#roadmap" title="Permalink to this heading">¶</a></h2>
+<p>Feature roadmap can be found <a class="reference external" href="https://github.com/fastapi-mvc/fastapi-mvc/issues/53">here</a>.</p>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+  <span id="sidebar-top"></span>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  
+    
+            <p class="logo"><a href="index.html">
+              <img class="logo" src="_static/logo.png" alt="Logo"/>
+            </a></p>
+  
+
+  <h3>Contents</h3>
+  <ul>
+<li><a class="reference internal" href="#">Why fastapi-mvc?</a><ul>
+<li><a class="reference internal" href="#what-is-fastapi-mvc">What is fastapi-mvc?</a></li>
+<li><a class="reference internal" href="#motivation">Motivation</a></li>
+<li><a class="reference internal" href="#features">Features</a><ul>
+<li><a class="reference internal" href="#implemented-using-mvc-architectural-pattern">Implemented using MVC architectural pattern</a></li>
+<li><a class="reference internal" href="#wsgi-asgi-production-server">WSGI + ASGI production server</a></li>
+<li><a class="reference internal" href="#generated-project-comes-with-sphinx-documentation-and-100-tests-coverage">Generated project comes with Sphinx documentation and 100% tests coverage</a></li>
+<li><a class="reference internal" href="#dockerfile-with-k8s-and-cloud-in-mind">Dockerfile with K8s and cloud in mind</a></li>
+<li><a class="reference internal" href="#extensive-github-actions-for-ci">Extensive GitHub actions for CI</a></li>
+<li><a class="reference internal" href="#helm-chart">Helm chart</a></li>
+<li><a class="reference internal" href="#kubernetes-deployment-with-ha-redis-cluster">Kubernetes deployment with HA Redis cluster</a></li>
+<li><a class="reference internal" href="#generate-pieces-of-code-or-even-your-own-generators">Generate pieces of code or even your own generators</a></li>
+<li><a class="reference internal" href="#uses-poetry-dependency-management">Uses Poetry dependency management</a></li>
+<li><a class="reference internal" href="#includes-set-of-nix-expressions">Includes set of Nix expressions</a></li>
+<li><a class="reference internal" href="#update-already-generated-project-with-changes-from-the-new-template-version">Update already generated project with changes from the new template version</a></li>
+<li><a class="reference internal" href="#virtualized-reproducible-development-environment-using-vagrant">Virtualized reproducible development environment using Vagrant</a></li>
+<li><a class="reference internal" href="#builtin-utilities">Builtin utilities</a></li>
+<li><a class="reference internal" href="#configurable-from-env">Configurable from env</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#roadmap">Roadmap</a></li>
+</ul>
+</li>
+</ul>
+<h3>Navigation</h3>
+<ul>
+  <li><a href="index.html">Overview</a>
+    <ul>
+          <li>Previous: <a href="index.html" title="previous chapter">Welcome to fastapi-mvc</a>
+          <li>Next: <a href="quickstart.html" title="next chapter">Quickstart</a>
+    </ul>
+  </li>
+</ul>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+  
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2022, Radosław Szamszur.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 6.2.1.
+    </div>
+  <script src="_static/version_warning_offset.js"></script>
+
+  </body>
+</html>

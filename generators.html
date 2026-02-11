@@ -1,0 +1,452 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Generators &#8212; Fastapi-mvc Documentation (0.29.0)</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/click.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/sphinx_highlight.js"></script>
+    <link rel="author" title="About these documents" href="about.html" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="API" href="api.html" />
+    <link rel="prev" title="CLI Reference" href="cli.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="api.html" title="API"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="cli.html" title="CLI Reference"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Fastapi-mvc Documentation (0.29.0)</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Generators</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="generators">
+<h1>Generators<a class="headerlink" href="#generators" title="Permalink to this heading">¶</a></h1>
+<p>When you create an application using the <code class="docutils literal notranslate"><span class="pre">fastapi-mvc</span> <span class="pre">new</span></code> command, you are in fact using a generator.
+After that, you can get a list of all available generators by just invoking <code class="docutils literal notranslate"><span class="pre">fastapi-mvc</span> <span class="pre">generate</span></code>:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>fastapi-mvc<span class="w"> </span>new<span class="w"> </span>my-app
+<span class="nb">cd</span><span class="w"> </span>my-app
+fastapi-mvc<span class="w"> </span>generate<span class="w"> </span>--help
+<span class="c1"># Or using alias short-cut</span>
+fm<span class="w"> </span>g<span class="w"> </span>--help
+</pre></div>
+</div>
+<p>You will get a list of all generators that come with <code class="docutils literal notranslate"><span class="pre">fastapi-mvc</span></code>.
+If you need a detailed description of the controller generator, for example, you can simply do:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>fastapi-mvc<span class="w"> </span>generate<span class="w"> </span>controller<span class="w"> </span>--help
+<span class="c1"># Or using alias short-cut</span>
+fm<span class="w"> </span>g<span class="w"> </span>ctl<span class="w"> </span>--help
+</pre></div>
+</div>
+<section id="creating-your-first-generator">
+<h2>Creating your first generator<a class="headerlink" href="#creating-your-first-generator" title="Permalink to this heading">¶</a></h2>
+<p>Generators are built on top of <a class="reference external" href="https://github.com/copier-org/copier">copier</a>. It provides powerful options for manipulating and creating files based on given input and template.
+Moreover, it is agnostic to the programming language one is templating. The best way to understand concepts behind generators is by creating one from scratch (but worry not, there is a builtin generator for generating generators, so you won’t have to do this every time).
+For instance, let’s create a <code class="docutils literal notranslate"><span class="pre">foobar</span></code> generator with name given as CLI argument, that creates a <code class="docutils literal notranslate"><span class="pre">hello_world.py</span></code> file inside <code class="docutils literal notranslate"><span class="pre">my_app</span></code> directory.</p>
+<section id="generator-cli">
+<h3>Generator CLI<a class="headerlink" href="#generator-cli" title="Permalink to this heading">¶</a></h3>
+<p>The first step is to create a bare minimum generator command line interface at <code class="docutils literal notranslate"><span class="pre">./lib/generators/foobar/foobar.py</span></code> with the following content:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">click</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">copier</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">fastapi_mvc.cli</span><span class="w"> </span><span class="kn">import</span> <span class="n">GeneratorCommand</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">fastapi_mvc.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">require_fastapi_mvc_project</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">fastapi_mvc.constants</span><span class="w"> </span><span class="kn">import</span> <span class="n">ANSWERS_FILE</span>
+
+
+<span class="n">cmd_short_help</span> <span class="o">=</span> <span class="s2">&quot;Run custom generator foobar.&quot;</span>
+<span class="n">cmd_help</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span><span class="se">\</span>
+<span class="s2">Creates a dummy hello_world.py example.</span>
+<span class="s2">&quot;&quot;&quot;</span>
+<span class="n">epilog</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span><span class="se">\</span>
+<span class="s2">Example:</span>
+<span class="s2">    `fastapi-mvc generate foobar WORLD!`</span>
+
+<span class="s2">    creates an example file:</span>
+<span class="s2">        helo_world.py</span>
+
+<span class="s2">&quot;&quot;&quot;</span>
+
+
+<span class="nd">@click</span><span class="o">.</span><span class="n">command</span><span class="p">(</span>
+    <span class="bp">cls</span><span class="o">=</span><span class="n">GeneratorCommand</span><span class="p">,</span>
+    <span class="n">help</span><span class="o">=</span><span class="n">cmd_help</span><span class="p">,</span>
+    <span class="n">short_help</span><span class="o">=</span><span class="n">cmd_short_help</span><span class="p">,</span>
+    <span class="n">epilog</span><span class="o">=</span><span class="n">epilog</span><span class="p">,</span>
+    <span class="c1"># Define alias short-cut for more efficient invocation</span>
+    <span class="n">alias</span><span class="o">=</span><span class="s2">&quot;foo&quot;</span><span class="p">,</span>
+    <span class="c1"># Define category under which generator should be printed in ``fastapi-mvc generate`` CLI command help page.</span>
+    <span class="n">category</span><span class="o">=</span><span class="s2">&quot;Custom&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="nd">@click</span><span class="o">.</span><span class="n">argument</span><span class="p">(</span>
+    <span class="s2">&quot;NAME&quot;</span><span class="p">,</span>
+    <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">nargs</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">foobar</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Define foobar generator command-line interface.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        name (str): Given name to greet.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">project_data</span> <span class="o">=</span> <span class="n">require_fastapi_mvc_project</span><span class="p">()</span>
+
+    <span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;project_name&quot;</span><span class="p">:</span> <span class="n">project_data</span><span class="p">[</span><span class="s2">&quot;project_name&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="n">name</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;-&quot;</span><span class="p">,</span> <span class="s2">&quot;_&quot;</span><span class="p">),</span>
+    <span class="p">}</span>
+
+    <span class="n">copier</span><span class="o">.</span><span class="n">run_copy</span><span class="p">(</span>
+        <span class="n">src_path</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">),</span>  <span class="c1"># Or use repository address</span>
+        <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span>
+        <span class="n">answers_file</span><span class="o">=</span><span class="n">ANSWERS_FILE</span><span class="p">,</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+<p>Our new generator is quite simple, it uses <code class="docutils literal notranslate"><span class="pre">GeneratorCommand</span></code> class to instantiate command line interface for this concrete generator. If you have used <a class="reference external" href="https://click.palletsprojects.com/en/8.1.x/">Click</a> before, this should be familiar to you.
+When a generator is invoked, the decorated method is executed with arguments and options provided from CLI command. In this case it is <code class="docutils literal notranslate"><span class="pre">name</span></code> CLI argument. Using <code class="docutils literal notranslate"><span class="pre">GeneratorCommand</span></code> class is not required. It only provides you with <code class="docutils literal notranslate"><span class="pre">alias</span></code>, <code class="docutils literal notranslate"><span class="pre">category</span></code> and some help formatting utils.
+You can use <code class="docutils literal notranslate"><span class="pre">click.Command</span></code> should you choose.</p>
+</section>
+<section id="copier-template">
+<h3>Copier template<a class="headerlink" href="#copier-template" title="Permalink to this heading">¶</a></h3>
+<p>In order to actually generate something, we still need to define a copier template. The first step is to create core template structure:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>foobar/
+├──<span class="w"> </span>template
+│<span class="w">   </span>└──<span class="w"> </span><span class="o">{{</span>package_name<span class="o">}}</span>
+│<span class="w">       </span>└──<span class="w"> </span>hello_world.py.jinja
+└──<span class="w"> </span>copier.yml
+</pre></div>
+</div>
+<p>You must have:</p>
+<ul class="simple">
+<li><p>A <code class="docutils literal notranslate"><span class="pre">copier.yml</span></code> file, that defines copier template configuration.</p></li>
+<li><p>A subdirectory that contains template files (configurable and not mandatory).</p></li>
+</ul>
+<p>Beyond that, you can have whatever files/directories you want.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Directory <code class="docutils literal notranslate"><span class="pre">{{package_name}}</span></code> is only needed if you want to generate files inside the project Python package.</p>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">copier.yml</span></code> defines template configuration, in our case it will be the following content:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="c1"># TEMPLATE SETTINGS</span>
+<span class="nt">_subdirectory</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">template</span>
+<span class="nt">_templates_suffix</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">.jinja</span>
+<span class="nt">_min_copier_version</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;6.2.0&quot;</span>
+<span class="nt">_envops</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">block_end_string</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;%}&quot;</span>
+<span class="w">  </span><span class="nt">block_start_string</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{%&quot;</span>
+<span class="w">  </span><span class="nt">comment_end_string</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;#}&quot;</span>
+<span class="w">  </span><span class="nt">comment_start_string</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{#&quot;</span>
+<span class="w">  </span><span class="nt">keep_trailing_newline</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">  </span><span class="nt">variable_end_string</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;}}&quot;</span>
+<span class="w">  </span><span class="nt">variable_start_string</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{&quot;</span>
+
+<span class="c1"># TEMPLATE QUESTIONS</span>
+<span class="nt">project_name</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">str</span>
+<span class="w">  </span><span class="nt">help</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">&gt;-</span>
+<span class="w">    </span><span class="no">What&#39;s your project name?</span>
+
+<span class="w">    </span><span class="no">Do not use dots or spaces in the name; just &quot;A-Za-z0-9-_&quot; please.</span>
+
+<span class="nt">name</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">str</span>
+<span class="w">  </span><span class="nt">help</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">What is the name to greet for the generator hello world example?</span>
+
+<span class="c1"># TEMPLATE NONE-CONFIGURABLE DEFAULTS</span>
+<span class="nt">package_name</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">str</span>
+<span class="w">  </span><span class="nt">default</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">project_name|lower|replace(&#39;</span><span class="nv"> </span><span class="s">&#39;,&#39;_&#39;)|replace(&#39;-&#39;,&#39;_&#39;)</span><span class="nv"> </span><span class="s">}}&quot;</span>
+<span class="w">  </span><span class="nt">when</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You might wonder why <code class="docutils literal notranslate"><span class="pre">project_name</span></code> and <code class="docutils literal notranslate"><span class="pre">package_name</span></code> are included in the template configuration when the generator only uses <code class="docutils literal notranslate"><span class="pre">name</span></code> (equivalent to name CLI argument) question?
+Since <code class="docutils literal notranslate"><span class="pre">foobar</span></code> generator will create a file inside the project Python module, it needs to know its directory name first.
+As a way to normalize value for the template, <code class="docutils literal notranslate"><span class="pre">package_name</span></code> - the non-configurable default is based on <code class="docutils literal notranslate"><span class="pre">project_name</span></code> value.
+Hence <code class="docutils literal notranslate"><span class="pre">project_name</span></code> question in <code class="docutils literal notranslate"><span class="pre">copier.yml</span></code> and the value in the <code class="docutils literal notranslate"><span class="pre">data</span></code> dictionary passed to the <code class="docutils literal notranslate"><span class="pre">run_copy</span></code> method.
+Moreover, for your convenience, this value is automatically read from <code class="docutils literal notranslate"><span class="pre">.fastapi-mvc.yml</span></code> file via <code class="docutils literal notranslate"><span class="pre">require_fastapi_mvc_project()</span></code> utility method.
+But nothing stands in your way of providing package_name directly or in any valid way you’d see fit.</p>
+</div>
+<p>Template questions looks familiar? It is contains exactly the same keys as copier data dictionary:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;project_name&quot;</span><span class="p">:</span> <span class="n">ctx</span><span class="o">.</span><span class="n">command</span><span class="o">.</span><span class="n">project_data</span><span class="p">[</span><span class="s2">&quot;project_name&quot;</span><span class="p">],</span>
+    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="n">name</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;-&quot;</span><span class="p">,</span> <span class="s2">&quot;_&quot;</span><span class="p">),</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Lastly, we need to implement <code class="docutils literal notranslate"><span class="pre">hello_world.py.jinja</span></code> template file.</p>
+<div class="highlight-jinja notranslate"><div class="highlight"><pre><span></span><span class="x">&quot;&quot;&quot;A dummy template file example&quot;</span>
+<span class="x">print(&quot;Hello </span><span class="cp">{{</span><span class="nv">name</span><span class="cp">}}</span><span class="x">!&quot;)</span>
+</pre></div>
+</div>
+<p>Before we can actually invoke foobar generator we need to make it visible for fastapi-mvc.</p>
+</section>
+<section id="generators-lookup">
+<h3>Generators lookup<a class="headerlink" href="#generators-lookup" title="Permalink to this heading">¶</a></h3>
+<p>To be imported a valid fastapi-mvc generator must have:</p>
+<ul class="simple">
+<li><p>A <code class="docutils literal notranslate"><span class="pre">*.py</span></code> file, that defines generator CLI and execution logic.</p></li>
+<li><p>A <code class="docutils literal notranslate"><span class="pre">__init__.py</span></code> file, that defines Python submodule and attribute for generator lookup.</p></li>
+</ul>
+<p>Since Python modules can have many files, classes, and methods we need to tell fastapi-mvc where to search for <code class="docutils literal notranslate"><span class="pre">foobar</span></code> generator. To do so write the following content to <code class="docutils literal notranslate"><span class="pre">__init__.py</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;Custom generator for fastapi-mvc.&quot;&quot;&quot;</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.foobar</span><span class="w"> </span><span class="kn">import</span> <span class="n">foobar</span>
+
+<span class="c1"># NOTE! Do not edit this! Method for programmatically loading user generators</span>
+<span class="c1"># depends on having only one fastapi_mvc.Generator in module `generator` attribute.</span>
+<span class="n">generator</span> <span class="o">=</span> <span class="n">foobar</span>
+</pre></div>
+</div>
+<p>Now our <code class="docutils literal notranslate"><span class="pre">foobar</span></code> generator structure will look like so:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>foobar/
+├──<span class="w"> </span>template
+│<span class="w">   </span>└──<span class="w"> </span><span class="o">{{</span>package_name<span class="o">}}</span>
+│<span class="w">       </span>└──<span class="w"> </span>hello_world.py.jinja
+├──<span class="w"> </span>__init__.py
+├──<span class="w"> </span>foobar.py
+└──<span class="w"> </span>copier.yml
+</pre></div>
+</div>
+<p>By default <code class="docutils literal notranslate"><span class="pre">fastapi-mvc</span></code> will try import generators from <code class="docutils literal notranslate"><span class="pre">lib/generators</span></code> located in the project root directory. However, one can provide additional paths to look for via <code class="docutils literal notranslate"><span class="pre">FMVC_PATH</span></code> environment variable:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span><span class="w"> </span><span class="nv">FMVC_PATH</span><span class="o">=</span><span class="s2">&quot;/my/generators:/home/user/fastapi-mvc-generators&quot;</span>
+fastapi-mvc<span class="w"> </span>generate<span class="w"> </span>--help
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The given path must point to the parent directory, not a generator root! For instance, if our <code class="docutils literal notranslate"><span class="pre">foobar</span></code> directory is located at <code class="docutils literal notranslate"><span class="pre">/tmp/generators/foobar</span></code> one needs to point to <code class="docutils literal notranslate"><span class="pre">/tmp/generators</span></code> otherwise import will fail with an exception.</p>
+</div>
+</section>
+<section id="invoking-generator">
+<h3>Invoking generator<a class="headerlink" href="#invoking-generator" title="Permalink to this heading">¶</a></h3>
+<p>To invoke our new generator we just need to call it:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>fastapi-mvc<span class="w"> </span>generate<span class="w"> </span>foobar<span class="w"> </span>johndoe
+
+Copying<span class="w"> </span>from<span class="w"> </span>template<span class="w"> </span>version<span class="w"> </span>None
+<span class="w"> </span>identical<span class="w">  </span>.
+<span class="w"> </span>identical<span class="w">  </span>my_app
+<span class="w">    </span>create<span class="w">  </span>my_app/hello_world.py
+
+$<span class="w"> </span>cat<span class="w"> </span>my_app/hello_world.py
+<span class="s2">&quot;&quot;&quot;A dummy template file example&quot;</span>
+print<span class="o">(</span><span class="s2">&quot;Hello johndoe!&quot;</span><span class="o">)</span>
+</pre></div>
+</div>
+<p>Before we go on, let’s see our brand new generator description:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>fastapi-mvc<span class="w"> </span>generate<span class="w"> </span>foobar<span class="w"> </span>--help
+Usage:<span class="w"> </span>fastapi-mvc<span class="w"> </span>generate<span class="w"> </span>foobar<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span><span class="w"> </span>NAME
+
+<span class="w">  </span>Creates<span class="w"> </span>a<span class="w"> </span>dummy<span class="w"> </span>hello_world.py<span class="w"> </span>example.
+
+Options:
+<span class="w">  </span>--help<span class="w">  </span>Show<span class="w"> </span>this<span class="w"> </span>message<span class="w"> </span>and<span class="w"> </span>exit.
+
+Example:
+<span class="w">    </span><span class="sb">`</span>fastapi-mvc<span class="w"> </span>generate<span class="w"> </span>foobar<span class="w"> </span>WORLD!<span class="sb">`</span>
+
+<span class="w">    </span>creates<span class="w"> </span>an<span class="w"> </span>example<span class="w"> </span>file:
+<span class="w">        </span>helo_world.py
+</pre></div>
+</div>
+</section>
+<section id="considerations">
+<h3>Considerations<a class="headerlink" href="#considerations" title="Permalink to this heading">¶</a></h3>
+<p>This tutorial explains the basic concept and implementations behind fastapi-mvc generators.
+The same use case can be templated in various ways. The full possibilities of copier and jinja are beyond the scope of this tutorial.</p>
+<p>For more information please see <a class="reference external" href="https://copier.readthedocs.io/en/v6.2.0/">copier documentation</a>, <a class="reference external" href="https://jinja.palletsprojects.com/en/3.1.x/">jinja documentation</a>.
+Builtin generators can be found in <a class="reference external" href="https://github.com/fastapi-mvc/fastapi-mvc/tree/master/fastapi_mvc/generators">fastapi_mvc.generators submodule</a>
+In case of any questions or problems, feel free to create an <a class="reference external" href="https://github.com/fastapi-mvc/fastapi-mvc/issues/new/choose">issue</a> or open a new <a class="reference external" href="https://github.com/fastapi-mvc/fastapi-mvc/discussions">discussion</a>.</p>
+</section>
+</section>
+<section id="creating-generators-with-generators">
+<h2>Creating generators with generators<a class="headerlink" href="#creating-generators-with-generators" title="Permalink to this heading">¶</a></h2>
+<p>Generators themselves have a generator:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>fastapi-mvc<span class="w"> </span>generate<span class="w"> </span>generator<span class="w"> </span>--help
+Usage:<span class="w"> </span>fastapi-mvc<span class="w"> </span>generate<span class="w"> </span>generator<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span><span class="w"> </span>NAME
+
+<span class="w">  </span>Creates<span class="w"> </span>a<span class="w"> </span>new<span class="w"> </span>generator<span class="w"> </span>at<span class="w"> </span>lib/generators.<span class="w"> </span>Pass<span class="w"> </span>the<span class="w"> </span>generator<span class="w"> </span>name
+<span class="w">  </span>under_scored.
+
+Options:
+<span class="w">  </span>-N,<span class="w"> </span>--skip-nix<span class="w">                  </span>Skip<span class="w"> </span>nix<span class="w"> </span>expression<span class="w"> </span>files.
+<span class="w">  </span>--license<span class="w"> </span><span class="o">[</span>MIT<span class="p">|</span>BSD2<span class="p">|</span>BSD3<span class="p">|</span>ISC<span class="p">|</span>Apache2.0<span class="p">|</span>LGPLv3+<span class="p">|</span>LGPLv3<span class="p">|</span>LGPLv2+<span class="p">|</span>LGPLv2<span class="p">|</span>no<span class="o">]</span>
+<span class="w">                                  </span>Choose<span class="w"> </span>license.<span class="w">  </span><span class="o">[</span>default:<span class="w"> </span>MIT<span class="o">]</span>
+<span class="w">  </span>--repo-url<span class="w"> </span>TEXT<span class="w">                 </span>New<span class="w"> </span>project<span class="w"> </span>repository<span class="w"> </span>url.
+<span class="w">  </span>--help<span class="w">                          </span>Show<span class="w"> </span>this<span class="w"> </span>message<span class="w"> </span>and<span class="w"> </span>exit.
+
+Example:
+<span class="w">    </span><span class="sb">`</span>fastapi-mvc<span class="w"> </span>generate<span class="w"> </span>generator<span class="w"> </span>awesome<span class="sb">`</span>
+
+<span class="w">    </span>creates<span class="w"> </span>a<span class="w"> </span>standard<span class="w"> </span>awesome<span class="w"> </span>generator:
+<span class="w">        </span>lib/generators/awesome/.github
+<span class="w">        </span>lib/generators/awesome/.github/dependabot.yml
+<span class="w">        </span>lib/generators/awesome/.github/workflows/update-flake.yml
+<span class="w">        </span>lib/generators/awesome/.envrc
+<span class="w">        </span>lib/generators/awesome/.gitignore
+<span class="w">        </span>lib/generators/awesome/CHANGELOG.md
+<span class="w">        </span>lib/generators/awesome/LICENSE
+<span class="w">        </span>lib/generators/awesome/README.md
+<span class="w">        </span>lib/generators/awesome/__init__.py
+<span class="w">        </span>lib/generators/awesome/template
+<span class="w">        </span>lib/generators/awesome/template/<span class="o">{{</span>package_name<span class="o">}}</span>
+<span class="w">        </span>lib/generators/awesome/template/<span class="o">{{</span>package_name<span class="o">}}</span>/hello_world.py
+<span class="w">        </span>lib/generators/awesome/update.sh
+<span class="w">        </span>lib/generators/awesome/flake.nix
+<span class="w">        </span>lib/generators/awesome/flake.lock
+<span class="w">        </span>lib/generators/awesome/.generator.yml
+<span class="w">        </span>lib/generators/awesome/awesome.py
+</pre></div>
+</div>
+</section>
+<section id="adding-cli-options-and-arguments">
+<h2>Adding CLI options and arguments<a class="headerlink" href="#adding-cli-options-and-arguments" title="Permalink to this heading">¶</a></h2>
+<p>If you have used <a class="reference external" href="https://click.palletsprojects.com/en/8.1.x/">Click</a> before, this should be a piece of cake for you.</p>
+<p>Really, the only difference between any <code class="docutils literal notranslate"><span class="pre">Click</span></code> command and fastapi-mvc generator is a custom class, and its few extra <code class="docutils literal notranslate"><span class="pre">kwargs</span></code> passed to <code class="docutils literal notranslate"><span class="pre">&#64;click.command</span></code> decorator.
+The differences are highlighted:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nd">@click</span><span class="o">.</span><span class="n">command</span><span class="p">(</span>
+<span class="hll">    <span class="bp">cls</span><span class="o">=</span><span class="n">GeneratorCommand</span><span class="p">,</span>
+</span>    <span class="n">help</span><span class="o">=</span><span class="n">cmd_help</span><span class="p">,</span>
+    <span class="n">short_help</span><span class="o">=</span><span class="n">cmd_short_help</span><span class="p">,</span>
+    <span class="n">epilog</span><span class="o">=</span><span class="n">epilog</span><span class="p">,</span>
+<span class="hll">    <span class="n">alias</span><span class="o">=</span><span class="s2">&quot;foo&quot;</span><span class="p">,</span>
+</span><span class="hll">    <span class="n">category</span><span class="o">=</span><span class="s2">&quot;Custom&quot;</span><span class="p">,</span>
+</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The rest of the implementation is just a pure Python Click.</p>
+</section>
+<section id="what-about-project-data">
+<h2>What about project data?<a class="headerlink" href="#what-about-project-data" title="Permalink to this heading">¶</a></h2>
+<p>Some generators might need to know the state from which a concrete project was rendered to generate something on top of it.
+For instance, it might depend on the information if the project has enabled Nix and will render its contents accordingly or just simply needs to know the name of the Python package directory name.
+This is where project data comes in. Via <code class="docutils literal notranslate"><span class="pre">require_fastapi_mvc_project()</span></code> method, one can load <code class="docutils literal notranslate"><span class="pre">.fastapi-mvc.yml</span></code> file and validate the project.</p>
+<p>But wait? What data is actually stored in <code class="docutils literal notranslate"><span class="pre">.fastapi-mvc.yml</span></code> file? Well this depends on the <a class="reference external" href="https://github.com/fastapi-mvc/copier-project">copier project template</a> used for rendering the project.
+In a nutshell it is a copier answers file that includes the current answers and copier metadata. It is used both by copier (updating, copying over, etc.) and fastapi-mvc.</p>
+<p>Example contents:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="c1"># Changes here will be overwritten by Copier</span>
+<span class="nt">_commit</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">efb938e</span>
+<span class="nt">_src_path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://github.com/fastapi-mvc/copier-project.git</span>
+<span class="nt">aiohttp</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="nt">author</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Radosław Szamszur</span>
+<span class="nt">chart_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">test-app</span>
+<span class="nt">container_image_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">test-app</span>
+<span class="nt">copyright_date</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;2022&#39;</span>
+<span class="nt">email</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">github@rsd.sh</span>
+<span class="nt">fastapi_mvc_version</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.17.0</span>
+<span class="nt">github_actions</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="nt">helm</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="nt">license</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">MIT</span>
+<span class="nt">nix</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="nt">package_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">test_app</span>
+<span class="nt">project_description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">This project was generated with fastapi-mvc.</span>
+<span class="nt">project_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">test-app</span>
+<span class="nt">redis</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="nt">repo_url</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://your.repo.url.here</span>
+<span class="nt">script_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">test-app</span>
+<span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.1.0</span>
+</pre></div>
+</div>
+</section>
+<section id="define-alias-short-cut">
+<h2>Define alias short-cut<a class="headerlink" href="#define-alias-short-cut" title="Permalink to this heading">¶</a></h2>
+<p>It is all about efficiency. Why type the long <code class="docutils literal notranslate"><span class="pre">fastapi-mvc</span> <span class="pre">generate</span> <span class="pre">foobar</span> <span class="pre">...</span></code> command? Ain’t nobody got time for that. All you need to do is define an alias for your generator:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nd">@click</span><span class="o">.</span><span class="n">command</span><span class="p">(</span>
+    <span class="bp">cls</span><span class="o">=</span><span class="n">GeneratorCommand</span><span class="p">,</span>
+    <span class="o">...</span><span class="p">,</span>
+    <span class="n">alias</span><span class="o">=</span><span class="s2">&quot;foo&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>And, now invoke it with speed: <code class="docutils literal notranslate"><span class="pre">fm</span> <span class="pre">g</span> <span class="pre">foo</span> <span class="pre">...</span></code></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code class="docutils literal notranslate"><span class="pre">fm</span></code> is an alias for <code class="docutils literal notranslate"><span class="pre">fastapi-mvc</span></code> entrypoint, and <code class="docutils literal notranslate"><span class="pre">g</span></code> is an alias for <code class="docutils literal notranslate"><span class="pre">generate</span></code> command.</p>
+</div>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+  <span id="sidebar-top"></span>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  
+    
+            <p class="logo"><a href="index.html">
+              <img class="logo" src="_static/logo.png" alt="Logo"/>
+            </a></p>
+  
+
+  <h3>Contents</h3>
+  <ul>
+<li><a class="reference internal" href="#">Generators</a><ul>
+<li><a class="reference internal" href="#creating-your-first-generator">Creating your first generator</a></li>
+<li><a class="reference internal" href="#creating-generators-with-generators">Creating generators with generators</a></li>
+<li><a class="reference internal" href="#adding-cli-options-and-arguments">Adding CLI options and arguments</a></li>
+<li><a class="reference internal" href="#what-about-project-data">What about project data?</a></li>
+<li><a class="reference internal" href="#define-alias-short-cut">Define alias short-cut</a></li>
+</ul>
+</li>
+</ul>
+<h3>Navigation</h3>
+<ul>
+  <li><a href="index.html">Overview</a>
+    <ul>
+          <li>Previous: <a href="cli.html" title="previous chapter">CLI Reference</a>
+          <li>Next: <a href="api.html" title="next chapter">API</a>
+    </ul>
+  </li>
+</ul>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+  
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2022, Radosław Szamszur.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 6.2.1.
+    </div>
+  <script src="_static/version_warning_offset.js"></script>
+
+  </body>
+</html>

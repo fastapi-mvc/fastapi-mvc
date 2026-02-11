@@ -1,0 +1,744 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>API &#8212; Fastapi-mvc Documentation (0.29.0)</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/click.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/sphinx_highlight.js"></script>
+    <link rel="author" title="About these documents" href="about.html" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Contributing" href="contributing.html" />
+    <link rel="prev" title="Generators" href="generators.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="contributing.html" title="Contributing"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="generators.html" title="Generators"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Fastapi-mvc Documentation (0.29.0)</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">API</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="api">
+<h1>API<a class="headerlink" href="#api" title="Permalink to this heading">¶</a></h1>
+<p>This part of the documentation lists the full API reference of all classes and functions.</p>
+<section id="module-fastapi_mvc.cli">
+<span id="cli"></span><h2>CLI<a class="headerlink" href="#module-fastapi_mvc.cli" title="Permalink to this heading">¶</a></h2>
+<p>Command-line interface.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">fastapi_mvc.cli</span></code> submodule defines Click command-line interface root and
+its commands.</p>
+<dl class="simple">
+<dt>Resources:</dt><dd><ol class="arabic simple">
+<li><p><a class="reference external" href="https://click.palletsprojects.com/en/8.1.x/">Click documentation</a></p></li>
+</ol>
+</dd>
+</dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="fastapi_mvc.cli.ClickAliasedCommand">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">fastapi_mvc.cli.</span></span><span class="sig-name descname"><span class="pre">ClickAliasedCommand</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">alias</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fastapi_mvc.cli.ClickAliasedCommand" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://click.palletsprojects.com/en/stable/api/#click.Command" title="(in Click v8.3.x)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Command</span></code></a></p>
+<p>Defines base class for all concrete fastapi-mvc CLI commands.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>alias</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – Given command alias.</p></li>
+<li><p><strong>*args</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.14)"><em>Any</em></a>) – Parent class constructor args.</p></li>
+<li><p><strong>**kwargs</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.14)"><em>Any</em></a>) – Parent class constructor kwargs.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="fastapi_mvc.cli.ClickAliasedCommand.alias">
+<span class="sig-name descname"><span class="pre">alias</span></span><a class="headerlink" href="#fastapi_mvc.cli.ClickAliasedCommand.alias" title="Permalink to this definition">¶</a></dt>
+<dd><p>Command alias.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="simple">
+<dt>Resources:</dt><dd><ol class="arabic simple">
+<li><p><a class="reference external" href="https://click.palletsprojects.com/en/8.1.x/api/#click.Command">click.Command class documentation</a></p></li>
+</ol>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="fastapi_mvc.cli.ClickAliasedGroup">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">fastapi_mvc.cli.</span></span><span class="sig-name descname"><span class="pre">ClickAliasedGroup</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fastapi_mvc.cli.ClickAliasedGroup" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://click.palletsprojects.com/en/stable/api/#click.Group" title="(in Click v8.3.x)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Group</span></code></a></p>
+<p>Custom click.Group class implementation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>*args</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.14)"><em>Any</em></a>) – Parent class constructor args.</p></li>
+<li><p><strong>**kwargs</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.14)"><em>Any</em></a>) – Parent class constructor kwargs.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="fastapi_mvc.cli.ClickAliasedGroup.aliases">
+<span class="sig-name descname"><span class="pre">aliases</span></span><a class="headerlink" href="#fastapi_mvc.cli.ClickAliasedGroup.aliases" title="Permalink to this definition">¶</a></dt>
+<dd><p>Map of command aliases to their names.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="simple">
+<dt>Resources:</dt><dd><ol class="arabic simple">
+<li><p><a class="reference external" href="https://click.palletsprojects.com/en/8.1.x/api/#click.Group">click.Group class documentation</a></p></li>
+</ol>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="fastapi_mvc.cli.ClickAliasedGroup.add_command">
+<span class="sig-name descname"><span class="pre">add_command</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cmd</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fastapi_mvc.cli.ClickAliasedGroup.add_command" title="Permalink to this definition">¶</a></dt>
+<dd><p>Register another Command class object instance with this group.</p>
+<p>If the name is not provided, the name of the command is used.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cmd</strong> (<a class="reference external" href="https://click.palletsprojects.com/en/stable/api/#click.Command" title="(in Click v8.3.x)"><em>click.Command</em></a>) – Command class object instance to register.</p></li>
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.14)"><em>Optional</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>]</em>) – Given command name.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="fastapi_mvc.cli.ClickAliasedGroup.format_commands">
+<span class="sig-name descname"><span class="pre">format_commands</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ctx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">formatter</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fastapi_mvc.cli.ClickAliasedGroup.format_commands" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write all the commands into the formatter if they exist.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ctx</strong> (<a class="reference external" href="https://click.palletsprojects.com/en/stable/api/#click.Context" title="(in Click v8.3.x)"><em>click.Context</em></a>) – Click Context class object instance.</p></li>
+<li><p><strong>formatter</strong> (<a class="reference external" href="https://click.palletsprojects.com/en/stable/api/#click.HelpFormatter" title="(in Click v8.3.x)"><em>click.HelpFormatter</em></a>) – Click HelpFormatter class object instance.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="fastapi_mvc.cli.ClickAliasedGroup.get_command">
+<span class="sig-name descname"><span class="pre">get_command</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ctx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cmd_name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fastapi_mvc.cli.ClickAliasedGroup.get_command" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return Command class object instance.</p>
+<p>Given a context and a command name or alias, this returns a <code class="docutils literal notranslate"><span class="pre">Command</span></code> class
+object instance if it exists.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ctx</strong> (<a class="reference external" href="https://click.palletsprojects.com/en/stable/api/#click.Context" title="(in Click v8.3.x)"><em>click.Context</em></a>) – Click Context class object instance.</p></li>
+<li><p><strong>cmd_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – Chosen command name.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>Command class object instance for given</dt><dd><p>command name.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.14)"><em>Optional</em></a>[<a class="reference external" href="https://click.palletsprojects.com/en/stable/api/#click.Command" title="(in Click v8.3.x)">click.Command</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="fastapi_mvc.cli.GeneratorCommand">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">fastapi_mvc.cli.</span></span><span class="sig-name descname"><span class="pre">GeneratorCommand</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">category</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Other'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fastapi_mvc.cli.GeneratorCommand" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#fastapi_mvc.cli.ClickAliasedCommand" title="fastapi_mvc.cli.base.ClickAliasedCommand"><code class="xref py py-class docutils literal notranslate"><span class="pre">ClickAliasedCommand</span></code></a></p>
+<p>Defines base class for all concrete fastapi-mvc generators.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>category</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – Given name under which generator should be printed in
+<code class="docutils literal notranslate"><span class="pre">fastapi-mvc</span> <span class="pre">generate</span></code> CLI command help page.</p></li>
+<li><p><strong>*args</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.14)"><em>Any</em></a>) – Parent class constructor args.</p></li>
+<li><p><strong>**kwargs</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.14)"><em>Any</em></a>) – Parent class constructor kwargs.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="fastapi_mvc.cli.GeneratorCommand.category">
+<span class="sig-name descname"><span class="pre">category</span></span><a class="headerlink" href="#fastapi_mvc.cli.GeneratorCommand.category" title="Permalink to this definition">¶</a></dt>
+<dd><p>Name under which generator should be printed in
+<code class="docutils literal notranslate"><span class="pre">fastapi-mvc</span> <span class="pre">generate</span></code> CLI command help page.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="fastapi_mvc.cli.GeneratorCommand.format_epilog">
+<span class="sig-name descname"><span class="pre">format_epilog</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ctx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">formatter</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fastapi_mvc.cli.GeneratorCommand.format_epilog" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write the epilog into the formatter if it exists.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ctx</strong> (<a class="reference external" href="https://click.palletsprojects.com/en/stable/api/#click.Context" title="(in Click v8.3.x)"><em>click.Context</em></a>) – Click Context class object instance.</p></li>
+<li><p><strong>formatter</strong> (<a class="reference external" href="https://click.palletsprojects.com/en/stable/api/#click.HelpFormatter" title="(in Click v8.3.x)"><em>click.HelpFormatter</em></a>) – Click HelpFormatter class object instance.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="fastapi_mvc.cli.GeneratorsMultiCommand">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">fastapi_mvc.cli.</span></span><span class="sig-name descname"><span class="pre">GeneratorsMultiCommand</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">generators</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alias</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fastapi_mvc.cli.GeneratorsMultiCommand" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">_MultiCommand</span></code></p>
+<p>Custom click.MultiCommand class implementation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>generators</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.14)"><em>Dict</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>, </em><a class="reference internal" href="#fastapi_mvc.cli.GeneratorCommand" title="fastapi_mvc.cli.GeneratorCommand"><em>GeneratorCommand</em></a><em>]</em>) – Given dictionary containing all
+available fastapi-mvc generators.</p></li>
+<li><p><strong>alias</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – Given command alias.</p></li>
+<li><p><strong>*args</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.14)"><em>Any</em></a>) – Parent class constructor args.</p></li>
+<li><p><strong>**kwargs</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.14)"><em>Any</em></a>) – Parent class constructor kwargs.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="fastapi_mvc.cli.GeneratorsMultiCommand.generators">
+<span class="sig-name descname"><span class="pre">generators</span></span><a class="headerlink" href="#fastapi_mvc.cli.GeneratorsMultiCommand.generators" title="Permalink to this definition">¶</a></dt>
+<dd><p>Dictionary containing all available
+fastapi-mvc generators.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.14)"><em>Dict</em></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)">str</a>, Generator]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="fastapi_mvc.cli.GeneratorsMultiCommand.generators_aliases">
+<span class="sig-name descname"><span class="pre">generators_aliases</span></span><a class="headerlink" href="#fastapi_mvc.cli.GeneratorsMultiCommand.generators_aliases" title="Permalink to this definition">¶</a></dt>
+<dd><p>Map of generator aliases to their
+names.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.14)"><em>Dict</em></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)">str</a>, <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)">str</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="simple">
+<dt>Resources:</dt><dd><ol class="arabic simple">
+<li><p><a class="reference external" href="https://click.palletsprojects.com/en/8.1.x/api/#click.MultiCommand">click.MultiCommand class documentation</a></p></li>
+</ol>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="fastapi_mvc.cli.GeneratorsMultiCommand.format_commands">
+<span class="sig-name descname"><span class="pre">format_commands</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ctx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">formatter</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fastapi_mvc.cli.GeneratorsMultiCommand.format_commands" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write all the generators into the formatter if they exist.</p>
+<p>Extra format methods for multi methods that adds all the generators after the
+options.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ctx</strong> (<a class="reference external" href="https://click.palletsprojects.com/en/stable/api/#click.Context" title="(in Click v8.3.x)"><em>click.Context</em></a>) – Click Context class object instance.</p></li>
+<li><p><strong>formatter</strong> (<a class="reference external" href="https://click.palletsprojects.com/en/stable/api/#click.HelpFormatter" title="(in Click v8.3.x)"><em>click.HelpFormatter</em></a>) – Click HelpFormatter class object instance.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="fastapi_mvc.cli.GeneratorsMultiCommand.get_command">
+<span class="sig-name descname"><span class="pre">get_command</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ctx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fastapi_mvc.cli.GeneratorsMultiCommand.get_command" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return GeneratorCommand class object instance.</p>
+<p>Given a context and a command name or alias, this returns a <code class="docutils literal notranslate"><span class="pre">GeneratorCommand</span></code>
+class object instance if it exists or aborts the execution of the program.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ctx</strong> (<a class="reference external" href="https://click.palletsprojects.com/en/stable/api/#click.Context" title="(in Click v8.3.x)"><em>click.Context</em></a>) – Click Context class object instance.</p></li>
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – Chosen generator name.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Command class object instance for given command name.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://click.palletsprojects.com/en/stable/api/#click.Command" title="(in Click v8.3.x)">click.Command</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="fastapi_mvc.cli.GeneratorsMultiCommand.list_commands">
+<span class="sig-name descname"><span class="pre">list_commands</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ctx</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fastapi_mvc.cli.GeneratorsMultiCommand.list_commands" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a list of subcommand names in the order they should appear.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>ctx</strong> (<a class="reference external" href="https://click.palletsprojects.com/en/stable/api/#click.Context" title="(in Click v8.3.x)"><em>click.Context</em></a>) – Click Context class object instance.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>List of subcommand names.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.14)"><em>List</em></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)">str</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="fastapi_mvc.cli.cli.cli">
+<span class="sig-prename descclassname"><span class="pre">fastapi_mvc.cli.cli.</span></span><span class="sig-name descname"><span class="pre">cli</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fastapi_mvc.cli.cli.cli" title="Permalink to this definition">¶</a></dt>
+<dd><p>Define command-line interface root.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>options</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.14)"><em>Dict</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.14)"><em>Any</em></a><em>]</em>) – Map of command option names to
+their parsed values.</p></li>
+<li><p><strong>args</strong> (<em>t.Any</em>) – </p></li>
+<li><p><strong>kwargs</strong> (<em>t.Any</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>t.Any</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="fastapi_mvc.cli.run.run">
+<span class="sig-prename descclassname"><span class="pre">fastapi_mvc.cli.run.</span></span><span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fastapi_mvc.cli.run.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>Define command-line interface run command.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ctx</strong> (<a class="reference external" href="https://click.palletsprojects.com/en/stable/api/#click.Context" title="(in Click v8.3.x)"><em>click.Context</em></a>) – Click Context class object instance.</p></li>
+<li><p><strong>options</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.14)"><em>Dict</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.14)"><em>Any</em></a><em>]</em>) – Map of command option names to their
+parsed values.</p></li>
+<li><p><strong>args</strong> (<em>t.Any</em>) – </p></li>
+<li><p><strong>kwargs</strong> (<em>t.Any</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>t.Any</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="fastapi_mvc.cli.new.new">
+<span class="sig-prename descclassname"><span class="pre">fastapi_mvc.cli.new.</span></span><span class="sig-name descname"><span class="pre">new</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fastapi_mvc.cli.new.new" title="Permalink to this definition">¶</a></dt>
+<dd><p>Define command-line interface new command.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>app_path</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – Destination path where to render the project.</p></li>
+<li><p><strong>options</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.14)"><em>Dict</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.14)"><em>Any</em></a><em>]</em>) – Map of command option names to their
+parsed values.</p></li>
+<li><p><strong>args</strong> (<em>t.Any</em>) – </p></li>
+<li><p><strong>kwargs</strong> (<em>t.Any</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>t.Any</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="fastapi_mvc.cli.generate.get_generate_cmd">
+<span class="sig-prename descclassname"><span class="pre">fastapi_mvc.cli.generate.</span></span><span class="sig-name descname"><span class="pre">get_generate_cmd</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fastapi_mvc.cli.generate.get_generate_cmd" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return command-line interface generate command.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Class object instance.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#fastapi_mvc.cli.GeneratorsMultiCommand" title="fastapi_mvc.cli.GeneratorsMultiCommand">GeneratorsMultiCommand</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="fastapi_mvc.cli.update.update">
+<span class="sig-prename descclassname"><span class="pre">fastapi_mvc.cli.update.</span></span><span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fastapi_mvc.cli.update.update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Define command-line interface update command.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ctx</strong> (<a class="reference external" href="https://click.palletsprojects.com/en/stable/api/#click.Context" title="(in Click v8.3.x)"><em>click.Context</em></a>) – Click Context class object instance.</p></li>
+<li><p><strong>options</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.14)"><em>Dict</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.14)"><em>Any</em></a><em>]</em>) – Map of command option names to their
+parsed values.</p></li>
+<li><p><strong>args</strong> (<em>t.Any</em>) – </p></li>
+<li><p><strong>kwargs</strong> (<em>t.Any</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>t.Any</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-fastapi_mvc.generators">
+<span id="generators"></span><h2>Generators<a class="headerlink" href="#module-fastapi_mvc.generators" title="Permalink to this heading">¶</a></h2>
+<p>Fastapi-mvc generators.</p>
+<p>Fastapi-mvc comes with a number of scripts called generators that are designed
+to make your development life easier by creating everything that’s necessary to
+start working on a particular task.</p>
+<dl class="simple">
+<dt>Each generator is build of the following:</dt><dd><ul class="simple">
+<li><p>A copier template.</p></li>
+<li><p>Click options and arguments for creating generator CLI subcommand.</p></li>
+<li><p>Method for creating thing it generates.</p></li>
+</ul>
+</dd>
+<dt>Resources:</dt><dd><ol class="arabic simple">
+<li><p><a class="reference external" href="https://click.palletsprojects.com/en/8.1.x/arguments/">Click Arguments</a></p></li>
+<li><p><a class="reference external" href="https://click.palletsprojects.com/en/8.1.x/options/">Click Options</a></p></li>
+<li><p><a class="reference external" href="https://copier.readthedocs.io/en/v6.2.0">Copier Docs</a></p></li>
+</ol>
+</dd>
+</dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="fastapi_mvc.generators.ControllerGenerator">
+<span class="sig-prename descclassname"><span class="pre">fastapi_mvc.generators.</span></span><span class="sig-name descname"><span class="pre">ControllerGenerator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fastapi_mvc.generators.ControllerGenerator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Define controller generator command-line interface.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – Given controller name.</p></li>
+<li><p><strong>endpoints</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.14)"><em>List</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>]</em>) – Given controller endpoints.</p></li>
+<li><p><strong>options</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.14)"><em>Dict</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.14)"><em>Any</em></a><em>]</em>) – Map of command option names to
+their parsed values.</p></li>
+<li><p><strong>args</strong> (<em>t.Any</em>) – </p></li>
+<li><p><strong>kwargs</strong> (<em>t.Any</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>t.Any</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="fastapi_mvc.generators.GeneratorGenerator">
+<span class="sig-prename descclassname"><span class="pre">fastapi_mvc.generators.</span></span><span class="sig-name descname"><span class="pre">GeneratorGenerator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fastapi_mvc.generators.GeneratorGenerator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Define generator generator command-line interface.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – Given generator name.</p></li>
+<li><p><strong>options</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.14)"><em>Dict</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.14)"><em>Any</em></a><em>]</em>) – Map of command option names to
+their parsed values.</p></li>
+<li><p><strong>args</strong> (<em>t.Any</em>) – </p></li>
+<li><p><strong>kwargs</strong> (<em>t.Any</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>t.Any</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="fastapi_mvc.generators.ScriptGenerator">
+<span class="sig-prename descclassname"><span class="pre">fastapi_mvc.generators.</span></span><span class="sig-name descname"><span class="pre">ScriptGenerator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fastapi_mvc.generators.ScriptGenerator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Define script generator command-line interface.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – Given script name.</p></li>
+<li><p><strong>options</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.14)"><em>Dict</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.14)"><em>Any</em></a><em>]</em>) – Map of command option names to
+their parsed values.</p></li>
+<li><p><strong>args</strong> (<em>t.Any</em>) – </p></li>
+<li><p><strong>kwargs</strong> (<em>t.Any</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>t.Any</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="fastapi_mvc.generators.load_generators">
+<span class="sig-prename descclassname"><span class="pre">fastapi_mvc.generators.</span></span><span class="sig-name descname"><span class="pre">load_generators</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fastapi_mvc.generators.load_generators" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load user fastapi-mvc generators.</p>
+<p>Programmatically import all available user generators from known paths to search
+in.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Builtin and imported fastapi-mvc generators.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.14)"><em>Dict</em></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)">str</a>, <a class="reference external" href="https://click.palletsprojects.com/en/stable/api/#click.Command" title="(in Click v8.3.x)">click.Command</a>]</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>Resources:</dt><dd><ol class="arabic simple">
+<li><p><a class="reference external" href="https://docs.python.org/3/library/importlib.html#importing-programmatically">Importing programmatically</a></p></li>
+</ol>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-fastapi_mvc.utils">
+<span id="utils"></span><h2>Utils<a class="headerlink" href="#module-fastapi_mvc.utils" title="Permalink to this heading">¶</a></h2>
+<p>Fastapi-mvc utilities.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">fastapi-mvc.utils</span></code> submodule implements generic utilities for the need of
+the package.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="fastapi_mvc.utils.get_poetry_path">
+<span class="sig-prename descclassname"><span class="pre">fastapi_mvc.utils.</span></span><span class="sig-name descname"><span class="pre">get_poetry_path</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fastapi_mvc.utils.get_poetry_path" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get Poetry executable abspath.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Poetry executable abspath.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="fastapi_mvc.utils.run_shell">
+<span class="sig-prename descclassname"><span class="pre">fastapi_mvc.utils.</span></span><span class="sig-name descname"><span class="pre">run_shell</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cmd</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cwd</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">check</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stdout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stderr</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">capture_output</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fastapi_mvc.utils.run_shell" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run shell command without activated virtualenv.</p>
+<p>If virtual env is activated, remove it from PATH in order to ensure command proper
+execution. For more information, see issue:
+<a class="reference external" href="https://github.com/fastapi-mvc/fastapi-mvc/issues/37">https://github.com/fastapi-mvc/fastapi-mvc/issues/37</a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cmd</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a>) – Shell command to run.</p></li>
+<li><p><strong>cwd</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – Path under which process should execute command. Defaults
+to current working directory.</p></li>
+<li><p><strong>check</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – If True raise a subprocess.CalledProcessError error
+when a process returns non-zero exit status.</p></li>
+<li><p><strong>stdout</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.14)"><em>Optional</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.14)"><em>Union</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>, </em><em>IO</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.AnyStr" title="(in Python v3.14)"><em>AnyStr</em></a><em>]</em><em>]</em><em>]</em>) – Specify the
+executed program’s standard output file handles.</p></li>
+<li><p><strong>stderr</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.14)"><em>Optional</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.14)"><em>Union</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>, </em><em>IO</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.AnyStr" title="(in Python v3.14)"><em>AnyStr</em></a><em>]</em><em>]</em><em>)</em>) – Specify the
+executed program’s standard error file handles.</p></li>
+<li><p><strong>input</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.14)"><em>Optional</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.14)"><em>Union</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="(in Python v3.14)"><em>bytes</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>]</em><em>]</em><em>)</em>) – If given the input argument
+is passed to the subprocess’s stdin.</p></li>
+<li><p><strong>capture_output</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – If True, stdout and stderr will be captured.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Class object instance.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>CompletedProcess</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/subprocess.html#subprocess.CalledProcessError" title="(in Python v3.14)"><strong>subprocess.CalledProcessError</strong></a> – If spawned proces finishes with an
+    error and check is True.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="fastapi_mvc.utils.get_git_user_info">
+<span class="sig-prename descclassname"><span class="pre">fastapi_mvc.utils.</span></span><span class="sig-name descname"><span class="pre">get_git_user_info</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fastapi_mvc.utils.get_git_user_info" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get git user information.</p>
+<p>Reads username and email information from git. If not exists, provide defaults
+values.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Tuple containing git username and email.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.14)"><em>Tuple</em></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)">str</a>, <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)">str</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="fastapi_mvc.utils.load_answers_file">
+<span class="sig-prename descclassname"><span class="pre">fastapi_mvc.utils.</span></span><span class="sig-name descname"><span class="pre">load_answers_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">project_root</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">answers_file</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'.fastapi-mvc.yml'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fastapi_mvc.utils.load_answers_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Define wrapper for Copier <cite>load_answersfile_data</cite> method.</p>
+<p>Load answers data from a <cite>$project_root/$answers_file</cite> file if it exists.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>project_root</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.14)"><em>Optional</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>]</em>) – Given fastapi-mvc project root path.</p></li>
+<li><p><strong>answers_file</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – Given name of Copier answers_file relative to project root.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Loaded answers data.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.14)"><em>Dict</em></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)">str</a>, <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.14)"><em>Any</em></a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="fastapi_mvc.utils.ensure_permissions">
+<span class="sig-prename descclassname"><span class="pre">fastapi_mvc.utils.</span></span><span class="sig-name descname"><span class="pre">ensure_permissions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">w</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fastapi_mvc.utils.ensure_permissions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Ensure correct permissions to given path.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>path</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – Given path to check.</p></li>
+<li><p><strong>r</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Check read ok.</p></li>
+<li><p><strong>w</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Check write ok.</p></li>
+<li><p><strong>x</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Check executable ok.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#SystemExit" title="(in Python v3.14)"><strong>SystemExit</strong></a> – If path has insufficient permissions.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="fastapi_mvc.utils.require_fastapi_mvc_project">
+<span class="sig-prename descclassname"><span class="pre">fastapi_mvc.utils.</span></span><span class="sig-name descname"><span class="pre">require_fastapi_mvc_project</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fastapi_mvc.utils.require_fastapi_mvc_project" title="Permalink to this definition">¶</a></dt>
+<dd><p>Ensure valid fastapi-mvc project, and return loaded project data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Loaded fastapi-mvc project answers data.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.14)"><em>Dict</em></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)">str</a>, Any]</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#SystemExit" title="(in Python v3.14)"><strong>SystemExit</strong></a> – If project data is empty or is missing required values.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="fastapi_mvc.utils.excepthook.global_except_hook">
+<span class="sig-prename descclassname"><span class="pre">fastapi_mvc.utils.excepthook.</span></span><span class="sig-name descname"><span class="pre">global_except_hook</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">exctype</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">traceback</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fastapi_mvc.utils.excepthook.global_except_hook" title="Permalink to this definition">¶</a></dt>
+<dd><p>Global except hook method.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>exctype</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Type" title="(in Python v3.14)"><em>Type</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#BaseException" title="(in Python v3.14)"><em>BaseException</em></a><em>]</em>) – Exception object instance.</p></li>
+<li><p><strong>value</strong> (<a class="reference external" href="https://docs.python.org/3/library/exceptions.html#BaseException" title="(in Python v3.14)"><em>BaseException</em></a>) – Exception value.</p></li>
+<li><p><strong>traceback</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.14)"><em>Optional</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/types.html#types.TracebackType" title="(in Python v3.14)"><em>types.TracebackType</em></a><em>]</em>) – Traceback object instance.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+  <span id="sidebar-top"></span>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  
+    
+            <p class="logo"><a href="index.html">
+              <img class="logo" src="_static/logo.png" alt="Logo"/>
+            </a></p>
+  
+
+  <h3>Contents</h3>
+  <ul>
+<li><a class="reference internal" href="#">API</a><ul>
+<li><a class="reference internal" href="#module-fastapi_mvc.cli">CLI</a></li>
+<li><a class="reference internal" href="#module-fastapi_mvc.generators">Generators</a></li>
+<li><a class="reference internal" href="#module-fastapi_mvc.utils">Utils</a></li>
+</ul>
+</li>
+</ul>
+<h3>Navigation</h3>
+<ul>
+  <li><a href="index.html">Overview</a>
+    <ul>
+          <li>Previous: <a href="generators.html" title="previous chapter">Generators</a>
+          <li>Next: <a href="contributing.html" title="next chapter">Contributing</a>
+    </ul>
+  </li>
+</ul>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+  
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2022, Radosław Szamszur.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 6.2.1.
+    </div>
+  <script src="_static/version_warning_offset.js"></script>
+
+  </body>
+</html>

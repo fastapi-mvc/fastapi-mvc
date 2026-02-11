@@ -1,0 +1,277 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Welcome to fastapi-mvc &#8212; Fastapi-mvc Documentation (0.29.0)</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/click.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/sphinx_highlight.js"></script>
+    <link rel="author" title="About these documents" href="about.html" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Why fastapi-mvc?" href="about.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="about.html" title="Why fastapi-mvc?"
+             accesskey="N">next</a> |</li>
+        <li class="nav-item nav-item-0"><a href="#">Fastapi-mvc Documentation (0.29.0)</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Welcome to fastapi-mvc</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="welcome-to-fastapi-mvc">
+<h1>Welcome to fastapi-mvc<a class="headerlink" href="#welcome-to-fastapi-mvc" title="Permalink to this heading">¶</a></h1>
+<a class="reference external image-reference" href="https://fastapi-mvc.netlify.app/"><img alt="_images/readme.gif" class="align-center" src="_images/readme.gif" /></a>
+<hr class="docutils" />
+<a class="reference external image-reference" href="https://github.com/fastapi-mvc/fastapi-mvc/actions/workflows/main.yml"><img alt="https://github.com/fastapi-mvc/fastapi-mvc/actions/workflows/main.yml/badge.svg?branch=master" src="https://github.com/fastapi-mvc/fastapi-mvc/actions/workflows/main.yml/badge.svg?branch=master" /></a>
+<a class="reference external image-reference" href="https://github.com/fastapi-mvc/fastapi-mvc/actions/workflows/nix.yml"><img alt="https://github.com/fastapi-mvc/fastapi-mvc/actions/workflows/nix.yml/badge.svg?branch=master" src="https://github.com/fastapi-mvc/fastapi-mvc/actions/workflows/nix.yml/badge.svg?branch=master" /></a>
+<a class="reference external image-reference" href="https://github.com/fastapi-mvc/fastapi-mvc/actions/workflows/integration.yml"><img alt="https://github.com/fastapi-mvc/fastapi-mvc/actions/workflows/integration.yml/badge.svg?branch=master" src="https://github.com/fastapi-mvc/fastapi-mvc/actions/workflows/integration.yml/badge.svg?branch=master" /></a>
+<a class="reference external image-reference" href="https://codecov.io/gh/fastapi-mvc/fastapi-mvc"><img alt="https://codecov.io/gh/fastapi-mvc/fastapi-mvc/branch/master/graph/badge.svg?token=7ESV30TYZS" src="https://codecov.io/gh/fastapi-mvc/fastapi-mvc/branch/master/graph/badge.svg?token=7ESV30TYZS" /></a>
+<img alt="PyPI" src="https://img.shields.io/pypi/v/fastapi-mvc" />
+<img alt="PyPI - Downloads" src="https://img.shields.io/pypi/dm/fastapi-mvc" />
+<img alt="PyPI - Python Version" src="https://img.shields.io/pypi/pyversions/fastapi-mvc" />
+<a class="reference external image-reference" href="https://github.com/psf/black"><img alt="https://img.shields.io/badge/code%20style-black-000000.svg" src="https://img.shields.io/badge/code%20style-black-000000.svg" /></a>
+<a class="reference external image-reference" href="https://github.com/fastapi-mvc/fastapi-mvc/stargazers/"><img alt="https://img.shields.io/github/stars/fastapi-mvc/fastapi-mvc?style=social" src="https://img.shields.io/github/stars/fastapi-mvc/fastapi-mvc?style=social" /></a>
+<p><strong>Project scaffold:</strong> <a class="reference external" href="https://github.com/fastapi-mvc/copier-project">https://github.com/fastapi-mvc/copier-project</a></p>
+<p><strong>Example generated project:</strong> <a class="reference external" href="https://github.com/fastapi-mvc/example">https://github.com/fastapi-mvc/example</a></p>
+<hr class="docutils" />
+<p>Fastapi-mvc is a developer productivity tool for <a class="reference external" href="https://fastapi.tiangolo.com/">FastAPI</a> web framework.
+It is designed to make programming <a class="reference external" href="https://fastapi.tiangolo.com/">FastAPI</a> applications easier by making assumptions about what every developer needs to get started.
+It allows you to write less code while accomplishing more. Core features:</p>
+<ul class="simple">
+<li><p>Generated project based on MVC architectural pattern</p></li>
+<li><p>WSGI + ASGI production server</p></li>
+<li><p>Generated project comes with docstrings and 100% unit tests coverage</p></li>
+<li><p>Kubernetes deployment with Redis HA cluster</p></li>
+<li><p>Makefile, GitHub actions and utilities</p></li>
+<li><p>Helm chart for Kubernetes deployment</p></li>
+<li><p>Dockerfile with K8s and cloud in mind</p></li>
+<li><p>Generate pieces of code or even your own generators</p></li>
+<li><p>Uses <a class="reference external" href="https://github.com/python-poetry/poetry">Poetry</a> dependency management</p></li>
+<li><p>Includes set of Nix expressions</p></li>
+<li><p>Virtualized reproducible development environment using Vagrant</p></li>
+</ul>
+<p>Fastapi-mvc comes with a number of scripts called generators that are designed to make your development life easier by creating everything that’s necessary to start working on a particular task.
+One of these is the new application generator, which will provide you with the foundation of a fresh <a class="reference external" href="https://fastapi.tiangolo.com/">FastAPI</a> application so that you don’t have to write it yourself.</p>
+<p>Creating a new project is as easy as:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>fastapi-mvc<span class="w"> </span>new<span class="w"> </span>/tmp/galactic-empire
+</pre></div>
+</div>
+<p>This will create a fastapi-mvc project called galactic-empire in a <code class="docutils literal notranslate"><span class="pre">/tmp/galactic-empire</span></code> directory and install its dependencies using <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">install</span></code>.</p>
+<p>Once project is generated and installed lets run development uvicorn server (ASGI):</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span><span class="nb">cd</span><span class="w"> </span>/tmp/galactic-empire
+$<span class="w"> </span>fastapi-mvc<span class="w"> </span>run
+</pre></div>
+</div>
+<p>To confirm it’s actually working:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>curl<span class="w"> </span><span class="m">127</span>.0.0.1:8000/api/ready
+<span class="o">{</span><span class="s2">&quot;status&quot;</span>:<span class="s2">&quot;ok&quot;</span><span class="o">}</span>
+</pre></div>
+</div>
+<p>Now let’s add new API endpoints. For that we need to generate new controller:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>fastapi-mvc<span class="w"> </span>generate<span class="w"> </span>controller<span class="w"> </span>death_star<span class="w"> </span>status<span class="w"> </span>load:post<span class="w"> </span>fire:delete
+</pre></div>
+</div>
+<p>And then test generated controller endpoints:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>curl<span class="w"> </span><span class="m">127</span>.0.0.1:8000/api/death_star/status
+<span class="o">{</span><span class="s2">&quot;hello&quot;</span>:<span class="s2">&quot;world&quot;</span><span class="o">}</span>
+$<span class="w"> </span>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span><span class="m">127</span>.0.0.1:8000/api/death_star/load
+<span class="o">{</span><span class="s2">&quot;hello&quot;</span>:<span class="s2">&quot;world&quot;</span><span class="o">}</span>
+$<span class="w"> </span>curl<span class="w"> </span>-X<span class="w"> </span>DELETE<span class="w"> </span><span class="m">127</span>.0.0.1:8000/api/death_star/fire
+<span class="o">{</span><span class="s2">&quot;hello&quot;</span>:<span class="s2">&quot;world&quot;</span><span class="o">}</span>
+</pre></div>
+</div>
+<p>You will also see it in server logs:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>INFO:<span class="w">     </span><span class="m">127</span>.0.0.1:47284<span class="w"> </span>-<span class="w"> </span><span class="s2">&quot;GET /api/ready HTTP/1.1&quot;</span><span class="w"> </span><span class="m">200</span><span class="w"> </span>OK
+INFO:<span class="w">     </span><span class="m">127</span>.0.0.1:55648<span class="w"> </span>-<span class="w"> </span><span class="s2">&quot;GET /api/death_star/status HTTP/1.1&quot;</span><span class="w"> </span><span class="m">200</span><span class="w"> </span>OK
+INFO:<span class="w">     </span><span class="m">127</span>.0.0.1:55650<span class="w"> </span>-<span class="w"> </span><span class="s2">&quot;POST /api/death_star/load HTTP/1.1&quot;</span><span class="w"> </span><span class="m">200</span><span class="w"> </span>OK
+INFO:<span class="w">     </span><span class="m">127</span>.0.0.1:55652<span class="w"> </span>-<span class="w"> </span><span class="s2">&quot;DELETE /api/death_star/fire HTTP/1.1&quot;</span><span class="w"> </span><span class="m">200</span><span class="w"> </span>OK
+</pre></div>
+</div>
+<p>You can get the project directly from PyPI:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>fastapi-mvc
+</pre></div>
+</div>
+<section id="documentation">
+<h2>Documentation<a class="headerlink" href="#documentation" title="Permalink to this heading">¶</a></h2>
+<p>This part of the documentation guides you through all of the features and usage.</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="about.html">Why fastapi-mvc?</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="about.html#what-is-fastapi-mvc">What is fastapi-mvc?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="about.html#motivation">Motivation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="about.html#features">Features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="about.html#roadmap">Roadmap</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#installation">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#creating-a-new-project">Creating a new project</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#hello-world">Hello, World!</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#creating-new-endpoint">Creating new endpoint</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#project-documentation">Project documentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#updating-project">Updating project</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="cli.html">CLI Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="cli.html#fastapi-mvc">fastapi-mvc</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="generators.html">Generators</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="generators.html#creating-your-first-generator">Creating your first generator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="generators.html#creating-generators-with-generators">Creating generators with generators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="generators.html#adding-cli-options-and-arguments">Adding CLI options and arguments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="generators.html#what-about-project-data">What about project data?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="generators.html#define-alias-short-cut">Define alias short-cut</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="api-reference">
+<h2>API Reference<a class="headerlink" href="#api-reference" title="Permalink to this heading">¶</a></h2>
+<p>If you are looking for information on a specific function, class, or
+method, this part of the documentation is for you.</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api.html#module-fastapi_mvc.cli">CLI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#module-fastapi_mvc.generators">Generators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#module-fastapi_mvc.utils">Utils</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="miscellaneous-pages">
+<h2>Miscellaneous Pages<a class="headerlink" href="#miscellaneous-pages" title="Permalink to this heading">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="contributing.html#issues">Issues</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contributing.html#documentation">Documentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contributing.html#discuss">Discuss</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contributing.html#contributing-to-code">Contributing to code</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id1">0.29.0 (11.02.2026)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id2">0.28.1 (09.07.2023)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id4">0.28.0 (27.03.2023)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id7">0.27.0 (01.03.2023)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id10">0.26.0 (12.02.2023)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id12">0.25.0 (07.02.2023)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id15">0.24.0 (08.01.2023)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id19">0.23.0 (01.01.2023)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id22">0.22.0 (15.12.2022)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id25">0.21.0 (13.12.2022)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id28">0.20.0 (11.11.2022)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id30">0.19.0 (09.11.2022)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id33">0.18.2 (23.10.2022)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id35">0.18.1 (17.10.2022)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id39">0.18.0 (10.10.2022)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id41">0.17.0 (05.10.2022)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id44">0.16.1 (04.10.2022)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id46">0.16.0 (18.09.2022)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id49">0.15.0 (09.09.2022)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id53">0.14.1 (11.08.2022)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id57">0.14.0 (31.07.2022)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id60">0.13.1 (13.06.2022)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id61">0.13.0 (09.06.2022)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id65">0.12.0 (10.05.2022)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id68">0.11.1 (27.04.2022)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id71">0.11.0 (24.04.2022)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id75">0.10.0 (07.04.2022)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id79">0.9.0 (14.02.2022)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id82">0.8.0 (08.02.2022)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id86">0.7.0 (31.01.2022)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id90">0.6.0 (27.01.2022)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id94">0.5.0 (11.01.2022)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id98">0.4.0 (10.12.2021)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id101">0.3.0 (28.11.2021)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id104">0.2.0 (09.11.2021)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id107">0.1.0 (27.07.2021)</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+  <span id="sidebar-top"></span>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  
+    
+            <p class="logo"><a href="#">
+              <img class="logo" src="_static/logo.png" alt="Logo"/>
+            </a></p>
+  
+
+  <h3>Project Links</h3>
+  <ul>
+    <li><a href="https://pypi.org/project/fastapi-mvc/">PyPI Releases</a>
+  
+    <li><a href="https://github.com/fastapi-mvc/fastapi-mvc/">Source Code</a>
+  
+    <li><a href="https://github.com/fastapi-mvc/fastapi-mvc/issues/">Issue Tracker</a>
+  </ul>
+  <h3>Contents</h3>
+  <ul>
+<li><a class="reference internal" href="#">Welcome to fastapi-mvc</a><ul>
+<li><a class="reference internal" href="#documentation">Documentation</a></li>
+<li><a class="reference internal" href="#api-reference">API Reference</a></li>
+<li><a class="reference internal" href="#miscellaneous-pages">Miscellaneous Pages</a></li>
+</ul>
+</li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+  
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2022, Radosław Szamszur.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 6.2.1.
+    </div>
+  <script src="_static/version_warning_offset.js"></script>
+
+  </body>
+</html>

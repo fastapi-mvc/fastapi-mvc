@@ -1,0 +1,731 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Quickstart &#8212; Fastapi-mvc Documentation (0.29.0)</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/click.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/sphinx_highlight.js"></script>
+    <link rel="author" title="About these documents" href="about.html" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="CLI Reference" href="cli.html" />
+    <link rel="prev" title="Why fastapi-mvc?" href="about.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="cli.html" title="CLI Reference"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="about.html" title="Why fastapi-mvc?"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Fastapi-mvc Documentation (0.29.0)</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Quickstart</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="quickstart">
+<h1>Quickstart<a class="headerlink" href="#quickstart" title="Permalink to this heading">¶</a></h1>
+<section id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this heading">¶</a></h2>
+<section id="from-pypi">
+<h3>From PyPi:<a class="headerlink" href="#from-pypi" title="Permalink to this heading">¶</a></h3>
+<p>Prerequisites:</p>
+<ul class="simple">
+<li><p>git 2.27 or later</p></li>
+</ul>
+<p>To install fastapi-mvc from PyPi use <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span></code> command:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>fastapi-mvc
+</pre></div>
+</div>
+<p>To verify that you have everything installed correctly, you should be able to run the following in a new terminal:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>fastapi-mvc<span class="w"> </span>--help
+</pre></div>
+</div>
+</section>
+<section id="from-source-with-poetry">
+<h3>From source with Poetry:<a class="headerlink" href="#from-source-with-poetry" title="Permalink to this heading">¶</a></h3>
+<p>Prerequisites:</p>
+<ul class="simple">
+<li><p>Python 3.8 or later <a class="reference external" href="https://docs.python-guide.org/starting/installation/">(How to install python)</a></p></li>
+<li><p>make</p></li>
+<li><p>git 2.27 or later</p></li>
+<li><p>(optional) curl</p></li>
+<li><p>(optional) Poetry <a class="reference external" href="https://python-poetry.org/docs/#installation">(How to install poetry)</a></p></li>
+</ul>
+<p>To install fastapi-mvc from source first clone the repository and use <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">install</span></code> target:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/fastapi-mvc/fastapi-mvc.git
+<span class="nb">cd</span><span class="w"> </span>fastapi-mvc
+make<span class="w"> </span>install
+</pre></div>
+</div>
+<p>By default <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">install</span></code> target will search first for <code class="docutils literal notranslate"><span class="pre">python3</span></code> then <code class="docutils literal notranslate"><span class="pre">python</span></code> executable in your <code class="docutils literal notranslate"><span class="pre">PATH</span></code>.
+If needed this can be overridden by <code class="docutils literal notranslate"><span class="pre">PYTHON</span></code> environment variable.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span><span class="w"> </span><span class="nv">PYTHON</span><span class="o">=</span>/path/to/my/python
+make<span class="w"> </span>install
+</pre></div>
+</div>
+<p>Lastly if Poetry is not found in its default installation directory (${HOME}/.local/share/pypoetry) this target will install it for you.
+However, one can always point to existing/customize Poetry installation with <a class="reference external" href="https://python-poetry.org/docs/configuration/#using-environment-variables">environment variables</a>:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span><span class="w"> </span><span class="nv">POETRY_HOME</span><span class="o">=</span>/custom/poetry/path
+<span class="nb">export</span><span class="w"> </span><span class="nv">POETRY_CACHE_DIR</span><span class="o">=</span>/custom/poetry/path/cache
+<span class="nb">export</span><span class="w"> </span><span class="nv">POETRY_VIRTUALENVS_IN_PROJECT</span><span class="o">=</span><span class="nb">true</span>
+make<span class="w"> </span>install
+</pre></div>
+</div>
+<p>Or using Poetry directly, should you choose:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>poetry<span class="w"> </span>install
+</pre></div>
+</div>
+</section>
+<section id="from-source-with-nix">
+<h3>From source with <a class="reference external" href="https://nixos.org/">Nix</a><a class="headerlink" href="#from-source-with-nix" title="Permalink to this heading">¶</a></h3>
+<p>Prerequisites:</p>
+<ul class="simple">
+<li><p>Nix 2.8.x or later installed <a class="reference external" href="https://nixos.org/download.html">(How to install Nix)</a></p></li>
+</ul>
+<p>First <a class="reference external" href="https://nixos.wiki/wiki/Flakes#Enable_flakes">enable Nix flakes</a> if needed.</p>
+<p>Optionally <a class="reference external" href="https://app.cachix.org/cache/fastapi-mvc#pull">setup fastapi-mvc Nix binary cache</a> to speed up the build process:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>nix-env<span class="w"> </span>-iA<span class="w"> </span>cachix<span class="w"> </span>-f<span class="w"> </span>https://cachix.org/api/v1/install
+cachix<span class="w"> </span>use<span class="w"> </span>fastapi-mvc
+</pre></div>
+</div>
+<p>To build default fastapi-mvc package run:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>nix<span class="w"> </span>build<span class="w"> </span>github:fastapi-mvc/fastapi-mvc#default<span class="w"> </span>--profile<span class="w"> </span><span class="nv">$HOME</span>/.nix-profile
+</pre></div>
+</div>
+<p>Or with concrete Python version, should you choose:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Build with Python38</span>
+nix<span class="w"> </span>build<span class="w"> </span>github:fastapi-mvc/fastapi-mvc#fastapi-mvc-py38<span class="w"> </span>--profile<span class="w"> </span><span class="nv">$HOME</span>/.nix-profile
+<span class="c1"># Build with Python39</span>
+nix<span class="w"> </span>build<span class="w"> </span>github:fastapi-mvc/fastapi-mvc#fastapi-mvc-py39<span class="w"> </span>--profile<span class="w"> </span><span class="nv">$HOME</span>/.nix-profile
+<span class="c1"># Build with Python310</span>
+nix<span class="w"> </span>build<span class="w"> </span>github:fastapi-mvc/fastapi-mvc#fastapi-mvc-py310<span class="w"> </span>--profile<span class="w"> </span><span class="nv">$HOME</span>/.nix-profile
+</pre></div>
+</div>
+<p>Lastly, to spawn shell for development environment for fastapi-mvc run:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>nix<span class="w"> </span>develop<span class="w"> </span>github:fastapi-mvc/fastapi-mvc#default
+</pre></div>
+</div>
+</section>
+</section>
+<section id="creating-a-new-project">
+<h2>Creating a new project<a class="headerlink" href="#creating-a-new-project" title="Permalink to this heading">¶</a></h2>
+<p>Fastapi-mvc comes with a number of scripts called generators that are designed to make your development life easier by creating everything that’s necessary to start working on a particular task.
+One of these is the new application generator, which will provide you with the foundation of a fresh <a class="reference external" href="https://fastapi.tiangolo.com/">FastAPI</a> application so that you don’t have to write it yourself.</p>
+<p>To use this generator, open a terminal and run:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>fastapi-mvc<span class="w"> </span>new<span class="w"> </span>/tmp/galactic-empire
+🎤<span class="w"> </span>What<span class="s1">&#39;s your project name?</span>
+<span class="s1">Do not use dots or spaces in the name; just &quot;A-Za-z0-9-_&quot; please.</span>
+<span class="s1">   galactic-empire</span>
+<span class="s1">🎤 What is the project repository URL?</span>
+<span class="s1">   https://your.repo.url.here</span>
+<span class="s1">🎤 What is the project container image name?</span>
+<span class="s1">   galactic-empire</span>
+<span class="s1">🎤 What is the project CLI entrypoint name?</span>
+<span class="s1">   galactic-empire</span>
+<span class="s1">🎤 What is the project Helm chart name?</span>
+<span class="s1">   galactic-empire</span>
+<span class="s1">🎤 Tell me who you are.</span>
+<span class="s1">   Radosław Szamszur</span>
+<span class="s1">🎤 Tell me your email.</span>
+<span class="s1">   radoslawszamszur@gmail.com</span>
+<span class="s1">🎤 What is the project description?</span>
+<span class="s1">   This project was generated with fastapi-mvc.</span>
+<span class="s1">🎤 What is the project initial version?</span>
+<span class="s1">   0.1.0</span>
+<span class="s1">🎤 Do you want to include Redis utilities and Kubernetes deployment?</span>
+<span class="s1">   Yes</span>
+<span class="s1">🎤 Do you want to include Helm chart for the project?</span>
+<span class="s1">   Yes</span>
+<span class="s1">🎤 Do you want to include GitHub actions?</span>
+<span class="s1">   Yes</span>
+<span class="s1">🎤 Do you want to include Nix expression files?</span>
+<span class="s1">   Yes</span>
+<span class="s1">🎤 Do you want to include aiohttp utility?</span>
+<span class="s1">   Yes</span>
+<span class="s1">🎤 What is your project license?</span>
+<span class="s1">   MIT</span>
+<span class="s1">🎤 What is your project copyright date?</span>
+<span class="s1">   2022</span>
+
+<span class="s1">Copying from template version 0.1.0</span>
+<span class="s1">    create  .</span>
+<span class="s1">    create  galactic_empire</span>
+<span class="s1">    create  galactic_empire/wsgi.py</span>
+<span class="s1">    create  galactic_empire/version.py</span>
+<span class="s1">    create  galactic_empire/config</span>
+<span class="s1">    create  galactic_empire/config/redis.py</span>
+<span class="s1">    create  galactic_empire/config/gunicorn.py</span>
+<span class="s1">    create  galactic_empire/config/application.py</span>
+<span class="s1">    create  galactic_empire/config/__init__.py</span>
+<span class="s1">    create  galactic_empire/cli</span>
+<span class="s1">    create  galactic_empire/cli/utils.py</span>
+<span class="s1">    create  galactic_empire/cli/serve.py</span>
+<span class="s1">    create  galactic_empire/cli/cli.py</span>
+<span class="s1">    create  galactic_empire/cli/__init__.py</span>
+<span class="s1">    create  galactic_empire/app</span>
+<span class="s1">    create  galactic_empire/app/views</span>
+<span class="s1">    create  galactic_empire/app/views/ready.py</span>
+<span class="s1">    create  galactic_empire/app/views/error.py</span>
+<span class="s1">    create  galactic_empire/app/views/__init__.py</span>
+<span class="s1">    create  galactic_empire/app/utils</span>
+<span class="s1">    create  galactic_empire/app/utils/redis.py</span>
+<span class="s1">    create  galactic_empire/app/utils/aiohttp_client.py</span>
+<span class="s1">    create  galactic_empire/app/utils/__init__.py</span>
+<span class="s1">    create  galactic_empire/app/router.py</span>
+<span class="s1">    create  galactic_empire/app/models</span>
+<span class="s1">    create  galactic_empire/app/models/__init__.py</span>
+<span class="s1">    create  galactic_empire/app/exceptions</span>
+<span class="s1">    create  galactic_empire/app/exceptions/http.py</span>
+<span class="s1">    create  galactic_empire/app/exceptions/__init__.py</span>
+<span class="s1">    create  galactic_empire/app/controllers</span>
+<span class="s1">    create  galactic_empire/app/controllers/ready.py</span>
+<span class="s1">    create  galactic_empire/app/controllers/__init__.py</span>
+<span class="s1">    create  galactic_empire/app/asgi.py</span>
+<span class="s1">    create  galactic_empire/app/__init__.py</span>
+<span class="s1">    create  galactic_empire/__main__.py</span>
+<span class="s1">    create  galactic_empire/__init__.py</span>
+<span class="s1">    create  .fastapi-mvc.yml</span>
+<span class="s1">    create  manifests</span>
+<span class="s1">    create  manifests/persistent-storage-no-pvc-deletion.yaml</span>
+<span class="s1">    create  manifests/all-redis-operator-resources.yaml</span>
+<span class="s1">    create  shell.nix</span>
+<span class="s1">    create  overlay.nix</span>
+<span class="s1">    create  image.nix</span>
+<span class="s1">    create  editable.nix</span>
+<span class="s1">    create  Nix.mk</span>
+<span class="s1">    create  charts</span>
+<span class="s1">    create  charts/galactic-empire</span>
+<span class="s1">    create  charts/galactic-empire/values.yaml</span>
+<span class="s1">    create  charts/galactic-empire/templates</span>
+<span class="s1">    create  charts/galactic-empire/templates/tests</span>
+<span class="s1">    create  charts/galactic-empire/templates/tests/test-connection.yaml</span>
+<span class="s1">    create  charts/galactic-empire/templates/serviceaccount.yaml</span>
+<span class="s1">    create  charts/galactic-empire/templates/service.yaml</span>
+<span class="s1">    create  charts/galactic-empire/templates/ingress.yaml</span>
+<span class="s1">    create  charts/galactic-empire/templates/hpa.yaml</span>
+<span class="s1">    create  charts/galactic-empire/templates/deployment.yaml</span>
+<span class="s1">    create  charts/galactic-empire/templates/configmap.yml</span>
+<span class="s1">    create  charts/galactic-empire/templates/_helpers.tpl</span>
+<span class="s1">    create  charts/galactic-empire/templates/NOTES.txt</span>
+<span class="s1">    create  charts/galactic-empire/README.md</span>
+<span class="s1">    create  charts/galactic-empire/Chart.yaml</span>
+<span class="s1">    create  charts/galactic-empire/.helmignore</span>
+<span class="s1">    create  .github</span>
+<span class="s1">    create  .github/workflows</span>
+<span class="s1">    create  .github/workflows/nix.yml</span>
+<span class="s1">    create  .github/workflows/integration.yml</span>
+<span class="s1">    create  .github/workflows/main.yml</span>
+<span class="s1">    create  .github/workflows/docs.yml</span>
+<span class="s1">    create  .github/dependabot.yml</span>
+<span class="s1">    create  tests</span>
+<span class="s1">    create  tests/unit</span>
+<span class="s1">    create  tests/unit/test_wsgi.py</span>
+<span class="s1">    create  tests/unit/cli</span>
+<span class="s1">    create  tests/unit/cli/test_utils.py</span>
+<span class="s1">    create  tests/unit/cli/test_serve.py</span>
+<span class="s1">    create  tests/unit/cli/test_cli.py</span>
+<span class="s1">    create  tests/unit/cli/conftest.py</span>
+<span class="s1">    create  tests/unit/cli/__init__.py</span>
+<span class="s1">    create  tests/unit/app</span>
+<span class="s1">    create  tests/unit/app/views</span>
+<span class="s1">    create  tests/unit/app/views/test_ready.py</span>
+<span class="s1">    create  tests/unit/app/views/test_error.py</span>
+<span class="s1">    create  tests/unit/app/views/__init__.py</span>
+<span class="s1">    create  tests/unit/app/utils</span>
+<span class="s1">    create  tests/unit/app/utils/test_redis.py</span>
+<span class="s1">    create  tests/unit/app/utils/test_aiohttp_client.py</span>
+<span class="s1">    create  tests/unit/app/utils/__init__.py</span>
+<span class="s1">    create  tests/unit/app/test_asgi.py</span>
+<span class="s1">    create  tests/unit/app/models</span>
+<span class="s1">    create  tests/unit/app/models/__init__.py</span>
+<span class="s1">    create  tests/unit/app/exceptions</span>
+<span class="s1">    create  tests/unit/app/exceptions/test_http.py</span>
+<span class="s1">    create  tests/unit/app/exceptions/__init__.py</span>
+<span class="s1">    create  tests/unit/app/controllers</span>
+<span class="s1">    create  tests/unit/app/controllers/test_ready.py</span>
+<span class="s1">    create  tests/unit/app/controllers/__init__.py</span>
+<span class="s1">    create  tests/unit/app/conftest.py</span>
+<span class="s1">    create  tests/unit/app/__init__.py</span>
+<span class="s1">    create  tests/unit/__init__.py</span>
+<span class="s1">    create  tests/integration</span>
+<span class="s1">    create  tests/integration/test_ready_endpoint.py</span>
+<span class="s1">    create  tests/integration/__init__.py</span>
+<span class="s1">    create  tests/__init__.py</span>
+<span class="s1">    create  pyproject.toml</span>
+<span class="s1">    create  docs</span>
+<span class="s1">    create  docs/nix.rst</span>
+<span class="s1">    create  docs/usage.rst</span>
+<span class="s1">    create  docs/license.rst</span>
+<span class="s1">    create  docs/install.rst</span>
+<span class="s1">    create  docs/index.rst</span>
+<span class="s1">    create  docs/deployment.rst</span>
+<span class="s1">    create  docs/conf.py</span>
+<span class="s1">    create  docs/api.rst</span>
+<span class="s1">    create  docs/_static</span>
+<span class="s1">    create  docs/_static/logo.png</span>
+<span class="s1">    create  default.nix</span>
+<span class="s1">    create  build</span>
+<span class="s1">    create  build/dev-env.sh</span>
+<span class="s1">    create  build/install.sh</span>
+<span class="s1">    create  build/image.sh</span>
+<span class="s1">    create  Vagrantfile</span>
+<span class="s1">    create  TAG</span>
+<span class="s1">    create  README.md</span>
+<span class="s1">    create  Poetry.mk</span>
+<span class="s1">    create  Makefile</span>
+<span class="s1">    create  LICENSE</span>
+<span class="s1">    create  Dockerfile</span>
+<span class="s1">    create  CHANGELOG.md</span>
+<span class="s1">    create  .gitignore</span>
+<span class="s1">    create  .dockerignore</span>
+<span class="s1">    create  .coveragerc</span>
+
+<span class="s1"> &gt; Running task 1 of 1: ln -srf CHANGELOG.md docs/CHANGELOG.md</span>
+
+<span class="s1">       run  make install</span>
+<span class="s1">[install] Begin installing project.</span>
+<span class="s1">Creating virtualenv galactic-empire in /tmp/galactic-empire/.venv</span>
+<span class="s1">Updating dependencies</span>
+<span class="s1">Resolving dependencies... (0.7s)</span>
+
+<span class="s1">Writing lock file</span>
+
+<span class="s1">Package operations: 75 installs, 0 updates, 0 removals</span>
+
+<span class="s1">  • Installing certifi (2022.9.24)</span>
+<span class="s1">  • Installing charset-normalizer (2.1.1)</span>
+<span class="s1">  • Installing frozenlist (1.3.1)</span>
+<span class="s1">  • Installing idna (3.4)</span>
+<span class="s1">  • Installing markupsafe (2.1.1)</span>
+<span class="s1">  • Installing mdurl (0.1.2)</span>
+<span class="s1">  • Installing multidict (6.0.2)</span>
+<span class="s1">  • Installing pyparsing (3.0.9)</span>
+<span class="s1">  • Installing pytz (2022.4)</span>
+<span class="s1">  • Installing sniffio (1.3.0)</span>
+<span class="s1">  • Installing urllib3 (1.26.12)</span>
+<span class="s1">  • Installing zipp (3.9.0)</span>
+<span class="s1">  • Installing aiosignal (1.2.0)</span>
+<span class="s1">  • Installing alabaster (0.7.12)</span>
+<span class="s1">  • Installing anyio (3.6.1)</span>
+<span class="s1">  • Installing async-timeout (4.0.2)</span>
+<span class="s1">  • Installing attrs (22.1.0)</span>
+<span class="s1">  • Installing babel (2.10.3)</span>
+<span class="s1">  • Installing docutils (0.19)</span>
+<span class="s1">  • Installing imagesize (1.4.1)</span>
+<span class="s1">  • Installing importlib-metadata (5.0.0)</span>
+<span class="s1">  • Installing iniconfig (1.1.1)</span>
+<span class="s1">  • Installing jinja2 (3.1.2)</span>
+<span class="s1">  • Installing markdown-it-py (2.1.0)</span>
+<span class="s1">  • Installing mccabe (0.7.0)</span>
+<span class="s1">  • Installing packaging (21.3)</span>
+<span class="s1">  • Installing pluggy (1.0.0)</span>
+<span class="s1">  • Installing py (1.11.0)</span>
+<span class="s1">  • Installing pycodestyle (2.9.1)</span>
+<span class="s1">  • Installing pyflakes (2.5.0)</span>
+<span class="s1">  • Installing pygments (2.13.0)</span>
+<span class="s1">  • Installing requests (2.28.1)</span>
+<span class="s1">  • Installing snowballstemmer (2.2.0)</span>
+<span class="s1">  • Installing sphinxcontrib-applehelp (1.0.2)</span>
+<span class="s1">  • Installing sphinxcontrib-devhelp (1.0.2)</span>
+<span class="s1">  • Installing sphinxcontrib-jsmath (1.0.1)</span>
+<span class="s1">  • Installing sphinxcontrib-htmlhelp (2.0.0)</span>
+<span class="s1">  • Installing sphinxcontrib-serializinghtml (1.1.5)</span>
+<span class="s1">  • Installing sphinxcontrib-qthelp (1.0.3)</span>
+<span class="s1">  • Installing tomli (2.0.1)</span>
+<span class="s1">  • Installing typing-extensions (4.4.0)</span>
+<span class="s1">  • Installing yarl (1.8.1)</span>
+<span class="s1">  • Installing aiohttp (3.8.3)</span>
+<span class="s1">  • Installing click (8.1.3)</span>
+<span class="s1">  • Installing coverage (6.5.0)</span>
+<span class="s1">  • Installing flake8 (5.0.4)</span>
+<span class="s1">  • Installing h11 (0.14.0)</span>
+<span class="s1">  • Installing httptools (0.5.0)</span>
+<span class="s1">  • Installing mdit-py-plugins (0.3.1)</span>
+<span class="s1">  • Installing mypy-extensions (0.4.3)</span>
+<span class="s1">  • Installing pathspec (0.10.1)</span>
+<span class="s1">  • Installing platformdirs (2.5.2)</span>
+<span class="s1">  • Installing pydantic (1.10.2)</span>
+<span class="s1">  • Installing pydocstyle (6.1.1)</span>
+<span class="s1">  • Installing pytest (7.1.3)</span>
+<span class="s1">  • Installing python-dotenv (0.21.0)</span>
+<span class="s1">  • Installing pyyaml (6.0)</span>
+<span class="s1">  • Installing sphinx (5.2.3)</span>
+<span class="s1">  • Installing starlette (0.20.4)</span>
+<span class="s1">  • Installing uvloop (0.17.0)</span>
+<span class="s1">  • Installing watchfiles (0.17.0)</span>
+<span class="s1">  • Installing websockets (10.3)</span>
+<span class="s1">  • Installing aioredis (2.0.1)</span>
+<span class="s1">  • Installing aioresponses (0.7.3)</span>
+<span class="s1">  • Installing black (22.8.0)</span>
+<span class="s1">  • Installing fastapi (0.85.0)</span>
+<span class="s1">  • Installing flake8-docstrings (1.6.0)</span>
+<span class="s1">  • Installing flake8-import-order (0.18.1)</span>
+<span class="s1">  • Installing flake8-todo (0.7)</span>
+<span class="s1">  • Installing gunicorn (20.1.0)</span>
+<span class="s1">  • Installing myst-parser (0.18.1)</span>
+<span class="s1">  • Installing pallets-sphinx-themes (2.0.2)</span>
+<span class="s1">  • Installing pytest-asyncio (0.19.0)</span>
+<span class="s1">  • Installing pytest-cov (4.0.0)</span>
+<span class="s1">  • Installing uvicorn (0.18.3)</span>
+
+<span class="s1">Installing the current project: galactic-empire (0.1.0)</span>
+<span class="s1">Project successfully installed.</span>
+<span class="s1">To activate virtualenv run: $ poetry shell</span>
+<span class="s1">Now you should access CLI script: $ galactic-empire --help</span>
+<span class="s1">Alternatively you can access CLI script via poetry run: $ poetry run galactic-empire --help</span>
+<span class="s1">To deactivate virtualenv simply type: $ deactivate</span>
+<span class="s1">To activate shell completion:</span>
+<span class="s1"> - for bash: $ echo &#39;</span><span class="nb">eval</span><span class="w"> </span><span class="s2">&quot;</span><span class="k">$(</span><span class="nv">_GALACTIC_EMPIRE_COMPLETE</span><span class="o">=</span>source_bash<span class="w"> </span>galactic-empire<span class="k">)</span><span class="s2">&#39; &gt;&gt; ~/.bashrc</span>
+<span class="s2"> - for zsh: </span>$<span class="s2"> echo &#39;eval &quot;</span><span class="k">$(</span><span class="nv">_GALACTIC_EMPIRE_COMPLETE</span><span class="o">=</span>source_zsh<span class="w"> </span>galactic-empire<span class="k">)</span><span class="s1">&#39; &gt;&gt; ~/.zshrc</span>
+<span class="s1"> - for fish: $ echo &#39;</span><span class="nb">eval</span><span class="w"> </span><span class="s2">&quot;</span><span class="k">$(</span><span class="nv">_GALACTIC_EMPIRE_COMPLETE</span><span class="o">=</span>source_fish<span class="w"> </span>galactic-empire<span class="k">)</span><span class="s2">&#39; &gt;&gt; ~/.config/fish/completions/galactic-empire.fish</span>
+</pre></div>
+</div>
+<p>This will create a fastapi-mvc project called galactic-empire in a <code class="docutils literal notranslate"><span class="pre">/tmp/galactic-empire</span></code> directory and install its dependencies using <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">install</span></code>.</p>
+<p>After you create the application, switch to its folder:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span><span class="nb">cd</span><span class="w"> </span>/tmp/galactic-empire
+</pre></div>
+</div>
+<p>The galactic-empire directory will have a number of generated files and folders that make up the structure of a fastapi-mvc application.
+Here’s a basic rundown on the function of each of the files and folders that fastapi-mvc creates by default:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>├──<span class="w"> </span>.github
+│<span class="w">   </span>└──<span class="w"> </span>workflows<span class="w">                </span>GitHub<span class="w"> </span>Actions<span class="w"> </span>definition
+├──<span class="w"> </span>build<span class="w">                        </span>Makefile<span class="w"> </span>scripts
+├──<span class="w"> </span>charts<span class="w">                       </span>Helm<span class="w"> </span>chart<span class="w"> </span><span class="k">for</span><span class="w"> </span>application
+│<span class="w">   </span>└──<span class="w"> </span>galactic-empire
+├──<span class="w"> </span>galactic_empire<span class="w">              </span>Python<span class="w"> </span>project<span class="w"> </span>root
+│<span class="w">   </span>├──<span class="w"> </span>app<span class="w">                      </span>FastAPI<span class="w"> </span>core<span class="w"> </span>implementation
+│<span class="w">   </span>│<span class="w">   </span>├──<span class="w"> </span>controllers<span class="w">          </span>Application<span class="w"> </span>controllers
+│<span class="w">   </span>│<span class="w">   </span>├──<span class="w"> </span>exceptions<span class="w">           </span>Application<span class="w"> </span>custom<span class="w"> </span>exceptions
+│<span class="w">   </span>│<span class="w">   </span>├──<span class="w"> </span>models<span class="w">               </span>Application<span class="w"> </span>models
+│<span class="w">   </span>│<span class="w">   </span>├──<span class="w"> </span>utils<span class="w">                </span>Application<span class="w"> </span>utilities
+│<span class="w">   </span>│<span class="w">   </span>├──<span class="w"> </span>router.py<span class="w">            </span>Application<span class="w"> </span>root<span class="w"> </span>APIRouter
+│<span class="w">   </span>│<span class="w">   </span>└──<span class="w"> </span>asgi.py<span class="w">              </span>Application<span class="w"> </span>ASGI<span class="w"> </span>node<span class="w"> </span>implementation
+│<span class="w">   </span>├──<span class="w"> </span>cli<span class="w">                      </span>Application<span class="w"> </span>CLI<span class="w"> </span>implementation
+│<span class="w">   </span>├──<span class="w"> </span>config<span class="w">                   </span>Configuration<span class="w"> </span>submodule
+│<span class="w">   </span>│<span class="w">   </span>├──<span class="w"> </span>application.py<span class="w">       </span>Application<span class="w"> </span>configuration
+│<span class="w">   </span>│<span class="w">   </span>├──<span class="w"> </span>gunicorn.py<span class="w">          </span>Gunicorn<span class="w"> </span>configuration
+│<span class="w">   </span>│<span class="w">   </span>└──<span class="w"> </span>redis.py<span class="w">             </span>Redis<span class="w"> </span>configuration
+│<span class="w">   </span>├──<span class="w"> </span>version.py<span class="w">               </span>Application<span class="w"> </span>version
+│<span class="w">   </span>└──<span class="w"> </span>wsgi.py<span class="w">                  </span>Application<span class="w"> </span>WSGI<span class="w"> </span>master<span class="w"> </span>node<span class="w"> </span>implementation
+├──<span class="w"> </span>manifests<span class="w">                    </span>Manifests<span class="w"> </span><span class="k">for</span><span class="w"> </span>spotathome/redis-operator
+├──<span class="w"> </span>tests
+│<span class="w">   </span>├──<span class="w"> </span>integration<span class="w">              </span>Integration<span class="w"> </span><span class="nb">test</span><span class="w"> </span>implementation
+│<span class="w">   </span>├──<span class="w"> </span>unit<span class="w">                     </span>Unit<span class="w"> </span>tests<span class="w"> </span>implementation
+├──<span class="w"> </span>CHANGELOG.md
+├──<span class="w"> </span>Dockerfile<span class="w">                   </span>Dockerfile<span class="w"> </span>definition
+├──<span class="w"> </span>.dockerignore
+├──<span class="w"> </span>.coveragerc
+├──<span class="w"> </span>.gitignore
+├──<span class="w"> </span>fastapi-mvc.ini<span class="w">              </span>Fastapi-mvc<span class="w"> </span>application<span class="w"> </span>configuration.
+├──<span class="w"> </span>shell.nix<span class="w">                    </span>Development<span class="w"> </span>environment<span class="w"> </span>Nix<span class="w"> </span>expression<span class="w"> </span>file.
+├──<span class="w"> </span>overlay.nix<span class="w">                  </span>Set<span class="w"> </span>of<span class="w"> </span>Nix<span class="w"> </span>overlays<span class="w"> </span>to<span class="w"> </span>extend<span class="w"> </span>and<span class="w"> </span>change<span class="w"> </span>nixpkgs.
+├──<span class="w"> </span>default.nix<span class="w">                  </span>Python<span class="w"> </span>project<span class="w"> </span>Nix<span class="w"> </span>expression<span class="w"> </span>file.
+├──<span class="w"> </span>editable.nix<span class="w">                 </span>Editable<span class="w"> </span>Python<span class="w"> </span>project<span class="w"> </span>Nix<span class="w"> </span>expression<span class="w"> </span>file.
+├──<span class="w"> </span>image.nix<span class="w">                    </span>Container<span class="w"> </span>image<span class="w"> </span>Nix<span class="w"> </span>expression<span class="w"> </span>file.
+├──<span class="w"> </span>LICENSE
+├──<span class="w"> </span>Makefile<span class="w">                     </span>Makefile<span class="w"> </span>definition
+├──<span class="w"> </span>Poetry.mk<span class="w">                    </span>Sub<span class="w"> </span>Makefile<span class="w"> </span>containing<span class="w"> </span>targets<span class="w"> </span><span class="k">for</span><span class="w"> </span>Poetry
+├──<span class="w"> </span>Nix.mk<span class="w">                       </span>Sub<span class="w"> </span>Makefile<span class="w"> </span>containing<span class="w"> </span>targets<span class="w"> </span><span class="k">for</span><span class="w"> </span>Nix
+├──<span class="w"> </span>poetry.lock<span class="w">                  </span>Poetry<span class="w"> </span>dependency<span class="w"> </span>management<span class="w"> </span>lock<span class="w"> </span>file
+├──<span class="w"> </span>pyproject.toml<span class="w">               </span>PEP<span class="w"> </span><span class="m">518</span><span class="w"> </span>-<span class="w"> </span>The<span class="w"> </span>build<span class="w"> </span>system<span class="w"> </span>dependencies
+├──<span class="w"> </span>README.md
+├──<span class="w"> </span>TAG<span class="w">                          </span>Application<span class="w"> </span>version<span class="w"> </span><span class="k">for</span><span class="w"> </span>build<span class="w"> </span>systems
+└──<span class="w"> </span>Vagrantfile<span class="w">                  </span>Virtualized<span class="w"> </span>environment<span class="w"> </span>definition
+</pre></div>
+</div>
+<section id="overriding-default-template">
+<h3>Overriding default template<a class="headerlink" href="#overriding-default-template" title="Permalink to this heading">¶</a></h3>
+<p>If needed one can always override <a class="reference external" href="https://github.com/fastapi-mvc/cookiecutter">default fastapi-mvc new project template</a>. For that use case <code class="docutils literal notranslate"><span class="pre">fastapi-mvc</span> <span class="pre">new</span></code> command comes with the following CLI options:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">--use-version</span></code> - The branch, tag or commit ID to checkout</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--use-repo</span></code> - Overrides fastapi-mvc copier-project repository.</p></li>
+</ul>
+<p>Examples:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Use default template from specific version (tag)</span>
+fastapi-mvc<span class="w"> </span>new<span class="w"> </span>--use-version<span class="w"> </span><span class="m">0</span>.1.0<span class="w"> </span>/tmp/galactic-empire
+<span class="c1"># Use default template from specific commit</span>
+fastapi-mvc<span class="w"> </span>new<span class="w"> </span>--use-version<span class="w"> </span>519ce9f23dbef378bf958d2463171930feab6dc2<span class="w"> </span>/tmp/galactic-empire
+
+<span class="c1"># Completely overrides template remote</span>
+fastapi-mvc<span class="w"> </span>new<span class="w"> </span>--use-repo<span class="w"> </span>https://github.com/johndoe/my-copier-project.git<span class="w"> </span>/tmp/galactic-empire
+</pre></div>
+</div>
+</section>
+</section>
+<section id="hello-world">
+<h2>Hello, World!<a class="headerlink" href="#hello-world" title="Permalink to this heading">¶</a></h2>
+<p>To begin with, let’s get some text up on screen quickly. To do this, you need to get your uvicorn development server running.</p>
+<section id="starting-up-the-web-server">
+<h3>Starting up the Web Server<a class="headerlink" href="#starting-up-the-web-server" title="Permalink to this heading">¶</a></h3>
+<p>You actually have a functional FastAPI application already. To see it, you need to start a web server on your development machine.
+You can do this by running the following command in the galactic-empire directory:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>fastapi-mvc<span class="w"> </span>run
+INFO:<span class="w">     </span>Will<span class="w"> </span>watch<span class="w"> </span><span class="k">for</span><span class="w"> </span>changes<span class="w"> </span><span class="k">in</span><span class="w"> </span>these<span class="w"> </span>directories:<span class="w"> </span><span class="o">[</span><span class="s1">&#39;/tmp/galactic-empire&#39;</span><span class="o">]</span>
+INFO:<span class="w">     </span>Uvicorn<span class="w"> </span>running<span class="w"> </span>on<span class="w"> </span>http://127.0.0.1:8000<span class="w"> </span><span class="o">(</span>Press<span class="w"> </span>CTRL+C<span class="w"> </span>to<span class="w"> </span>quit<span class="o">)</span>
+INFO:<span class="w">     </span>Started<span class="w"> </span>reloader<span class="w"> </span>process<span class="w"> </span><span class="o">[</span><span class="m">4039270</span><span class="o">]</span><span class="w"> </span>using<span class="w"> </span>WatchFiles
+INFO:<span class="w">     </span>Started<span class="w"> </span>server<span class="w"> </span>process<span class="w"> </span><span class="o">[</span><span class="m">4039305</span><span class="o">]</span>
+INFO:<span class="w">     </span>Waiting<span class="w"> </span><span class="k">for</span><span class="w"> </span>application<span class="w"> </span>startup.
+INFO:<span class="w">     </span>Application<span class="w"> </span>startup<span class="w"> </span>complete.
+</pre></div>
+</div>
+<p>This will start up <a class="reference external" href="https://github.com/encode/uvicorn">uvicron</a> development server (ASGI) distributed with fastapi-mvc by default.
+To see your application in action, open a browser window and navigate to <a class="reference external" href="http://127.0.0.1:8000">http://127.0.0.1:8000</a>. You should see the FastAPI interactive API documentation page:</p>
+<img alt="_images/docs_page.png" class="align-center" src="_images/docs_page.png" />
+<p>When you want to stop the web server, hit Ctrl+C in the terminal window where it’s running.
+When using uvicorn development server, you don’t need to restart the it; changes you make in files will be automatically picked up by the uvicorn.</p>
+<p>The FastAPI documentation page is the smoke test for a new fastapi-mvc application: it makes sure that you have your software configured correctly enough to serve a page.</p>
+<p>You can also check application health by running GET request to <code class="docutils literal notranslate"><span class="pre">/api/ready</span></code> endpoint:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>curl<span class="w"> </span><span class="m">127</span>.0.0.1:8000/api/ready
+<span class="o">{</span><span class="s2">&quot;status&quot;</span>:<span class="s2">&quot;ok&quot;</span><span class="o">}</span>
+</pre></div>
+</div>
+<p>Lastly, you can always use the project <code class="docutils literal notranslate"><span class="pre">serve</span></code> CLI command for starting production unicorn + uvicorn (WSGI + ASGI) server:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>galactic-empire<span class="w"> </span>serve
+<span class="o">[</span><span class="m">2022</span>-04-23<span class="w"> </span><span class="m">20</span>:21:49<span class="w"> </span>+0000<span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="m">4769</span><span class="o">]</span><span class="w"> </span><span class="o">[</span>INFO<span class="o">]</span><span class="w"> </span>Start<span class="w"> </span>gunicorn<span class="w"> </span>WSGI<span class="w"> </span>with<span class="w"> </span>ASGI<span class="w"> </span>workers.
+<span class="o">[</span><span class="m">2022</span>-04-23<span class="w"> </span><span class="m">20</span>:21:49<span class="w"> </span>+0000<span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="m">4769</span><span class="o">]</span><span class="w"> </span><span class="o">[</span>INFO<span class="o">]</span><span class="w"> </span>Starting<span class="w"> </span>gunicorn<span class="w"> </span><span class="m">20</span>.1.0
+<span class="o">[</span><span class="m">2022</span>-04-23<span class="w"> </span><span class="m">20</span>:21:49<span class="w"> </span>+0000<span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="m">4769</span><span class="o">]</span><span class="w"> </span><span class="o">[</span>INFO<span class="o">]</span><span class="w"> </span>Listening<span class="w"> </span>at:<span class="w"> </span>http://127.0.0.1:8000<span class="w"> </span><span class="o">(</span><span class="m">4769</span><span class="o">)</span>
+<span class="o">[</span><span class="m">2022</span>-04-23<span class="w"> </span><span class="m">20</span>:21:49<span class="w"> </span>+0000<span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="m">4769</span><span class="o">]</span><span class="w"> </span><span class="o">[</span>INFO<span class="o">]</span><span class="w"> </span>Using<span class="w"> </span>worker:<span class="w"> </span>uvicorn.workers.UvicornWorker
+<span class="o">[</span><span class="m">2022</span>-04-23<span class="w"> </span><span class="m">20</span>:21:49<span class="w"> </span>+0000<span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="m">4769</span><span class="o">]</span><span class="w"> </span><span class="o">[</span>INFO<span class="o">]</span><span class="w"> </span>Server<span class="w"> </span>is<span class="w"> </span>ready.<span class="w"> </span>Spawning<span class="w"> </span>workers
+<span class="o">[</span><span class="m">2022</span>-04-23<span class="w"> </span><span class="m">20</span>:21:49<span class="w"> </span>+0000<span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="m">4771</span><span class="o">]</span><span class="w"> </span><span class="o">[</span>INFO<span class="o">]</span><span class="w"> </span>Booting<span class="w"> </span>worker<span class="w"> </span>with<span class="w"> </span>pid:<span class="w"> </span><span class="m">4771</span>
+<span class="o">[</span><span class="m">2022</span>-04-23<span class="w"> </span><span class="m">20</span>:21:49<span class="w"> </span>+0000<span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="m">4771</span><span class="o">]</span><span class="w"> </span><span class="o">[</span>INFO<span class="o">]</span><span class="w"> </span>Worker<span class="w"> </span>spawned<span class="w"> </span><span class="o">(</span>pid:<span class="w"> </span><span class="m">4771</span><span class="o">)</span>
+<span class="o">[</span><span class="m">2022</span>-04-23<span class="w"> </span><span class="m">20</span>:21:49<span class="w"> </span>+0000<span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="m">4771</span><span class="o">]</span><span class="w"> </span><span class="o">[</span>INFO<span class="o">]</span><span class="w"> </span>Started<span class="w"> </span>server<span class="w"> </span>process<span class="w"> </span><span class="o">[</span><span class="m">4771</span><span class="o">]</span>
+<span class="o">[</span><span class="m">2022</span>-04-23<span class="w"> </span><span class="m">20</span>:21:49<span class="w"> </span>+0000<span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="m">4771</span><span class="o">]</span><span class="w"> </span><span class="o">[</span>INFO<span class="o">]</span><span class="w"> </span>Waiting<span class="w"> </span><span class="k">for</span><span class="w"> </span>application<span class="w"> </span>startup.
+<span class="o">[</span><span class="m">2022</span>-04-23<span class="w"> </span><span class="m">20</span>:21:49<span class="w"> </span>+0000<span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="m">4771</span><span class="o">]</span><span class="w"> </span><span class="o">[</span>INFO<span class="o">]</span><span class="w"> </span>Application<span class="w"> </span>startup<span class="w"> </span>complete.
+<span class="o">[</span><span class="m">2022</span>-04-23<span class="w"> </span><span class="m">20</span>:21:49<span class="w"> </span>+0000<span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="m">4772</span><span class="o">]</span><span class="w"> </span><span class="o">[</span>INFO<span class="o">]</span><span class="w"> </span>Booting<span class="w"> </span>worker<span class="w"> </span>with<span class="w"> </span>pid:<span class="w"> </span><span class="m">4772</span>
+<span class="o">[</span><span class="m">2022</span>-04-23<span class="w"> </span><span class="m">20</span>:21:49<span class="w"> </span>+0000<span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="m">4772</span><span class="o">]</span><span class="w"> </span><span class="o">[</span>INFO<span class="o">]</span><span class="w"> </span>Worker<span class="w"> </span>spawned<span class="w"> </span><span class="o">(</span>pid:<span class="w"> </span><span class="m">4772</span><span class="o">)</span>
+<span class="o">[</span><span class="m">2022</span>-04-23<span class="w"> </span><span class="m">20</span>:21:49<span class="w"> </span>+0000<span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="m">4772</span><span class="o">]</span><span class="w"> </span><span class="o">[</span>INFO<span class="o">]</span><span class="w"> </span>Started<span class="w"> </span>server<span class="w"> </span>process<span class="w"> </span><span class="o">[</span><span class="m">4772</span><span class="o">]</span>
+<span class="o">[</span><span class="m">2022</span>-04-23<span class="w"> </span><span class="m">20</span>:21:49<span class="w"> </span>+0000<span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="m">4772</span><span class="o">]</span><span class="w"> </span><span class="o">[</span>INFO<span class="o">]</span><span class="w"> </span>Waiting<span class="w"> </span><span class="k">for</span><span class="w"> </span>application<span class="w"> </span>startup.
+<span class="o">[</span><span class="m">2022</span>-04-23<span class="w"> </span><span class="m">20</span>:21:49<span class="w"> </span>+0000<span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="m">4772</span><span class="o">]</span><span class="w"> </span><span class="o">[</span>INFO<span class="o">]</span><span class="w"> </span>Application<span class="w"> </span>startup<span class="w"> </span>complete.
+</pre></div>
+</div>
+</section>
+</section>
+<section id="creating-new-endpoint">
+<h2>Creating new endpoint<a class="headerlink" href="#creating-new-endpoint" title="Permalink to this heading">¶</a></h2>
+<p>To create new endpoint, you need to create at minimum a route and controller with a method.
+Lets say we want to create <code class="docutils literal notranslate"><span class="pre">death_star</span></code> controller with following endpoints:</p>
+<ul class="simple">
+<li><p>status (GET)</p></li>
+<li><p>load (POST)</p></li>
+<li><p>fire (DELETE)</p></li>
+</ul>
+<p>For that we will run the controller generator:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>fastapi-mvc<span class="w"> </span>generate<span class="w"> </span>controller<span class="w"> </span>death_star<span class="w"> </span>status<span class="w"> </span>load:post<span class="w"> </span>fire:delete
+</pre></div>
+</div>
+<p>This will do several things for you:</p>
+<ul class="simple">
+<li><p>Create controller: galactic_empire/app/controllers/death_star.py</p></li>
+<li><p>Create unit test: tests/unit/app/controllers/test_death_star.py</p></li>
+<li><p>Add router entry in: galactic_empire/config/router.py</p></li>
+</ul>
+<p>The most important of these is the controller file, <code class="docutils literal notranslate"><span class="pre">galactic_empire/app/controllers/death_star.py</span></code>.
+Let’s take a look at it:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;Death star controller implementation.&quot;&quot;&quot;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">fastapi</span><span class="w"> </span><span class="kn">import</span> <span class="n">APIRouter</span>
+
+
+<span class="n">router</span> <span class="o">=</span> <span class="n">APIRouter</span><span class="p">(</span>
+    <span class="n">prefix</span><span class="o">=</span><span class="s2">&quot;/death_star&quot;</span>
+<span class="p">)</span>
+<span class="n">log</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+
+<span class="nd">@router</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+    <span class="s2">&quot;/status&quot;</span><span class="p">,</span>
+    <span class="n">status_code</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span>
+    <span class="c1"># Decorator options:</span>
+    <span class="c1"># https://fastapi.tiangolo.com/tutorial/path-operation-configuration/</span>
+<span class="p">)</span>
+<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">status</span><span class="p">():</span>
+    <span class="c1"># Implement endpoint logic here.</span>
+    <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;hello&quot;</span><span class="p">:</span> <span class="s2">&quot;world&quot;</span><span class="p">}</span>
+
+
+<span class="nd">@router</span><span class="o">.</span><span class="n">post</span><span class="p">(</span>
+    <span class="s2">&quot;/load&quot;</span><span class="p">,</span>
+    <span class="n">status_code</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span>
+    <span class="c1"># Decorator options:</span>
+    <span class="c1"># https://fastapi.tiangolo.com/tutorial/path-operation-configuration/</span>
+<span class="p">)</span>
+<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">load</span><span class="p">():</span>
+    <span class="c1"># Implement endpoint logic here.</span>
+    <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;hello&quot;</span><span class="p">:</span> <span class="s2">&quot;world&quot;</span><span class="p">}</span>
+
+
+<span class="nd">@router</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span>
+    <span class="s2">&quot;/fire&quot;</span><span class="p">,</span>
+    <span class="n">status_code</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span>
+    <span class="c1"># Decorator options:</span>
+    <span class="c1"># https://fastapi.tiangolo.com/tutorial/path-operation-configuration/</span>
+<span class="p">)</span>
+<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">fire</span><span class="p">():</span>
+    <span class="c1"># Implement endpoint logic here.</span>
+    <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;hello&quot;</span><span class="p">:</span> <span class="s2">&quot;world&quot;</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>Endpoints are just methods with <code class="docutils literal notranslate"><span class="pre">FastAPI</span> <span class="pre">path</span> <span class="pre">decorator</span></code> aggregated in one file that makes a controller.
+For more information please refer to FastAPI documentation, some useful links:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://fastapi.tiangolo.com/tutorial/first-steps/#step-3-create-a-path-operation">create-a-path-operation</a></p></li>
+<li><p><a class="reference external" href="https://fastapi.tiangolo.com/tutorial/path-params/">path params</a></p></li>
+<li><p><a class="reference external" href="https://fastapi.tiangolo.com/tutorial/path-operation-configuration/">path-operation-configuration</a></p></li>
+</ul>
+<p>Now let’s look at router configuration:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;Application routes configuration.</span>
+
+<span class="sd">In this file all application endpoints are being defined.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">fastapi</span><span class="w"> </span><span class="kn">import</span> <span class="n">APIRouter</span>
+<span class="hll"><span class="kn">from</span><span class="w"> </span><span class="nn">galactic_empire.app.controllers</span><span class="w"> </span><span class="kn">import</span> <span class="n">death_star</span>
+</span><span class="kn">from</span><span class="w"> </span><span class="nn">galactic_empire.app.controllers.api.v1</span><span class="w"> </span><span class="kn">import</span> <span class="n">ready</span>
+
+<span class="n">router</span> <span class="o">=</span> <span class="n">APIRouter</span><span class="p">(</span><span class="n">prefix</span><span class="o">=</span><span class="s2">&quot;/api&quot;</span><span class="p">)</span>
+
+<span class="n">router</span><span class="o">.</span><span class="n">include_router</span><span class="p">(</span><span class="n">ready</span><span class="o">.</span><span class="n">router</span><span class="p">,</span> <span class="n">tags</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;ready&quot;</span><span class="p">])</span>
+<span class="hll"><span class="n">router</span><span class="o">.</span><span class="n">include_router</span><span class="p">(</span><span class="n">death_star</span><span class="o">.</span><span class="n">router</span><span class="p">)</span>
+</span></pre></div>
+</div>
+<p>As you can see controller generator automatically added FastAPI router entries for you.
+You can always disable this behaviour by running with the <code class="docutils literal notranslate"><span class="pre">--skip-routes</span></code> option.</p>
+<p>Lastly let’s try if our new endpoints actually work:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>curl<span class="w"> </span><span class="m">127</span>.0.0.1:8000/api/death_star/status
+<span class="o">{</span><span class="s2">&quot;hello&quot;</span>:<span class="s2">&quot;world&quot;</span><span class="o">}</span>
+$<span class="w"> </span>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span><span class="m">127</span>.0.0.1:8000/api/death_star/load
+<span class="o">{</span><span class="s2">&quot;hello&quot;</span>:<span class="s2">&quot;world&quot;</span><span class="o">}</span>
+$<span class="w"> </span>curl<span class="w"> </span>-X<span class="w"> </span>DELETE<span class="w"> </span><span class="m">127</span>.0.0.1:8000/api/death_star/fire
+<span class="o">{</span><span class="s2">&quot;hello&quot;</span>:<span class="s2">&quot;world&quot;</span><span class="o">}</span>
+</pre></div>
+</div>
+</section>
+<section id="project-documentation">
+<h2>Project documentation<a class="headerlink" href="#project-documentation" title="Permalink to this heading">¶</a></h2>
+<p>As you can see fastapi-mvc is just a tool designed to make your FastAPI development life easier, by creating everything that’s necessary to start working on a particular task.
+However, generated project by fastapi-mvc is fully independent and does not require it in order to work. You can learn more about it from included documentation in it.</p>
+<p>If you did not skip GitHub Actions during project generation, the documentation will be deployed to your project GitHub pages via Build Docs workflow.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You might need to enable GitHub pages for this project first.</p>
+</div>
+<p>To build docs manually:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>make<span class="w"> </span>docs
+</pre></div>
+</div>
+<p>Then open <code class="docutils literal notranslate"><span class="pre">./site/index.html</span></code> with any browser.</p>
+<p>Lastly, you can always have a look at the <code class="docutils literal notranslate"><span class="pre">fastapi-mvc/example</span></code> <a class="reference external" href="https://fastapi-mvc.github.io/example/index.html">documentation deployment</a>.</p>
+</section>
+<section id="updating-project">
+<h2>Updating project<a class="headerlink" href="#updating-project" title="Permalink to this heading">¶</a></h2>
+<p>Prerequisites:</p>
+<ul class="simple">
+<li><p>Project is git tracked</p></li>
+<li><p>Project is not git dirty</p></li>
+</ul>
+<p>Generated projects by <code class="docutils literal notranslate"><span class="pre">fastapi-mvc</span></code> can be easily updated with changes from the given <a class="reference external" href="https://github.com/fastapi-mvc/copier-project">copier-project</a> template version.
+For that we will run <code class="docutils literal notranslate"><span class="pre">fastapi-mvc</span> <span class="pre">update</span></code> command:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>fastapi-mvc<span class="w"> </span>update
+<span class="c1"># Or using alias short-cut</span>
+fm<span class="w"> </span>u
+
+<span class="c1"># Update to concrete version</span>
+fastapi-mvc<span class="w"> </span>update<span class="w"> </span>--use-version<span class="w"> </span><span class="m">0</span>.3.0
+</pre></div>
+</div>
+<p>The update feature also allows extending projects with previously not selected features or even changing namespaces. To do so just update answers to project questions.
+More information on how the update process works can be found <a class="reference external" href="https://copier.readthedocs.io/en/v7.0.1/updating/#how-the-update-works">here</a>.</p>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+  <span id="sidebar-top"></span>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  
+    
+            <p class="logo"><a href="index.html">
+              <img class="logo" src="_static/logo.png" alt="Logo"/>
+            </a></p>
+  
+
+  <h3>Contents</h3>
+  <ul>
+<li><a class="reference internal" href="#">Quickstart</a><ul>
+<li><a class="reference internal" href="#installation">Installation</a><ul>
+<li><a class="reference internal" href="#from-pypi">From PyPi:</a></li>
+<li><a class="reference internal" href="#from-source-with-poetry">From source with Poetry:</a></li>
+<li><a class="reference internal" href="#from-source-with-nix">From source with Nix</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#creating-a-new-project">Creating a new project</a><ul>
+<li><a class="reference internal" href="#overriding-default-template">Overriding default template</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#hello-world">Hello, World!</a><ul>
+<li><a class="reference internal" href="#starting-up-the-web-server">Starting up the Web Server</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#creating-new-endpoint">Creating new endpoint</a></li>
+<li><a class="reference internal" href="#project-documentation">Project documentation</a></li>
+<li><a class="reference internal" href="#updating-project">Updating project</a></li>
+</ul>
+</li>
+</ul>
+<h3>Navigation</h3>
+<ul>
+  <li><a href="index.html">Overview</a>
+    <ul>
+          <li>Previous: <a href="about.html" title="previous chapter">Why fastapi-mvc?</a>
+          <li>Next: <a href="cli.html" title="next chapter">CLI Reference</a>
+    </ul>
+  </li>
+</ul>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+  
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2022, Radosław Szamszur.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 6.2.1.
+    </div>
+  <script src="_static/version_warning_offset.js"></script>
+
+  </body>
+</html>

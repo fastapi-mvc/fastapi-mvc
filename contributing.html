@@ -1,0 +1,294 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Contributing &#8212; Fastapi-mvc Documentation (0.29.0)</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/click.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/sphinx_highlight.js"></script>
+    <link rel="author" title="About these documents" href="about.html" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="License" href="license.html" />
+    <link rel="prev" title="API" href="api.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="license.html" title="License"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="api.html" title="API"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Fastapi-mvc Documentation (0.29.0)</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Contributing</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="contributing">
+<h1>Contributing<a class="headerlink" href="#contributing" title="Permalink to this heading">¶</a></h1>
+<p><strong>First off, thanks for taking the time to contribute!</strong></p>
+<section id="issues">
+<h2>Issues<a class="headerlink" href="#issues" title="Permalink to this heading">¶</a></h2>
+<p><strong>Before submitting</strong></p>
+<ul class="simple">
+<li><p><strong>Check that your issue does not already exist in the <a class="reference external" href="https://github.com/fastapi-mvc/fastapi-mvc/issues">issue tracker</a></strong></p></li>
+</ul>
+<section id="questions">
+<h3>Questions<a class="headerlink" href="#questions" title="Permalink to this heading">¶</a></h3>
+<p>If you have any question about fastapi-mvc, or you are seeking for help you are encouraged to <a class="reference external" href="https://github.com/fastapi-mvc/fastapi-mvc/issues/new?assignees=&amp;amp;labels=question&amp;amp;template=question.md&amp;amp;title=">open question</a> or <a class="reference external" href="https://github.com/fastapi-mvc/fastapi-mvc/discussions/new">a new discussion</a>.</p>
+</section>
+<section id="suggesting-enhancements">
+<h3>Suggesting enhancements<a class="headerlink" href="#suggesting-enhancements" title="Permalink to this heading">¶</a></h3>
+<p>Feel free to <a class="reference external" href="https://github.com/fastapi-mvc/fastapi-mvc/issues/new?assignees=&amp;amp;labels=enhancement%2C+triage&amp;amp;template=feature-request.md&amp;amp;title=">open enhancement</a> so we can discuss it. Bringing new ideas and pointing out elements needing clarification allows to make this project better!</p>
+</section>
+<section id="reporting-bugs">
+<h3>Reporting Bugs<a class="headerlink" href="#reporting-bugs" title="Permalink to this heading">¶</a></h3>
+<p>If you encountered an unexpected behavior using <a class="reference external" href="https://github.com/fastapi-mvc/fastapi-mvc">fastapi-mvc</a>, please open bug report and provide the necessary information by <a class="reference external" href="https://github.com/fastapi-mvc/fastapi-mvc/issues/new?assignees=&amp;amp;labels=bug%2C+triage&amp;amp;template=bug-report.md&amp;amp;title=">filling in the template</a>.</p>
+</section>
+</section>
+<section id="documentation">
+<h2>Documentation<a class="headerlink" href="#documentation" title="Permalink to this heading">¶</a></h2>
+<p>The project could always use more documentation, whether as part of the official project docs, or even on the web in blog posts, articles, and such.</p>
+</section>
+<section id="discuss">
+<h2>Discuss<a class="headerlink" href="#discuss" title="Permalink to this heading">¶</a></h2>
+<p>Feel free to discuss with community through <a class="reference external" href="https://github.com/fastapi-mvc/fastapi-mvc/discussions">discussion channel</a>.</p>
+</section>
+<section id="contributing-to-code">
+<h2>Contributing to code<a class="headerlink" href="#contributing-to-code" title="Permalink to this heading">¶</a></h2>
+<section id="codebase">
+<h3>Codebase<a class="headerlink" href="#codebase" title="Permalink to this heading">¶</a></h3>
+<p>This project is made of two things:</p>
+<ul class="simple">
+<li><p>Package: fastapi-mvc - implementation, tests, etc.</p></li>
+<li><p>Builtin copier templates:</p>
+<ul>
+<li><p><a class="reference external" href="https://github.com/fastapi-mvc/copier-project">fastapi-mvc/copier-project</a> for scaffolding new fastapi-mvc project.</p></li>
+<li><p><a class="reference external" href="https://github.com/fastapi-mvc/copier-controller">fastapi-mvc/copier-controller</a> for scaffolding new controller upon fastapi-mvc project.</p></li>
+<li><p><a class="reference external" href="https://github.com/fastapi-mvc/copier-generator">fastapi-mvc/copier-generator</a> for scaffolding new generator for fastapi-mvc.</p></li>
+<li><p><a class="reference external" href="https://github.com/fastapi-mvc/copier-script">fastapi-mvc/copier-script</a> for scaffolding new shell script.</p></li>
+</ul>
+</li>
+</ul>
+<p>The project template (copier-project) has their own tests and checks. However, since template isn’t a valid Python code until its generated, all checks are done on the default (full) generated project in <a class="reference external" href="https://github.com/fastapi-mvc/copier-project/actions/workflows/main.yml">fastapi-mvc/copier-project CI workflow</a>.</p>
+</section>
+<section id="style-guide">
+<h3>Style guide<a class="headerlink" href="#style-guide" title="Permalink to this heading">¶</a></h3>
+<p>Git Commit Messages: https://www.conventionalcommits.org/en/v1.0.0/#summary</p>
+<p>Metrics stage ensure following rules are followed:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://www.python.org/dev/peps/pep-0008/">PEP 8</a></p></li>
+<li><p><a class="reference external" href="https://www.python.org/dev/peps/pep-0257/">PEP 257</a> for docstrings</p></li>
+<li><p><a class="reference external" href="https://github.com/psf/black">black</a> for unified formatting</p></li>
+</ul>
+</section>
+<section id="development-environment">
+<h3>Development environment<a class="headerlink" href="#development-environment" title="Permalink to this heading">¶</a></h3>
+<p>This project provides two ways of setting up the project for local development. Feel free to choose one that suits you the most.</p>
+<table>
+<tr>
+<th> uv </th>
+<th> Nix (recommended) </th>
+</tr>
+<tr>
+<td>
+<p>Prerequisites:</p>
+<ul class="simple">
+<li><p>Python 3.8 or later <a class="reference external" href="https://docs.python-guide.org/starting/installation/">How to install python</a></p></li>
+<li><p>make</p></li>
+<li><p>git 2.27 or later</p></li>
+<li><p>(optional) curl</p></li>
+<li><p>(optional) uv <a class="reference external" href="https://docs.astral.sh/uv/#highlights">How to install uv</a></p></li>
+</ul>
+</td>
+<td>
+<p>Prerequisites:</p>
+<ul class="simple">
+<li><p>Nix 2.8.x or later installed <a class="reference external" href="https://nixos.org/download.html">How to install Nix</a></p></li>
+</ul>
+</td>
+</tr>
+<tr>
+<td colspan="2">
+<p>You will first need to fork <a class="reference external" href="https://github.com/fastapi-mvc/fastapi-mvc">fastapi-mvc</a> and clone repository:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>git@github.com:your_username/fastapi-mvc.git
+<span class="nb">cd</span><span class="w"> </span>fastapi-mvc
+</pre></div>
+</div>
+</td>
+</tr>
+<tr>
+<td>
+<p>Now, you will need to install the required dependencies for fastapi-mvc with <code class="docutils literal notranslate"><span class="pre">uv</span></code> via <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">install</span></code> target:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>make<span class="w"> </span>install
+</pre></div>
+</div>
+<p>By default <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">install</span></code> target will search first for <code class="docutils literal notranslate"><span class="pre">python3</span></code> then <code class="docutils literal notranslate"><span class="pre">python</span></code> executable in your <code class="docutils literal notranslate"><span class="pre">PATH</span></code>.
+If needed this can be overridden by <code class="docutils literal notranslate"><span class="pre">PYTHON</span></code> environment variable.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span><span class="w"> </span><span class="nv">PYTHON</span><span class="o">=</span>/path/to/my/python
+make<span class="w"> </span>install
+</pre></div>
+</div>
+<p>If <code class="docutils literal notranslate"><span class="pre">uv</span></code> is not found in its default installation directory (<code class="docutils literal notranslate"><span class="pre">${HOME}/.local/bin</span></code>) this target will install it for you.
+However, one can always point to existing/customize <code class="docutils literal notranslate"><span class="pre">uv</span></code> installation with <a class="reference external" href="https://docs.astral.sh/uv/reference/environment/">environment variables</a>:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span><span class="w"> </span><span class="nv">UV_INSTALL_DIR</span><span class="o">=</span>/custom/uv/path
+<span class="nb">export</span><span class="w"> </span><span class="nv">UV_CACHE_DIR</span><span class="o">=</span>/custom/uv/path/cache
+<span class="nb">export</span><span class="w"> </span><span class="nv">UV_PROJECT_ENVIRONMENT</span><span class="o">=</span>/custom/uv/path/venv
+make<span class="w"> </span>install
+</pre></div>
+</div>
+</td>
+<td>
+<p>First <a class="reference external" href="https://nixos.wiki/wiki/Flakes#Enable_flakes">enable Nix flakes</a> if needed.</p>
+<p>(Optional) <a class="reference external" href="https://app.cachix.org/cache/fastapi-mvc#pull">Setup fastapi-mvc Nix binary cache</a> to speed up the build process:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>nix-env<span class="w"> </span>-iA<span class="w"> </span>cachix<span class="w"> </span>-f<span class="w"> </span>https://cachix.org/api/v1/install
+cachix<span class="w"> </span>use<span class="w"> </span>fastapi-mvc
+</pre></div>
+</div>
+<p>Build fastapi-mvc development environment with Nix:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>nix<span class="w"> </span>build<span class="w"> </span>.#fastapi-mvc-dev<span class="w"> </span>--print-build-logs
+</pre></div>
+</div>
+<p><strong>NOTE!</strong> On first run this may take a while.</p>
+<p>To spawn shell with complete development environment form Nix:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>nix<span class="w"> </span>develop
+</pre></div>
+</div>
+</td>
+</tr>
+<tr>
+<td colspan="2">
+<p>Create a branch for local development:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>checkout<span class="w"> </span>-b<span class="w"> </span>name-of-your-bugfix-or-feature
+</pre></div>
+</div>
+<p>Now you can make your changes locally. When you’re done making changes, check that your changes pass all tests:</p>
+</td>
+</tr>
+<tr>
+<td>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>make<span class="w"> </span>metrics
+make<span class="w"> </span><span class="nb">test</span>
+</pre></div>
+</div>
+</td>
+<td>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>nix<span class="w"> </span>run<span class="w"> </span>.#metrics
+nix<span class="w"> </span>run<span class="w"> </span>.#test
+</pre></div>
+</div>
+</td>
+</tr>
+<tr>
+<td colspan="2">
+<p>Commit your changes and push your branch to GitHub:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>add<span class="w"> </span>.
+git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;conventional_commit_type: meaningfull commit message&quot;</span>
+git<span class="w"> </span>push<span class="w"> </span>origin<span class="w"> </span>name-of-your-bugfix-or-feature
+</pre></div>
+</div>
+</td>
+</tr>
+</table>
+</section>
+<section id="pull-requests">
+<h3>Pull requests<a class="headerlink" href="#pull-requests" title="Permalink to this heading">¶</a></h3>
+<p>Before you submit a pull request, check that it meets these guidelines:</p>
+<ul class="simple">
+<li><p>Added tests for changed code where applicable.</p></li>
+<li><p>Documentation reflects the changes where applicable.</p></li>
+<li><p><a class="reference external" href="https://github.com/fastapi-mvc/fastapi-mvc/compare">Open a new pull request</a></p></li>
+</ul>
+<p>If you have any questions to any of the points above, just <strong>submit and ask</strong>!
+This checklist is here to help you, not to deter you from contributing!</p>
+</section>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+  <span id="sidebar-top"></span>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  
+    
+            <p class="logo"><a href="index.html">
+              <img class="logo" src="_static/logo.png" alt="Logo"/>
+            </a></p>
+  
+
+  <h3>Contents</h3>
+  <ul>
+<li><a class="reference internal" href="#">Contributing</a><ul>
+<li><a class="reference internal" href="#issues">Issues</a><ul>
+<li><a class="reference internal" href="#questions">Questions</a></li>
+<li><a class="reference internal" href="#suggesting-enhancements">Suggesting enhancements</a></li>
+<li><a class="reference internal" href="#reporting-bugs">Reporting Bugs</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#documentation">Documentation</a></li>
+<li><a class="reference internal" href="#discuss">Discuss</a></li>
+<li><a class="reference internal" href="#contributing-to-code">Contributing to code</a><ul>
+<li><a class="reference internal" href="#codebase">Codebase</a></li>
+<li><a class="reference internal" href="#style-guide">Style guide</a></li>
+<li><a class="reference internal" href="#development-environment">Development environment</a></li>
+<li><a class="reference internal" href="#pull-requests">Pull requests</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3>Navigation</h3>
+<ul>
+  <li><a href="index.html">Overview</a>
+    <ul>
+          <li>Previous: <a href="api.html" title="previous chapter">API</a>
+          <li>Next: <a href="license.html" title="next chapter">License</a>
+    </ul>
+  </li>
+</ul>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+  
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2022, Radosław Szamszur.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 6.2.1.
+    </div>
+  <script src="_static/version_warning_offset.js"></script>
+
+  </body>
+</html>
