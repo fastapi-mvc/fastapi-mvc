@@ -2,6 +2,33 @@
 
 This file documents changes to [fastapi-mvc](https://github.com/fastapi-mvc/fastapi-mvc). The release numbering uses [semantic versioning](http://semver.org).
 
+## 0.29.0 (11.02.2026)
+
+### Features
+
+* Migrate to uv dependency manager. [74db689](https://github.com/fastapi-mvc/fastapi-mvc/commit/74db6891d19f83998620dc85213782f177e5396c)
+
+### Fixed
+
+* MacOS runner toolchains. [38ee3fa](https://github.com/fastapi-mvc/fastapi-mvc/commit/38ee3facfe8bea2460f1d318532e57cd5893d1df)
+* Add UV_BINARY env variable to dev-env shell. [3b5eed5](https://github.com/fastapi-mvc/fastapi-mvc/commit/3b5eed51e6680208adcb93f06595ac88ff04702e)
+* Mypy errors. [6ec6129](https://github.com/fastapi-mvc/fastapi-mvc/commit/6ec612905b934446c4d29d298972abfa1a42c438)
+
+### Internal
+
+* Remove deprecated nix format check. [d8daa1b](https://github.com/fastapi-mvc/fastapi-mvc/commit/d8daa1b62934a096e2130844531ddc9685be4ada)
+* Exclude test generators. [cee53d4](https://github.com/fastapi-mvc/fastapi-mvc/commit/cee53d49a0a22e0c739cf52109fca52b0d49e471)
+* Reformat codebase with black formatter. [4eb71ba](https://github.com/fastapi-mvc/fastapi-mvc/commit/4eb71ba44fad362d24261bec897d52515b7ea76a)
+* Bumps dependencies. [e67784f](https://github.com/fastapi-mvc/fastapi-mvc/commit/e67784f20e23d1fcc78e87b7e0b4161371dfa2f3)
+* Reformat Nix code using nixfmt. [96634dc](https://github.com/fastapi-mvc/fastapi-mvc/commit/96634dc06ed8b6c1ade443b15d13fd22c895588b)
+* Configure treefmt formatter and flake check. [29138eb](https://github.com/fastapi-mvc/fastapi-mvc/commit/29138eb137907d469ea5a66f911622221805bb4b)
+* Migrate to nix-util. [b865358](https://github.com/fastapi-mvc/fastapi-mvc/commit/b865358b9a6870bf7d03063f452cac34f14da9ab)
+* Bump GitHub actions versions. [3704004](https://github.com/fastapi-mvc/fastapi-mvc/commit/370400402615eb1021846e5c4f577da86c5dd58d)
+
+### Docs
+
+* Upload documentation to GitHub pages. [e687393](https://github.com/fastapi-mvc/fastapi-mvc/commit/e687393566d7b71876ee3514161583a6576c6c5c) 
+
 ## 0.28.1 (09.07.2023)
 
 ### Generators
