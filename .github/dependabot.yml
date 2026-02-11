@@ -13,3 +13,5 @@ updates:
     reviewers:
       - "fastapi-mvc/triage"
     open-pull-requests-limit: 3
+    exclude-paths:
+      - "fastapi_mvc/tests/unit/custom_generators/**"
