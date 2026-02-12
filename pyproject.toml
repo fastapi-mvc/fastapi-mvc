@@ -50,7 +50,7 @@ test = [
 docs = [
   "Sphinx >=5.3, <6.3",
   "Pallets-Sphinx-Themes >=2.0.3, <2.2.0",
-  "myst-parser >=0.18.1, <1.1.0",
+  "myst-parser >=0.18.1, <4.1.0",
   "sphinx-click ~=4.4.0",
 ]
 
