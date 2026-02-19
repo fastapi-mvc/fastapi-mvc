@@ -17,7 +17,7 @@ jobs:
 
     steps:
       - name: Download build artifact
-        uses: dawidd6/action-download-artifact@v14
+        uses: dawidd6/action-download-artifact@v15
         with:
           workflow: main.yml
           workflow_conclusion: success
@@ -35,7 +35,7 @@ jobs:
     steps:
       - uses: actions/checkout@v6
       - name: Download image artifact
-        uses: dawidd6/action-download-artifact@v14
+        uses: dawidd6/action-download-artifact@v15
         with:
           workflow: image.yml
           workflow_conclusion: success
