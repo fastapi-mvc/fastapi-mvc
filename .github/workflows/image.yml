@@ -59,7 +59,7 @@ jobs:
       - name: Build container image
         run: nix build .#image
       - name: Archive build artifacts
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: ${{ format('nix-image-{0}', github.sha) }}
           path: result

@@ -71,7 +71,7 @@ jobs:
       - name: Build wheel
         run: make build
       - name: Archive build artifacts
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: ${{ format('fastapi_mvc-{0}', github.sha) }}
           path: dist
