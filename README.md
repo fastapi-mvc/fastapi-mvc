@@ -106,6 +106,11 @@ Or build with Nix from flake:
 
 ```shell
 # Optionally setup fastapi-mvc Nix binary cache to speed up the build process
+
+## What's different in this fork
+
+
+
 # https://app.cachix.org/cache/fastapi-mvc#pull
 nix-env -iA cachix -f https://cachix.org/api/v1/install
 cachix use fastapi-mvc
